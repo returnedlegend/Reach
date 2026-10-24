@@ -30,6 +30,14 @@ const COOKIE = "reach_community_session";
 const SESSION_SECONDS = 7 * 24 * 3600;
 const MAX_BODY = 8192;
 const databases = new Map<string, DatabaseSync>();
+
+/** Release cached SQLite handles before a worker exits or an isolated store is removed. */
+export function closeCommunityDatabases(): void {
+  for (const [filename, db] of databases) {
+    if (db.isOpen) db.close();
+    databases.delete(filename);
+  }
+}
 type Row = Record<string, string | number | null>;
 class ApiError extends Error {
   constructor(
@@ -128,7 +136,8 @@ export function openCommunityDatabase(
   // Runtime-only persistent data: never trace the configured private database into build assets.
   const filename = resolve(/* turbopackIgnore: true */ path);
   const existing = databases.get(filename);
-  if (existing) return existing;
+  if (existing?.isOpen) return existing;
+  databases.delete(filename);
   mkdirSync(dirname(filename), { recursive: true, mode: 0o700 });
   closeSync(openSync(/* turbopackIgnore: true */ filename, "a", 0o600));
   chmodSync(filename, 0o600);

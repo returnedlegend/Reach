@@ -384,3 +384,81 @@
   overflow-y: auto;
   overscroll-behavior: contain;
 }
+
+/* Discovery has one primary action; advanced planning stays available. */
+.heroCopy,
+.heroControls {
+  min-width: 0;
+}
+.heroCopy > p {
+  max-width: 34rem;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.6;
+}
+.heroControls {
+  width: 100%;
+}
+.secondaryTools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.secondaryTools > p {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+.secondaryAction.secondaryAction {
+  min-height: 44px;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+}
+@media (min-width: 960px) {
+  .hero.hero:not(.heroCompact) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    column-gap: 52px;
+    row-gap: 12px;
+    align-items: center;
+    max-width: none;
+    margin: 0;
+    padding: 28px 0 36px;
+  }
+  .hero:not(.heroCompact) .heroLinks {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+  .hero.hero h1 {
+    font-size: clamp(42px, 4.4vw, 60px);
+  }
+  .heroCompact .heroControls {
+    margin-top: 14px;
+  }
+}
+@media (max-width: 959px) {
+  .heroControls {
+    margin-top: 22px;
+  }
+  .secondaryTools {
+    margin-top: 18px;
+  }
+}
+
+@media (max-width: 599px) {
+  .heroControls {
+    margin-top: 16px;
+  }
+  .heroLocation.heroLocation.heroLocation {
+    padding: 16px;
+  }
+  .heroLocation.heroLocation form input,
+  .heroLocation.heroLocation form > button {
+    min-height: 44px;
+  }
+}

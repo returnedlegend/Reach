@@ -3,6 +3,8 @@ import { POST as journey } from "../src/app/api/journey/route";
 import { POST as geocode } from "../src/app/api/geocode/route";
 import { POST as reverse } from "../src/app/api/reverse-geocode/route";
 import { decodePolyline6 } from "../src/lib/osm-services";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 // Exercise the actual lock algorithm without touching an application's real /tmp limiter.
 const disk = vi.hoisted(() => ({
@@ -469,7 +471,10 @@ describe("OSM server adapters (mocked providers)", () => {
   });
   it("fails closed on corrupted persistent limiter timestamps", async () => {
     vi.stubEnv("OSM_NOMINATIM_SINGLE_INSTANCE", "true");
-    const dir = `/tmp/reach-osm-${process.getuid?.() ?? "node"}-nominatim`;
+    const dir = join(
+      tmpdir(),
+      `reach-osm-${process.getuid?.() ?? "node"}-nominatim`,
+    );
     disk.files.set(dir, { data: "", directory: true, mode: 0o700 });
     disk.files.set(`${dir}/timestamp`, {
       data: "broken state",

@@ -1,3 +1,4 @@
+import { closeCommunityDatabases } from "../src/lib/community";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   mkdtempSync,
@@ -80,6 +81,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  closeCommunityDatabases();
   vi.unstubAllEnvs();
   rmSync(directory, { recursive: true, force: true });
 });
@@ -101,10 +103,13 @@ describe("account mail verification in private preview", () => {
     const verification = previewFor("Verify your Reach email");
     expect(verification.to).toBe("member@example.org");
     expect(verification.subject).toBe("Verify your Reach email");
-    expect(
-      statSync(join(previewDirectory, readdirSync(previewDirectory)[0])).mode &
-        0o777,
-    ).toBe(0o600);
+    // Windows exposes ACLs rather than POSIX permission bits.
+    if (process.platform !== "win32") {
+      expect(
+        statSync(join(previewDirectory, readdirSync(previewDirectory)[0]))
+          .mode & 0o777,
+      ).toBe(0o600);
+    }
     expect(
       db
         .prepare("SELECT token_hash FROM account_tokens WHERE purpose='verify'")

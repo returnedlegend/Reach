@@ -1,8 +1,12 @@
+import { closeCommunityDatabases } from "../src/lib/community";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { openPantryDatabase, listPantryResources } from "../src/lib/pantry-store";
+import {
+  openPantryDatabase,
+  listPantryResources,
+} from "../src/lib/pantry-store";
 import { createAssistantHandler } from "../src/lib/reach-assistant";
 import { interpretNavigationNeeds } from "../src/lib/navigation-needs-agent";
 import { accessInput } from "./fixtures/access-scenarios";
@@ -50,6 +54,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  closeCommunityDatabases();
   vi.unstubAllEnvs();
   vi.restoreAllMocks();
   rmSync(directory, { recursive: true, force: true });
@@ -61,7 +66,9 @@ describe("independent conversational assistant boundaries", () => {
       status: "unavailable" as const,
       message: "Synthetic AI-disabled fixture.",
     }));
-    const plan = vi.fn(async () => json({ timezone: "America/Chicago", options: [] }));
+    const plan = vi.fn(async () =>
+      json({ timezone: "America/Chicago", options: [] }),
+    );
     const handle = createAssistantHandler(database, { interpret, plan });
 
     const crossOrigin = await handle(
@@ -153,7 +160,9 @@ describe("independent conversational assistant boundaries", () => {
       needs: { service: "shelter" as const, stock: "available" } as never,
       message: "Synthetic malicious output.",
     }));
-    const plan = vi.fn(async () => json({ timezone: "America/Chicago", options: [] }));
+    const plan = vi.fn(async () =>
+      json({ timezone: "America/Chicago", options: [] }),
+    );
     const handle = createAssistantHandler(database, { interpret, plan });
     const base = accessInput({
       origin: { lat: 30.55, lng: -96.55 },
@@ -238,7 +247,9 @@ describe("independent conversational assistant boundaries", () => {
       status: "unavailable" as const,
       message: "Synthetic provider unavailable.",
     }));
-    const plan = vi.fn(async () => json({ timezone: "America/Chicago", options: [] }));
+    const plan = vi.fn(async () =>
+      json({ timezone: "America/Chicago", options: [] }),
+    );
     const handle = createAssistantHandler(database, { interpret, plan });
     const response = await handle(
       request({ message: "I need shelter today", input: accessInput() }),
@@ -254,7 +265,9 @@ describe("independent conversational assistant boundaries", () => {
       status: "unavailable" as const,
       message: "Synthetic provider unavailable.",
     }));
-    const plan = vi.fn(async () => json({ timezone: "America/Chicago", options: [] }));
+    const plan = vi.fn(async () =>
+      json({ timezone: "America/Chicago", options: [] }),
+    );
     const handle = createAssistantHandler(database, { interpret, plan });
     const selectedInput = accessInput({ departure: "17:30" });
     const explicit = await handle(
@@ -269,7 +282,10 @@ describe("independent conversational assistant boundaries", () => {
 
     const before = plan.mock.calls.length;
     const unspecified = await handle(
-      request({ message: "I need groceries this evening", input: selectedInput }),
+      request({
+        message: "I need groceries this evening",
+        input: selectedInput,
+      }),
     );
     expect(unspecified.status).toBe(200);
     expect((await unspecified.json()).status).toBe("needs-details");

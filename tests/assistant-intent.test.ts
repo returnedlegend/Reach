@@ -28,3 +28,53 @@ describe("assistant explicit time and travel capability semantics", () => {
     ).toEqual({ allowWaiting: false });
   });
 });
+
+describe("assistant negated travel preferences", () => {
+  it.each([
+    ["I cannot take the bus; I can walk", "walking"],
+    ["I cannot walk to a bus stop, but can drive", "driving"],
+    ["I do not want public transit. I prefer walking", "walking"],
+    ["I can walk to the bus stop", "walking"],
+    ["I do not take buses, I drive", "driving"],
+    ["I don't want to walk; I can drive", "driving"],
+    ["Walking is not possible. I can use the bus", "transit"],
+    ["The bus isn't an option; I am driving", "driving"],
+    ["I can't drive but I can walk", "walking"],
+    ["I do not want to use the bus. Walking is fine", "walking"],
+  ])("does not turn a rejected mode into a preference: %s", (text, mode) => {
+    expect(localAssistantPreferences(text).mode).toBe(mode);
+  });
+  it.each([
+    "I don't want to walk",
+    "Walking is not possible",
+    "I cannot use public transit",
+    "I have no car and cannot take the bus",
+    "No bus",
+    "I can't drive",
+  ])("keeps the selected mode when no alternative is stated: %s", (text) => {
+    expect(localAssistantPreferences(text).mode).toBeUndefined();
+  });
+  it.each([
+    "I can't walk more than 20 minutes",
+    "I cannot walk 20 minutes",
+    "I cannot walk a mile",
+    "I cannot walk without assistance",
+    "I cannot walk far",
+    "I can't walk to the bus stop",
+  ])(
+    "does not invent a zero walking limit from a qualified limitation: %s",
+    (text) => {
+      expect(localAssistantPreferences(text).maxWalkingMinutes).toBeUndefined();
+      expect(localAssistantPreferences(text).maxWalkingMiles).toBeUndefined();
+    },
+  );
+  it("handles typographic contractions and an absolute walking restriction", () => {
+    expect(
+      localAssistantPreferences("I can\u2019t walk, but I can take the bus"),
+    ).toEqual({
+      mode: "transit",
+      maxWalkingMinutes: 0,
+      maxWalkingMiles: 0,
+    });
+  });
+});

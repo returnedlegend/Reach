@@ -1,3 +1,4 @@
+import { closeCommunityDatabases } from "../src/lib/community";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { mkdtempSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -119,6 +120,7 @@ beforeEach(() => {
   process.env.REACH_COMMUNITY_ENABLED = "true";
 });
 afterEach(() => {
+  closeCommunityDatabases();
   delete process.env.REACH_COMMUNITY_ENABLED;
   rmSync(directory, { recursive: true, force: true });
 });
@@ -501,7 +503,9 @@ describe("deployment and media regression checks", () => {
       (await handle(request("https://evil.example", "evil.example"))).status,
     ).toBe(403);
     expect((await handle(request("http://localhost:3000"))).status).toBe(201);
-    expect(statSync(database).mode & 0o777).toBe(0o600);
+    // Windows exposes ACLs rather than POSIX permission bits.
+    if (process.platform !== "win32")
+      expect(statSync(database).mode & 0o777).toBe(0o600);
   });
   it("gates sanitized media and prevents replacing an approved photo", async () => {
     const alice = await signup("alice"),

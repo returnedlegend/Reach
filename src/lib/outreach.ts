@@ -205,13 +205,16 @@ export function createOutreachHandler(
             "Remove personal circumstances and precise location from this inquiry.",
           );
         outreachRate(db, `draft:${actor.id}`, 12, 3600, now);
-        const draft = await generateOutreachDraft({
-          recipientName:
-            recipient.kind === "household"
-              ? "Participating household donor"
-              : String(recipient.name),
-          question: b.question,
-        });
+        const draft = await generateOutreachDraft(
+          {
+            recipientName:
+              recipient.kind === "household"
+                ? "Participating household donor"
+                : String(recipient.name),
+            question: b.question,
+          },
+          { signal: request.signal },
+        );
         const messageId = createOutreachDraft(
           db,
           actor.id,

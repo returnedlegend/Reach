@@ -580,28 +580,30 @@ export function OutreachPanel({ pantryId, onAvailabilityChange }: Props) {
                 maxLength={180}
                 required
                 disabled={busy}
-                onChange={(event) =>
+                onChange={(event) => {
+                  setAuthorized(false);
                   setDraft({
                     ...draft,
                     subject: event.target.value.slice(0, 180),
-                  })
-                }
+                  });
+                }}
               />
               <label htmlFor="outreach-body">Message</label>
               <textarea
                 id="outreach-body"
                 className="textarea textarea-bordered"
                 value={draft.body}
-                maxLength={5000}
+                maxLength={4000}
                 rows={7}
                 required
                 disabled={busy}
-                onChange={(event) =>
+                onChange={(event) => {
+                  setAuthorized(false);
                   setDraft({
                     ...draft,
-                    body: event.target.value.slice(0, 5000),
-                  })
-                }
+                    body: event.target.value.slice(0, 4000),
+                  });
+                }}
               />
               <p className="outreach-small">
                 This message is a question, not a promise that food is
@@ -626,7 +628,10 @@ export function OutreachPanel({ pantryId, onAvailabilityChange }: Props) {
                   type="checkbox"
                   checked={followup}
                   disabled={busy}
-                  onChange={(event) => setFollowup(event.target.checked)}
+                  onChange={(event) => {
+                    setAuthorized(false);
+                    setFollowup(event.target.checked);
+                  }}
                 />
                 <span>
                   Allow one follow-up after 24 hours if there is no reply. It

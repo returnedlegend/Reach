@@ -1,5 +1,14 @@
 # Reach
 
+## Final polish and demo checks
+
+The latest pass simplifies the home-to-pantry journey, restores the official district-boundary map toggle, hardens the retained planner API, makes travel-intent and email approval safer, and repairs Windows test/runtime portability. See [audit, changed files, verification, and demo steps](docs/FINAL-POLISH.md).
+
+Use Node 24. For browser tests, install Chromium with `npx playwright install chromium` (or set `PLAYWRIGHT_CHROMIUM_PATH`). Unit GTFS reproduction also needs Python; set `REACH_PYTHON` to its executable if it is not on PATH. No separate lint command is configured; TypeScript, unit/data checks, production builds and changed-file formatting are checked.
+
+Production account/access/assistant endpoints deliberately require a canonical HTTPS `REACH_APP_ORIGIN`; a plain HTTP production server without this setting is suitable only for basic discovery smoke checks, not end-to-end authenticated or assistant workflows. Do not bypass the origin guard to demonstrate those features. Live AI, search/routing, OAuth and mail still require their documented operator configuration. No live food availability or route is fabricated when a provider is unavailable.
+
+
 Google account sign-in is available alongside Reach passwords. Configure the separate Google OAuth Web client using [Google sign-in setup](docs/GOOGLE-SIGN-IN.md). Only identity permissions are requested; pantry emails still use Reach’s Resend service and explicit approval.
 
 Reach is a mobile-first community-resource and transit website for Bryan–College Station, built with Next.js 16, React 19, TypeScript, and Node.js 24.

@@ -1,3 +1,4 @@
+import { closeCommunityDatabases } from "../src/lib/community";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -50,6 +51,7 @@ beforeEach(() => {
   initializeCrowdSchema(db);
 });
 afterEach(() => {
+  closeCommunityDatabases();
   vi.unstubAllEnvs();
   rmSync(directory, { recursive: true, force: true });
 });

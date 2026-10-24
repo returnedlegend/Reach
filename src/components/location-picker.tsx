@@ -478,7 +478,7 @@ export function LocationPicker({
     >
       <p>
         {compact
-          ? "Where are you starting? Search an address or local pantry."
+          ? "Where are you starting?"
           : "Use your location or search an address or place. Your location is used only when you choose it. You can also choose a point on the map."}
       </p>
       <button
@@ -489,14 +489,16 @@ export function LocationPicker({
       >
         {busy ? "Working…" : "Use my location"}
       </button>
-      <button
-        className="btn btn-outline"
-        type="button"
-        onClick={startFollowing}
-        disabled={busy}
-      >
-        {isFollowing ? "Stop following" : "Follow my location"}
-      </button>
+      {!compact && (
+        <button
+          className="btn btn-outline"
+          type="button"
+          onClick={startFollowing}
+          disabled={busy}
+        >
+          {isFollowing ? "Stop following" : "Follow my location"}
+        </button>
+      )}
       {value && (
         <p>
           Selected:{" "}
@@ -528,8 +530,13 @@ export function LocationPicker({
             autoComplete="off"
           />
         </label>
-        <button className="btn btn-outline" type="submit" disabled={busy}>
-          Search address
+        <button
+          className="btn btn-outline"
+          type="submit"
+          disabled={busy}
+          aria-label="Search address"
+        >
+          {compact ? "Search" : "Search address"}
         </button>
       </form>
       {localSuggestions.length > 0 && (
@@ -612,6 +619,16 @@ export function LocationPicker({
       )}
       <details className="location-advanced">
         <summary>Advanced: enter coordinates</summary>
+        {compact && (
+          <button
+            className="btn btn-outline"
+            type="button"
+            onClick={startFollowing}
+            disabled={busy}
+          >
+            {isFollowing ? "Stop following" : "Follow my location"}
+          </button>
+        )}
         <p>
           Enter an exact point or inspect your selected location. Coordinate
           precision does not establish a safe entrance.

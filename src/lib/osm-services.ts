@@ -2,6 +2,8 @@
 import { z } from "zod";
 import { createHash } from "node:crypto";
 import { constants } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { mkdir, lstat, open, rename, unlink } from "node:fs/promises";
 import type { MapAttribution, MapPath } from "./map-types";
 
@@ -274,7 +276,7 @@ async function withPublicSlot<T>(
   if (count >= MAX_PENDING) throw new LimiterFailure("quota");
   state.pending.set(namespace, count + 1);
   const uid = process.getuid?.();
-  const dir = `/tmp/reach-osm-${uid ?? "node"}-${namespace}`;
+  const dir = join(tmpdir(), `reach-osm-${uid ?? "node"}-${namespace}`);
   let lock: Awaited<ReturnType<typeof open>> | undefined;
   const lockPath = `${dir}/lock`;
   try {
@@ -286,7 +288,8 @@ async function withPublicSlot<T>(
       !info.isDirectory() ||
       info.isSymbolicLink() ||
       (uid !== undefined && info.uid !== uid) ||
-      info.mode & 0o077
+      // Windows uses the per-user temporary directory and ACLs, not POSIX mode bits.
+      (process.platform !== "win32" && (info.mode & 0o077) !== 0)
     )
       throw new LimiterFailure("configuration");
     const deadline = Date.now() + TIMEOUT_MS;

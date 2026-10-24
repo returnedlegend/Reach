@@ -8,7 +8,8 @@ import timetable from "../src/data/btd-timetable.json";
 describe("official BTD snapshot integration", () => {
   it("reproduces the committed projection from the original ZIP without modifying files", () => {
     const output = execFileSync(
-      "python3",
+      process.env.REACH_PYTHON ||
+        (process.platform === "win32" ? "python" : "python3"),
       [
         "-c",
         `import importlib.util,json,pathlib

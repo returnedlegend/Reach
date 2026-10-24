@@ -1,3 +1,4 @@
+import { closeCommunityDatabases } from "../src/lib/community";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { JWTPayload } from "jose";
@@ -166,6 +167,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
+  closeCommunityDatabases();
   vi.unstubAllEnvs();
   vi.restoreAllMocks();
   rmSync(directory, { recursive: true, force: true });

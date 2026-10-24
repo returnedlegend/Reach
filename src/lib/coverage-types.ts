@@ -15,7 +15,9 @@ function isPosition(value: unknown): value is CoveragePosition {
     Array.isArray(value) &&
     value.length >= 2 &&
     Number.isFinite(value[0]) &&
-    Number.isFinite(value[1])
+    Number.isFinite(value[1]) &&
+    Math.abs(value[0]) <= 180 &&
+    Math.abs(value[1]) <= 90
   );
 }
 

@@ -65,27 +65,51 @@ function takeBudget() {
 /** Clear, bounded local intent recognition; never constructs a resource or route. */
 export function localAssistantPreferences(text: string): Partial<AccessInput> {
   const patch: Partial<AccessInput> = {};
-  if (/\b(?:bus|public transit|by transit)\b/i.test(text))
-    patch.mode = "transit";
-  else if (
-    /\b(?:walk|walking|on foot)\b/i.test(text) &&
-    !/\b(?:cannot|can't|unable to)\s+walk\b/i.test(text)
-  )
-    patch.mode = "walking";
-  else if (
-    /\b(?:drive|driving|by car)\b/i.test(text) &&
-    !/\b(?:no car|don't have a car|do not have a car|cannot drive|can't drive)\b/i.test(
-      text,
+  const normalized = text.replace(/\u2019/g, "'");
+  // Remove explicitly rejected modes before looking for a positive preference.
+  // These local values override AI suggestions, so a negative bus/walking mention
+  // must never become an affirmative travel instruction.
+  let rejectedTransit = false;
+  const affirmative = normalized
+    .replace(
+      /\b(?:(?:do not|don't|cannot|can't|can not|unable to|not able to|will not|won't|would rather not)\s+(?:(?:want|need|prefer)(?:\s+to)?\s+)?(?:(?:take|use|ride|catch|travel|go)\s+(?:by\s+)?)?|no\s+|not\s+(?:by\s+|on\s+)?)(?:the\s+|a\s+)?(?:bus(?:es)?|public transit|transit|walk(?:ing)?|on foot|driv(?:e|ing)|car)\b/gi,
+      (phrase) => {
+        if (/\b(?:bus(?:es)?|transit)\b/i.test(phrase)) rejectedTransit = true;
+        return " ";
+      },
     )
-  )
+    .replace(
+      /\b(?:bus(?:es)?|public transit|transit|walk(?:ing)?|on foot|driv(?:e|ing)|car)\s+(?:(?:is|are)\s+)?(?:(?:not|never)\s+(?:possible|available|an option)|(?:isn't|aren't)\s+(?:possible|available|an option)|unsafe|too difficult)\b/gi,
+      (phrase) => {
+        if (/\b(?:bus(?:es)?|transit)\b/i.test(phrase)) rejectedTransit = true;
+        return " ";
+      },
+    );
+  // A bus stop is a landmark, not an instruction to travel by bus.
+  const travelText = affirmative.replace(
+    /\bbus (?:stops?|stations?|shelters?)\b/gi,
+    " ",
+  );
+  if (/\b(?:bus|public transit|by transit)\b/i.test(travelText))
+    patch.mode = "transit";
+  else if (/\b(?:walk|walking|on foot)\b/i.test(travelText))
+    patch.mode = "walking";
+  else if (/\b(?:drive|driving|by car)\b/i.test(travelText))
     patch.mode = "driving";
   else if (
+    !rejectedTransit &&
     /\b(?:no car|don't have a car|do not have a car|without a car)\b/i.test(
-      text,
+      normalized,
     )
   )
     patch.mode = "transit";
-  if (/\b(?:cannot walk|can't walk|unable to walk)\b/i.test(text)) {
+  // A qualified walking limitation is not an inability to walk at all. Leave
+  // distances and durations to the user's controls / reviewed interpretation.
+  if (
+    /\b(?:cannot|can't|can not|unable to|not able to)\s+walk\b(?!\s+(?:more|over|for|far|long|to|that|very|much|without|a|an)\b|\s+\d)/i.test(
+      normalized,
+    )
+  ) {
     patch.maxWalkingMinutes = 0;
     patch.maxWalkingMiles = 0;
   }

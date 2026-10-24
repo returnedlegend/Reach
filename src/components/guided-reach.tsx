@@ -35,7 +35,7 @@ import { MoreMenu } from "./site-navigation";
 import { Surface, ActionButton } from "./ui";
 import { LocationPicker, type SelectedLocation } from "./location-picker";
 import { JourneyMap } from "./journey-map";
-import { CommunityPanel } from "./community-panel";
+import { LoadingState } from "./loading-state";
 import {
   transportResources,
   transitStops,
@@ -72,13 +72,23 @@ type RouteResult = {
   attribution?: MapAttribution[];
   steps?: { instruction: string }[];
 };
+const CommunityPanel = dynamic(
+  () => import("./community-panel").then((module) => module.CommunityPanel),
+  { loading: () => <LoadingState label="Loading community food…" /> },
+);
 const AccessPlanner = dynamic(
   () => import("./access-planner").then((m) => m.AccessPlanner),
-  { ssr: false },
+  {
+    ssr: false,
+    loading: () => <LoadingState label="Loading food access planner…" />,
+  },
 );
 const ReachAssistant = dynamic(
   () => import("./reach-assistant").then((m) => m.ReachAssistant),
-  { ssr: false },
+  {
+    ssr: false,
+    loading: () => <LoadingState label="Loading Reach assistant…" />,
+  },
 );
 
 const PantryDetail = dynamic(
@@ -139,7 +149,20 @@ export function GuidedReach({
     initialHotspots ? "community" : "explore",
   );
   const [hotspotRequest, setHotspotRequest] = useState(initialHotspots ? 1 : 0);
+  const [communityLoaded, setCommunityLoaded] = useState(initialHotspots);
+  useEffect(() => {
+    if (tab === "community" || tab === "map") setCommunityLoaded(true);
+  }, [tab]);
   const [step, setStep] = useState(0);
+  const flowPanel = useRef<HTMLElement>(null);
+  const previousStep = useRef(step);
+  useEffect(() => {
+    if (previousStep.current === step) return;
+    previousStep.current = step;
+    const heading = flowPanel.current?.querySelector("h2");
+    heading?.setAttribute("tabindex", "-1");
+    heading?.focus();
+  }, [step]);
   const [accessPlanning, setAccessPlanning] = useState(false);
   const [assistantOpen, setAssistantOpen] = useState(false);
   const assistantOpener = useRef<HTMLButtonElement | null>(null);
@@ -1188,61 +1211,68 @@ export function GuidedReach({
             <section
               className={`reach-intro ${styles.hero} ${step > 0 ? styles.heroCompact : ""}`}
             >
-              <span className="reach-kicker">
-                FOOD ASSISTANCE · GROWING REGIONAL COVERAGE
-              </span>
-              <h1>
-                Food and support,
-                <br />
-                within reach<span>.</span>
-              </h1>
-              <p>Find local food assistance and a way to get there.</p>
-              <button
-                className="btn btn-primary reach-primary"
-                onClick={() => {
-                  clearRoute();
-                  setAccessPlanning(true);
-                }}
-              >
-                Find food I can reach{" "}
-                <ArrowRight size={18} aria-hidden="true" />
-              </button>
-              <button
-                className="btn btn-outline reach-primary"
-                onClick={(event) => {
-                  assistantOpener.current = event.currentTarget;
-                  setAssistantOpen(true);
-                }}
-              >
-                Reach AI assistant
-              </button>
-              {step === 0 && (
-                <div className={styles.quickStart}>
-                  <LocationPicker
-                    compact
-                    className={styles.heroLocation}
-                    value={location}
-                    onChange={changeLocation}
-                    resources={foodResources}
-                  />
+              <div className={styles.heroCopy}>
+                <span className="reach-kicker">
+                  FOOD ASSISTANCE · GROWING REGIONAL COVERAGE
+                </span>
+                <h1>
+                  Food and support,
+                  <br />
+                  within reach<span>.</span>
+                </h1>
+                <p>Find local food assistance and a way to get there.</p>
+                <div className="reach-intro-note">
+                  <ShieldCheck size={17} />
+                  Free to explore. No account needed. Your location is your
+                  choice.
+                </div>
+              </div>
+              <div className={styles.heroControls}>
+                {step === 0 && (
+                  <div className={styles.quickStart}>
+                    <LocationPicker
+                      compact
+                      className={styles.heroLocation}
+                      value={location}
+                      onChange={changeLocation}
+                      resources={foodResources}
+                    />
+                    <button
+                      className={`btn btn-primary reach-primary ${styles.findFood}`}
+                      onClick={() => {
+                        clearRoute();
+                        setNeed("food");
+                        setDestination("");
+                        setStep(location ? 3 : 1);
+                      }}
+                    >
+                      Find food near me{" "}
+                      <ArrowRight size={18} aria-hidden="true" />
+                    </button>
+                  </div>
+                )}
+                <div className={styles.secondaryTools}>
+                  <p>Need help comparing your trip?</p>
                   <button
-                    className={`btn btn-primary reach-primary ${styles.findFood}`}
+                    className={"btn btn-outline " + styles.secondaryAction}
                     onClick={() => {
                       clearRoute();
-                      setNeed("food");
-                      setDestination("");
-                      setStep(location ? 2 : 1);
+                      setAccessPlanning(true);
                     }}
                   >
-                    Find food near me{" "}
+                    Find food I can reach{" "}
                     <ArrowRight size={18} aria-hidden="true" />
                   </button>
+                  <button
+                    className={"btn btn-outline " + styles.secondaryAction}
+                    onClick={(event) => {
+                      assistantOpener.current = event.currentTarget;
+                      setAssistantOpen(true);
+                    }}
+                  >
+                    Reach AI assistant
+                  </button>
                 </div>
-              )}
-              <div className="reach-intro-note">
-                <ShieldCheck size={17} />
-                Free to explore. No account needed. Your location is your
-                choice.
               </div>
               <div className={styles.heroLinks}>
                 <button
@@ -1279,7 +1309,11 @@ export function GuidedReach({
                 </span>
               ))}
             </nav>
-            <section className="reach-flow" aria-label={`Step ${step + 1}`}>
+            <section
+              ref={flowPanel}
+              className="reach-flow"
+              aria-label={`Step ${step + 1}`}
+            >
               <div className="reach-flow-top">
                 <span className="reach-kicker">STEP {step + 1} OF 4</span>
                 {step > 0 && (
@@ -1445,6 +1479,13 @@ export function GuidedReach({
                       Edit starting point
                     </button>
                   </div>
+                  {!selected && (
+                    <p>
+                      Compare the food assistance options below, then open a
+                      pantry for hours, visit requirements and directions.
+                      Distances are straight-line estimates, not walking routes.
+                    </p>
+                  )}
                   {selected && (
                     <>
                       {modeSelect("results-mode")}
@@ -1879,12 +1920,14 @@ export function GuidedReach({
               </div>
             </div>
           )}
-          <CommunityPanel
-            hotspotRequest={hotspotRequest}
-            origin={location?.coordinates ?? null}
-            onDiscoveryChange={setCommunityMarkers}
-            selectedMarkerId={communitySelection}
-          />
+          {communityLoaded && (
+            <CommunityPanel
+              hotspotRequest={hotspotRequest}
+              origin={location?.coordinates ?? null}
+              onDiscoveryChange={setCommunityMarkers}
+              selectedMarkerId={communitySelection}
+            />
+          )}
         </div>
         {tab === "saved" && (
           <section className="reach-saved">

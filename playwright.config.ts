@@ -15,11 +15,11 @@ export default defineConfig({
     browserName: "chromium",
     // Local test-only TLS proxy; never changes application certificate validation.
     ignoreHTTPSErrors: process.env.REACH_TEST_LOCAL_TLS === "true",
-    launchOptions: {
-      executablePath:
-        process.env.PLAYWRIGHT_CHROMIUM_PATH ?? "/usr/bin/chromium",
-      args: ["--no-sandbox"],
-    },
+    // Use Playwright's platform-matched browser by default. A system browser
+    // remains an explicit option for offline or managed environments.
+    launchOptions: process.env.PLAYWRIGHT_CHROMIUM_PATH
+      ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_PATH }
+      : undefined,
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
     timezoneId: "America/Chicago",

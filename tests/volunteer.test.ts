@@ -1,3 +1,4 @@
+import { closeCommunityDatabases } from "../src/lib/community";
 import { beforeEach, afterEach, describe, expect, it } from "vitest";
 import { mkdtempSync, rmSync } from "node:fs";
 import { join } from "node:path";
@@ -126,6 +127,7 @@ beforeEach(() => {
   offer();
 });
 afterEach(() => {
+  closeCommunityDatabases();
   delete process.env.REACH_COMMUNITY_ENABLED;
   rmSync(dir, { recursive: true, force: true });
 });

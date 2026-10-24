@@ -1,3 +1,4 @@
+import { closeCommunityDatabases } from "../src/lib/community";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -75,6 +76,7 @@ beforeEach(() => {
   });
 });
 afterEach(() => {
+  closeCommunityDatabases();
   delete process.env.REACH_APP_ORIGIN;
   rmSync(directory, { recursive: true, force: true });
 });

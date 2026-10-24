@@ -315,8 +315,12 @@ describe("central delivery boundary", () => {
     const result = await deliverMail(db, mail);
     expect(result.status).toBe("preview");
     const file = join(dir, readdirSync(dir)[0]);
-    expect(statSync(file).mode & 0o777).toBe(0o600);
-    expect(statSync(dir).mode & 0o777).toBe(0o700);
+    // Windows exposes ACLs rather than POSIX permission bits.
+    if (process.platform !== "win32")
+      expect(statSync(file).mode & 0o777).toBe(0o600);
+    // Windows exposes ACLs rather than POSIX permission bits.
+    if (process.platform !== "win32")
+      expect(statSync(dir).mode & 0o777).toBe(0o700);
     expect(readFileSync(file, "utf8")).toContain("secret-token");
     expect(logger).not.toHaveBeenCalled();
     vi.stubEnv("NODE_ENV", "production");

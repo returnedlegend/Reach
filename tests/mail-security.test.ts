@@ -1,3 +1,4 @@
+import { closeCommunityDatabases } from "../src/lib/community";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   mkdtempSync,
@@ -84,6 +85,7 @@ beforeEach(() => {
   initializeNotifications(db);
 });
 afterEach(() => {
+  closeCommunityDatabases();
   vi.unstubAllEnvs();
   vi.restoreAllMocks();
   rmSync(directory, { recursive: true, force: true });
@@ -234,8 +236,12 @@ describe("independent Resend transport security", () => {
       "preview",
     );
     const filename = join(preview, readdirSync(preview)[0]);
-    expect(statSync(filename).mode & 0o777).toBe(0o600);
-    expect(statSync(preview).mode & 0o777).toBe(0o700);
+    // Windows exposes ACLs rather than POSIX permission bits.
+    if (process.platform !== "win32")
+      expect(statSync(filename).mode & 0o777).toBe(0o600);
+    // Windows exposes ACLs rather than POSIX permission bits.
+    if (process.platform !== "win32")
+      expect(statSync(preview).mode & 0o777).toBe(0o700);
     expect(JSON.parse(readFileSync(filename, "utf8")).text).toBe(mail.text);
     vi.stubEnv("NODE_ENV", "production");
     expect(emailDeliveryMode()).toBe("disabled");
