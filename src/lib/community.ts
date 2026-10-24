@@ -508,6 +508,7 @@ export function createCommunityHandler(databasePath?: string) {
     if (process.env.REACH_COMMUNITY_ENABLED !== "true")
       return response(
         {
+          code: "community_disabled",
           error:
             "Community sharing is disabled. Food resources and trip planning remain available.",
         },

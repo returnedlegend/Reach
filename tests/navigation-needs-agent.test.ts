@@ -3,6 +3,9 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 let agent: typeof import("../src/lib/navigation-needs-agent");
 
 beforeEach(async () => {
+  // This suite opts into each provider explicitly; inherited cloud keys must
+  // not activate OpenRouter in the deterministic-only fixture below.
+  vi.stubEnv("REACH_AI_PROVIDER", "disabled");
   vi.resetModules();
   agent = await import("../src/lib/navigation-needs-agent");
 });
@@ -229,11 +232,15 @@ describe("navigation needs interpreter", () => {
   });
 
   it("does not infer a nearby-transit preference from a negated request", async () => {
+    vi.stubEnv("OPENROUTER_API_KEY", "unrelated-present-fixture-key");
+    const fetcher = vi.fn();
     const result = await agent.interpretNavigationNeeds(
       "I do not need a place near public transit.",
-      { fetch: vi.fn() as typeof fetch },
+      { fetch: fetcher as typeof fetch },
     );
     expect(result.status).toBe("available");
+    expect(fetcher).not.toHaveBeenCalled();
+    expect(result).toMatchObject({ assistance: "computed" });
     if (result.status === "available")
       expect(result.needs?.preferTransitNearby).toBe(false);
   });

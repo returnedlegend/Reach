@@ -70,6 +70,52 @@ test("hotspot entry remains clear when the community service is disabled", async
   ).toBeVisible();
 });
 
+test("structured community-disabled status does not depend on English error wording", async ({
+  page,
+}) => {
+  await page.route("**/api/community/**", (route) =>
+    route.fulfill({
+      status: 503,
+      json: {
+        code: "community_disabled",
+        error: "Community sharing is not available on this server.",
+      },
+    }),
+  );
+  await page.goto("/food-hotspots");
+  await expect(
+    page.getByRole("heading", { name: "Community sharing is not enabled" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Check again", exact: true }),
+  ).toBeVisible();
+});
+
+test("a transient community error is not reported as a disabled feature", async ({
+  page,
+}) => {
+  await page.route("**/api/community/**", (route) =>
+    route.fulfill({
+      status: 503,
+      json: {
+        code: "temporarily_unavailable",
+        error:
+          "Community updates are temporarily unavailable; posting is disabled until recovery.",
+      },
+    }),
+  );
+  await page.goto("/food-hotspots");
+  await expect(page.getByTestId("community-error")).toContainText(
+    "temporarily unavailable",
+  );
+  await expect(
+    page.getByRole("heading", { name: "Community sharing is not enabled" }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("button", { name: "Refresh community", exact: true }),
+  ).toBeVisible();
+});
+
 test("hotspot creation resumes after signup and requires organizer approval", async ({
   page,
 }) => {

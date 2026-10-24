@@ -9,18 +9,21 @@ Start here to run Reach, understand its data, rehearse a demonstration, or maint
 - [Final polish and alignment verification](FINAL-POLISH.md): implementation checklist, known launch limitations, test results, and before/after screenshots.
 - [Student guide](STUDENT-GUIDE.md): project learning and explanation material.
 
+- [Code review and regression findings](CODE-REVIEW.md): review scope, repaired defects, evidence and remaining external limits.
+
 ## Understand the application
 
-| Area | Main guide | Supporting material |
-| --- | --- | --- |
-| Architecture and trust boundaries | [How Reach works](ARCHITECTURE.md) | [Access planner](ACCESS-PLANNER.md), [AI navigation](AI-NAVIGATION.md) |
-| Pantry records and maintenance | [Pantry database](PANTRY-DATABASE.md) | [Data sources](DATA-SOURCES.md), [TX-10 data](TX10-DATA.md), [Data review](DATA-REVIEW.md) |
-| Maps, search, and routing | [OpenStreetMap providers](OPENSTREETMAP.md) | [Navigation providers](NAVIGATION-PROVIDERS.md), [GTFS](GTFS.md), [District boundary](TX10-BOUNDARY.md) |
-| Assistant and AI configuration | [Free OpenRouter setup](FREE-OPENROUTER.md) | [AI configuration](AI-CONFIGURATION.md), [AI assistance](AI-ASSISTANCE.md) |
-| Accounts and identity | [Authentication](AUTHENTICATION.md) | [Google sign-in](GOOGLE-SIGN-IN.md), [Account integration](ACCOUNT-INTEGRATION.md) |
-| Reviewed email and delivery | [Resend](RESEND.md) | [SMTP and AI setup](SMTP-AI-SETUP.md), [Access planner outreach](ACCESS-PLANNER.md) |
-| Community participation | [Community](COMMUNITY.md) | [Food-sharing safety](FOOD-SHARING-SAFETY.md), [Volunteer coordination](VOLUNTEER-COORDINATION.md) |
-| Visual design and accessibility | [DaisyUI design system](DAISY-DESIGN.md) | [DaisyUI verification](DAISY-VERIFICATION.md), [Alignment follow-up](FINAL-POLISH.md#follow-up-alignment-polish--october-23-2026) |
+| Area                              | Main guide                                                       | Supporting material                                                                                                               |
+| --------------------------------- | ---------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Architecture and trust boundaries | [How Reach works](ARCHITECTURE.md)                               | [Access planner](ACCESS-PLANNER.md), [AI navigation](AI-NAVIGATION.md)                                                            |
+| API routes and access boundaries  | [Route and access map](DEVELOPMENT.md#api-and-access-boundaries) | [Authentication](AUTHENTICATION.md), [Community](COMMUNITY.md)                                                                    |
+| Pantry records and maintenance    | [Pantry database](PANTRY-DATABASE.md)                            | [Data sources](DATA-SOURCES.md), [TX-10 data](TX10-DATA.md), [Data review](DATA-REVIEW.md)                                        |
+| Maps, search, and routing         | [OpenStreetMap providers](OPENSTREETMAP.md)                      | [Navigation providers](NAVIGATION-PROVIDERS.md), [GTFS](GTFS.md), [District boundary](TX10-BOUNDARY.md)                           |
+| Assistant and AI configuration    | [Free OpenRouter setup](FREE-OPENROUTER.md)                      | [AI configuration](AI-CONFIGURATION.md), [AI assistance](AI-ASSISTANCE.md)                                                        |
+| Accounts and identity             | [Authentication](AUTHENTICATION.md)                              | [Google sign-in](GOOGLE-SIGN-IN.md), [Account integration](ACCOUNT-INTEGRATION.md)                                                |
+| Reviewed email and delivery       | [Resend](RESEND.md)                                              | [SMTP and AI setup](SMTP-AI-SETUP.md), [Access planner outreach](ACCESS-PLANNER.md)                                               |
+| Community participation           | [Community](COMMUNITY.md)                                        | [Food-sharing safety](FOOD-SHARING-SAFETY.md), [Volunteer coordination](VOLUNTEER-COORDINATION.md)                                |
+| Visual design and accessibility   | [DaisyUI design system](DAISY-DESIGN.md)                         | [DaisyUI verification](DAISY-VERIFICATION.md), [Alignment follow-up](FINAL-POLISH.md#follow-up-alignment-polish--october-23-2026) |
 
 ## Interpret evidence correctly
 

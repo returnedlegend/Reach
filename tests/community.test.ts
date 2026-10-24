@@ -1,6 +1,6 @@
 import { closeCommunityDatabases } from "../src/lib/community";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { mkdtempSync, rmSync, statSync } from "node:fs";
+import { existsSync, mkdtempSync, rmSync, statSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import sharp from "sharp";
@@ -128,7 +128,10 @@ afterEach(() => {
 describe("development community authentication and request boundaries", () => {
   it("is off by default, with no database initialization", async () => {
     delete process.env.REACH_COMMUNITY_ENABLED;
-    expect((await call("discovery")).status).toBe(503);
+    const result = await call("discovery");
+    expect(result.status).toBe(503);
+    expect(await result.json()).toMatchObject({ code: "community_disabled" });
+    expect(existsSync(database)).toBe(false);
   });
   it("requires adult affirmation, strong passwords and strict schemas without role escalation", async () => {
     for (const data of [

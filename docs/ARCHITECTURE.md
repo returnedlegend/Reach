@@ -4,17 +4,19 @@ Reach combines anonymous pantry discovery, maps, deterministic trip feasibility,
 
 ## Current application layers
 
-| Layer | Main code | Responsibility |
-| --- | --- | --- |
-| Public presentation | `src/app/page.tsx`, `src/components/guided-reach.tsx` | Load the active public directory; collect an optional starting point; present resources, map, details, saved items and guided steps |
-| Maintained directory | `src/lib/public-directory.ts`, `src/lib/pantry-store.ts` | Read active SQLite pantry records with schedules, provenance and uncertainty; report failures rather than silently reverting to stale seeds |
-| Access planning | `src/lib/access-service.ts`, `access-engine.ts`, `access-routing.ts` | Retrieve supported itineraries, apply travel/timing/eligibility constraints and produce explainable results |
-| Maps and provider boundaries | `journey-map.tsx`, `osm-map-canvas.tsx`, `src/lib/osm-services.ts` | Render MapLibre, validate provider data and support explicit location/routing requests with honest unavailable states |
-| Optional AI | `src/lib/openrouter-client.ts`, `reach-assistant.ts`, navigation modules | Interpret bounded preferences and explain computed evidence without creating resource facts, routes, inventory or eligibility |
-| Identity and authorization | `src/lib/community.ts`, `account.ts`, `account-store.ts` | Private SQLite identities and sessions; account verification and role/ownership checks |
-| Reviewed communication | `src/lib/outreach.ts`, `outreach-worker.ts`, mail modules | Draft, authorize and dispatch eligible inquiries; preserve idempotency and distinguish preview, submission and delivery states |
+| Layer                        | Main code                                                                | Responsibility                                                                                                                              |
+| ---------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Public presentation          | `src/app/page.tsx`, `src/components/guided-reach.tsx`                    | Load the active public directory; collect an optional starting point; present resources, map, details, saved items and guided steps         |
+| Maintained directory         | `src/lib/public-directory.ts`, `src/lib/pantry-store.ts`                 | Read active SQLite pantry records with schedules, provenance and uncertainty; report failures rather than silently reverting to stale seeds |
+| Access planning              | `src/lib/access-service.ts`, `access-engine.ts`, `access-routing.ts`     | Retrieve supported itineraries, apply travel/timing/eligibility constraints and produce explainable results                                 |
+| Maps and provider boundaries | `journey-map.tsx`, `osm-map-canvas.tsx`, `src/lib/osm-services.ts`       | Render MapLibre, validate provider data and support explicit location/routing requests with honest unavailable states                       |
+| Optional AI                  | `src/lib/openrouter-client.ts`, `reach-assistant.ts`, navigation modules | Interpret bounded preferences and explain computed evidence without creating resource facts, routes, inventory or eligibility               |
+| Identity and authorization   | `src/lib/community.ts`, `account.ts`, `account-store.ts`                 | Private SQLite identities and sessions; account verification and role/ownership checks                                                      |
+| Reviewed communication       | `src/lib/outreach.ts`, `outreach-worker.ts`, mail modules                | Draft, authorize and dispatch eligible inquiries; preserve idempotency and distinguish preview, submission and delivery states              |
 
 The home directory currently contains 24 maintained food sites; dataset scope and individual verification status are described in [TX-10 data](TX10-DATA.md). The original bounded timetable planner remains at `/pantry-planner` and `POST /api/plan`. The sections below describe that retained engine; its supplied walking links must not be confused with separately configured street-routing providers used by the newer access planner.
+
+HTTP route files under `src/app/api` are thin entry points into handlers in `src/lib`. The route/method overview and the main public, same-origin, session and feature-flag boundaries are listed in [development and maintenance](DEVELOPMENT.md#api-and-access-boundaries). For a mutation or a failing route, follow the route into its handler before changing behavior: origin validation, actor lookup, role checks and community gating are enforced at different layers. `src/lib/access-http.ts` centralizes bounded private JSON reads and no-store responses for access-related handlers; the account, pantry, notification and crowd handlers also enforce their own request boundaries.
 
 ## Trust boundaries
 

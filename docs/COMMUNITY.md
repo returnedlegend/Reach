@@ -44,10 +44,10 @@ Optional photos are stored as SQLite bytes under opaque record IDs, never upload
 
 ## API
 
-All paths below start with `/api/community`. Errors use `{error:string}`. The feature returns 503 when `REACH_COMMUNITY_ENABLED` is not exactly `true`; unsupported methods return 405 when enabled. Read endpoints use no-store. Normal JSON bodies are limited to 8 KB; photo JSON bodies to 3 MB.
+All paths below start with `/api/community`. Errors include a human-readable `{error:string}`. When Community is switched off, HTTP 503 also includes `code: "community_disabled"` before database initialization. Clients should use that stable code for the disabled screen instead of matching the error wording; other structured 503 errors remain service failures. Legacy no-code disabled responses remain supported. The feature returns 503 when `REACH_COMMUNITY_ENABLED` is not exactly `true`; unsupported methods return 405 when enabled. Read endpoints use no-store. Normal JSON bodies are limited to 8 KB; photo JSON bodies to 3 MB.
 
 | Method | Path                                                      | Body / result                                                                |
-| ------ | --------------------------------------------------------- | ---------------------------------------------------------------------------- | ------- | ------------------------ |
+| ------ | --------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | GET    | `/discovery`                                              | `{mode:'development',pickupAreas,hotspots,offers}`; public redacted listings |
 | GET    | `/me`                                                     | `{user,organizerRequested}`                                                  |
 | POST   | `/auth/signup`                                            | `{username,password,adultConfirmed:true}` → `{user}` + session cookie        |
@@ -63,7 +63,7 @@ All paths below start with `/api/community`. Errors use `{error:string}`. The fe
 | POST   | `/offers/:id/request`                                     | `{pickupConsent:true}` → `{id,status}`                                       |
 | POST   | `/requests/:id/accept`, `/decline`, `/cancel`, `/collect` | `{}`; role/ownership/status checked                                          |
 | GET    | `/requests/:id/pickup`                                    | `{instructions,area}`; private consent checks                                |
-| POST   | `/reports`                                                | `{targetType: hotspot / offer / user, targetId, reason}` |
+| POST   | `/reports`                                                | `{targetType: hotspot / offer / user, targetId, reason}`                     |
 | POST   | `/blocks`                                                 | `{userId}`                                                                   |
 | GET    | `/moderation`                                             | Pending listings/organizers, reports, audit; moderator only                  |
 | POST   | `/moderation/:kind/:id/approve` or `/reject`              | `{reason?}`; kind hotspots/offers/organizers                                 |

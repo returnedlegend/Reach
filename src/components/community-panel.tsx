@@ -41,9 +41,20 @@ class CommunityError extends Error {
   constructor(
     message: string,
     public status: number,
+    public code?: string,
   ) {
     super(message);
   }
+}
+function isCommunityDisabled(error: unknown): boolean {
+  return (
+    error instanceof CommunityError &&
+    error.status === 503 &&
+    (error.code === "community_disabled" ||
+      // Support older servers that predate the structured error contract.
+      (error.code === undefined &&
+        error.message.toLowerCase().includes("disabled")))
+  );
 }
 async function api<T>(
   path: string,
@@ -79,6 +90,12 @@ async function api<T>(
         ? result.error
         : "The community service could not complete this request.",
       response.status,
+      typeof result === "object" &&
+      result &&
+      "code" in result &&
+      typeof result.code === "string"
+        ? result.code
+        : undefined,
     );
   if (!result || typeof result !== "object")
     throw new CommunityError(
@@ -352,12 +369,7 @@ export function CommunityPanel({
         await refresh();
       } catch (failure) {
         if (active) {
-          if (
-            failure instanceof CommunityError &&
-            failure.status === 503 &&
-            failure.message.toLowerCase().includes("disabled")
-          )
-            setDisabled(true);
+          if (isCommunityDisabled(failure)) setDisabled(true);
           else setError(explain(failure));
         }
       } finally {
@@ -398,11 +410,7 @@ export function CommunityPanel({
         }
       } catch (failure) {
         if (active) {
-          if (
-            failure instanceof CommunityError &&
-            failure.status === 503 &&
-            failure.message.toLowerCase().includes("disabled")
-          ) {
+          if (isCommunityDisabled(failure)) {
             setDisabled(true);
             setDiscovery(null);
           } else

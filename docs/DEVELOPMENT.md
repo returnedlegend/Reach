@@ -30,15 +30,15 @@ Choose one local origin and use it consistently. `localhost` and `127.0.0.1` are
 
 ## Understand optional integrations
 
-| Capability | Without its provider | Configuration reference |
-| --- | --- | --- |
-| Map display | External tile failure has a visible fallback; resource information remains available | [OpenStreetMap](OPENSTREETMAP.md) |
-| Address search | Local directory matches and manual coordinates remain usable | [OpenStreetMap](OPENSTREETMAP.md) |
-| Walking and driving routes | Missing routes remain unavailable; external directions handoffs are separate | [Navigation providers](NAVIGATION-PROVIDERS.md) |
-| Scheduled transit | Uses only the supplied timetable's coverage and validity, not live vehicles | [GTFS](GTFS.md) |
-| AI interpretation | Manual preferences and deterministic facts remain available | [Free OpenRouter](FREE-OPENROUTER.md) |
-| Email | Disabled or explicitly private preview; preview is not delivery | [Resend](RESEND.md), [SMTP and AI](SMTP-AI-SETUP.md) |
-| Google identity | Reach's supported password workflow remains separate | [Google sign-in](GOOGLE-SIGN-IN.md) |
+| Capability                 | Without its provider                                                                 | Configuration reference                              |
+| -------------------------- | ------------------------------------------------------------------------------------ | ---------------------------------------------------- |
+| Map display                | External tile failure has a visible fallback; resource information remains available | [OpenStreetMap](OPENSTREETMAP.md)                    |
+| Address search             | Local directory matches and manual coordinates remain usable                         | [OpenStreetMap](OPENSTREETMAP.md)                    |
+| Walking and driving routes | Missing routes remain unavailable; external directions handoffs are separate         | [Navigation providers](NAVIGATION-PROVIDERS.md)      |
+| Scheduled transit          | Uses only the supplied timetable's coverage and validity, not live vehicles          | [GTFS](GTFS.md)                                      |
+| AI interpretation          | Manual preferences and deterministic facts remain available                          | [Free OpenRouter](FREE-OPENROUTER.md)                |
+| Email                      | Disabled or explicitly private preview; preview is not delivery                      | [Resend](RESEND.md), [SMTP and AI](SMTP-AI-SETUP.md) |
+| Google identity            | Reach's supported password workflow remains separate                                 | [Google sign-in](GOOGLE-SIGN-IN.md)                  |
 
 `GET /api/ai/status` reports configuration without invoking a model. It is not a provider health or billing guarantee. Follow the provider guides before enabling external calls. Do not expose server keys through `NEXT_PUBLIC_` variables or browser code.
 
@@ -85,6 +85,43 @@ The configured projects cover desktop, tablet, mobile, and Android-sized viewpor
 
 `PLAYWRIGHT_CHROMIUM_PATH` optionally selects an existing compatible Chromium binary. Otherwise use `npx playwright install chromium`. A bare production server over local HTTP cannot substitute for the HTTPS canonical-origin setup required by access/account/assistant endpoints. Keep authenticated-preview, live-service and community fixture requirements explicit; do not silently treat a skipped case as passed.
 
+### Isolated tests and community opt-in
+
+`npm test -- tests/<name>.test.ts` runs a focused Vitest file. Unit fixtures use their own temporary databases and clear the canonical-origin variables in Vitest's config. Keep test database paths under the test's temporary directory; do not point tests or admin scripts at a live database. Browser specs are `*.spec.ts`; `playwright.config.ts` runs Chromium projects for mobile, Android-sized, tablet and desktop viewports with two workers. Set `REACH_TEST_URL` to target an already running server; Playwright then does not start one. Without that setting, Playwright starts `npm run dev:community -- --port 3000` and may reuse an existing localhost server. Community browser workflows need that opt-in: a reused server must itself have been started with `npm run dev:community` or `REACH_COMMUNITY_ENABLED=true`, or the community API remains disabled. `dev:community` enables the feature only in its child process; it does not alter `.env.local`.
+
+Community sharing is disabled by default. `npm run dev` respects `REACH_COMMUNITY_ENABLED` from the process environment or Next's loaded environment files, while `npm run dev:community` forces it on for that server process. Use a disposable private database for local community exercises, and stop the opt-in server when finished. This switch does not establish moderation, safety, or public-launch readiness. See [community](COMMUNITY.md) and [food-sharing safety](FOOD-SHARING-SAFETY.md) for the feature's boundaries.
+
+### Configuration precedence
+
+Start from `.env.example` and consult the integration guide before setting an optional provider. Next loads environment variables for the application process; shell-provided values take precedence over the corresponding `.env*` value. Worker and admin commands run as separate Node processes, so load their environment explicitly when needed. Do not assume edits to a loaded environment file change an already-running process; restart it after configuration changes.
+
+Some application settings have their own code-level selection rules:
+
+- Account origin uses `REACH_APP_ORIGIN` when nonempty, then `REACH_COMMUNITY_ORIGIN`. A malformed first value does not fall through to the second. Production requires HTTPS; local development may infer only a loopback origin.
+- Community is enabled only when `REACH_COMMUNITY_ENABLED` is exactly `true`; the `dev:community` command sets that value for its child process.
+- Email uses `REACH_EMAIL_PROVIDER` when set. `preview` is available only outside production, `smtp` requires valid SMTP configuration, and `resend` (also the default when unset) requires a valid Resend key and sender. An invalid or unknown selection disables delivery. Preview writes private local files and never sends mail. See [Resend](RESEND.md) and [SMTP and AI setup](SMTP-AI-SETUP.md).
+- OpenRouter model selection checks the task-specific `OPENROUTER_<FAST|PRIMARY>_MODEL`, then `OPENROUTER_MODEL`, then `REACH_AI_<FAST|PRIMARY>_MODEL`, then `REACH_AI_MODEL`, then `openrouter/free`. Provider, key, free-only and data-policy checks still apply; a status response indicates configuration only. See [AI configuration](AI-CONFIGURATION.md) and [Free OpenRouter setup](FREE-OPENROUTER.md).
+
+### API and access boundaries
+
+Use this map to find the handler family. Dynamic account, pantry, community and outreach handlers validate the requested subpath internally; their accepted operations and roles are documented in their focused guides.
+
+| Route                                                                      | Methods                                                                                                                                                               | Boundary                                                                                                                                                                                                                                                                                            |
+| -------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `/api/coverage`, `/api/ai/status`                                          | `GET`                                                                                                                                                                 | Public district asset and sanitized AI configuration status; neither requires an account.                                                                                                                                                                                                           |
+| `/api/plan`                                                                | `POST`                                                                                                                                                                | Bounded planner input; demo results are fictional, while real requests require an available reviewed directory and supported landmark. No account is required.                                                                                                                                      |
+| `/api/geocode`, `/api/reverse-geocode`, `/api/journey`                     | `POST`                                                                                                                                                                | Validated OpenStreetMap service requests; no account, external service availability is not guaranteed.                                                                                                                                                                                              |
+| `/api/access/plan`                                                         | `POST`                                                                                                                                                                | Always requires a same-origin request; private response and server-side session/authorization checks apply where private data is requested. Production account origin must be canonical HTTPS, including for anonymous requests.                                                                    |
+| `/api/access/assist`                                                       | `POST`                                                                                                                                                                | Always requires a same-origin request; provider configuration and data-policy checks apply. Production account origin must be canonical HTTPS, including for anonymous requests.                                                                                                                    |
+| `/api/assistant`                                                           | `POST`                                                                                                                                                                | Assistant handler with bounded, validated input and provider/privacy limits. See [AI assistance](AI-ASSISTANCE.md); same-origin and canonical-origin requirements also apply.                                                                                                                       |
+| `/api/account/[...path]`, `/api/auth/google/[action]`                      | `GET`, `POST`, account also `PATCH`, `DELETE`                                                                                                                         | Account/session and Google identity workflows; mutations enforce same-origin and account authorization.                                                                                                                                                                                             |
+| `/api/pantries/[[...path]]`, `/api/notifications/[[...path]]`              | Pantry: `GET`, `POST`, `PATCH`, `PUT`, `DELETE`; notifications: `GET`, `PUT`, `POST`                                                                                  | Pantry read access and management mutations depend on the selected subpath; management changes require role checks and same-origin protection. Notification changes require an authenticated account and same-origin request.                                                                       |
+| `/api/community/[...path]`, `/api/volunteer/[[...path]]`                   | Community route exports: `GET`, `POST`, `PATCH`, `PUT`, `DELETE`, `HEAD`, `OPTIONS`; accepted community operations: `GET`, `POST`, `PATCH`. Volunteer: `GET`, `POST`. | Both are feature-gated by community opt-in. Signup and login do not require an existing session; other community writes require an account and applicable authorization. Volunteer mutations are similarly authorized. The community handler returns `405` for exported methods it does not handle. |
+| `/api/crowd/[pantryId]`                                                    | `GET`, `POST`                                                                                                                                                         | Public crowd summary; report submission is same-origin, bounded and rate-limited.                                                                                                                                                                                                                   |
+| `/api/outreach/[[...path]]`, `/api/outreach/inbound`, `/api/email/webhook` | All: `GET` or `POST` (inbound and webhook: `POST` only)                                                                                                               | Reviewed outreach workflow with account/consent checks; inbound and provider webhook routes validate their own provider authentication.                                                                                                                                                             |
+
+Private handlers return no-store responses and sanitize failures. When debugging a `400`, check the documented request shape and body size; for `403`, check the exact browser origin and session/role; for `503`, check configuration, database availability and provider readiness without exposing credentials. Read the corresponding guide before changing an authorization boundary.
+
 `npm run test:e2e` runs all browser suites. Some historical or service-specific suites require isolated accounts, preview mail, a test database, or their documented configuration. Do not run real email or consent-changing workflows against production accounts simply to make the suite green.
 
 ## Maintain the visual system
@@ -104,17 +141,17 @@ Before handing off a visual change, inspect desktop, tablet, and small-phone scr
 
 ## Troubleshoot common local problems
 
-| Symptom | What to check |
-| --- | --- |
-| Port already in use | Reuse your known running server or start a different port; update the test URL and canonical local origin together |
-| Account origin is not configured | Confirm the exact configured origin and production HTTPS requirement; do not weaken the guard |
-| Browser executable missing | Install Playwright Chromium or set an explicit supported binary path |
-| GTFS reproduction cannot start Python | Verify Python installation and `REACH_PYTHON`; the npm import script itself uses `python3` |
-| AI unavailable despite a configured status | Check provider credentials, privacy acknowledgement, model compatibility and quota; configuration is not a successful completion |
-| An email says preview only | That is an intentional non-delivery state; configure and verify the real provider separately |
-| Temporary SQLite files cannot be removed on Windows | Close the database connections first; do not suppress authorization assertions to hide cleanup failures |
-| Changes appear missing in a screenshot | Confirm the target port/build, theme, viewport, cached tab and completion of any HMR reload |
-| Git push returns 403 | The Git credential account needs repository write access; commit author identity is not authentication |
+| Symptom                                             | What to check                                                                                                                    |
+| --------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Port already in use                                 | Reuse your known running server or start a different port; update the test URL and canonical local origin together               |
+| Account origin is not configured                    | Confirm the exact configured origin and production HTTPS requirement; do not weaken the guard                                    |
+| Browser executable missing                          | Install Playwright Chromium or set an explicit supported binary path                                                             |
+| GTFS reproduction cannot start Python               | Verify Python installation and `REACH_PYTHON`; the npm import script itself uses `python3`                                       |
+| AI unavailable despite a configured status          | Check provider credentials, privacy acknowledgement, model compatibility and quota; configuration is not a successful completion |
+| An email says preview only                          | That is an intentional non-delivery state; configure and verify the real provider separately                                     |
+| Temporary SQLite files cannot be removed on Windows | Close the database connections first; do not suppress authorization assertions to hide cleanup failures                          |
+| Changes appear missing in a screenshot              | Confirm the target port/build, theme, viewport, cached tab and completion of any HMR reload                                      |
+| Git push returns 403                                | The Git credential account needs repository write access; commit author identity is not authentication                           |
 
 For storage permissions, coherent WAL backups, migration and restore, use [pantry database operations](PANTRY-DATABASE.md). Windows NTFS privacy needs appropriate operator ACLs; passing POSIX-mode tests on another platform is not an ACL audit.
 
