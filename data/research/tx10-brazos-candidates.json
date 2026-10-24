@@ -45,7 +45,8 @@
     "hours": "3rd Saturday 9am–12pm",
     "offering": "BVFB lists drive-through food distribution.",
     "eligibility": "Serves Grimes County; twice-monthly visit limit. Other eligibility rules unknown.",
-    "accessibility": "Drive-through; Spanish translators available. Accessible parking/loading details unknown.",
+    "languages": ["Spanish"],
+    "accessibility": "BVFB lists drive-through distribution. It does not document walk-up pickup, an entrance, or step-free access; confirm whether a pedestrian can receive food.",
     "notes": "Directory lists address as 3202 Main St.; linked Maps destination resolves to 3203 Main St. Flag one-digit address discrepancy for confirmation.",
     "city": "Bedias",
     "postalCode": "77831",
@@ -53,7 +54,7 @@
       {
         "title": "Brazos Valley Food Bank — Find Food (Grimes County listing)",
         "url": "https://www.bvfb.org/find-food",
-        "checkedOn": "2026-10-21"
+        "checkedOn": "2026-10-24"
       },
       {
         "title": "BVFB-linked Google Maps destination",
@@ -181,19 +182,24 @@
     "hours": "2nd Thursday 10–11:30am; listed 2026 dates include Nov 12 and Dec 10",
     "offering": "BVFB lists drive-through mobile food distribution.",
     "eligibility": "Serves Grimes and Washington Counties; monthly visit limit. Other eligibility rules unknown.",
-    "accessibility": "Drive-through; accessible parking/loading details unknown.",
+    "accessibility": "BVFB lists drive-through distribution at the fairgrounds. It does not identify an event gate or document walk-up pickup; confirm the pedestrian entrance and whether staff can serve people arriving on foot.",
     "notes": "Fairgrounds is the distribution venue, not BVFB's warehouse. Hours/dates may change; confirm current flyer before travel.",
     "city": "Navasota",
     "sources": [
       {
         "title": "Brazos Valley Food Bank — Find Food (Grimes County listing and linked distribution schedule)",
         "url": "https://www.bvfb.org/find-food",
-        "checkedOn": "2026-10-21"
+        "checkedOn": "2026-10-24"
       },
       {
         "title": "BVFB-linked Google Maps destination",
         "url": "https://www.google.com/maps/place/Grimes+County+Fairgrounds/@30.4154217,-96.0587796,17z/data=!4m13!1m7!3m6!1s0x8646eac639462b2b:0x2b2b58a16b8f40a0!2sFM+3455+Rd,+Texas+77868!3b1!8m2!3d30.4154217!4d-96.0565909!3m4!1m7!3m6!1s0x8646eacfb56a58fb:0x1a665617a11af08!8m2!3d30.4173493!4d-96.0618299",
         "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB — 2026 Grimes Mobile Pantry flyer",
+        "url": "https://www.bvfb.org/sites/bvfb/files/2026%20GMP%20Flyer.pdf",
+        "checkedOn": "2026-10-24"
       }
     ],
     "coordinateSource": {
@@ -214,7 +220,7 @@
     "hours": "4th Thursday 11am–12:30pm; listed 2026 dates include Oct 22, Nov 19, Dec 17",
     "offering": "BVFB lists drive-through mobile food distribution.",
     "eligibility": "Serves Madison County; monthly visit limit. Other eligibility rules unknown.",
-    "accessibility": "Drive-through; accessible parking/loading details unknown.",
+    "accessibility": "BVFB lists drive-through distribution at the fairgrounds. It does not identify an event gate or document walk-up pickup; confirm the pedestrian entrance and whether staff can serve people arriving on foot.",
     "notes": "Recurring mobile distribution at county fairgrounds; date list is BVFB-published schedule.",
     "city": "Madisonville",
     "postalCode": "77864",
@@ -222,12 +228,17 @@
       {
         "title": "Brazos Valley Food Bank — Find Food (Madison County listing and linked distribution schedule)",
         "url": "https://www.bvfb.org/find-food",
-        "checkedOn": "2026-10-21"
+        "checkedOn": "2026-10-24"
       },
       {
         "title": "BVFB-linked Google Maps destination",
         "url": "https://www.google.com/maps/place/Madison+County+Fairgrounds/@30.9713142,-95.905426,17z/data=!4m13!1m7!3m6!1s0x8646456136d18449:0x258f0e5feb2fc89f!2s402+Industrial+Park,+Madisonville,+TX+77864!3b1!8m2!3d30.9716535!4d-95.903532!3m4!1m7!3m6!1s0x864645619c967847:0x5011c0294c9a41b4!8m2!3d30.9727148!4d-95.9010858",
         "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB — 2026 Madison Mobile Pantry flyers",
+        "url": "https://www.bvfb.org/sites/bvfb/files/2026%20Madison%20Mobile%20Pantry%20Flyers.pdf",
+        "checkedOn": "2026-10-24"
       }
     ],
     "coordinateSource": {

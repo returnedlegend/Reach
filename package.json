@@ -20,7 +20,8 @@
     "mail:worker": "tsx scripts/mail-worker.ts",
     "outreach:worker": "tsx scripts/outreach-worker.ts",
     "outreach:admin": "tsx scripts/outreach-admin.ts",
-    "access:evaluate": "tsx scripts/evaluate-access.ts"
+    "access:evaluate": "tsx scripts/evaluate-access.ts",
+    "data:review": "tsx scripts/review-directory.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",
@@ -33,7 +34,8 @@
     "react-dom": "19.3.1",
     "resend": "6.34.1",
     "sharp": "0.35.5",
-    "zod": "^4.3.6"
+    "zod": "^4.3.6",
+    "tsx": "^4.21.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "4.11.1",
@@ -46,7 +48,6 @@
     "daisyui": "5.7.50",
     "prettier": "3.6.2",
     "tailwindcss": "4.3.3",
-    "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "vitest": "5.0.5"
   },

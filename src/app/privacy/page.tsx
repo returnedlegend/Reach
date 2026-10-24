@@ -1,7 +1,17 @@
+import { coreRelease } from "@/lib/release-features";
 export default function Privacy() {
   return (
     <main className="guided">
       <a href="/">Back to Reach</a>
+      {coreRelease() && (
+        <p>
+          The current public release offers anonymous discovery and saved
+          directions. Accounts, Google sign-in, AI, email outreach, community
+          sharing and volunteering are disabled. Sections about those services
+          below describe optional functionality, not services active in this
+          release.
+        </p>
+      )}
       <h1>Privacy and location</h1>
       <p>
         Finding resources does not require an account. Your starting location
@@ -134,6 +144,16 @@ export default function Privacy() {
         pickup. You can cancel pending inquiries and optional follow-ups, and
         enrolled donors can stop inquiries. Deleting your account removes its
         private inquiry history.
+      </p>
+      <h2>Anonymous directory corrections</h2>
+      <p>
+        Report only factual listing problems and supporting public sources. Do
+        not include contact details, private locations or sensitive personal
+        information. Reports are stored privately for up to 90 days, are
+        rate-limited without recording your IP address, and never automatically
+        change a listing. Review and a response are not guaranteed. Expired
+        reports are removed on report submission and during scheduled
+        maintenance.
       </p>
       <h2>Optional crowd observations</h2>
       <p>

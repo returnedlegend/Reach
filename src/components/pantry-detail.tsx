@@ -2,6 +2,13 @@
 
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
+import {
+  loadSavedItems,
+  storeSavedItems,
+  type SavedItems,
+} from "@/lib/saved-items";
+import { serviceFreshness } from "@/lib/service-freshness";
+import { CORE_FEATURES, type PublicFeatures } from "@/lib/public-feature-types";
 import dynamic from "next/dynamic";
 const OutreachPanel = dynamic(
   () => import("./outreach-panel").then((m) => m.OutreachPanel),
@@ -163,15 +170,19 @@ export function PantryDetail({
   initialOrigin = null,
   initialLocation,
   embedded = false,
+  features = CORE_FEATURES,
   onDirections,
   onLocationChange,
+  onDeviceSave,
 }: {
   id: string;
   initialOrigin?: { lat: number; lng: number } | null;
   initialLocation?: SelectedLocation | null;
   embedded?: boolean;
+  features?: PublicFeatures;
   onDirections?: (origin: SelectedLocation | null) => void;
   onLocationChange?: (origin: SelectedLocation | null) => void;
+  onDeviceSave?: (items: SavedItems) => void;
 }) {
   const router = useRouter();
   const [showInquiry, setShowInquiry] = useState(false);
@@ -222,6 +233,10 @@ export function PantryDetail({
     return () => controller.abort();
   }, [pantryId, reload]);
   useEffect(() => {
+    if (!features.accounts) {
+      setFavorite(loadSavedItems().resourceIds.includes(pantryId));
+      return;
+    }
     const controller = new AbortController();
     pantryRequest<{ user: PantryAccount | null }>("/api/account/me", {
       signal: controller.signal,
@@ -242,8 +257,25 @@ export function PantryDetail({
       })
       .catch(() => {});
     return () => controller.abort();
-  }, [pantryId]);
+  }, [pantryId, features.accounts]);
   async function toggleFavorite() {
+    if (!features.accounts) {
+      const saved = loadSavedItems();
+      saved.resourceIds = favorite
+        ? saved.resourceIds.filter((id) => id !== pantryId)
+        : [...new Set([...saved.resourceIds, pantryId])];
+      const persisted = storeSavedItems(saved);
+      if (persisted) onDeviceSave?.(saved);
+      setFavorite(!favorite);
+      setMessage(
+        persisted
+          ? favorite
+            ? "Removed from this device's saved places."
+            : "Saved on this device. No account needed."
+          : "Device storage is blocked. Use download or print to keep trip information.",
+      );
+      return;
+    }
     if (!user) {
       setMessage("Sign in to your account to save favorite pantries.");
       return;
@@ -275,12 +307,12 @@ export function PantryDetail({
     setCorrectionMessage("");
     try {
       await pantryRequest(
-        `/api/pantries/${encodeURIComponent(pantryId)}/corrections`,
+        `/api/pantries/${encodeURIComponent(pantryId)}/report`,
         { method: "POST", body: JSON.stringify({ description: correction }) },
       );
       setCorrection("");
       setCorrectionMessage(
-        "Thank you. Your correction has been sent for review.",
+        "Report recorded for review. The listing has not changed, and a response is not guaranteed. Contact the organization before travel.",
       );
     } catch (reason) {
       setCorrectionMessage(
@@ -374,10 +406,19 @@ export function PantryDetail({
               )}
             </div>
             <p className="pantry-muted">
+              {pantry.pedestrianPickup !== "allowed" && (
+                <strong>
+                  Pedestrian pickup{" "}
+                  {pantry.pedestrianPickup === "not-allowed"
+                    ? "is not allowed by the recorded policy"
+                    : "permission is unknown"}
+                  . Confirm before traveling on foot or by transit.{" "}
+                </strong>
+              )}
               Published hours can change. Contact the pantry to confirm your
               visit and food availability.
             </p>
-            {!user && (
+            {features.accounts && !user && (
               <p className="pantry-muted pantry-sign-in">
                 <Link href="/account">Sign in</Link> to keep favorites across
                 devices.
@@ -389,34 +430,44 @@ export function PantryDetail({
               {message}
             </p>
           )}
-          <section
-            className="card bg-base-100 pantry-section"
-            aria-labelledby="pantry-contact-assistant"
-          >
-            <h2 id="pantry-contact-assistant">Questions before you travel?</h2>
-            <p>
-              Check routes with the assistant or review an inquiry to an
-              enrolled pantry contact. Food availability is not guaranteed.
-              Email requires sign-in and your approval.
-            </p>
-            <div className="pantry-actions">
-              <Link
-                className="btn btn-outline"
-                href={`/?assistant=1&pantry=${encodeURIComponent(pantryId)}`}
-              >
-                Reach AI assistant
-              </Link>
-              <button
-                className="btn btn-primary"
-                type="button"
-                aria-expanded={showInquiry}
-                onClick={() => setShowInquiry((v) => !v)}
-              >
-                Ask about availability
-              </button>
-            </div>
-            {showInquiry && <OutreachPanel pantryId={pantryId} />}
-          </section>
+          {(features.ai || features.email) && (
+            <section
+              className="card bg-base-100 pantry-section"
+              aria-labelledby="pantry-contact-assistant"
+            >
+              <h2 id="pantry-contact-assistant">
+                Questions before you travel?
+              </h2>
+              <p>
+                Check routes with the assistant or review an inquiry to an
+                enrolled pantry contact. Food availability is not guaranteed.
+                Email requires sign-in and your approval.
+              </p>
+              <div className="pantry-actions">
+                {features.ai && (
+                  <Link
+                    className="btn btn-outline"
+                    href={`/?assistant=1&pantry=${encodeURIComponent(pantryId)}`}
+                  >
+                    Reach AI assistant
+                  </Link>
+                )}
+                {features.email && (
+                  <button
+                    className="btn btn-primary"
+                    type="button"
+                    aria-expanded={showInquiry}
+                    onClick={() => setShowInquiry((v) => !v)}
+                  >
+                    Ask about availability
+                  </button>
+                )}
+              </div>
+              {features.email && showInquiry && (
+                <OutreachPanel pantryId={pantryId} />
+              )}
+            </section>
+          )}
           <div className="pantry-detail-grid">
             <section className="card bg-base-100 pantry-section">
               <p className="pantry-eyebrow">Before you go</p>
@@ -673,7 +724,8 @@ export function PantryDetail({
               )}
             </div>
             <p className="pantry-muted">
-              Last verified: {dateLabel(pantry.lastVerified)}.
+              Source check recorded: {dateLabel(pantry.lastVerified)}.
+              {now && <> {serviceFreshness(pantry, now).label}</>}
             </p>
             <details>
               <summary>Sources, freshness &amp; visit notes</summary>
@@ -714,37 +766,32 @@ export function PantryDetail({
               <summary>Report incorrect information</summary>
               <p>
                 Tell us what needs updating and include a source or provider
-                confirmation when possible. A reviewer checks suggested changes
-                before publication.
+                confirmation when possible. Do not include personal contact
+                details, private locations or other sensitive information.
+                Reports are private, retained for up to 90 days, and never
+                automatically change a listing. Review is not guaranteed.
               </p>
-              {user?.emailVerified ? (
-                <form className="pantry-form" onSubmit={submitCorrection}>
-                  <label>
-                    Suggested correction
-                    <textarea
-                      required
-                      minLength={10}
-                      maxLength={2000}
-                      rows={4}
-                      value={correction}
-                      onChange={(event) => setCorrection(event.target.value)}
-                      className="textarea textarea-bordered"
-                    />
-                  </label>
-                  <button
-                    type="submit"
-                    disabled={saving}
-                    className="btn btn-primary"
-                  >
-                    {saving ? "Sending…" : "Send correction for review"}
-                  </button>
-                </form>
-              ) : (
-                <p>
-                  <Link href="/account">Sign in and verify your email</Link> to
-                  submit a correction.
-                </p>
-              )}
+              <form className="pantry-form" onSubmit={submitCorrection}>
+                <label>
+                  Suggested correction
+                  <textarea
+                    required
+                    minLength={10}
+                    maxLength={2000}
+                    rows={4}
+                    value={correction}
+                    onChange={(event) => setCorrection(event.target.value)}
+                    className="textarea textarea-bordered"
+                  />
+                </label>
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="btn btn-primary"
+                >
+                  {saving ? "Sending…" : "Send correction for review"}
+                </button>
+              </form>
               {correctionMessage && (
                 <p role="status" className="pantry-notice">
                   {correctionMessage}

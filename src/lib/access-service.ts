@@ -13,7 +13,11 @@ import {
   ACCESS_WEIGHTS,
   type AccessCandidate,
 } from "./access-engine";
-import { accessJourneyLookup, shortlistMiles } from "./access-routing";
+import { accessJourneyLookup } from "./access-routing";
+import {
+  prioritizePantryCandidates,
+  recommendPantry,
+} from "./pantry-recommendation";
 import {
   getPantryInventory,
   listPantryResources,
@@ -145,7 +149,11 @@ function takeSearchBudget() {
 }
 export function createAccessHandler(
   databasePath?: string,
-  handlerOptions: { pantriesOnly?: boolean } = {},
+  handlerOptions: {
+    pantriesOnly?: boolean;
+    routeFactory?: typeof accessJourneyLookup;
+    now?: () => Date;
+  } = {},
 ) {
   return async (request: Request) => {
     try {
@@ -163,34 +171,17 @@ export function createAccessHandler(
           .strict(),
       );
       const db = openPantryDatabase(databasePath),
-        now = new Date(),
+        now = handlerOptions.now?.() ?? new Date(),
         actor = getAccountActor(db, request, now);
       const resources = listPantryResources(db),
         pantries = listPlannerPantries(db);
-      const ranked = [...resources].sort(
-        (a, b) =>
-          (a.coordinates
-            ? shortlistMiles(input.origin, a.coordinates)
-            : Infinity) -
-          (b.coordinates
-            ? shortlistMiles(input.origin, b.coordinates)
-            : Infinity),
-      );
-      const number = Math.max(
-        1,
-        Math.min(5, Number(process.env.REACH_ACCESS_CANDIDATES) || 3),
-      );
-      const toRoute = new Set(
-        destinationId
-          ? [destinationId]
-          : ranked
-              .filter(
-                (r) =>
-                  r.verificationStatus === "confirmed-site" && r.coordinates,
-              )
-              .slice(0, number)
-              .map((r) => r.id),
-      );
+      const configuredLimit = process.env.REACH_ACCESS_CANDIDATES ?? "8";
+      if (!/^[1-9]\d*$/.test(configuredLimit) || Number(configuredLimit) > 24)
+        throw new AccountError(
+          503,
+          "Planner candidate limit must be an integer from 1 to 24.",
+        );
+      const number = Number(configuredLimit);
       const candidates: AccessCandidate[] = resources.flatMap((resource) => {
         const pantry = pantries.find((p) => p.id === resource.id);
         if (!pantry) return [];
@@ -339,33 +330,16 @@ export function createAccessHandler(
           404,
           "This destination is not available to this account.",
         );
-      if (destinationId) toRoute.add(destinationId);
-      // Route selected candidates first so the per-request budget cannot be consumed by unchecked sites.
-      candidates.sort(
-        (a, b) =>
-          Number(toRoute.has(b.resource.id)) -
-          Number(toRoute.has(a.resource.id)),
+      const route = (handlerOptions.routeFactory ?? accessJourneyLookup)(
+        input,
+        { signal: request.signal },
       );
-      const route = accessJourneyLookup(input, { signal: request.signal });
       const clockChange =
         hasChicagoClockChange(input.date) ||
         ([input.returnDeadline, input.arrivalDeadline].some(
           (deadline) => deadline && deadline >= "24:00",
         ) &&
           hasChicagoClockChange(shiftDate(input.date, 1)));
-      const destinationKey = (
-        to: typeof input.origin,
-        from: typeof input.origin,
-      ) =>
-        candidates.some(
-          (c) =>
-            toRoute.has(c.resource.id) &&
-            c.resource.coordinates &&
-            ((to.lat === c.resource.coordinates.lat &&
-              to.lng === c.resource.coordinates.lng) ||
-              (from.lat === c.resource.coordinates.lat &&
-                from.lng === c.resource.coordinates.lng)),
-        );
       let weights = { ...ACCESS_WEIGHTS };
       if (process.env.REACH_ACCESS_WEIGHTS) {
         try {
@@ -397,17 +371,38 @@ export function createAccessHandler(
         declaredNeeds,
         now,
       );
+      const byId = new Map(
+        resourceReview.candidates.map((c) => [c.resource.id, c]),
+      );
+      const attempted = new Set<string>();
+      let siteLimitReached = false;
       if (declaredNeeds.preferTransitNearby && input.mode !== "transit")
         resourceReview.limitations.push(
           "Your current travel mode does not check bus access. Select public transit to compare routed walking connections to supported stops.",
         );
       const result = await evaluateAccess(
         input,
-        resourceReview.candidates,
-        (from, to, early, late) =>
-          !clockChange && destinationKey(to, from)
-            ? route.lookup(from, to, early, late)
-            : Promise.resolve([]),
+        prioritizePantryCandidates(resourceReview.candidates, input),
+        (from, to, early, late, candidateId) => {
+          const candidate = candidateId ? byId.get(candidateId) : undefined;
+          if (
+            clockChange ||
+            !candidate ||
+            !validCoordinates(candidate.resource.coordinates) ||
+            (destinationId
+              ? candidateId !== destinationId
+              : candidate.resource.verificationStatus !== "confirmed-site")
+          )
+            return Promise.resolve([]);
+          if (!attempted.has(candidateId!)) {
+            if (attempted.size >= number || route.exhausted()) {
+              siteLimitReached = true;
+              return Promise.resolve([]);
+            }
+            attempted.add(candidateId!);
+          }
+          return route.lookup(from, to, early, late);
+        },
         now,
         needs ? navigationWeights(declaredNeeds, input.mode, weights) : weights,
       );
@@ -429,8 +424,13 @@ export function createAccessHandler(
         );
       }
       result.routingCalls = route.calls();
+      result.recommendation = recommendPantry(result, input, {
+        siteLimit: number,
+        routeLimitReached: siteLimitReached || route.exhausted(),
+        destinationId,
+      });
       result.message +=
-        " Routes are checked for up to five selected nearby confirmed sites; unexamined sites stay unconfirmed. " +
+        ` Compared ${result.recommendation.comparison.routedPantries} routed verified pantry sites; ${result.recommendation.comparison.staticallyExcludedPantries} were ruled out by known constraints before routing. ${result.recommendation.comparison.complete ? "The verified-site comparison is complete for this catalog and these inputs." : "The comparison is incomplete; another site could be better."} ` +
         (clockChange
           ? "Clock-change journeys cannot be timed unambiguously by this static planner. Confirm with the provider."
           : route.messages().join(" "));

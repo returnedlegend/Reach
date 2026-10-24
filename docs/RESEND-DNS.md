@@ -1,5 +1,7 @@
 # Reach Resend domain authentication — current audit
 
+> Current status update: the [October 24, 2026 read-only provider check](evidence/runtime-readiness.json) authenticated to Resend but returned **failed** for `reachemail.com` and all returned authentication records. The dated observations below remain historical evidence. No sending-domain success or live email delivery is established.
+
 Checked October 24, 2026 (America/Chicago). **Sending is not verified. No DNS records were published and no email was sent.**
 
 ## Completed work and current status

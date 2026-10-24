@@ -629,6 +629,16 @@ async function computeJourney(input: JourneyRequest): Promise<JourneyResult> {
     );
   const mode = process.env.OSM_ROUTER_MODE ?? "disabled";
   const demo = mode === "valhalla-demo";
+  if (
+    demo &&
+    process.env.NODE_ENV === "production" &&
+    (process.env.REACH_ENVIRONMENT !== "preview" ||
+      process.env.REACH_ROUTER_DEMO_ACKNOWLEDGED !== "true")
+  )
+    return unavailable(
+      "Demonstration routing is not enabled for this release. Open external directions or use an operator-configured routing service.",
+      "configuration",
+    );
   let base: URL;
   try {
     if (mode !== "valhalla" && !demo)

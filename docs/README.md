@@ -2,6 +2,16 @@
 
 Start here to run Reach, understand its data, rehearse a demonstration, or maintain the application. The repository contains current setup guides alongside historical implementation and verification reports. A dated successful test describes that run; it does not establish that an external service is available today.
 
+## Current release decision
+
+Start with the [implemented first-release candidate](FIRST-RELEASE.md), its readiness table, maintenance process and current verification evidence. Earlier assessments below are dated history.
+
+- [Executive readiness report](REACH-CEO-READINESS-REPORT.md): detailed feature assessment, implemented improvements, remaining repairs and release priorities.
+- [Pantry recommendation](PANTRY-RECOMMENDATION.md): deterministic constraints, scoring, alternatives, comparison limits and a dated real routing example.
+- [Publishing](PUBLISHING.md): tested single-host container, HTTPS configuration, persistent volume and WAL-safe backup/restore.
+- [2026 competition requirements](CHALLENGE-REQUIREMENTS-2026.md) and [submission preparation](SUBMISSION-PREPARATION.md): official-source conflict, authorship/AI disclosure, video and entrant-owned actions.
+- [Current test evidence](evidence/readiness-verification.json), [runtime provider state](evidence/runtime-readiness.json), and [container evidence](evidence/publication-verification.json): scoped checks rather than a public-service guarantee.
+
 ## Start and demonstrate
 
 - [Development and maintenance](DEVELOPMENT.md): local setup, Windows and POSIX commands, test prerequisites, layout conventions, troubleshooting, and safe publishing.

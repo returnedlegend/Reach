@@ -1,0 +1,15 @@
+{
+  log default {
+    format filter {
+      wrap json
+      fields {
+        request delete
+      }
+    }
+  }
+}
+
+{$REACH_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy app:3000
+}

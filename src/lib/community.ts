@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { chmodSync, closeSync, mkdirSync, openSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -505,7 +506,7 @@ export function createCommunityHandler(databasePath?: string) {
     request: Request,
     path?: string[],
   ): Promise<Response> {
-    if (process.env.REACH_COMMUNITY_ENABLED !== "true")
+    if (!featureEnabled("community"))
       return response(
         {
           code: "community_disabled",

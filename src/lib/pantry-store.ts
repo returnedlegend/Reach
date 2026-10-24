@@ -54,6 +54,7 @@ export function openPantryDatabase(path?: string): DatabaseSync {
     }
   });
   importPantries(db);
+  applyMaintainedReview(db);
   initialized.add(db);
   return db;
 }
@@ -90,6 +91,55 @@ export function importPantries(db: DatabaseSync): number {
     return imported;
   });
 }
+/** Apply this dated review only to untouched imports. Manager edits/archives win. */
+export function applyMaintainedReview(db: DatabaseSync): number {
+  return pantryTransaction(db, () => {
+    if (db.prepare("SELECT 1 FROM pantry_migrations WHERE version=2").get())
+      return 0;
+    let changed = 0;
+    for (const id of [
+      "bedias-food-pantry",
+      "grimes-mobile-pantry",
+      "madison-mobile-pantry",
+    ]) {
+      const row = db
+        .prepare(
+          "SELECT resource_json,planner_json,version,active FROM pantries WHERE id=?",
+        )
+        .get(id);
+      const resource = foodResources.find((p) => p.id === id);
+      const planner = realPantries.find((p) => p.id === id);
+      if (!row || !resource || !planner || row.version !== 1 || !row.active)
+        continue;
+      if (
+        row.resource_json === JSON.stringify(resource) &&
+        row.planner_json === JSON.stringify(planner)
+      )
+        continue;
+      const date =
+        resource.sources
+          .flatMap((s) => (s.checkedOn ? [s.checkedOn] : []))
+          .sort()
+          .at(-1) ?? null;
+      db.prepare(
+        "UPDATE pantries SET resource_json=?,planner_json=?,last_verified=?,version=version+1,updated_at=? WHERE id=? AND version=1 AND active=1",
+      ).run(
+        JSON.stringify(resource),
+        JSON.stringify(planner),
+        date,
+        new Date().toISOString(),
+        id,
+      );
+      savePantryHours(db, id, planner.windows, planner.closures ?? []);
+      recordPantryHistory(db, id, "maintained-review-2026-10-24", null);
+      changed++;
+    }
+    db.prepare("INSERT INTO pantry_migrations VALUES(2,?)").run(
+      new Date().toISOString(),
+    );
+    return changed;
+  });
+}
 export function savePantryHours(
   db: DatabaseSync,
   id: string,
@@ -111,8 +161,16 @@ export function getPantryRecord(
   if (!row) return null;
   const resource = JSON.parse(String(row.resource_json)) as Resource;
   const original = JSON.parse(String(row.planner_json)) as Pantry;
+  const sameSite =
+    resource.address === original.address &&
+    resource.coordinates?.lat === original.coordinates?.lat &&
+    resource.coordinates?.lng === original.coordinates?.lon;
   const record: Omit<PantryRecord, "scheduleSources"> = {
     ...resource,
+    pedestrianPickup:
+      resource.pedestrianPickup ??
+      (sameSite ? original.pedestrianPickup : "unknown") ??
+      "unknown",
     // Older imported databases predate the scheduleNotes field. Preserve their
     // source exceptions until an authorized hours or notes update replaces them.
     scheduleNotes: resource.scheduleNotes ?? original.notes ?? resource.notes,
@@ -225,6 +283,7 @@ export function listPlannerPantries(db = openPantryDatabase()): Pantry[] {
         name: p.name,
         address: p.address,
         phone: p.phone,
+        pedestrianPickup: p.pedestrianPickup ?? "unknown",
         sources: p.scheduleSources,
         notes: p.notes,
         accessibility: p.accessibility,

@@ -1,0 +1,9 @@
+import { createPublicCorrectionHandler } from "@/lib/public-corrections";
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+export async function POST(
+  request: Request,
+  context: { params: Promise<{ id: string }> },
+) {
+  return createPublicCorrectionHandler()(request, (await context.params).id);
+}

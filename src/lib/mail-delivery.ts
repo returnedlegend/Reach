@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 import { randomUUID } from "node:crypto";
 import { chmodSync, mkdirSync, writeFileSync } from "node:fs";
 import { resolve, relative, sep } from "node:path";
@@ -59,6 +60,7 @@ function resendConfiguration() {
   return { key, from };
 }
 export function emailDeliveryMode(): EmailDeliveryMode {
+  if (!featureEnabled("email")) return "disabled";
   const provider = process.env.REACH_EMAIL_PROVIDER;
   if (provider === "disabled") return "disabled";
   if (provider === "preview")

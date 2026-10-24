@@ -108,7 +108,11 @@ describe("persistent pantry database", () => {
       expect(p.website).toBe(source.website ?? null);
       expect(p.hours).toBe(source.hours);
       expect(p.lastVerified).toBe(
-        source.sources.map((s) => s.checkedOn).filter(Boolean).sort().at(-1),
+        source.sources
+          .map((s) => s.checkedOn)
+          .filter(Boolean)
+          .sort()
+          .at(-1),
       );
       expect(getPantryInventory(source.id, db)).toEqual([]);
     }
@@ -121,6 +125,7 @@ describe("persistent pantry database", () => {
     );
     expect(db.prepare("SELECT version FROM pantry_migrations").all()).toEqual([
       { version: 1 },
+      { version: 2 },
     ]);
   });
   it("creates and edits through strict validated administrator API and rejects stale versions", async () => {
@@ -844,6 +849,9 @@ describe("persistent pantry database", () => {
     expect(getPantryScheduleEvidence(first, db)).toBeNull();
   });
   it("uses the configured public origin behind a proxy and fails closed for invalid production origin", async () => {
+    // This case exercises intentionally enabled account management, not the default core release.
+    vi.stubEnv("REACH_RELEASE_PROFILE", "extended");
+    vi.stubEnv("REACH_RELEASE_ACCOUNTS", "true");
     const request = (origin: string) =>
       new Request("http://0.0.0.0:3000/api/pantries/favorites", {
         method: "POST",

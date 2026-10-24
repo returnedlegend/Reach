@@ -93,7 +93,9 @@ export async function buildNavigationGuidance(
   } = {},
 ): Promise<NavigationGuidance> {
   const usable = result.options.filter((o) => o.status !== "no" && o.outbound);
-  const selected = usable[0] ?? null;
+  const selected = result.recommendation
+    ? (usable.find((o) => o.id === result.recommendation!.selectedId) ?? null)
+    : (usable[0] ?? null);
   const evidence = navigationEvidence(result, selected?.id);
   const selectedEvidence = selected
     ? evidence.filter((e) => e.resourceId === selected.id)
@@ -101,6 +103,11 @@ export async function buildNavigationGuidance(
   const limitations = [
     ...new Set([
       ...(options.limitations || []),
+      ...(result.recommendation && !result.recommendation.comparison.complete
+        ? [
+            "The pantry comparison is incomplete; unexamined or unresolved sites could be better.",
+          ]
+        : []),
       "Listed food, eligibility, entrance accessibility and pickup conditions must be confirmed before travel.",
       ...(input.mode === "transit"
         ? [
@@ -194,7 +201,9 @@ export async function buildNavigationGuidance(
       : "A workable trip is not confirmed",
     paragraphs,
     selectedId: selected?.id ?? null,
-    alternativeIds: usable.slice(1, 3).map((o) => o.id),
+    alternativeIds:
+      result.recommendation?.alternativeIds ??
+      usable.slice(1, 3).map((o) => o.id),
     evidence,
     modules: [
       { name: "needs", status: "complete" },
@@ -216,7 +225,13 @@ export async function buildNavigationGuidance(
         name: "transport",
         status: result.options.some((o) => o.outbound) ? "complete" : "limited",
       },
-      { name: "ranking", status: "complete" },
+      {
+        name: "ranking",
+        status:
+          result.recommendation && !result.recommendation.comparison.complete
+            ? "limited"
+            : "complete",
+      },
       {
         name: "guidance",
         status: options.explain && assistance !== "ai" ? "limited" : "complete",

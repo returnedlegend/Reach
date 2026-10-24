@@ -1,6 +1,11 @@
 import candidates from "../../data/research/tx10-brazos-candidates.json";
 import regionalCandidates from "../../data/research/tx10-regional-candidates.json";
-import type { Pantry, PantryWindow, ScheduleRule, SourceRef } from "../lib/types";
+import type {
+  Pantry,
+  PantryWindow,
+  ScheduleRule,
+  SourceRef,
+} from "../lib/types";
 import type { PantryVerification } from "./pantry-verification";
 
 type SourceData = { title: string; url: string; checkedOn: string };
@@ -11,6 +16,7 @@ type Candidate = {
   coordinates: { lat: number; lng: number } | null;
   phone?: string;
   website?: string;
+  languages?: string[];
   hours: string;
   offering: string;
   eligibility: string;
@@ -140,9 +146,7 @@ const selected = [
   ...candidates
     .filter((c) => admittedBrazosIds.includes(c.id))
     .map(asCandidate),
-  ...regionalCandidates
-    .filter((c) => regionalIds.has(c.id))
-    .map(asCandidate),
+  ...regionalCandidates.filter((c) => regionalIds.has(c.id)).map(asCandidate),
 ];
 
 function candidateNotes(c: Candidate): string {
@@ -234,8 +238,11 @@ export const tx10Pantries: Pantry[] = selected.map((c) => {
     id: c.id,
     name: c.name,
     address: c.address,
-    coordinates: c.coordinates ? { lat: c.coordinates.lat, lon: c.coordinates.lng } : null,
+    coordinates: c.coordinates
+      ? { lat: c.coordinates.lat, lon: c.coordinates.lng }
+      : null,
     phone: c.phone,
+    languages: c.languages,
     serviceArea: publishedServiceAreas[c.id],
     pickupFormat: c.offering.includes("drive-through")
       ? "drive-through"
@@ -243,17 +250,15 @@ export const tx10Pantries: Pantry[] = selected.map((c) => {
         ? "walk-in"
         : "unknown",
     pedestrianPickup: c.offering.includes("walk-in") ? "allowed" : "unknown",
-    visitFrequency: c.eligibility.match(/(?:twice-monthly|monthly|weekly) visit limit/i)?.[0],
+    visitFrequency: c.eligibility.match(
+      /(?:twice-monthly|monthly|weekly) visit limit/i,
+    )?.[0],
     documents: [
       {
-        name:
-          regionalIds.has(c.id)
-            ? "Document requirements are not fully stated in the reviewed provider pages."
-            : "BVFB says ID or proof of income/address may be requested but cannot be required.",
-        requirement:
-          regionalIds.has(c.id)
-            ? "unknown"
-            : "requested",
+        name: regionalIds.has(c.id)
+          ? "Document requirements are not fully stated in the reviewed provider pages."
+          : "BVFB says ID or proof of income/address may be requested but cannot be required.",
+        requirement: regionalIds.has(c.id) ? "unknown" : "requested",
       },
     ],
     windows,

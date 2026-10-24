@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 import { z } from "zod";
 import type { AccessInput } from "./access-types";
 import type { OutreachFacts } from "./outreach-types";
@@ -385,6 +386,7 @@ async function complete<T>(
   jsonSchema: object,
   opts?: Options,
 ): Promise<T | null> {
+  if (!featureEnabled("ai")) return null;
   const cfg = configured();
   const fallbackAllowed = geminiFallbackEnabled();
   const implicitOpenRouter =

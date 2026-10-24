@@ -68,7 +68,7 @@ export async function GET(
       return json({ error: "Pantry not found." }, 404);
     return json(getCrowdSummary(db, pantryId));
   } catch (error) {
-    console.error("Crowd summary request failed", error);
+    console.error("Crowd summary request failed");
     return json({ error: "Unable to load crowd information." }, 500);
   }
 }
@@ -100,7 +100,7 @@ export async function POST(
   } catch (error) {
     if (error instanceof AccountError)
       return json({ error: error.message }, error.status);
-    console.error("Crowd report request failed", error);
+    console.error("Crowd report request failed");
     return json({ error: "Unable to save crowd report." }, 500);
   }
 }

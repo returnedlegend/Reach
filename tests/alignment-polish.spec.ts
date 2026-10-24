@@ -71,6 +71,9 @@ test("saved empty state centers its icon and supports dark-theme keyboard naviga
   page,
 }, info) => {
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Switch to light mode", exact: true })
+    .click();
   const trigger = page.getByRole("button", { name: "Saved", exact: true });
   await trigger.focus();
   await page.keyboard.press("Enter");

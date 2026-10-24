@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 import type { z } from "zod";
 import { geminiJson } from "./gemini-client";
 import {
@@ -570,6 +571,8 @@ function openRouterModelConfigured(role: OpenRouterRole) {
 export async function openRouterJson<T>(
   input: OpenRouterJsonInput<T>,
 ): Promise<OpenRouterResult<T>> {
+  if (!featureEnabled("ai"))
+    return unavailable("AI is not part of this release.", 0);
   const provider = process.env.REACH_AI_PROVIDER?.toLowerCase();
   const useGemini = geminiFallbackConfigured(input.role);
   if (provider && provider !== "openrouter")

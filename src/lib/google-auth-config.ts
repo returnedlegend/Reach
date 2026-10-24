@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 import { canonicalAccountOrigin } from "./auth-origin";
 
 /** Web OAuth credentials only; Google Maps keys cannot configure sign-in. */
@@ -6,7 +7,7 @@ export function googleAuthConfiguration() {
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
   const origin = canonicalAccountOrigin();
   if (
-    process.env.REACH_ACCOUNT_ENABLED === "false" ||
+    !featureEnabled("google") ||
     !origin ||
     !/^[A-Za-z0-9_-]+\.apps\.googleusercontent\.com$/.test(clientId) ||
     !/^[A-Za-z0-9_-]{10,200}$/.test(clientSecret) ||

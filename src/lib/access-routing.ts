@@ -188,6 +188,9 @@ export function accessJourneyLookup(
   const memo = new Map<string, Promise<JourneyResult>>(),
     messages = new Set<string>();
   let calls = 0;
+  let exhausted = false;
+  const budgetMessage =
+    "The route-check budget was reached. Select one destination to check it separately.";
   const started = Date.now();
   const walking: WalkingLookup = (from, to) => {
     if (from.lat === to.lat && from.lng === to.lng)
@@ -203,13 +206,19 @@ export function accessJourneyLookup(
     const key = JSON.stringify([from, to, "walking"]);
     const old = memo.get(key);
     if (old) return old;
-    if (calls >= 12 || Date.now() - started > 25000 || options.signal?.aborted)
+    if (
+      calls >= 12 ||
+      Date.now() - started > 25000 ||
+      options.signal?.aborted
+    ) {
+      exhausted = true;
+      messages.add(budgetMessage);
       return Promise.resolve({
         status: "unavailable",
         reason: "quota",
-        message:
-          "The route-check budget was reached. Select one destination to check it separately.",
+        message: budgetMessage,
       });
+    }
     calls++;
     const promise = (options.route || computeOsmJourney)({
       origin: from,
@@ -248,8 +257,11 @@ export function accessJourneyLookup(
           calls >= 12 ||
           Date.now() - started > 25000 ||
           options.signal?.aborted
-        )
+        ) {
+          exhausted = true;
+          messages.add(budgetMessage);
           return [];
+        }
         calls++;
         pending = (options.route || computeOsmJourney)({
           origin: from,
@@ -286,5 +298,10 @@ export function accessJourneyLookup(
       },
     ];
   };
-  return { lookup, calls: () => calls, messages: () => [...messages] };
+  return {
+    lookup,
+    calls: () => calls,
+    messages: () => [...messages],
+    exhausted: () => exhausted,
+  };
 }

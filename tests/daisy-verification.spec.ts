@@ -170,6 +170,12 @@ for (const colorScheme of ["light", "dark"] as const) {
     const errors: string[] = [];
     page.on("pageerror", (error) => errors.push(error.message));
     await page.emulateMedia({ colorScheme, reducedMotion: "reduce" });
+    await page.addInitScript(
+      (theme) => {
+        localStorage.setItem("reach-theme", theme);
+      },
+      colorScheme === "dark" ? "reach-dark" : "reach",
+    );
     for (const width of widths[info.project.name] ?? [390]) {
       await page.setViewportSize({ width, height: width >= 768 ? 1000 : 844 });
       for (const route of routes) {
@@ -313,7 +319,7 @@ test("daisy dark navigation and dialogs work with keyboard, save, download and p
   await expect(page.locator(".saved-card")).toHaveCount(0);
 });
 
-test("daisy theme follows system until an explicit choice persists across routes and reloads", async ({
+test("daisy theme defaults dark and explicit choices persist across routes and reloads", async ({
   page,
 }) => {
   await page.emulateMedia({ colorScheme: "dark" });
@@ -326,47 +332,41 @@ test("daisy theme follows system until an explicit choice persists across routes
     await page.evaluate(() => localStorage.getItem("reach-theme")),
   ).toBeNull();
   await page.emulateMedia({ colorScheme: "light" });
-  await expect(page.locator("html")).toHaveAttribute("data-theme", "reach");
-  const dark = page.getByRole("button", {
-    name: "Switch to dark mode",
-    exact: true,
-  });
-  await target(dark);
-  await dark.focus();
-  await page.keyboard.press("Enter");
   await expect(page.locator("html")).toHaveAttribute(
     "data-theme",
     "reach-dark",
   );
+  const light = page.getByRole("button", {
+    name: "Switch to light mode",
+    exact: true,
+  });
+  await target(light);
+  await light.focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "reach");
   await expect(
-    page.getByRole("button", { name: "Switch to light mode", exact: true }),
-  ).toHaveAttribute("aria-pressed", "true");
+    page.getByRole("button", { name: "Switch to dark mode", exact: true }),
+  ).toHaveAttribute("aria-pressed", "false");
   expect(await page.evaluate(() => localStorage.getItem("reach-theme"))).toBe(
-    "reach-dark",
+    "reach",
   );
   await page.goto("/account");
   await settled(page);
-  await expect(page.locator("html")).toHaveAttribute(
-    "data-theme",
-    "reach-dark",
-  );
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "reach");
   await page.emulateMedia({ colorScheme: "dark" });
   await page.emulateMedia({ colorScheme: "light" });
-  await expect(page.locator("html")).toHaveAttribute(
-    "data-theme",
-    "reach-dark",
-  );
-  await page.reload();
-  await expect(page.locator("html")).toHaveAttribute(
-    "data-theme",
-    "reach-dark",
-  );
-  await page
-    .getByRole("button", { name: "Switch to light mode", exact: true })
-    .click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "reach");
+  await page.reload();
+  await expect(page.locator("html")).toHaveAttribute("data-theme", "reach");
+  await page
+    .getByRole("button", { name: "Switch to dark mode", exact: true })
+    .click();
+  await expect(page.locator("html")).toHaveAttribute(
+    "data-theme",
+    "reach-dark",
+  );
   expect(await page.evaluate(() => localStorage.getItem("reach-theme"))).toBe(
-    "reach",
+    "reach-dark",
   );
 });
 

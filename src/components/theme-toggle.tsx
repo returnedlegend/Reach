@@ -3,8 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 
-import { THEME_STORAGE_KEY } from "@/lib/theme";
-type Theme = "reach" | "reach-dark";
+import { DEFAULT_THEME, THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
 let sessionChoice: Theme | null = null;
 function commitTheme(theme: Theme) {
   const root = document.documentElement;
@@ -15,10 +14,9 @@ function commitTheme(theme: Theme) {
   );
 }
 export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
+  const [dark, setDark] = useState(true);
   const choice = useRef(sessionChoice !== null);
   useEffect(() => {
-    const media = window.matchMedia("(prefers-color-scheme: dark)");
     function apply(theme: Theme) {
       commitTheme(theme);
       setDark(theme === "reach-dark");
@@ -34,21 +32,20 @@ export function ThemeToggle() {
         sessionChoice = saved;
         choice.current = true;
         apply(saved);
-      } else if (!choice.current) apply(media.matches ? "reach-dark" : "reach");
+      } else if (!choice.current) apply(DEFAULT_THEME);
       else setDark(document.documentElement.dataset.theme === "reach-dark");
     }
     const storage = (event: StorageEvent) => {
       if (event.key === THEME_STORAGE_KEY || event.key === null) {
+        // A removed/cleared preference returns to the dark default.
         sessionChoice = null;
         choice.current = false;
         sync();
       }
     };
     sync();
-    media.addEventListener("change", sync);
     window.addEventListener("storage", storage);
     return () => {
-      media.removeEventListener("change", sync);
       window.removeEventListener("storage", storage);
     };
   }, []);

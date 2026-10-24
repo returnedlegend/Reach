@@ -76,6 +76,9 @@ test("homepage light and dark themes fit a small phone and pass automated access
   page,
 }, info) => {
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Switch to light mode", exact: true })
+    .click();
   if (info.project.name === "mobile")
     await page.setViewportSize({ width: 320, height: 740 });
   if (info.project.name === "mobile") {

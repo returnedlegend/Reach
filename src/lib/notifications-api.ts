@@ -1,3 +1,4 @@
+import { featureEnabled, disabledFeatureResponse } from "./release-features";
 import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import {
@@ -69,6 +70,8 @@ async function body<T>(request: Request, schema: z.ZodType<T>): Promise<T> {
 export function createNotificationsHandler(database?: DatabaseSync) {
   return async (request: Request, path: string[] = []): Promise<Response> => {
     try {
+      if (!featureEnabled("email") && path.join("/") !== "unsubscribe")
+        return disabledFeatureResponse("Email notifications");
       const db = database ?? openPantryDatabase();
       initializeNotifications(db);
       if (

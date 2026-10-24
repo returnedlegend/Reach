@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 import { randomBytes, randomUUID } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import type { JWTPayload } from "jose";
@@ -121,7 +122,7 @@ export function createGoogleAuthHandler(
     const configuration = googleAuthConfiguration();
     try {
       if (path === "status" && request.method === "GET") {
-        if (process.env.REACH_ACCOUNT_ENABLED === "false")
+        if (!featureEnabled("accounts"))
           return accountResponse({
             configured: false,
             linked: false,
@@ -143,7 +144,7 @@ export function createGoogleAuthHandler(
       if (path === "disconnect" && request.method === "POST") {
         // Removing a saved identity must remain possible after OAuth keys are removed.
         const accountOrigin = canonicalAccountOrigin();
-        if (!accountOrigin || process.env.REACH_ACCOUNT_ENABLED === "false")
+        if (!accountOrigin || !featureEnabled("accounts"))
           throw new AccountError(503, "Accounts are currently unavailable.");
         requireSameOrigin(request);
         if (

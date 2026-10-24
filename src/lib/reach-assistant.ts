@@ -1,3 +1,4 @@
+import { coreRelease, disabledFeatureResponse } from "./release-features";
 import { z } from "zod";
 import { accessInputSchema, createAccessHandler } from "./access-service";
 import { navigationNeedsSchema } from "./navigation-resource-agent";
@@ -155,6 +156,7 @@ export function createAssistantHandler(
     createAccessHandler(databasePath, { pantriesOnly: true });
   return async (request: Request) => {
     try {
+      if (coreRelease()) return disabledFeatureResponse("AI assistance");
       requireSameOrigin(request);
       takeBudget();
       const body = await readPrivateJson(request, bodySchema);

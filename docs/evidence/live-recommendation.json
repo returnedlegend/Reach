@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-10-24T20:44:38.326Z",
+  "scope": "Real handler and Valhalla/FOSSGIS responses using an official public BTD terminal example origin; no user location/account/inference/email",
+  "http": 200,
+  "routingCalls": 5,
+  "recommendation": {
+    "algorithm": "feasibility-weighted-v1",
+    "status": "confirm",
+    "selectedId": "brazos-church-pantry",
+    "alternativeIds": [],
+    "paretoFrontierIds": ["brazos-church-pantry"],
+    "headline": "Best checked pantry: Brazos Church Pantry",
+    "explanation": [
+      "The highest comparison score among checked, verified pantry sites with a timed visit and a checked return trip. Feasibility comes before score.",
+      "12 minutes traveling; 12 minutes walking; 10 minutes before service; 0 transfers across the complete trip.",
+      "Checked travel fare: $0.00. This does not include any unverified costs.",
+      "74 minutes of modeled intake buffer. The visit fits the recorded distribution and registration limits.",
+      "This is a conditional recommendation: confirm the listed requirements, food availability and access before leaving.",
+      "The comparison is incomplete where routes, return trips or service windows are missing, or a request budget was reached. Another pantry could be better.",
+      "Scores are planning points, not success probabilities. No result guarantees food, admission, eligibility or a safe accessible entrance."
+    ],
+    "comparison": {
+      "scope": "catalog",
+      "totalPantries": 24,
+      "verifiedPantries": 21,
+      "routedPantries": 3,
+      "staticallyExcludedPantries": 17,
+      "unresolvedPantries": 2,
+      "unverifiedPantries": 3,
+      "siteLimit": 8,
+      "routeLimitReached": false,
+      "complete": false
+    }
+  },
+  "selected": [
+    {
+      "name": "Brazos Church Pantry",
+      "status": "confirm",
+      "outbound": {
+        "source": "routed",
+        "miles": 0.2701,
+        "minutes": 6
+      },
+      "returnJourney": {
+        "source": "routed",
+        "miles": 0.2701,
+        "minutes": 6
+      },
+      "warnings": [
+        "Eligibility, service-area and document requirements have not been confirmed for you.",
+        "Food availability is unknown or its report has expired.",
+        "Pedestrian pickup permission is not verified.",
+        "Walking time is a routing estimate. Sidewalk safety, step-free access and pedestrian entrances are not verified.",
+        "Availability is not confirmed for the expected service time.",
+        "Published pickup policy or schedule requires confirmation.",
+        "No sufficiently supported crowd pattern is available for the planned pickup hour."
+      ]
+    }
+  ]
+}

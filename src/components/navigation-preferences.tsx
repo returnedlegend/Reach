@@ -7,6 +7,7 @@ type Props = {
   value: NavigationNeeds;
   onChange: (value: NavigationNeeds) => void;
   aiEnabled: boolean;
+  aiAvailable?: boolean;
   onAIEnabledChange: (value: boolean) => void;
 };
 
@@ -27,6 +28,7 @@ export function NavigationPreferences({
   value,
   onChange,
   aiEnabled,
+  aiAvailable = true,
   onAIEnabledChange,
 }: Props) {
   function update(patch: Partial<NavigationNeeds>) {
@@ -140,20 +142,24 @@ export function NavigationPreferences({
         </div>
       </details>
 
-      <label className="navigation-ui__check-label navigation-preferences__ai">
-        <input
-          className="checkbox checkbox-primary"
-          type="checkbox"
-          checked={aiEnabled}
-          onChange={(event) => onAIEnabledChange(event.target.checked)}
-        />
-        Use optional AI-assisted guidance
-      </label>
-      <p className="navigation-ui__note">
-        {aiEnabled
-          ? "AI-assisted guidance is enabled. Review any suggestions before acting on them."
-          : "AI guidance is off. You can change this choice at any time."}
-      </p>
+      {aiAvailable && (
+        <>
+          <label className="navigation-ui__check-label navigation-preferences__ai">
+            <input
+              className="checkbox checkbox-primary"
+              type="checkbox"
+              checked={aiEnabled}
+              onChange={(event) => onAIEnabledChange(event.target.checked)}
+            />
+            Use optional AI-assisted guidance
+          </label>
+          <p className="navigation-ui__note">
+            {aiEnabled
+              ? "AI-assisted guidance is enabled. Review any suggestions before acting on them."
+              : "AI guidance is off. You can change this choice at any time."}
+          </p>
+        </>
+      )}
       <p className="navigation-ui__coverage-note">
         This catalog does not have verified coverage for prepared meals or
         shelter. Listings and matches cannot guarantee service, eligibility,

@@ -1,3 +1,4 @@
+import { publicFeatures } from "@/lib/release-features";
 import { PantryDetail } from "@/components/pantry-detail";
 
 export default async function PantryPage({
@@ -8,7 +9,7 @@ export default async function PantryPage({
   const { id } = await params;
   return (
     <main id="main-content">
-      <PantryDetail id={id} />
+      <PantryDetail id={id} features={publicFeatures()} />
     </main>
   );
 }

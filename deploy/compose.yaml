@@ -1,0 +1,103 @@
+services:
+  app:
+    image: reach-app:local
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_MAP_STYLE_URL: ${NEXT_PUBLIC_MAP_STYLE_URL-}
+        NEXT_PUBLIC_MAP_RASTER_TILE_URL: ${NEXT_PUBLIC_MAP_RASTER_TILE_URL-}
+        NEXT_PUBLIC_MAP_ATTRIBUTION: ${NEXT_PUBLIC_MAP_ATTRIBUTION-}
+        NEXT_PUBLIC_MAP_RASTER_ATTRIBUTION: ${NEXT_PUBLIC_MAP_RASTER_ATTRIBUTION-}
+    env_file:
+      - ./production.env
+    environment:
+      NODE_ENV: production
+      REACH_PROCESS_ROLE: app
+      HOSTNAME: 0.0.0.0
+      PORT: "3000"
+      REACH_ENVIRONMENT: production
+      REACH_COMMUNITY_DB: /var/lib/reach/community.sqlite
+    volumes:
+      - reach-data:/var/lib/reach
+    expose:
+      - "3000"
+    networks:
+      - reach
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "fetch('http://127.0.0.1:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+
+  caddy:
+    image: caddy:2-alpine
+    environment:
+      REACH_DOMAIN: ${REACH_DOMAIN:?Set REACH_DOMAIN in deploy/production.env}
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - reach
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+  email-worker:
+    image: reach-app:local
+    build:
+      context: ..
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_MAP_STYLE_URL: ${NEXT_PUBLIC_MAP_STYLE_URL-}
+        NEXT_PUBLIC_MAP_RASTER_TILE_URL: ${NEXT_PUBLIC_MAP_RASTER_TILE_URL-}
+        NEXT_PUBLIC_MAP_ATTRIBUTION: ${NEXT_PUBLIC_MAP_ATTRIBUTION-}
+        NEXT_PUBLIC_MAP_RASTER_ATTRIBUTION: ${NEXT_PUBLIC_MAP_RASTER_ATTRIBUTION-}
+    profiles:
+      - email
+    env_file:
+      - ./production.env
+    environment:
+      NODE_ENV: production
+      REACH_ENVIRONMENT: production
+      REACH_PROCESS_ROLE: email-worker
+      REACH_COMMUNITY_DB: /var/lib/reach/community.sqlite
+    command:
+      - sh
+      - -ec
+      - node --import tsx scripts/release-preflight.ts && exec node --import tsx scripts/mail-worker.ts --watch
+    volumes:
+      - reach-data:/var/lib/reach
+    networks:
+      - reach
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  reach-data:
+  caddy-data:
+  caddy-config:
+
+networks:
+  reach:
+    driver: bridge

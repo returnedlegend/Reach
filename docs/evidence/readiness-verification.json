@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-10-24T20:55:21.020901+00:00",
+  "baseCommit": "5ca993b",
+  "scope": "Working-tree readiness changes; no public deployment or external message sending",
+  "unit": {
+    "command": "npm test",
+    "filesPassed": 58,
+    "testsPassed": 536,
+    "failed": 0,
+    "fixtures": "Includes synthetic transit/provider fixtures and isolated real SQLite databases"
+  },
+  "data": {
+    "command": "npm run data:validate",
+    "productionRecords": 24,
+    "fictionalDemoRecords": 6,
+    "status": "passed",
+    "limit": "Schema and cross-reference validation; not physical pantry verification"
+  },
+  "typescript": {
+    "command": "npm run typecheck",
+    "status": "passed"
+  },
+  "productionBuild": {
+    "command": "npm run build",
+    "status": "passed",
+    "standalone": true
+  },
+  "browsers": {
+    "viewports": ["mobile", "desktop"],
+    "distinctCasesPassedAcrossFinalRuns": 30,
+    "allHistoricalSuitesRerun": false,
+    "initialNewRecommendationSelectorFailures": 4,
+    "selectorCorrectedAndAffectedCasesPassed": 4,
+    "scope": "Dark-first/saved/blocked storage; recommendation and unavailable result; hotspot recovery; alignment; scoped axe checks; theme toggle. Browser provider responses are synthetic or disabled, not live integration evidence."
+  },
+  "container": "publication-verification.json",
+  "providerConfigurationReadonly": "runtime-readiness.json",
+  "realRoutingHandler": "live-recommendation.json",
+  "googleOAuthHumanLogin": "not performed",
+  "liveEmail": "not sent; Resend domain failed authentication",
+  "aiInference": "not performed in this readiness audit",
+  "githubWorkflow": {
+    "added": ".github/workflows/ci.yml",
+    "remoteRunObserved": false
+  },
+  "publicDeployment": "not performed",
+  "privateKeysRecorded": false,
+  "independentReview": "independent-readiness-review.json",
+  "sourceChecks": {
+    "changedFileFormatting": "passed",
+    "gitDiffCheck": "passed",
+    "documentationTargetsChecked": 157,
+    "missingDocumentationTargets": 0,
+    "changedJson": "valid",
+    "credentialScan": "passed on changed/new text files, values not printed",
+    "localEnvironmentMode": "0600",
+    "localEnvironmentIgnored": true,
+    "lockedVersionsAndIntegritiesUnchanged": true
+  }
+}

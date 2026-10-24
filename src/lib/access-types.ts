@@ -61,6 +61,44 @@ export type AccessOption = {
   serviceEnd: number | null;
   intakeCutoff: number | null;
   score: number;
+  /** Comparison points, not probabilities or actual unknown costs. */
+  scoreBreakdown?: {
+    travelPenalty: number;
+    walkingPenalty: number;
+    farePenalty: number;
+    transferPenalty: number;
+    uncertaintyPenalty: number;
+    waitingPenalty: number;
+    serviceDelayPenalty: number;
+    closingBufferBonus: number;
+    totalTravelMinutes: number;
+    totalWalkingMinutes: number;
+    totalFare: number | null;
+    totalTransfers: number;
+    waitingMinutes: number;
+    intakeSlackMinutes: number;
+  };
+};
+export type PantryRecommendation = {
+  algorithm: "feasibility-weighted-v1";
+  status: "ready" | "confirm" | "unavailable";
+  selectedId: string | null;
+  alternativeIds: string[];
+  paretoFrontierIds: string[];
+  headline: string;
+  explanation: string[];
+  comparison: {
+    scope: "catalog" | "selected-destination";
+    totalPantries: number;
+    verifiedPantries: number;
+    routedPantries: number;
+    staticallyExcludedPantries: number;
+    unresolvedPantries: number;
+    unverifiedPantries: number;
+    siteLimit: number;
+    routeLimitReached: boolean;
+    complete: boolean;
+  };
 };
 export type AccessResponse = {
   timezone: "America/Chicago";
@@ -69,5 +107,6 @@ export type AccessResponse = {
   routingCalls: number;
   aiCalls: number;
   message: string;
+  recommendation?: PantryRecommendation;
   guidance?: import("./navigation-types").NavigationGuidance;
 };

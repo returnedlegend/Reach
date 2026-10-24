@@ -65,6 +65,7 @@ const fields = {
   eligibility: plain(2000),
   notes: plain(4000),
   offering: plain(2000),
+  pedestrianPickup: z.enum(["allowed", "not-allowed", "unknown"]),
   accessibility: plain(2000),
   verificationStatus: z.enum(["confirmed-site", "needs-confirmation"]),
   detailsNeedConfirmation: z.boolean(),
@@ -92,6 +93,7 @@ const createSchema = z
     eligibility: fields.eligibility.default("Eligibility not verified."),
     notes: fields.notes.default(""),
     offering: fields.offering.optional(),
+    pedestrianPickup: fields.pedestrianPickup.default("unknown"),
     accessibility: fields.accessibility.optional(),
     verificationStatus: fields.verificationStatus.default("needs-confirmation"),
     detailsNeedConfirmation: fields.detailsNeedConfirmation.default(true),
@@ -213,6 +215,11 @@ function applyPatch(
   version(p, data.version);
   const { version: _, ...changes } = data,
     merged = { ...p, ...changes };
+  const moved =
+    merged.address !== p.address ||
+    JSON.stringify(merged.coordinates) !== JSON.stringify(p.coordinates);
+  if (moved && changes.pedestrianPickup === undefined)
+    merged.pedestrianPickup = "unknown";
   if (changes.hours !== undefined && changes.hours !== p.hours) {
     // Human-readable hours cannot safely stand in for a recurrence rule.
     // Keep recorded closures, and require a structured hours save before routing.

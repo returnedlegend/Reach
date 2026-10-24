@@ -1,0 +1,129 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-24",
+  "scope": "Local release-candidate build and container checks only; no production deployment, public DNS changes, public HTTPS request, ACME request, or live provider action",
+  "source": {
+    "git_head": "5ca993bb737a981b2a18d4bb6e2639c25c769076",
+    "sha256": {
+      "Dockerfile": "2e8030a64c4ef81f9b700e7582fe0d0c81543a6537742ca0985584563c6bdde6",
+      ".dockerignore": "1b8866443d5d202360e021be7bf3b04d916f3df17e38e97bf4c57484ffdeefa5",
+      "deploy/compose.yaml": "72a9fe79d4718922fe789c49e446f36c1347aa130aaba43caa5f7d0b6e539092",
+      "deploy/production.env.example": "c593b97d8f43bb6254e4e9e8493eb20249378e6c349044b58296f7a6e5a1196c",
+      "scripts/release-preflight.ts": "e1f0c773a5bc5fd3aaaaeda081a032e58867d134515bc9eddba9c21d5436454d",
+      "tests/release-preflight.test.ts": "13a1c7abeaaaa20d64babffd6d5c792ef6d72ada63f741f11c6ba0a5cbfb87b7",
+      "docs/PUBLISHING.md": "69f199fdc458d424ec7092e90f3fb146a4df43c6eeb73f717d037101b971443c",
+      "src/lib/release-features.ts": "992ca0f1ea424ff4248dc44ce04798a24e9de48ab8deaf75412d5409c41252f4",
+      "src/lib/osm-services.ts": "20a86db9dd8e7b7a3c6a5e6eeeb61e519501004098abeebda1ad4a6b8b7b0f37",
+      "src/lib/access-routing.ts": "83f8af7af61d824f15bffad80176b0974d6160a4f0960efde2bc047dcd8bcb26",
+      "src/lib/health.ts": "c9d7daf6a4785142a7290202e3bf3da242a5669f779c74de81e7565b002b8e94",
+      "src/app/api/health/route.ts": "3b7b4e114eaea298c0d96ff9ab3f0294f4bb20d942ef5b8c22ff6487c6a6ae5a",
+      "src/components/guided-reach.tsx": "b0062b1cfb3955abdfe132800d6fc081a2c5c850d25c8a987cefd7438ef51ea6",
+      "src/components/pantry-detail.tsx": "43af5eb38be177ec04ea7f058f0bc2fdb77843941298514b5a3dd18c2ac0077c",
+      "deploy/Caddyfile": "cfad2e06e70b31417ba8834781ac6dfca646d7d731fdf9b44b81491b2cda155c"
+    }
+  },
+  "image": {
+    "tag": "reach:release-candidate",
+    "id": "sha256:8255fb40f4eedb0741192d7d82bbff167b8cb7467e82d622357c8402e21f7aeb",
+    "base": "node:24-bookworm-slim",
+    "size_bytes": 857967363,
+    "build_status": "passed",
+    "docker_context_bytes": 250050,
+    "buildkit_proxy_ca_secret_mount": true,
+    "strict_tls": true,
+    "next_compilation": "passed",
+    "typescript": "passed",
+    "static_generation": "passed",
+    "standalone_output": "passed",
+    "runtime_user": "node",
+    "contains_env_key_cert_or_sqlite_files": false,
+    "private_runtime_env_in_image": false
+  },
+  "runtime": {
+    "container_image_id": "sha256:8255fb40f4eedb0741192d7d82bbff167b8cb7467e82d622357c8402e21f7aeb",
+    "network": "Docker internal bridge; no published ports",
+    "domain": "localhost",
+    "app_origin": "https://localhost",
+    "release_profile": "core",
+    "container_tmpfs_override": false,
+    "startup_preflight": "passed with the built image before the Next.js server started",
+    "database_mount": {
+      "path": "/var/lib/reach/community.sqlite",
+      "volume_target": "/var/lib/reach",
+      "mountinfo_filesystem": "overlay",
+      "writable_probe": "4 KiB temporary file write and fsync passed",
+      "ownership": "1000:1000",
+      "database_mode": "0600"
+    },
+    "http_checks": {
+      "/api/health": 200,
+      "/": 200,
+      "/api/account/status": 200,
+      "/api/ai/status": 200
+    },
+    "ui_source_refresh_smoke": {
+      "image_id": "sha256:8255fb40f4eedb0741192d7d82bbff167b8cb7467e82d622357c8402e21f7aeb",
+      "tmpfs_override": false,
+      "startup_preflight": "passed",
+      "health": 200,
+      "account_status": 200
+    },
+    "optional_features": {
+      "accounts_enabled": false,
+      "email_configured": false,
+      "email_delivery_mode": "disabled",
+      "ai_state": "disabled"
+    },
+    "preflight_fail_closed_checks": {
+      "email_worker_with_core_and_disabled_provider": "rejected before worker launch",
+      "production_demo_router_even_with_acknowledgement": "rejected",
+      "public_nominatim_without_single_instance_opt_in": "rejected",
+      "public_nominatim_exact_https_origin_with_opt_in_and_user_agent": "passed without making a request",
+      "mismatched_app_origin": "rejected",
+      "writable_tmpfs_database_mount": "rejected because the mount is volatile"
+    },
+    "secret_file_scan": {
+      "matching_env_pem_key_sqlite_or_db_files_in_app": 0,
+      "deploy_production_env_in_app": false
+    }
+  },
+  "persistence_and_recovery": {
+    "tested_image_id": "sha256:e7bffc2083a386c178515781836b4d485aee8ba6694431f1016b8fc74bbb0fb0",
+    "source_snapshot_note": "Container replacement and WAL backup/restore were verified on the immediately preceding release candidate before the UI-only saved-pantry refresh change. Those checks cover unchanged Docker, preflight, and database code; recovery was not rerun on the UI-refresh image.",
+    "container_replacement": {
+      "named_volume_retained": true,
+      "synthetic_marker_survived": true,
+      "integrity_after_replacement": "ok",
+      "health_after_replacement": 200
+    },
+    "offline_backup_restore": {
+      "app_stopped_before_backup_and_restore": true,
+      "database_journal_mode": "WAL",
+      "backup_method": "SQLite VACUUM INTO",
+      "backup_bytes": 593920,
+      "committed_wal_marker_in_backup": true,
+      "backup_integrity": "ok",
+      "restore_candidate_integrity": "ok",
+      "restore_owner_and_mode": "UID/GID 1000, mode 0600",
+      "restore_operation": "copy to temporary path, integrity check, atomic rename, remove WAL/SHM sidecars",
+      "restored_integrity": "ok",
+      "post_backup_marker_absent_after_restore": true,
+      "health_after_restore": 200
+    },
+    "data": "Synthetic release_ops_markers only; no personal or production data"
+  },
+  "checks": {
+    "release_preflight_tests": "14 passed",
+    "typescript_check": "passed",
+    "prettier_check": "passed",
+    "no_provider_requests_or_messages_sent": true,
+    "secrets_or_credential_values_recorded": false
+  },
+  "configuration_followup": {
+    "scope": "Mounted Caddy configuration and operator documentation only; application image unchanged",
+    "evidence": "release-log-redaction.json",
+    "production_config_validation": "passed",
+    "actual_synthetic_upstream_error_redaction": "passed",
+    "hash_note": "Caddyfile and publishing-guide hashes refreshed after log-filter follow-up. Prior app/image and recovery evidence keeps its original scope."
+  }
+}

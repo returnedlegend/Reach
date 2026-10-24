@@ -1,3 +1,4 @@
+import { featureEnabled, disabledFeatureResponse } from "./release-features";
 import { randomBytes, randomUUID } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
@@ -90,6 +91,8 @@ export function createOutreachHandler(
 ) {
   return async (request: Request, path: string[] = []): Promise<Response> => {
     try {
+      if (!featureEnabled("email") && path.join("/") !== "unsubscribe")
+        return disabledFeatureResponse("Email outreach");
       const now = (options.now || (() => new Date()))(),
         db = openPantryDatabase(databasePath);
       initializeOutreach(db);

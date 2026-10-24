@@ -10,6 +10,7 @@ import type { Pantry, PantryWindow } from "./types";
 import { chicagoNow } from "./journey";
 import { matchesRule } from "./recurrence";
 import { isDate, parseTime, shiftDate } from "./time";
+import { serviceFreshness } from "./service-freshness";
 import { chicagoWallInstant } from "./access-time";
 
 export type AccessCandidate = {
@@ -24,6 +25,7 @@ export type JourneyLookup = (
   to: AccessInput["origin"],
   earliest: number,
   latest: number,
+  candidateId?: string,
 ) => Promise<AccessJourney[]>;
 /** Ranking points, never a success probability. Unknown costs do not become zero. */
 export const ACCESS_WEIGHTS = {
@@ -186,6 +188,9 @@ export async function evaluateAccess(
       resource.detailsNeedConfirmation
     )
       warnings.push("Site details need confirmation.");
+    const freshness = serviceFreshness(resource, now);
+    if (freshness.status !== "recent-source-check")
+      warnings.push(freshness.label);
     if (!input.eligibilityConfirmed)
       warnings.push(
         "Eligibility, service-area and document requirements have not been confirmed for you.",
@@ -236,6 +241,38 @@ export async function evaluateAccess(
       });
       continue;
     }
+    if (
+      windows.length &&
+      windows.every((w) => {
+        if (w.window.appointmentRequired && input.appointment === "not-booked")
+          return true;
+        // Necessary timing condition with zero travel. This is not a route estimate.
+        const registration = Math.max(
+          earliest + input.arrivalBufferMinutes,
+          w.registrationOpen,
+        );
+        const start = Math.max(registration, w.open);
+        const end = start + input.visitMinutes;
+        return (
+          registration > w.registrationCutoff ||
+          start > w.distributionCutoff ||
+          end > w.close ||
+          (Boolean(input.returnTo) && end > latest)
+        );
+      })
+    ) {
+      options.push({
+        ...base,
+        status: "no",
+        reasons: [
+          windows.every((w) => w.window.appointmentRequired) &&
+          input.appointment === "not-booked"
+            ? "An appointment is required and has not been booked."
+            : "Even before travel, intake and visit time cannot fit the published cutoff or return deadline.",
+        ],
+      });
+      continue;
+    }
     let outbound: AccessJourney[] = [];
     if (resource.coordinates)
       outbound = await lookup(
@@ -243,6 +280,7 @@ export async function evaluateAccess(
         resource.coordinates,
         earliest,
         latest,
+        resource.id,
       );
     if (!outbound.length) {
       options.push({
@@ -260,6 +298,18 @@ export async function evaluateAccess(
     const choices: AccessOption[] = [],
       failures: string[] = [];
     for (const out of outbound) {
+      if (
+        !Number.isFinite(out.departure) ||
+        !Number.isFinite(out.arrival) ||
+        out.departure < earliest ||
+        out.arrival < out.departure ||
+        out.arrival > latest
+      ) {
+        failures.push(
+          "The returned outbound itinerary is outside the requested travel window.",
+        );
+        continue;
+      }
       const hardTravel = travelFailures(out, null, input);
       if (hardTravel.length) {
         failures.push(...hardTravel);
@@ -328,7 +378,13 @@ export async function evaluateAccess(
         }
         const returns =
           input.returnTo && resource.coordinates
-            ? await lookup(resource.coordinates, input.returnTo, end, latest)
+            ? await lookup(
+                resource.coordinates,
+                input.returnTo,
+                end,
+                latest,
+                resource.id,
+              )
             : [];
         if (input.returnTo && !returns.length) {
           failures.push(
@@ -348,6 +404,19 @@ export async function evaluateAccess(
           continue;
         }
         for (const back of input.returnTo ? returns : [null]) {
+          if (
+            back &&
+            (!Number.isFinite(back.departure) ||
+              !Number.isFinite(back.arrival) ||
+              back.departure < end ||
+              back.arrival < back.departure ||
+              back.arrival > latest)
+          ) {
+            failures.push(
+              "The returned itinerary departs before the visit ends or falls outside the return deadline.",
+            );
+            continue;
+          }
           const hard = travelFailures(out, back, input);
           if (hard.length) {
             failures.push(...hard);
@@ -402,18 +471,39 @@ export async function evaluateAccess(
           const farePenalty =
             (out.fare ?? input.fareBudget + 1) +
             (back ? (back.fare ?? input.fareBudget + 1) : 0);
+          const scoreBreakdown = {
+            travelPenalty: travel * weights.travelMinute,
+            serviceDelayPenalty:
+              Math.max(0, start - earliest) * weights.timeToServiceMinute,
+            waitingPenalty:
+              Math.max(0, start - out.arrival) * weights.waitingMinute,
+            walkingPenalty: walking * weights.walkingMinute,
+            farePenalty: farePenalty * weights.dollar,
+            transferPenalty:
+              (out.transfers + (back?.transfers || 0)) * weights.transfer,
+            uncertaintyPenalty: unique(unknowns).length * weights.uncertainty,
+            closingBufferBonus:
+              Math.min(120, w.registrationCutoff - registration) *
+              weights.closingSlackMinute,
+            totalTravelMinutes: travel,
+            totalWalkingMinutes: walking,
+            totalFare:
+              out.fare === null || (back && back.fare === null)
+                ? null
+                : out.fare + (back?.fare ?? 0),
+            totalTransfers: out.transfers + (back?.transfers || 0),
+            waitingMinutes: Math.max(0, start - out.arrival),
+            intakeSlackMinutes: w.registrationCutoff - registration,
+          };
           const score =
-            -(
-              travel * weights.travelMinute +
-              Math.max(0, start - earliest) * weights.timeToServiceMinute +
-              Math.max(0, start - out.arrival) * weights.waitingMinute +
-              walking * weights.walkingMinute +
-              farePenalty * weights.dollar +
-              (out.transfers + (back?.transfers || 0)) * weights.transfer +
-              unique(unknowns).length * weights.uncertainty
-            ) +
-            Math.min(120, w.registrationCutoff - registration) *
-              weights.closingSlackMinute;
+            scoreBreakdown.closingBufferBonus -
+            (scoreBreakdown.travelPenalty +
+              scoreBreakdown.serviceDelayPenalty +
+              scoreBreakdown.waitingPenalty +
+              scoreBreakdown.walkingPenalty +
+              scoreBreakdown.farePenalty +
+              scoreBreakdown.transferPenalty +
+              scoreBreakdown.uncertaintyPenalty);
           choices.push({
             ...base,
             availability: serviceAvailability,
@@ -424,6 +514,7 @@ export async function evaluateAccess(
             serviceEnd: end,
             intakeCutoff: w.registrationCutoff,
             score,
+            scoreBreakdown,
             reasons: [
               unknowns.length
                 ? "A route fits the checked timing limits; the listed information still needs confirmation."

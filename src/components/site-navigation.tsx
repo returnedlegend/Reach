@@ -4,6 +4,7 @@ import { ThemeToggle } from "./theme-toggle";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, type ReactNode } from "react";
+import { CORE_FEATURES, type PublicFeatures } from "@/lib/public-feature-types";
 import {
   ArrowUpRight,
   HeartHandshake,
@@ -15,17 +16,26 @@ import {
   Users,
 } from "lucide-react";
 
-const destinations = [
-  { href: "/", label: "Find food", Icon: Soup },
-  { href: "/food-hotspots", label: "Food sharing", Icon: MapPin },
-  { href: "/volunteer", label: "Volunteer", Icon: Users },
-  { href: "/account", label: "Account", Icon: UserRound },
-];
-
 /** Shared navigation for supporting pages; the discovery screen keeps its in-page tabs. */
-export function SiteNavigation() {
+export function SiteNavigation({
+  features = CORE_FEATURES,
+}: {
+  features?: PublicFeatures;
+} = {}) {
   const pathname = usePathname();
   if (pathname === "/" || pathname === "/food-hotspots") return null;
+  const destinations = [
+    { href: "/", label: "Find food", Icon: Soup },
+    ...(features.community
+      ? [{ href: "/food-hotspots", label: "Food sharing", Icon: MapPin }]
+      : []),
+    ...(features.volunteering
+      ? [{ href: "/volunteer", label: "Volunteer", Icon: Users }]
+      : []),
+    ...(features.accounts
+      ? [{ href: "/account", label: "Account", Icon: UserRound }]
+      : []),
+  ];
   return (
     <>
       <header className="site-navigation" data-secondary-nav>
@@ -53,14 +63,18 @@ export function SiteNavigation() {
               <Route size={18} />
               Detailed trip planner
             </Link>
-            <Link href="/volunteer">
-              <Users size={18} />
-              Volunteer pickups
-            </Link>
-            <Link href="/manage">
-              <Soup size={18} />
-              Manage a pantry
-            </Link>
+            {features.volunteering && (
+              <Link href="/volunteer">
+                <Users size={18} />
+                Volunteer pickups
+              </Link>
+            )}
+            {features.accounts && (
+              <Link href="/manage">
+                <Soup size={18} />
+                Manage a pantry
+              </Link>
+            )}
             <Link href="/privacy">
               Privacy & location
               <ArrowUpRight size={15} />

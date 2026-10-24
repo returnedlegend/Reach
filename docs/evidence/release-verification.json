@@ -1,0 +1,102 @@
+{
+  "checkedAt": "2026-10-24T21:46:30.102560+00:00",
+  "scope": "Implemented working-tree first-release candidate; local tests, authenticated read-only metadata, limited real map/routing requests. No public deployment.",
+  "baseline": {
+    "branch": "main",
+    "head": "5ca993bb737a981b2a18d4bb6e2639c25c769076",
+    "priorUncommittedChanges": "preserved",
+    "unitTestsPassed": 536
+  },
+  "integratedChecks": {
+    "command": "npm run check (repeated after the embedded save UI fix)",
+    "data": {
+      "productionRecords": 24,
+      "fictionalFixtures": 6,
+      "passed": true
+    },
+    "typescript": "passed",
+    "productionBuild": "passed",
+    "unitSnapshot": {
+      "files": 69,
+      "testsPassed": 578
+    }
+  },
+  "finalUnitAndTypes": {
+    "command": "npm run typecheck && npm test",
+    "files": 69,
+    "testsPassed": 578,
+    "failed": 0,
+    "addedSinceIntegratedCheck": "None; final integrated check repeats all tests, data validation, TypeScript and build after the UI fix."
+  },
+  "browser": {
+    "origin": "https://localhost:3443",
+    "publicDeployment": false,
+    "build": "current local production build",
+    "distinctPassingCasesAcrossFinalRuns": 49,
+    "tests": [
+      "release-journey.spec.ts (3 cases \u00d7 mobile, Android, tablet, desktop)",
+      "theme-default.spec.ts (5 \u00d7 mobile, tablet, desktop)",
+      "pantry-recommendation.spec.ts (2 \u00d7 mobile, tablet, desktop)",
+      "release-core.spec.ts (4 \u00d7 mobile, desktop, independently run; embedded save regression reproduced then fixed)",
+      "location-follow.spec.ts (4 \u00d7 mobile, desktop; synthetic browser position callbacks)"
+    ],
+    "fixtureBoundary": "Recommendation browser responses and position errors are synthetic; actual core/API/directory/save/export/print flows use the running production build. Missing routing remains unavailable.",
+    "localCertificate": "Only browser test contexts except the local certificate; health curl used the explicit test CA.",
+    "afterFinalUiFix": "Affected save/export/print flow rerun (9/9) and full core rerun independently (8/8); no-reload embedded save regression passes."
+  },
+  "live": {
+    "map": "release-visual.json",
+    "routing": "release-live-routing.json",
+    "data": "release-data.json",
+    "providerMetadataAndDns": "release-providers.json",
+    "emailSent": false,
+    "aiInferencePerformed": false,
+    "pantriesContacted": false,
+    "mapSelection": "release-map-selection.json"
+  },
+  "accessibility": {
+    "scope": "Initial anonymous home at mobile, tablet and desktop; scoped WCAG axe scan",
+    "violations": 0,
+    "humanReview": "not performed"
+  },
+  "container": "release-operations.json",
+  "independentReview": "release-independent.json",
+  "security": {
+    "dependencyAuditCommand": "npm audit --omit=dev --json --cache /tmp/reach-release-npm-cache",
+    "knownVulnerabilitiesReturned": 0,
+    "auditScope": "production dependency advisory snapshot, not a complete security certification",
+    "caddyRequestLogRedaction": "release-log-redaction.json",
+    "credentialScan": {
+      "status": "passed",
+      "textAndClientBundleFiles": 164,
+      "valuesPrinted": false
+    },
+    "privateEnvironmentMode": "600",
+    "privateEnvironmentIgnored": true
+  },
+  "notPerformed": [
+    "Public deployment or actual public-origin checks",
+    "Public ACME certificate issuance",
+    "Intentional real persistent-volume saturation after write/fsync probe fix",
+    "Live Google human sign-in",
+    "Live email sending/inbox delivery",
+    "Physical entrance, pedestrian pickup or food-stock validation",
+    "Reviewed Spanish translation",
+    "Remote GitHub Actions run"
+  ],
+  "externalBlockers": [
+    "Authorized Docker-capable host and controlled public app domain",
+    "Production-suitable routing endpoint; directory/external links available without it",
+    "Unresolved pantry address/gate/walk-up facts and BTD timetable conflict",
+    "Optional Resend domain authentication and separate optional-service release operations"
+  ],
+  "containerRecoveryScope": "Restart and WAL backup/restore passed on image e7; UI-only save sync fix rebuilt and startup-smoke-tested as 8255fb40. See exact IDs/scopes in release-operations.json.",
+  "sourceChecks": {
+    "changedFileFormatting": "passed",
+    "documentationTargets": 187,
+    "missingTargets": 0,
+    "changedJson": "valid",
+    "sourceConfigurationHashes": 15,
+    "gitDiffCheck": "passed"
+  }
+}

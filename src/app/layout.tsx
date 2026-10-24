@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./reach-theme.css";
 import { SiteNavigation } from "@/components/site-navigation";
+import { publicFeatures } from "@/lib/release-features";
+export const dynamic = "force-dynamic";
 import { themeBootstrap } from "@/lib/theme";
 export const metadata: Metadata = {
   title: "Reach · A little more within reach",
@@ -13,7 +15,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      data-theme="reach"
+      data-theme="reach-dark"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
@@ -24,7 +26,7 @@ export default function RootLayout({
         <a className="skip-link" href="#page-content">
           Skip to content
         </a>
-        <SiteNavigation />
+        <SiteNavigation features={publicFeatures()} />
         <div id="page-content" tabIndex={-1}>
           {children}
         </div>

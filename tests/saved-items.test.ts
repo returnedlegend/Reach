@@ -48,7 +48,41 @@ describe("device saved trip boundary", () => {
       hours: "Hours not confirmed",
     });
     expect(text).toContain("Call to confirm before traveling.");
+    expect(text).toContain("Created:");
+    expect(text).toContain("Visit requirements: Eligibility not verified.");
+    expect(text).toContain("No source details are recorded");
+    expect(text).toContain("may be out of date");
     expect(text).toContain("not live directions");
+  });
+  it("exports a dated snapshot with visit requirements and source freshness", () => {
+    const trip = {
+      id: "trip-2",
+      resourceId: "pantry-2",
+      need: "food",
+      mode: "walking",
+      savedAt: "2026-10-24T12:00:00.000Z",
+    } as const;
+    const text = savedTripText(trip, {
+      name: "Community Pantry",
+      address: "123 Main St",
+      hours: "Tuesdays, 10–12",
+      eligibility: "Brazos County residents",
+      pedestrianPickup: "unknown",
+      sources: [
+        {
+          title: "Provider website",
+          url: "https://example.org/pantry",
+          checkedOn: "2026-10-22",
+        },
+      ],
+    });
+    expect(text).toContain("Created:");
+    expect(text).toContain("Visit requirements: Brazos County residents");
+    expect(text).toContain("Provider website (checked 2026-10-22)");
+    expect(text).toContain("https://example.org/pantry");
+    expect(text).toContain("Pedestrian pickup access: unknown");
+    expect(text).toContain("snapshot may be out of date");
+    expect(text).not.toContain("map tiles");
   });
   it("does not restore invalid coordinates from browser storage", () => {
     const saved = parseSavedItems(

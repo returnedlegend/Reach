@@ -17,6 +17,8 @@ export type Resource = {
   notes: string;
   phone?: string;
   offering?: string;
+  languages?: string[];
+  pedestrianPickup?: "allowed" | "not-allowed" | "unknown";
   verificationStatus?: "confirmed-site" | "needs-confirmation";
   accessibility?: string;
   detailsNeedConfirmation?: boolean;
@@ -40,6 +42,8 @@ export function resourceFromPantry(
     postalCode: metadata?.postalCode,
     phone: p.phone,
     offering: review?.offering ?? "Food assistance; details need confirmation.",
+    languages: p.languages,
+    pedestrianPickup: p.pedestrianPickup ?? "unknown",
     verificationStatus: review?.status ?? "needs-confirmation",
     detailsNeedConfirmation: review
       ? Boolean(review.detailsNeedConfirmation)

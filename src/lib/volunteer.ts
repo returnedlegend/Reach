@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 import { randomUUID } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
@@ -304,7 +305,7 @@ export function createVolunteerHandler(databasePath?: string) {
     suppliedParts?: string[],
   ): Promise<Response> => {
     try {
-      if (process.env.REACH_COMMUNITY_ENABLED !== "true")
+      if (!featureEnabled("volunteering"))
         fail(404, "Volunteer coordination is not enabled.");
       const db = openPantryDatabase(databasePath);
       initializeVolunteerSchema(db);

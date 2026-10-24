@@ -51,7 +51,10 @@ describe("TX-10 pantry admissions", () => {
       "washington-mobile-pantry-brenham",
     ];
     for (const id of excluded)
-      expect(realPantries.some((p) => p.id === id), id).toBe(false);
+      expect(
+        realPantries.some((p) => p.id === id),
+        id,
+      ).toBe(false);
   });
 
   it("retains source dates, address metadata and honest schedule uncertainty", () => {
@@ -59,14 +62,29 @@ describe("TX-10 pantry admissions", () => {
     for (const id of admittedIds) {
       const resource = foodResources.find((p) => p.id === id)!;
       expect(resource.sources.length, id).toBeGreaterThan(0);
+      const auditedOnOctober24 = [
+        "bedias-food-pantry",
+        "grimes-mobile-pantry",
+        "madison-mobile-pantry",
+      ].includes(id);
       expect(
         resource.sources.every(
           (source) =>
             source.url?.startsWith("https://") &&
-            /^2026-10-2[12]$/.test(source.checkedOn ?? ""),
+            (auditedOnOctober24
+              ? ["2026-10-21", "2026-10-24"].includes(source.checkedOn ?? "")
+              : /^2026-10-2[12]$/.test(source.checkedOn ?? "")),
         ),
         id,
       ).toBe(true);
+      if (auditedOnOctober24) {
+        expect(
+          resource.sources.find((source) =>
+            source.url?.includes("bvfb.org/find-food"),
+          )?.checkedOn,
+          id,
+        ).toBe("2026-10-24");
+      }
       expect(resource.city, id).toBeTruthy();
       expect(resource.coordinates).not.toBeNull();
     }
@@ -109,7 +127,9 @@ describe("TX-10 pantry admissions", () => {
         id,
       ).toBe(true);
     }
-    const madison = foodResources.find((p) => p.id === "madison-mobile-pantry")!;
+    const madison = foodResources.find(
+      (p) => p.id === "madison-mobile-pantry",
+    )!;
     expect(madison.windows).toEqual([]);
     expect(madison.hours).toMatch(/Nov 19/);
     expect(madison.notes).toMatch(/third Thursdays/);
@@ -117,7 +137,9 @@ describe("TX-10 pantry admissions", () => {
       (p) => p.id === "bastrop-county-emergency-food-pantry",
     )!;
     expect(bastrop.windows.some((w) => w.appointmentRequired)).toBe(true);
-    expect(bastrop.windows.some((w) => w.rule.kind === "nth-weekday")).toBe(true);
+    expect(bastrop.windows.some((w) => w.rule.kind === "nth-weekday")).toBe(
+      true,
+    );
     const bvfbPantry = realPantries.find(
       (p) => p.id === "anderson-food-pantry",
     )!;

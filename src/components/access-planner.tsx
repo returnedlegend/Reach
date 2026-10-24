@@ -11,6 +11,10 @@ import {
 import dynamic from "next/dynamic";
 import { transitStops, type Resource } from "../data/resources";
 import Link from "next/link";
+import {
+  CORE_FEATURES,
+  type PublicFeatures,
+} from "../lib/public-feature-types";
 import { chicagoNow, googleMapsUrl, validCoordinates } from "../lib/journey";
 import { formatTime } from "../lib/time";
 import type {
@@ -39,6 +43,7 @@ type Props = {
   onLocationChange: (location: SelectedLocation) => void;
   onBack: () => void;
   foodResources: Resource[];
+  features?: PublicFeatures;
 };
 type AssistReply = NeedsSuggestion;
 
@@ -211,8 +216,12 @@ function itineraryText(
   const lines = [
     `Reach food itinerary: ${option.resource.name}`,
     option.resource.address,
+    `Created: ${new Date().toISOString()}`,
+    "Saved snapshot: schedules, food and routes may change. This file does not provide offline routing or live updates.",
     `Date: ${input.date}`,
     "All trip times: America/Chicago",
+    `Planning status: ${option.status === "fits" ? "Fits the checked limits" : option.status === "no" ? "Does not fit" : "May fit; confirmation needed"}. Food and admission are not guaranteed.`,
+    `Pedestrian pickup: ${option.resource.pedestrianPickup ?? "unknown"}`,
     `Travel mode: ${input.mode === "walking" ? "Walking" : input.mode === "driving" ? "Driving" : "Public transit"}`,
     ...(includeOrigin
       ? [
@@ -258,6 +267,13 @@ function itineraryText(
           ...option.returnJourney.steps.map((step) => `• ${step}`),
         ]
       : []),
+    ...(input.returnTo && !option.returnJourney
+      ? ["Requested return: unavailable. This is not a confirmed round trip."]
+      : []),
+    "Trip checks:",
+    ...option.reasons.map((v) => `• ${v}`),
+    "Uncertainties:",
+    ...option.warnings.map((v) => `• ${v}`),
     "Confirm current hours, eligibility, food availability, fares, and accessibility with the pantry before travel.",
   ];
   return lines.join("\n");
@@ -268,6 +284,7 @@ export function AccessPlanner({
   onLocationChange,
   onBack,
   foodResources,
+  features = CORE_FEATURES,
 }: Props) {
   const defaults = useMemo(chicagoDefaults, []);
   const [input, setInput] = useState<AccessInput>(() => ({
@@ -358,7 +375,7 @@ export function AccessPlanner({
           body: JSON.stringify({
             input: nextInput,
             needs,
-            explain,
+            explain: features.ai && explain,
             ...(destinationId ? { destinationId } : {}),
           }),
           signal: controller.signal,
@@ -382,6 +399,7 @@ export function AccessPlanner({
             ? current
             : (payload.options.find((option) => option.id === destinationId)
                 ?.id ??
+              payload.recommendation?.selectedId ??
               payload.options[0]?.id ??
               ""),
         );
@@ -561,9 +579,11 @@ export function AccessPlanner({
           ← Back
         </button>
         <span>Food access planner</span>
-        <Link className="btn btn-outline" href="/outreach">
-          Availability inquiries
-        </Link>
+        {features.email && (
+          <Link className="btn btn-outline" href="/outreach">
+            Availability inquiries
+          </Link>
+        )}
       </div>
       <header className="access-planner__hero">
         <p className="access-planner__eyebrow">
@@ -587,7 +607,8 @@ export function AccessPlanner({
                 "Preferences changed. Search again to refresh the trip.",
               );
             }}
-            aiEnabled={explain}
+            aiAvailable={features.ai}
+            aiEnabled={features.ai && explain}
             onAIEnabledChange={(value) => {
               invalidate();
               setExplain(value);
@@ -917,66 +938,70 @@ export function AccessPlanner({
           </details>
         </section>
 
-        <section
-          className="access-planner__section"
-          aria-labelledby="access-assist-heading"
-        >
-          <h2 id="access-assist-heading">Want help describing preferences?</h2>
-          <p>
-            Optional interpretation can suggest form changes for you to review.
-            You can use every control without it. Using this button sends the
-            text below to the configured AI provider. Do not include names,
-            addresses, coordinates or contact details.
-          </p>
-          <label>
-            Describe what matters to your trip
-            <textarea
-              className="textarea textarea-bordered"
-              maxLength={1200}
-              value={assistText}
-              onChange={(event) => setAssistText(event.target.value)}
-              placeholder="For example, I can walk for 10 minutes and need step-free travel."
-            />
-          </label>
-          <button
-            className="btn btn-outline"
-            type="button"
-            onClick={requestAssist}
-            disabled={!assistText.trim()}
+        {features.ai && (
+          <section
+            className="access-planner__section"
+            aria-labelledby="access-assist-heading"
           >
-            Interpret preferences
-          </button>
-          {assist && (
-            <div className="access-planner__assist" role="status">
-              <p>{assist.message}</p>
-              {assist.status === "available" &&
-                (assist.patch || assist.needs) && (
-                  <>
-                    <p>
-                      Suggested preferences:{" "}
-                      {readablePatch({
-                        ...assist.patch,
-                        ...assist.needs,
-                      } as Partial<AccessInput>)}
-                    </p>
-                    <button
-                      className="btn btn-outline"
-                      type="button"
-                      onClick={applyAssist}
-                    >
-                      Review and apply suggested preferences
-                    </button>
-                    {appliedAssist && (
+            <h2 id="access-assist-heading">
+              Want help describing preferences?
+            </h2>
+            <p>
+              Optional interpretation can suggest form changes for you to
+              review. You can use every control without it. Using this button
+              sends the text below to the configured AI provider. Do not include
+              names, addresses, coordinates or contact details.
+            </p>
+            <label>
+              Describe what matters to your trip
+              <textarea
+                className="textarea textarea-bordered"
+                maxLength={1200}
+                value={assistText}
+                onChange={(event) => setAssistText(event.target.value)}
+                placeholder="For example, I can walk for 10 minutes and need step-free travel."
+              />
+            </label>
+            <button
+              className="btn btn-outline"
+              type="button"
+              onClick={requestAssist}
+              disabled={!assistText.trim()}
+            >
+              Interpret preferences
+            </button>
+            {assist && (
+              <div className="access-planner__assist" role="status">
+                <p>{assist.message}</p>
+                {assist.status === "available" &&
+                  (assist.patch || assist.needs) && (
+                    <>
                       <p>
-                        Preferences applied. Check the fields above and search
-                        when ready.
+                        Suggested preferences:{" "}
+                        {readablePatch({
+                          ...assist.patch,
+                          ...assist.needs,
+                        } as Partial<AccessInput>)}
                       </p>
-                    )}
-                  </>
-                )}
-            </div>
-          )}
-        </section>
+                      <button
+                        className="btn btn-outline"
+                        type="button"
+                        onClick={applyAssist}
+                      >
+                        Review and apply suggested preferences
+                      </button>
+                      {appliedAssist && (
+                        <p>
+                          Preferences applied. Check the fields above and search
+                          when ready.
+                        </p>
+                      )}
+                    </>
+                  )}
+              </div>
+            )}
+          </section>
+        )}
         <button
           className="btn btn-primary access-planner__search"
           form="access-travel-preferences"
@@ -1010,6 +1035,56 @@ export function AccessPlanner({
           <p className="access-planner__timezone-note">
             All trip times are America/Chicago.
           </p>
+          {response.recommendation && (
+            <section
+              className="card bg-base-100 p-4 my-4"
+              aria-label="Pantry recommendation"
+            >
+              <h3>{response.recommendation.headline}</h3>
+              <p>
+                {response.recommendation.status === "confirm"
+                  ? "Confirm before leaving. "
+                  : ""}
+                {response.recommendation.comparison.complete
+                  ? "Complete comparison of the verified sites in this search."
+                  : "Limited comparison: another pantry could be better."}
+              </p>
+              <p>
+                {response.recommendation.comparison.routedPantries} routed ·{" "}
+                {response.recommendation.comparison.staticallyExcludedPantries}{" "}
+                ruled out by known timing or pickup constraints ·{" "}
+                {response.recommendation.comparison.unresolvedPantries}{" "}
+                unresolved ·{" "}
+                {response.recommendation.comparison.unverifiedPantries} sites
+                without verified locations excluded from recommendations.
+              </p>
+              {response.recommendation.selectedId && (
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() =>
+                    setSelectedId(response.recommendation!.selectedId!)
+                  }
+                >
+                  View recommended pantry
+                </button>
+              )}
+              <details className="reach-disclosure">
+                <summary>Why this recommendation?</summary>
+                <ul>
+                  {response.recommendation.explanation.map((reason) => (
+                    <li key={reason}>{reason}</li>
+                  ))}
+                </ul>
+                <p>
+                  Algorithm: feasibility checks, then weighted travel, walking,
+                  cost uncertainty, waiting, transfers and intake buffer.
+                  Different tradeoffs are preserved as alternatives. Scores are
+                  not probabilities.
+                </p>
+              </details>
+            </section>
+          )}
           {response.guidance && (
             <NavigationGuidanceView
               guidance={response.guidance}
@@ -1337,17 +1412,19 @@ export function AccessPlanner({
                           </p>
                         </div>
                       )}
-                    {selectedId === option.id && option.kind === "pantry" && (
-                      <OutreachPanel
-                        pantryId={option.resource.id}
-                        onAvailabilityChange={() => {
-                          setStaleAvailability(true);
-                          setMessage(
-                            "Availability updated. Recalculate to review a revised trip.",
-                          );
-                        }}
-                      />
-                    )}
+                    {features.email &&
+                      selectedId === option.id &&
+                      option.kind === "pantry" && (
+                        <OutreachPanel
+                          pantryId={option.resource.id}
+                          onAvailabilityChange={() => {
+                            setStaleAvailability(true);
+                            setMessage(
+                              "Availability updated. Recalculate to review a revised trip.",
+                            );
+                          }}
+                        />
+                      )}
                   </article>
                 ))}
               </div>

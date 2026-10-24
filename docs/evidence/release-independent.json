@@ -1,0 +1,241 @@
+{
+  "checkedAt": "2026-10-24T21:59:17Z",
+  "scope": "Independent focused review of the anonymous production-core pantry recommendation algorithm; synthetic fixtures only",
+  "releaseProfile": "anonymous-directory-and-trip-planner; optional account-dependent services gated off",
+  "checks": {
+    "calendarTimezone": {
+      "status": "pass",
+      "coverage": [
+        "Chicago standard-time conversion",
+        "Chicago daylight-time conversion",
+        "spring-forward nonexistent wall time is rejected",
+        "fall-back ambiguous wall time is rejected",
+        "explicit next-day service window with after-midnight return deadline"
+      ],
+      "evidence": [
+        "tests/release-recommendation.test.ts",
+        "tests/access-engine.test.ts"
+      ],
+      "limitation": "Synthetic time fixtures; no provider or pantry calendar was independently validated."
+    },
+    "returnTrip": {
+      "status": "pass",
+      "initialFinding": "The initial evaluator accepted a returned itinerary whose departure preceded the modeled visit end, despite passing serviceEnd as the lookup's earliest argument.",
+      "recheck": "The evaluator now rejects a returned itinerary departing before the modeled visit ends. Regression passed.",
+      "reproduction": "Synthetic outbound arrival 08:30; modeled service ends 09:20; return lookup receives earliest 09:20 but returns a trip departing 09:05.",
+      "evidence": "tests/release-recommendation.test.ts",
+      "result": "No fits recommendation; the invalid return journey is not exposed as the accepted complete return."
+    },
+    "outboundChronology": {
+      "status": "pass",
+      "coverage": "An outbound route departing before the requested departure time is rejected.",
+      "evidence": "tests/release-recommendation.test.ts"
+    },
+    "unknownAndCombinedFare": {
+      "status": "pass",
+      "coverage": [
+        "unknown outbound fare with known over-budget return is rejected",
+        "unknown fare remains null and cannot win as if free",
+        "two individually affordable legs whose combined known fare exceeds budget are rejected"
+      ],
+      "evidence": [
+        "tests/access-engine.test.ts",
+        "tests/pantry-recommendation.test.ts",
+        "tests/release-recommendation.test.ts"
+      ]
+    },
+    "walkAccessAndBudgets": {
+      "status": "pass",
+      "coverage": [
+        "complete-trip walking time and distance limits",
+        "cumulative round-trip walking-time limit",
+        "transfer cap",
+        "arrival and return deadlines",
+        "unverified pedestrian pickup remains conditional",
+        "published pedestrian pickup prohibition excludes walking/transit"
+      ],
+      "evidence": [
+        "tests/access-engine.test.ts",
+        "tests/release-recommendation.test.ts"
+      ],
+      "limitation": "No evidence here establishes actual sidewalk safety, step-free access, entrance location, or pickup permission."
+    },
+    "releaseRecommendation": {
+      "status": "pass",
+      "reason": "Focused recommendation and adjacent route/access checks passed. Integrated UI/server and broader release gates are outside this evidence record."
+    },
+    "productionCoreAndAccountBoundary": {
+      "status": "pass",
+      "coverage": [
+        "production defaults to core despite stale account/community/provider settings",
+        "invalid release profile fails closed",
+        "explicit extended profile requires per-feature production attestations",
+        "direct optional API handlers reject before storage or provider work",
+        "seeded valid administrator session resolves in attested extended profile and is ignored in core"
+      ],
+      "evidence": "tests/release-features.test.ts plus one-off seeded SQLite session check"
+    },
+    "publicCorrections": {
+      "status": "pass",
+      "coverage": [
+        "same-origin bounded anonymous submission",
+        "duplicate suppression without editing authoritative pantry data",
+        "per-pantry rate limit",
+        "private retention expires after 90 days"
+      ],
+      "evidence": "tests/public-corrections.test.ts"
+    },
+    "maintainedReviewMigration": {
+      "status": "pass",
+      "coverage": "One-off disposable SQLite upgrade check confirmed migration 2 updates an untouched active version-1 import once, preserves a version-4 manager-edited record and preserves an archived version-1 record.",
+      "evidence": "src/lib/pantry-store.ts applyMaintainedReview plus one-off seeded SQLite check"
+    },
+    "mailWorkerCoreBehavior": {
+      "status": "pass",
+      "coverage": "Source review confirms notification and outreach dispatch return unavailable while email delivery is disabled, before queued work is processed.",
+      "evidence": [
+        "src/lib/notifications-worker.ts",
+        "src/lib/outreach-worker.ts",
+        "tests/mail-delivery.test.ts"
+      ]
+    },
+    "productionCoreBrowserGate": {
+      "status": "pass",
+      "coverage": "The refreshed host production build passed all eight core browser cases across mobile and desktop, including direct optional API gates, anonymous pantry save/correction, useful planner behavior with routing disabled, and immediate Saved-tab synchronization after embedded pantry saving.",
+      "command": "REACH_TEST_URL=https://localhost:3443 REACH_TEST_LOCAL_TLS=true PLAYWRIGHT_CHROMIUM_PATH=/usr/bin/chromium npx playwright test tests/release-core.spec.ts --project=mobile --project=desktop --output=/tmp/reach-release-core-full-recheck",
+      "result": "8 passed",
+      "screenshot": "docs/evidence/release-core-mobile.png; captured and visually inspected."
+    },
+    "embeddedSavedTabSync": {
+      "status": "pass",
+      "reportedInitialReproduction": "The main agent reproduced a prior-build defect where saving in embedded pantry details left the Saved tab empty until reload.",
+      "sourceReview": "PantryDetail calls onDeviceSave only after storeSavedItems succeeds; GuidedReach supplies setSaved so the parent Saved tab receives persisted resource IDs.",
+      "independentRecheck": {
+        "command": "REACH_TEST_URL=https://localhost:3443 REACH_TEST_LOCAL_TLS=true PLAYWRIGHT_CHROMIUM_PATH=/usr/bin/chromium npx playwright test tests/release-core.spec.ts --project=mobile --project=desktop --grep \"saving in embedded pantry details updates Saved immediately\" --output=/tmp/reach-release-core-save-regression",
+        "cases": 2,
+        "passed": 2,
+        "failed": 0
+      }
+    },
+    "persistentVolumeWritePreflight": {
+      "status": "pass",
+      "reportedBy": "release operations agent; not rerun by this verifier",
+      "sourceReview": "pass",
+      "finding": "The check creates an exclusive private file in /var/lib/reach, writes and syncs 4096 bytes, and returns unwritable on a write or sync failure; it closes and removes the probe in finally.",
+      "runtimeEvidence": "release-operations.json reports a 4096-byte write and fsync passed on the named data volume and a writable tmpfs mount was rejected as volatile.",
+      "limitation": "No intentionally saturated persistent-volume ENOSPC simulation after the fix was recorded; do not claim that fault-injection case passed."
+    },
+    "postFixFullVolumeEnospcInjection": {
+      "status": "not-run",
+      "reason": "The operations evidence records a real 4096-byte write/fsync and volatile tmpfs rejection but no deliberate persistent-volume saturation after the fix."
+    },
+    "syntheticStorageFaultHandling": {
+      "status": "pass",
+      "testFile": "tests/release-storage-probe.test.ts",
+      "coverage": [
+        "synthetic ENOSPC during probe write makes preflight fail and cleanup runs",
+        "synthetic EIO during fsync makes preflight fail and cleanup runs"
+      ],
+      "limitation": "Mocks filesystem failures; does not fill a real volume."
+    },
+    "operationsEvidenceProvenance": {
+      "status": "pass",
+      "checkedBy": "independent verifier",
+      "evidence": "Refreshed release-operations.json base HEAD and all 15 listed file SHA-256 values match the current worktree.",
+      "runtimeEvidenceOwner": "release operations agent; container operations were not repeated by this verifier.",
+      "checkedAt": "2026-10-24T21:59:17Z"
+    },
+    "refreshedOperationsImage": {
+      "status": "pass",
+      "reportedBy": "release operations agent; not independently run by this verifier",
+      "imageId": "sha256:8255fb40f4eedb0741192d7d82bbff167b8cb7467e82d622357c8402e21f7aeb",
+      "sourceHashes": "All 14 recorded file hashes and base HEAD match the current worktree.",
+      "smokeChecks": "Built image startup preflight, health and account status passed with no tmpfs override.",
+      "recoveryScope": "Container replacement and WAL backup/restore remain evidenced on preceding image e7 only; not rerun on the UI-refresh image 8255fb40.",
+      "recoveryImageId": "sha256:e7bffc2083a386c178515781836b4d485aee8ba6694431f1016b8fc74bbb0fb0"
+    },
+    "caddyErrorLogRedaction": {
+      "status": "pass",
+      "sourceReview": "The Caddy global default logger wraps structured JSON with a filter that deletes the entire request field, removing URI/query/cookie/client-address metadata from that field in operational errors.",
+      "caddyfileSha256": "cfad2e06e70b31417ba8834781ac6dfca646d7d731fdf9b44b81491b2cda155c",
+      "runtimeEvidence": "release-log-redaction.json reports production Caddyfile validation passed and an isolated upstream 502 with the structured request field and synthetic OAuth query absent; no published ports or ACME requests.",
+      "runtimeEvidenceOwner": "release operations agent; not independently rerun by this verifier",
+      "appImageChanged": false
+    },
+    "caddyFollowupOperationsMetadata": {
+      "status": "pass",
+      "evidence": "release-operations.json includes the Caddyfile and publishing-guide hashes and scopes this as a mounted Caddy configuration/operator documentation follow-up.",
+      "sourceHashCheck": "All 15 listed SHA-256 values and base HEAD match the current worktree.",
+      "imageChanged": false
+    }
+  },
+  "focusedTestRuns": [
+    {
+      "command": "npx vitest run tests/release-recommendation.test.ts tests/access-engine.test.ts tests/pantry-recommendation.test.ts tests/navigation-driving.test.ts tests/access-routing.test.ts",
+      "files": 5,
+      "tests": 34,
+      "passed": 34,
+      "failed": 0,
+      "initialRegression": "The return itinerary was initially accepted with status fits; evaluator chronology validation was added and the regression now passes."
+    },
+    {
+      "command": "npx vitest run tests/release-features.test.ts tests/public-corrections.test.ts tests/release-data.test.ts tests/release-preflight.test.ts tests/mail-delivery.test.ts",
+      "files": 5,
+      "tests": 36,
+      "passed": 36,
+      "failed": 0
+    },
+    {
+      "command": "npx vitest run tests/pantry-database.test.ts",
+      "files": 1,
+      "tests": 17,
+      "passed": 17,
+      "failed": 0
+    }
+  ],
+  "focusedTotals": {
+    "files": 11,
+    "tests": 87,
+    "passed": 87,
+    "failed": 0
+  },
+  "focusedBrowserRun": {
+    "file": "tests/release-core.spec.ts",
+    "projects": ["mobile", "desktop"],
+    "cases": 8,
+    "passed": 8,
+    "failed": 0,
+    "tls": "Supplied canonical local HTTPS origin; local certificate errors ignored only for this test command.",
+    "note": "Run against the refreshed host production build. The embedded save regression also passed as an isolated two-case mobile/desktop run."
+  },
+  "preflightUnitRecheck": {
+    "command": "npx vitest run tests/release-preflight.test.ts",
+    "tests": 14,
+    "passed": 14,
+    "failed": 0,
+    "limit": "Environment-validation unit cases do not exercise actual volume ENOSPC behavior."
+  },
+  "storageFaultFocusedRun": {
+    "command": "npx vitest run tests/release-storage-probe.test.ts tests/release-preflight.test.ts",
+    "files": 2,
+    "tests": 16,
+    "passed": 16,
+    "failed": 0,
+    "note": "Fourteen preflight cases repeated; two new synthetic storage failure tests passed."
+  },
+  "updatedFocusedTotals": {
+    "uniqueFiles": 12,
+    "uniqueTests": 89,
+    "passed": 89,
+    "failed": 0
+  },
+  "checksNotRepeated": [
+    "full test suite",
+    "TypeScript",
+    "production build",
+    "data validation script",
+    "release operations container/image checks (reviewed from ops evidence, not rerun by this verifier)",
+    "live provider checks",
+    "public deployment"
+  ]
+}

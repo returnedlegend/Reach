@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 /** Central server-side settings. Import only the type into browser code. */
 if (typeof window !== "undefined")
   throw new Error("AI configuration is server-only.");
@@ -56,7 +57,7 @@ export function getAIServiceStatus(): AIServiceStatus {
     message: string,
   ): AIServiceStatus => ({ state, code, message, model });
   const provider = process.env.REACH_AI_PROVIDER?.toLowerCase();
-  if (provider === "disabled")
+  if (!featureEnabled("ai") || provider === "disabled")
     return result(
       "disabled",
       "disabled",

@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-10-24T21:31:53.656Z",
+  "scope": "Current local production build at canonical HTTPS test origin; no public deployment",
+  "screenshots": [
+    "release-home-mobile.png",
+    "release-live-map-mobile.png",
+    "release-home-tablet.png",
+    "release-home-desktop.png"
+  ],
+  "accessibility": [
+    {
+      "viewport": "mobile",
+      "scope": "Initial anonymous home",
+      "violations": []
+    },
+    {
+      "viewport": "tablet",
+      "scope": "Initial anonymous home",
+      "violations": []
+    },
+    {
+      "viewport": "desktop",
+      "scope": "Initial anonymous home",
+      "violations": []
+    }
+  ],
+  "map": {
+    "actualAssetHttp": [
+      200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200
+    ],
+    "rendered": true,
+    "attributionVisible": true,
+    "userLocationSelected": false,
+    "view": "Default Bryan\u2013College Station view with maintained pantry pins; no personal origin."
+  }
+}

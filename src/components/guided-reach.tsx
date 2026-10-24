@@ -57,6 +57,8 @@ import type {
   MapAttribution,
 } from "@/lib/map-types";
 import { formatTime } from "@/lib/time";
+import { CORE_FEATURES, type PublicFeatures } from "@/lib/public-feature-types";
+import { serviceFreshness } from "@/lib/service-freshness";
 import styles from "./guided-reach.module.css";
 
 type Tab = "explore" | "map" | "community" | "saved";
@@ -133,10 +135,12 @@ export function GuidedReach({
   initialHotspots = false,
   foodResources = [],
   directoryError = "",
+  features = CORE_FEATURES,
 }: {
   initialHotspots?: boolean;
   foodResources?: Resource[];
   directoryError?: string;
+  features?: PublicFeatures;
 } = {}) {
   const allResources = [...foodResources, ...transportResources];
   const [detailId, setDetailId] = useState<string | null>(null);
@@ -146,12 +150,17 @@ export function GuidedReach({
   }, [detailId]);
   const [clock, setClock] = useState<Date | null>(null);
   const [tab, setTab] = useState<Tab>(
-    initialHotspots ? "community" : "explore",
+    initialHotspots && features.community ? "community" : "explore",
   );
-  const [hotspotRequest, setHotspotRequest] = useState(initialHotspots ? 1 : 0);
-  const [communityLoaded, setCommunityLoaded] = useState(initialHotspots);
+  const [hotspotRequest, setHotspotRequest] = useState(
+    initialHotspots && features.community ? 1 : 0,
+  );
+  const [communityLoaded, setCommunityLoaded] = useState(
+    initialHotspots && features.community,
+  );
   useEffect(() => {
-    if (tab === "community" || tab === "map") setCommunityLoaded(true);
+    if (features.community && (tab === "community" || tab === "map"))
+      setCommunityLoaded(true);
   }, [tab]);
   const [step, setStep] = useState(0);
   const flowPanel = useRef<HTMLElement>(null);
@@ -773,6 +782,7 @@ export function GuidedReach({
     detailed?: boolean;
   }) {
     const summary = summarizeResource(resource, clock ?? undefined);
+    const freshness = clock ? serviceFreshness(resource, clock) : null;
     return (
       <Surface
         key={resource.id}
@@ -803,6 +813,19 @@ export function GuidedReach({
           {summary.address}
         </p>
         <p className="reach-offering">{summary.offering}</p>
+        {detailed && resource.pedestrianPickup !== "allowed" && (
+          <p className={styles.pedestrianPickup} role="status">
+            <strong>
+              Pedestrian pickup:{" "}
+              {resource.pedestrianPickup === "not-allowed"
+                ? "not allowed"
+                : "UNKNOWN"}
+            </strong>
+            {resource.pedestrianPickup === "not-allowed"
+              ? " — walking or transit pickup is not available."
+              : " — confirm walk-in access before using walking or transit directions."}
+          </p>
+        )}
         <p className="reach-hours">
           <Clock3 size={15} aria-hidden="true" />
           <span className="line-clamp-2">{summary.hours}</span>
@@ -813,6 +836,11 @@ export function GuidedReach({
             ? " · Some details need confirmation."
             : ". Availability is not live."}
         </p>
+        {freshness && (
+          <p className="reach-help" data-source-freshness={freshness.status}>
+            {freshness.label}
+          </p>
+        )}
         {travelComparisons[resource.id] && (
           <p className="reach-help">
             Routed: {travelComparisons[resource.id].miles.toFixed(2)} miles ·{" "}
@@ -843,7 +871,9 @@ export function GuidedReach({
             Pantry information & busy times
           </button>
         )}
-        {detailed && <SourceDetails resource={resource} />}
+        {detailed && (
+          <SourceDetails resource={resource} now={clock ?? undefined} />
+        )}
       </Surface>
     );
   }
@@ -867,8 +897,10 @@ export function GuidedReach({
       communityMarkers={communityMarkers}
       selectedCommunityId={communitySelection}
       onCommunitySelect={(id) => {
-        setCommunitySelection(id);
-        setTab("community");
+        if (features.community) {
+          setCommunitySelection(id);
+          setTab("community");
+        }
       }}
       onOriginChange={(coordinates) =>
         changeLocation({
@@ -1055,17 +1087,18 @@ export function GuidedReach({
           Check hours and availability before visiting.
         </p>
         {renderResourceActions({ resource: selected, compact: true })}
-        {foodResources.some((pantry) => pantry.id === selected.id) && (
-          <button
-            className="btn btn-outline reach-action"
-            onClick={(event) => {
-              assistantOpener.current = event.currentTarget;
-              setAssistantOpen(true);
-            }}
-          >
-            Ask Reach AI assistant
-          </button>
-        )}
+        {features.ai &&
+          foodResources.some((pantry) => pantry.id === selected.id) && (
+            <button
+              className="btn btn-outline reach-action"
+              onClick={(event) => {
+                assistantOpener.current = event.currentTarget;
+                setAssistantOpen(true);
+              }}
+            >
+              Ask Reach AI assistant
+            </button>
+          )}
         {foodResources.some((pantry) => pantry.id === selected.id) && (
           <button
             className="btn btn-ghost reach-text-button"
@@ -1152,6 +1185,7 @@ export function GuidedReach({
         onLocationChange={changeLocation}
         onBack={() => setAccessPlanning(false)}
         foodResources={foodResources}
+        features={features}
       />
     );
   return (
@@ -1172,13 +1206,18 @@ export function GuidedReach({
           Central Texas
         </span>
         <span className="reach-account-note">No account needed to explore</span>
-        <Link href="/volunteer">Volunteer pickups</Link>
-        <Link href="/account">Account</Link>
+        {features.volunteering && (
+          <Link href="/volunteer">Volunteer pickups</Link>
+        )}
+        {features.accounts && <Link href="/account">Account</Link>}
         <ThemeToggle />
         <MoreMenu>
-          <Link href="/volunteer">Volunteer pickups</Link>
+          {features.volunteering && (
+            <Link href="/volunteer">Volunteer pickups</Link>
+          )}
+          {features.accounts && <Link href="/account">Account</Link>}
           <Link href="/pantry-planner">Detailed trip planner</Link>
-          <Link href="/manage">Manage a pantry</Link>
+          {features.accounts && <Link href="/manage">Manage a pantry</Link>}
           <Link href="/privacy">Privacy & location</Link>
         </MoreMenu>
       </header>
@@ -1187,7 +1226,15 @@ export function GuidedReach({
           [
             { id: "explore", label: "Explore", Icon: Compass },
             { id: "map", label: "Map", Icon: MapIcon },
-            { id: "community", label: "Community", Icon: HeartHandshake },
+            ...(features.community
+              ? [
+                  {
+                    id: "community" as const,
+                    label: "Community",
+                    Icon: HeartHandshake,
+                  },
+                ]
+              : []),
             { id: "saved", label: "Saved", Icon: Bookmark },
           ] as const
         ).map(({ id, label, Icon }) => (
@@ -1252,7 +1299,7 @@ export function GuidedReach({
                   </div>
                 )}
                 <div className={styles.secondaryTools}>
-                  <p>Need help comparing your trip?</p>
+                  <p>Find the best checked pantry for your trip.</p>
                   <button
                     className={"btn btn-outline " + styles.secondaryAction}
                     onClick={() => {
@@ -1263,29 +1310,33 @@ export function GuidedReach({
                     Find food I can reach{" "}
                     <ArrowRight size={18} aria-hidden="true" />
                   </button>
-                  <button
-                    className={"btn btn-outline " + styles.secondaryAction}
-                    onClick={(event) => {
-                      assistantOpener.current = event.currentTarget;
-                      setAssistantOpen(true);
-                    }}
-                  >
-                    Reach AI assistant
-                  </button>
+                  {features.ai && (
+                    <button
+                      className={"btn btn-outline " + styles.secondaryAction}
+                      onClick={(event) => {
+                        assistantOpener.current = event.currentTarget;
+                        setAssistantOpen(true);
+                      }}
+                    >
+                      Reach AI assistant
+                    </button>
+                  )}
                 </div>
               </div>
               <div className={styles.heroLinks}>
-                <button
-                  aria-label="Browse food hotspots"
-                  className="btn btn-ghost reach-text-button"
-                  onClick={() => {
-                    setHotspotRequest((request) => request + 1);
-                    setTab("community");
-                  }}
-                >
-                  Food hotspots <ArrowRight size={17} aria-hidden="true" />
-                </button>
-                {step === 0 && (
+                {features.community && (
+                  <button
+                    aria-label="Browse food hotspots"
+                    className="btn btn-ghost reach-text-button"
+                    onClick={() => {
+                      setHotspotRequest((request) => request + 1);
+                      setTab("community");
+                    }}
+                  >
+                    Food hotspots <ArrowRight size={17} aria-hidden="true" />
+                  </button>
+                )}
+                {step === 0 && features.volunteering && (
                   <Link href="/volunteer">
                     Help with a food pickup{" "}
                     <ArrowRight size={17} aria-hidden="true" />
@@ -1295,10 +1346,10 @@ export function GuidedReach({
             </section>
             <nav className="reach-progress" aria-label="Your progress">
               {[
-                "Your need",
+                "Choose support",
                 "Starting point",
-                "Travel choices",
-                "Your options",
+                "Choose a pantry",
+                "Visit & save",
               ].map((label, index) => (
                 <span
                   key={label}
@@ -1548,7 +1599,7 @@ export function GuidedReach({
                 </>
               )}
             </section>
-            {step === 0 && (
+            {step === 0 && features.community && (
               <aside className="reach-community-invite">
                 <span className="reach-invite-icon">
                   <HeartHandshake size={28} />
@@ -1578,16 +1629,18 @@ export function GuidedReach({
         )}
         {tab === "map" && (
           <section className="reach-map-view">
-            <button
-              className="btn btn-outline reach-action"
-              type="button"
-              onClick={(event) => {
-                assistantOpener.current = event.currentTarget;
-                setAssistantOpen(true);
-              }}
-            >
-              Reach AI assistant
-            </button>
+            {features.ai && (
+              <button
+                className="btn btn-outline reach-action"
+                type="button"
+                onClick={(event) => {
+                  assistantOpener.current = event.currentTarget;
+                  setAssistantOpen(true);
+                }}
+              >
+                Reach AI assistant
+              </button>
+            )}
             <div className="reach-section-heading">
               <div>
                 <span className="reach-kicker">FIND YOUR NEXT STOP</span>
@@ -1747,6 +1800,25 @@ export function GuidedReach({
                           .
                         </p>
                         {modeSelect("navigation-mode")}
+                        {(mode === "walking" || mode === "transit") &&
+                          selected.pedestrianPickup !== "allowed" && (
+                            <aside
+                              className={styles.pedestrianPickup}
+                              role="alert"
+                            >
+                              <strong>
+                                Pedestrian pickup:{" "}
+                                {selected.pedestrianPickup === "not-allowed"
+                                  ? "not allowed"
+                                  : "UNKNOWN"}
+                              </strong>
+                              <span>
+                                {selected.pedestrianPickup === "not-allowed"
+                                  ? " Do not plan a walking or transit pickup here. Choose another pantry or travel by car."
+                                  : " Confirm that walk-in pickup is available before traveling by foot or transit."}
+                              </span>
+                            </aside>
+                          )}
                         <button
                           className="btn btn-primary reach-primary"
                           disabled={busy || !location || !selected.coordinates}
@@ -1909,26 +1981,28 @@ export function GuidedReach({
             </div>
           </section>
         )}
-        <div hidden={tab !== "community"}>
-          {tab === "community" && (
-            <div className="reach-section-heading">
-              <div>
-                <span className="reach-kicker">
-                  NEIGHBORS HELPING NEIGHBORS
-                </span>
-                <h1>Food sharing</h1>
+        {features.community && (
+          <div hidden={tab !== "community"}>
+            {tab === "community" && (
+              <div className="reach-section-heading">
+                <div>
+                  <span className="reach-kicker">
+                    NEIGHBORS HELPING NEIGHBORS
+                  </span>
+                  <h1>Food sharing</h1>
+                </div>
               </div>
-            </div>
-          )}
-          {communityLoaded && (
-            <CommunityPanel
-              hotspotRequest={hotspotRequest}
-              origin={location?.coordinates ?? null}
-              onDiscoveryChange={setCommunityMarkers}
-              selectedMarkerId={communitySelection}
-            />
-          )}
-        </div>
+            )}
+            {communityLoaded && (
+              <CommunityPanel
+                hotspotRequest={hotspotRequest}
+                origin={location?.coordinates ?? null}
+                onDiscoveryChange={setCommunityMarkers}
+                selectedMarkerId={communitySelection}
+              />
+            )}
+          </div>
+        )}
         {tab === "saved" && (
           <section className="reach-saved">
             <span className="reach-kicker">HERE WHEN YOU NEED THEM</span>
@@ -1980,14 +2054,14 @@ export function GuidedReach({
                 >
                   <h3>{resource.name}</h3>
                   <p>
-                    {trip.mode} · saved{" "}
+                    {trip.mode} · created{" "}
                     {new Date(trip.savedAt).toLocaleDateString()}
                   </p>
                   <p>
                     {trip.origin
                       ? "Precise starting location included with your consent."
                       : "Starting location not saved."}{" "}
-                    This snapshot is not live directions.
+                    This snapshot may be out of date and is not live directions.
                   </p>
                   <details className="reach-disclosure">
                     <summary>View saved trip</summary>
@@ -2114,6 +2188,8 @@ export function GuidedReach({
             id={detailId}
             initialOrigin={location?.coordinates ?? null}
             initialLocation={location}
+            features={features}
+            onDeviceSave={setSaved}
             onLocationChange={(origin) => {
               if (origin) changeLocation(origin);
               else {
@@ -2131,7 +2207,7 @@ export function GuidedReach({
           />
         </dialog>
       )}
-      {assistantOpen && (
+      {assistantOpen && features.ai && (
         <ReachAssistant
           returnFocusTo={assistantOpener.current}
           location={location}
@@ -2183,11 +2259,15 @@ export function GuidedReach({
   );
 }
 
-function SourceDetails({ resource }: { resource: Resource }) {
+function SourceDetails({ resource, now }: { resource: Resource; now?: Date }) {
+  const freshness = now ? serviceFreshness(resource, now) : null;
   return (
     <details className="reach-disclosure reach-source-details">
       <summary>Sources & verification details</summary>
       <p>{resource.notes}</p>
+      {freshness && (
+        <p data-source-freshness={freshness.status}>{freshness.label}</p>
+      )}
       <ul>
         {resource.sources.map((source, index) => (
           <li key={index}>

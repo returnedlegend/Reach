@@ -44,9 +44,11 @@ export default function Terms() {
       </p>
       <p>
         Source links and review dates identify the evidence for maintained
-        pantry records. Report uncertain information to the organization using
-        its public contact details; Reach does not contact providers on your
-        behalf.
+        pantry records. You can privately report incorrect directory facts
+        without an account; reports do not immediately change listings or
+        guarantee a response. Report uncertain information to the organization
+        using its public contact details; Reach does not contact providers on
+        your behalf.
       </p>
     </main>
   );

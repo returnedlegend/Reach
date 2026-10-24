@@ -1,0 +1,10 @@
+{
+  "checkedAt": "2026-10-24T21:46:53.775Z",
+  "scope": "Actual local production browser, real map tiles and synthetic public example location; no personal GPS",
+  "mapAssetsAccepted": 11,
+  "initialOrigin": "Official public BTD terminal example",
+  "mapClickConfirmed": true,
+  "originChanged": true,
+  "externalLinkUsesCorrectedOrigin": true,
+  "publicDeployment": false
+}

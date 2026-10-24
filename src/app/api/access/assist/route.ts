@@ -1,3 +1,7 @@
+import {
+  featureEnabled,
+  disabledFeatureResponse,
+} from "@/lib/release-features";
 import { z } from "zod";
 import { interpretNavigationNeeds } from "@/lib/navigation-needs-agent";
 import {
@@ -9,6 +13,7 @@ import {
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function POST(request: Request) {
+  if (!featureEnabled("ai")) return disabledFeatureResponse("AI assistance");
   try {
     requireSameOrigin(request);
     const body = await readPrivateJson(

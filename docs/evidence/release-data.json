@@ -1,0 +1,129 @@
+{
+  "reviewedOn": "2026-10-24",
+  "contactedProviders": false,
+  "sources": [
+    {
+      "id": "bvfb-find-food",
+      "url": "https://www.bvfb.org/find-food",
+      "httpStatus": 200,
+      "finalUrl": "https://www.bvfb.org/find-food",
+      "checkedOn": "2026-10-24",
+      "facts": {
+        "bedias": "3202 Main St.; third Saturday 9am-noon; Grimes County; drive-through; twice monthly.",
+        "grimesMobile": "Grimes County Expo, 5220 FM 3455; second Thursday 10-11:30am; Nov 12 and Dec 10; Grimes and Washington Counties; drive-through; monthly.",
+        "madisonMobile": "Madison County Fairgrounds, 599 Industrial Park Ln.; fourth Thursday 11am-12:30pm; Oct 22, Nov 19, Dec 17; Madison County; drive-through; monthly."
+      }
+    },
+    {
+      "id": "bvfb-grimes-2026-flyer",
+      "url": "https://www.bvfb.org/sites/bvfb/files/2026%20GMP%20Flyer.pdf",
+      "httpStatus": 200,
+      "contentType": "application/pdf",
+      "checkedOn": "2026-10-24",
+      "extractedFacts": "Every second Thursday, 10-11:30am, January-December 2026; Grimes County Expo, 5220 FM 3455, Navasota, TX 77868. November 12 and December 10."
+    },
+    {
+      "id": "bvfb-madison-2026-flyer",
+      "url": "https://www.bvfb.org/sites/bvfb/files/2026%20Madison%20Mobile%20Pantry%20Flyers.pdf",
+      "httpStatus": 200,
+      "contentType": "application/pdf",
+      "checkedOn": "2026-10-24",
+      "extractedFacts": "11am-12:30pm, Madison County Fairgrounds, 599 Industrial Park Ln., Madisonville, TX 77864. October 22, November 19 and December 17, 2026. November and December dates are third Thursdays, conflicting with directory recurrence."
+    },
+    {
+      "id": "btd-public-orange-table",
+      "url": "https://www.btd.org/bcs/",
+      "httpStatus": 200,
+      "finalUrl": "https://www.btd.org/bcs/",
+      "checkedOn": "2026-10-24",
+      "facts": {
+        "orangeRoute": "Published table says depart North Terminal at :00 and reach Forest Park Apartments at :09."
+      }
+    },
+    {
+      "id": "btd-gtfs-download",
+      "url": "https://www.btd.org/2025btdgtfs/",
+      "httpStatus": 200,
+      "finalUrl": "https://www.btd.org/wp-content/uploads/2025/01/2025BTDGTFS.zip",
+      "lastModified": "Wed, 21 Oct 2026 15:21:44 GMT",
+      "checkedOn": "2026-10-24",
+      "downloadedBytes": 247754,
+      "internalFeedVersion": "Updated: Oct 28, 2025, 12:33 PM",
+      "feedValidity": {
+        "from": "2025-07-15",
+        "to": "2026-12-31"
+      },
+      "retainedSnapshot": {
+        "path": "data/transit/btd-2026-10-15.zip",
+        "sha256": "d2b7948582883f6c8191d613ea3c7f80f64db48e86a467057a69725538e4825b",
+        "internalFeedVersion": "Updated: Mar 25, 2026, 2:20 PM",
+        "feedValidity": {
+          "from": "2025-07-15",
+          "to": "2026-12-31"
+        }
+      },
+      "timetableConflict": [
+        {
+          "source": "Current BTD page",
+          "point": "North Terminal",
+          "publishedTime": "minute 00"
+        },
+        {
+          "source": "Retained GTFS",
+          "stopId": "126",
+          "stop": "BTD Bryan Terminal - Roy Kelly Parking Garage",
+          "publishedTime": "05:48 for the 05:48 trip"
+        },
+        {
+          "source": "Current BTD page",
+          "point": "Forest Park Apartments",
+          "publishedTime": "minute 09"
+        },
+        {
+          "source": "Retained GTFS",
+          "stopId": "134",
+          "stop": "Sandy Point @ Forest Park Apartments",
+          "publishedTime": "05:53 for the 05:48 trip"
+        }
+      ],
+      "interpretation": "No source establishes which timetable controls. The live linked ZIP's older internal feed version and the agency page conflict with the retained snapshot. Do not replace the retained data or choose departures without direct confirmation."
+    }
+  ],
+  "pantryAudit": [
+    {
+      "id": "bedias-food-pantry",
+      "addressConflict": "BVFB directory says 3202 Main St.; linked Maps destination is 3203 Main St.",
+      "pinStatus": "needs-confirmation",
+      "pickupFormat": "drive-through",
+      "pedestrianPickup": "unknown",
+      "questions": [
+        "Is pickup at 3202 or 3203 Main Street?",
+        "Can pedestrians be served, and which entrance should they use?"
+      ]
+    },
+    {
+      "id": "grimes-mobile-pantry",
+      "eventGateConfirmed": false,
+      "pickupFormat": "drive-through",
+      "pedestrianPickup": "unknown",
+      "questions": [
+        "Which fairgrounds gate and serving line are used?",
+        "Can pedestrians be served?"
+      ]
+    },
+    {
+      "id": "madison-mobile-pantry",
+      "eventGateConfirmed": false,
+      "scheduleConflict": "November 19 and December 17 are third Thursdays, although directory recurrence says fourth Thursday.",
+      "genericScheduleWindow": null,
+      "pickupFormat": "drive-through",
+      "pedestrianPickup": "unknown",
+      "questions": [
+        "Are November 19 and December 17 the correct dates?",
+        "Which fairgrounds gate and serving line are used?",
+        "Can pedestrians be served?"
+      ]
+    }
+  ],
+  "sqliteSeedBehavior": "INSERT OR IGNORE does not apply updated source JSON to existing rows; make explicit migrations and preserve operator data before release."
+}

@@ -127,22 +127,40 @@ export function storeSavedItems(items: SavedItems): boolean {
 }
 export function savedTripText(
   trip: SavedTrip,
-  destination: { name: string; address: string; hours: string },
+  destination: {
+    name: string;
+    address: string;
+    hours: string;
+    eligibility?: string;
+    sources?: { title: string; url?: string; checkedOn?: string }[];
+    pedestrianPickup?: "allowed" | "not-allowed" | "unknown";
+  },
 ): string {
+  const sources = destination.sources?.length
+    ? destination.sources
+        .map(
+          (source) =>
+            `- ${source.title}${source.checkedOn ? ` (checked ${source.checkedOn})` : " (check date unavailable)"}${source.url ? ` — ${source.url}` : ""}`,
+        )
+        .join("\n")
+    : "No source details are recorded for this listing.";
   return [
     "Reach — saved trip",
     destination.name,
     destination.address,
-    `Saved: ${new Date(trip.savedAt).toLocaleString()}`,
+    `Created: ${new Date(trip.savedAt).toLocaleString()}`,
     `Travel: ${trip.mode}`,
+    `Published hours: ${destination.hours}`,
+    `Visit requirements: ${destination.eligibility ?? "Eligibility not verified. Contact the provider before visiting."}`,
+    `Pedestrian pickup access: ${destination.pedestrianPickup ?? "unknown"}`,
+    `Sources and checked dates:\n${sources}`,
     trip.origin
       ? `Starting point: ${trip.origin.label}\nExact starting point: ${trip.origin.coordinates.lat}, ${trip.origin.coordinates.lng}`
       : "Starting point was not saved. Choose one before requesting directions.",
-    `Published hours: ${destination.hours}`,
     "Confirm hours, eligibility, accessibility and availability before visiting.",
     trip.route
       ? `Saved route: ${trip.route.label}\n${trip.route.steps.join("\n")}`
       : "No calculated route was saved.",
-    "This is a saved snapshot, not live directions. Recheck before travel.",
+    "This saved snapshot may be out of date and is not live directions. Recheck hours, requirements and availability with the provider before travel.",
   ].join("\n\n");
 }

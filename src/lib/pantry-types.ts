@@ -39,6 +39,7 @@ export type PantryPatch = Partial<
     | "eligibility"
     | "notes"
     | "offering"
+    | "pedestrianPickup"
     | "accessibility"
     | "verificationStatus"
     | "detailsNeedConfirmation"

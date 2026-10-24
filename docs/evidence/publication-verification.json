@@ -1,0 +1,117 @@
+{
+  "recorded_at_utc": "2026-10-24",
+  "scope": "Local container readiness checks only; no public deployment or live provider activity",
+  "image": {
+    "tag": "reach:readiness-review",
+    "base": "node:24-bookworm-slim",
+    "build_status": "passed",
+    "build_environment_issue_fixed": {
+      "failure": "Buildx could not create its metadata directory under a read-only Docker config path",
+      "resolution": "Used task-scoped BUILDX_CONFIG under /tmp; Docker config, registry credentials and inherited proxy settings remained unchanged"
+    },
+    "build_steps": {
+      "npm_ci_with_dev_dependencies": "passed",
+      "npm_ci_without_dev_dependencies": "passed",
+      "strict_tls": true,
+      "buildkit_proxy_ca_secret_mount": "used for both npm install steps; CA was not copied into image layers",
+      "npm_warning": "npm reported esbuild@0.28.2 postinstall was not covered by allowScripts; production build and tsx worker execution succeeded",
+      "next_compilation": "passed",
+      "typescript": "passed",
+      "static_generation": "passed",
+      "standalone_output": "passed",
+      "health_route_rendering": "dynamic"
+    },
+    "fixed_build_issues": [
+      {
+        "failure": "TypeScript build could not resolve tests/fixtures/access-scenarios imported by scripts/evaluate-access.ts because tests/ was excluded from build context",
+        "resolution": "Included tests/ in build context; runtime stage still copies only data/, src/ and scripts/"
+      },
+      {
+        "failure": "Worker import could not resolve repository-root data/research/tx10-brazos-candidates.json",
+        "resolution": "Copied repository-root data/ into runtime image"
+      }
+    ],
+    "prior_lockfile_refresh": {
+      "host_lock_only_operation": "blocked with EALLOWREMOTE",
+      "image_npm_ci": "passed using existing lockfile",
+      "package_versions_or_integrities_changed_by_ci": false
+    }
+  },
+  "runtime": {
+    "host_binding": "127.0.0.1:32769 -> container 3000/tcp",
+    "container_user": "node",
+    "container_uid": 1000,
+    "database_volume": "fresh named volume",
+    "database_permissions": {
+      "mode": "0600",
+      "uid": 1000,
+      "gid": 1000
+    },
+    "http_checks": {
+      "/api/health": 200,
+      "/": 200,
+      "/api/pantries": 200,
+      "/api/account/status": 200
+    },
+    "health_body": {
+      "status": "ok"
+    },
+    "health_cache_control": "no-store",
+    "account_enabled": false,
+    "env_filenames_in_app": []
+  },
+  "persistence_and_recovery": {
+    "test_scope": "Disposable named volume and synthetic SQLite markers only",
+    "container_network": "none",
+    "published_ports": [],
+    "replacement_test": {
+      "container_recreated": true,
+      "named_volume_retained": true,
+      "synthetic_marker_survived": true,
+      "health_after_replacement": 200
+    },
+    "offline_backup_restore_test": {
+      "writers_stopped_before_backup": true,
+      "backup_method": "Node DatabaseSync with VACUUM INTO after app stop",
+      "backup_integrity": "ok",
+      "backup_permissions": "0600",
+      "backup_bytes": 581632,
+      "synthetic_marker_restored": true,
+      "post_backup_marker_absent_after_restore": true,
+      "restore_integrity": "ok",
+      "health_after_restore": 200
+    },
+    "initial_copy_failure_fixed": {
+      "failure": "Copying only community.sqlite omitted a committed synthetic marker held in its WAL sidecar.",
+      "resolution": "Backup procedure now stops writers and creates a standalone VACUUM INTO snapshot before integrity checking."
+    },
+    "test_containers_volumes_and_backup_removed": true
+  },
+  "email_worker": {
+    "command": "node --import tsx scripts/mail-worker.ts --once",
+    "network": "none",
+    "provider": "disabled",
+    "processed": 0,
+    "accepted": 0,
+    "reported_unavailable": true,
+    "exit_status": 1,
+    "exit_status_reason": "The script returns status 1 for a one-shot dispatch when email delivery is disabled or unavailable.",
+    "mail_sent": false
+  },
+  "caddy": {
+    "image": "caddy:2-alpine",
+    "validation": "passed",
+    "network": "none",
+    "listener_started": false,
+    "public_ports_opened": false,
+    "acme_or_certificate_request": false
+  },
+  "not_performed": [
+    "Public deployment",
+    "DNS changes",
+    "Public HTTP request",
+    "Live HTTPS certificate or ACME request",
+    "Live email send"
+  ],
+  "secrets_or_credential_values_recorded": false
+}

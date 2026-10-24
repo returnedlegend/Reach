@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 const config: NextConfig = {
+  output: "standalone",
   poweredByHeader: false,
   devIndicators: false,
   // Authorization codes and state must not enter the development access log.

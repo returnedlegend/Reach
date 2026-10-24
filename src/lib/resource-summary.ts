@@ -164,15 +164,13 @@ function distanceMiles(a: ResourceOrigin, b: ResourceOrigin): number {
 
 /**
  * Rank confirmed sites before sites needing confirmation, then by straight-line
- * miles when coordinates are available. `mode` is accepted for caller
- * compatibility; route reachability is not inferred from straight-line distance.
+ * miles when coordinates are available. Known pedestrian pickup prohibitions
+ * exclude walking/transit options; proximity never establishes route reachability.
  */
 export function rankResources(
   resources: Resource[],
   options: RankResourcesOptions = {},
 ): RankedResource[] {
-  // The mode does not add route data to Resource.
-  void options.mode;
   const origin = validPoint(options.origin) ? options.origin : null;
   const maximum = options.maxDistanceMiles;
   const canFilterByDistance =
@@ -182,6 +180,11 @@ export function rankResources(
     maximum >= 0;
 
   return resources
+    .filter(
+      (resource) =>
+        !["walking", "transit"].includes(options.mode ?? "") ||
+        resource.pedestrianPickup !== "not-allowed",
+    )
     .map((resource, index) => {
       const coordinates = validPoint(resource.coordinates)
         ? resource.coordinates

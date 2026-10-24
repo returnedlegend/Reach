@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 import { createHash } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 
@@ -78,6 +79,7 @@ export function getAccountActor(
   request: Request,
   at = new Date(),
 ): AccountActor | null {
+  if (!featureEnabled("accounts")) return null;
   for (const token of accountSessionTokens(request)) {
     const row = db
       .prepare(

@@ -1,3 +1,4 @@
+import { featureEnabled } from "./release-features";
 import { randomBytes, randomUUID } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
@@ -249,11 +250,11 @@ export function createAccountHandler(
       const route = parts[0];
       if (route === "status" && request.method === "GET")
         return accountResponse({
-          enabled: process.env.REACH_ACCOUNT_ENABLED !== "false",
+          enabled: featureEnabled("accounts"),
           emailConfigured: emailReady(),
           deliveryMode: emailDeliveryMode(),
         });
-      if (process.env.REACH_ACCOUNT_ENABLED === "false")
+      if (!featureEnabled("accounts"))
         fail(503, "Accounts are currently unavailable.");
       const db = openCommunityDatabase(databasePath),
         at = clock();

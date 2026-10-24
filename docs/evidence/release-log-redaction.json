@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-24T21:56:53Z",
+  "scope": "Production Caddyfile validation plus equivalent filter on isolated local HTTP error; no published ports or ACME requests",
+  "officialDocs": [
+    "https://caddyserver.com/docs/caddyfile/directives/log#filter",
+    "https://caddyserver.com/docs/caddyfile/options#log"
+  ],
+  "productionConfigValidation": "passed",
+  "realUpstreamFailureObserved": true,
+  "structuredRequestAbsent": true,
+  "syntheticOAuthQueryAbsent": true,
+  "applicationImageUnchanged": "8255fb40",
+  "publishedPorts": []
+}

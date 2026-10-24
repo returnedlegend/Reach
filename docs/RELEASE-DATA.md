@@ -1,0 +1,22 @@
+# Public release data review
+
+Reviewed 2026-10-24 from the live Brazos Valley Food Bank (BVFB) and Brazos Transit District (BTD) websites. No pantry or transit provider was contacted. The review supports the published source text and its limits; it does not confirm same-day food, a serving entrance, or a pedestrian route.
+
+BVFB's [Find Food directory](https://www.bvfb.org/find-food) still lists Bedias Food Pantry at 3202 Main St., Bedias, for the third Saturday, 9 a.m.–noon, drive-through, serving Grimes County, with a twice-monthly limit and Spanish translators available. Its linked Directions destination resolves to 3203 Main St. The one-digit street-number conflict remains in the data and the location remains `needs-confirmation`; do not treat that pin as an entrance.
+
+The directory and the linked [2026 Grimes Mobile Pantry flyer](https://www.bvfb.org/sites/bvfb/files/2026%20GMP%20Flyer.pdf) agree on the second Thursday, 10–11:30 a.m., at Grimes County Expo, 5220 FM 3455, Navasota. The flyer lists November 12 and December 10, 2026. BVFB calls this drive-through service for Grimes and Washington Counties, once monthly. The named fairgrounds point does not identify an event gate or service line.
+
+The directory's [2026 Madison Mobile Pantry flyer](https://www.bvfb.org/sites/bvfb/files/2026%20Madison%20Mobile%20Pantry%20Flyers.pdf) lists 11 a.m.–12:30 p.m. at Madison County Fairgrounds, 599 Industrial Park Ln., Madisonville. The flyer dates include October 22, November 19, and December 17, 2026. The directory calls the event a fourth-Thursday drive-through serving Madison County once monthly, but November 19 and December 17 are third Thursdays. The recurring schedule is therefore left unmodeled; use the date on the current flyer and confirm it for the intended visit. The named fairgrounds point does not identify an event gate or service line.
+
+For these three sites, BVFB publishes drive-through pickup, not a policy for people arriving on foot. Their `pedestrianPickup` value stays `unknown`; no value was inferred from the venue coordinates. Confirm whether a pedestrian can be served and which entrance or queue to use. Step-free paths and access from transit have not been reviewed.
+
+BTD's [Bryan/College Station route table](https://www.btd.org/bcs/) says Orange departs North Terminal at :00 and reaches Forest Park Apartments at :09. The retained official GTFS snapshot instead places Route 00 Orange at stop 126 at :48 and stop 134 at :53. The [current GTFS download link](https://www.btd.org/2025btdgtfs/) returned a package whose internal `feed_version` says “Updated: Oct 28, 2025, 12:33 PM,” while the checked-in snapshot says “Updated: Mar 25, 2026, 2:20 PM.” Both advertise service validity through December 31, 2026; the live package response had an HTTP Last-Modified date of October 21, 2026, which does not resolve its older internal version. The existing snapshot remains valid by its stated end date on this review date, but the public feed link and route table disagree with its provenance or times. Do not use these departures as confirmed travel times. Ask BTD which Route 00 schedule and feed version are current, and whether a replacement feed will extend beyond December 31, 2026.
+
+The food data is seeded with SQLite `INSERT OR IGNORE`; editing a source JSON record does not update an already-seeded row. Release migration 2 now applies the three audited source updates only to untouched active version-1 imported rows and records history. Manager-edited and archived rows are preserved for explicit review. Future seed changes still need an explicit maintained-data migration. The three audited food records were not changed where current sources repeated existing values; source review dates, flyer citations, Bedias Spanish-language support, and pedestrian-access uncertainty were made explicit.
+
+## Questions for direct confirmation
+
+- **Bedias Food Pantry:** Is pickup at 3202 or 3203 Main Street, and can someone arriving on foot be served? Which entrance should a visitor use?
+- **Grimes Mobile Pantry:** Is November 12 / December 10 the current schedule? Which fairgrounds gate and serving line are used, and can a pedestrian receive food?
+- **Madison Mobile Pantry:** Are November 19 and December 17 the correct 2026 dates despite the directory's fourth-Thursday text? Which gate and serving line are used, and can a pedestrian receive food?
+- **BTD:** Which Orange timetable is current, what feed version should be used, and when will service after December 31, 2026 be published?
