@@ -1,5 +1,7 @@
 # AI provider configuration
 
+The current recommended setup is [Free OpenRouter assistance](FREE-OPENROUTER.md): the general model defaults to `openrouter/free`, with verified zero-price routing and no paid fallback for that profile. The explicit paid-provider options below are retained legacy configurations and are not enabled by the free setup.
+
 AI assistance is server-side and remains unavailable until the operator accepts the data policy with `REACH_AI_DATA_POLICY_ACCEPTED=true`. Never expose provider credentials through `NEXT_PUBLIC_*` variables. Requests use a bounded timeout, strict structured output, local Zod validation, and no prompt or response logging. User-facing AI results still require review.
 
 ## OpenRouter
@@ -12,20 +14,20 @@ REACH_AI_PROVIDER=openrouter
 OPENROUTER_API_KEY=your_openrouter_api_key_here
 OPENROUTER_FAST_MODEL=
 OPENROUTER_PRIMARY_MODEL=
-OPENROUTER_MODEL=
+OPENROUTER_MODEL=openrouter/free
 OPENROUTER_FALLBACK_MODEL=
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 REACH_AI_FREE_ONLY=true
 REACH_AI_ALLOW_PAID=false
 ```
 
-The fast and primary role variables take priority, followed by `OPENROUTER_MODEL` and legacy `REACH_AI_*_MODEL` aliases. Select an exact model ID after checking the current public catalog for `tools`, `structured_outputs`, and pricing. In free-only mode, every configured selected/fallback model must have a `:free` ID, explicit zero-valued pricing fields, and the required capabilities. Catalog checks are unauthenticated and do not perform inference. No model is hardcoded or automatically selected. The completion request also denies data-collecting providers, disables provider fallbacks, requires parameters, and applies zero price ceilings in free-only mode.
+The fast and primary role variables take priority, followed by `OPENROUTER_MODEL` and legacy aliases. A blank model defaults to `openrouter/free`. Every free-profile selected/fallback model must be that router or a `:free` ID with explicit zero catalog pricing and the required capabilities. Catalog checks are unauthenticated and public metadata is cached for up to 60 seconds. Each router response must identify an eligible actual free model. The completion request denies data-collecting providers, disables paid/provider fallbacks, requires parameters, and applies zero price ceilings for every free selection even if old flags allow paid use. `openrouter/auto` is rejected.
 
 Paid OpenRouter requests require both `REACH_AI_FREE_ONLY=false` and `REACH_AI_ALLOW_PAID=true`. This only enables explicitly configured model IDs; it does not choose paid models automatically.
 
 ## Optional Gemini fallback
 
-Gemini may be enabled as one explicit fallback for transient OpenRouter failures, or as the sole configured provider when OpenRouter credentials/model are absent. Both cases require all of these switches and credentials:
+Gemini is not a fallback for the default router or any selected free model. The old explicitly paid OpenRouter profile can retain its separately opted-in transient Gemini fallback; a native Gemini-only provider must be explicitly selected. Those deliberate configurations require the switches and credentials below and are outside the recommended free setup:
 
 ```dotenv
 REACH_AI_GEMINI_FALLBACK=true

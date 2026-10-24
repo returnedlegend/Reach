@@ -217,7 +217,15 @@ describe("navigation needs interpreter", () => {
       status: "available",
       needs: { service: "groceries", urgency: "soon" },
     });
-    expect(routerFetch).toHaveBeenCalledTimes(6);
+    expect(routerFetch).toHaveBeenCalledTimes(4);
+    expect(
+      routerFetch.mock.calls.filter(([url]) => String(url).endsWith("/models")),
+    ).toHaveLength(1);
+    expect(
+      routerFetch.mock.calls.filter(([url]) =>
+        String(url).endsWith("/chat/completions"),
+      ),
+    ).toHaveLength(3);
   });
 
   it("does not infer a nearby-transit preference from a negated request", async () => {

@@ -8,7 +8,6 @@ Use Node 24. For browser tests, install Chromium with `npx playwright install ch
 
 Production account/access/assistant endpoints deliberately require a canonical HTTPS `REACH_APP_ORIGIN`; a plain HTTP production server without this setting is suitable only for basic discovery smoke checks, not end-to-end authenticated or assistant workflows. Do not bypass the origin guard to demonstrate those features. Live AI, search/routing, OAuth and mail still require their documented operator configuration. No live food availability or route is fabricated when a provider is unavailable.
 
-
 Google account sign-in is available alongside Reach passwords. Configure the separate Google OAuth Web client using [Google sign-in setup](docs/GOOGLE-SIGN-IN.md). Only identity permissions are requested; pantry emails still use Reach’s Resend service and explicit approval.
 
 Reach is a mobile-first community-resource and transit website for Bryan–College Station, built with Next.js 16, React 19, TypeScript, and Node.js 24.
@@ -22,6 +21,8 @@ The home page now offers an anonymous, mobile-first feasibility planner using th
 See [planner setup, limits and outreach](docs/ACCESS-PLANNER.md), [independent checks](docs/ACCESS-VERIFICATION.md), [official integration research](docs/ACCESS-INTEGRATIONS.md), and [fixture evaluation](docs/ACCESS-EVALUATION.md), and [changed files](docs/ACCESS-FILES.md). `npm run access:evaluate` compares synthetic scenarios to a proximity-only baseline. The mail worker now dispatches both consent-based notifications and separately authorized inquiries. Private inquiry history is retained separately from the metadata-only notification queue.
 
 ## Optional AI Navigation
+
+The default AI model is now `openrouter/free`. It reuses the assistant, grounded recommendations and reviewed email drafting with zero-price checks, bounded free retries and no paid fallback for that profile. Missing credentials keep the planner available and show a clear assistant notice. See [free OpenRouter setup](docs/FREE-OPENROUTER.md), [official research](docs/FREE-OPENROUTER-RESEARCH.md), and [independent verification](docs/FREE-OPENROUTER-VERIFICATION.md). Live inference still requires a private API key and provider data-policy acknowledgement.
 
 The existing food-access planner now has optional service, urgency, household-size, identification and transit preferences, plus routed driving alongside walking and scheduled BTD transit. A five-module pipeline keeps resource facts, feasibility and ranking deterministic. Optional OpenRouter models interpret submitted preferences and foreground computed guidance; every suggested preference needs review, and manual controls work without credentials. Prepared meals and shelter have an explicit coverage gap. Fuel, parking, stock, document rules and accessibility are never assumed. See [configuration, privacy and cost limits](docs/AI-NAVIGATION.md), [provider sources](docs/NAVIGATION-PROVIDERS.md) and [independent checks](docs/NAVIGATION-VERIFICATION.md). No live inference or public deployment is claimed.
 

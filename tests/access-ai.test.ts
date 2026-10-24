@@ -26,7 +26,13 @@ function jsonResponse(value: unknown, status = 200) {
 }
 function freeCatalog(model = "test/model:free", price: unknown = "0") {
   return jsonResponse({
-    data: [{ id: model, pricing: { prompt: price, completion: price }, supported_parameters: ["tools", "structured_outputs"] }],
+    data: [
+      {
+        id: model,
+        pricing: { prompt: price, completion: price },
+        supported_parameters: ["tools", "structured_outputs"],
+      },
+    ],
   });
 }
 function completion(value: unknown, status = 200) {
@@ -108,14 +114,19 @@ describe("server-side access AI safeguards", () => {
     useOpenRouter();
     vi.stubEnv("REACH_AI_MODEL", "");
     vi.stubEnv("OPENROUTER_FAST_MODEL", "test/model:free");
-    const fetcher = vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
-      if (String(input).endsWith("/models")) return freeCatalog();
-      expect(JSON.parse(String(init?.body)).model).toBe("test/model:free");
-      return completion(preferenceOutput({ mode: "driving" }));
+    const fetcher = vi.fn(
+      async (input: RequestInfo | URL, init?: RequestInit) => {
+        if (String(input).endsWith("/models")) return freeCatalog();
+        expect(JSON.parse(String(init?.body)).model).toBe("test/model:free");
+        return completion(preferenceOutput({ mode: "driving" }));
+      },
+    );
+    const result = await accessAI.interpretPreferences("I prefer driving", {
+      fetch: fetcher as typeof fetch,
     });
-    const result = await accessAI.interpretPreferences("I prefer driving", { fetch: fetcher as typeof fetch });
     expect(result.status).toBe("available");
-    if (result.status === "available") expect(result.patch).toEqual({ mode: "driving" });
+    if (result.status === "available")
+      expect(result.patch).toEqual({ mode: "driving" });
   });
 
   it("rejects malformed JSON and extra preference fields", async () => {
@@ -195,12 +206,15 @@ describe("server-side access AI safeguards", () => {
 
   it("accepts a large free catalog only when every listed price is zero and disables router fallbacks", async () => {
     useOpenRouter();
-    const rows: Array<{ id: string; pricing: Record<string, string>; supported_parameters: string[] }> =
-      Array.from({ length: 160 }, (_, index) => ({
-        id: `other/model-${index}`,
-        pricing: { prompt: "0", completion: "0", request: "0" },
-        supported_parameters: ["tools", "structured_outputs"],
-      }));
+    const rows: Array<{
+      id: string;
+      pricing: Record<string, string>;
+      supported_parameters: string[];
+    }> = Array.from({ length: 160 }, (_, index) => ({
+      id: `other/model-${index}`,
+      pricing: { prompt: "0", completion: "0", request: "0" },
+      supported_parameters: ["tools", "structured_outputs"],
+    }));
     rows[159] = {
       id: "test/model:free",
       pricing: {
@@ -273,8 +287,24 @@ describe("server-side access AI safeguards", () => {
     for (const pricing of prices) {
       vi.resetModules();
       accessAI = await import("../src/lib/access-ai");
-      const fetcher = vi.fn(async () => jsonResponse({ data: [{ id: "test/model:free", pricing, supported_parameters: ["tools", "structured_outputs"] }] }));
-      expect((await accessAI.interpretPreferences("transit", { fetch: fetcher as typeof fetch })).status).toBe("unavailable");
+      const fetcher = vi.fn(async () =>
+        jsonResponse({
+          data: [
+            {
+              id: "test/model:free",
+              pricing,
+              supported_parameters: ["tools", "structured_outputs"],
+            },
+          ],
+        }),
+      );
+      expect(
+        (
+          await accessAI.interpretPreferences("transit", {
+            fetch: fetcher as typeof fetch,
+          })
+        ).status,
+      ).toBe("unavailable");
       expect(fetcher).toHaveBeenCalledTimes(1);
     }
   });
@@ -510,7 +540,10 @@ describe("server-side access AI safeguards", () => {
         })
       ).status,
     ).toBe("unavailable");
-    expect(fetcher).toHaveBeenCalledTimes(10);
+    expect(fetcher).toHaveBeenCalledTimes(6);
+    expect(
+      fetcher.mock.calls.filter(([url]) => String(url).endsWith("/models")),
+    ).toHaveLength(1);
 
     const draftBody =
       "Hello Pantry,\n\nReach is sending an AI-assisted inquiry on a user's behalf. The user is checking current availability and pickup details. Could you please help with this question: Can you share current availability?\n\nThank you.";
@@ -563,9 +596,25 @@ describe("server-side access AI safeguards", () => {
       calls += 1;
       return calls === 1
         ? new Response("{}", { status: 429, headers: { "retry-after": "0" } })
-        : jsonResponse({ candidates: [{ content: { parts: [{ text: JSON.stringify(preferenceOutput({ mode: "driving" })) }] } }] });
+        : jsonResponse({
+            candidates: [
+              {
+                content: {
+                  parts: [
+                    {
+                      text: JSON.stringify(
+                        preferenceOutput({ mode: "driving" }),
+                      ),
+                    },
+                  ],
+                },
+              },
+            ],
+          });
     });
-    const result = await accessAI.interpretPreferences("I prefer driving", { fetch: fetcher as typeof fetch });
+    const result = await accessAI.interpretPreferences("I prefer driving", {
+      fetch: fetcher as typeof fetch,
+    });
     expect(result.status).toBe("unavailable");
     expect(fetcher).toHaveBeenCalledTimes(1);
   });

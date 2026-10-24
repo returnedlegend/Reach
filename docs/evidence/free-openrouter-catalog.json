@@ -1,0 +1,45 @@
+{
+  "checkedAtUtc": "2026-10-24T02:24:21.226413+00:00",
+  "endpoint": "https://openrouter.ai/api/v1/models",
+  "httpStatus": 200,
+  "catalogEntries": 469,
+  "router": {
+    "id": "openrouter/free",
+    "pricing": {
+      "prompt": "0",
+      "completion": "0"
+    },
+    "supported_parameters": [
+      "frequency_penalty",
+      "include_reasoning",
+      "logprobs",
+      "max_completion_tokens",
+      "max_tokens",
+      "min_p",
+      "presence_penalty",
+      "reasoning",
+      "reasoning_effort",
+      "repetition_penalty",
+      "response_format",
+      "seed",
+      "stop",
+      "structured_outputs",
+      "temperature",
+      "tool_choice",
+      "tools",
+      "top_k",
+      "top_logprobs",
+      "top_p"
+    ]
+  },
+  "routerMeetsReachPreflight": true,
+  "eligibleFreeIds": [
+    "xingchen-agi/xing4.0-29b-a4b:free",
+    "nvidia/nemotron-3.5-super-vl:free",
+    "dots-studio/dots-3-note-preview:free",
+    "liquid/lfm-2.5-2.6b:free",
+    "nvidia/nemotron-3-super-120b-a12b:free",
+    "openrouter/free"
+  ],
+  "inferencePerformed": false
+}

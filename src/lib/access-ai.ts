@@ -2,6 +2,7 @@ import { z } from "zod";
 import type { AccessInput } from "./access-types";
 import type { OutreachFacts } from "./outreach-types";
 import { openRouterJson, reserveSharedAIUsage } from "./openrouter-client";
+import { getOpenRouterModels, openRouterKeyConfigured } from "./ai-config";
 
 /** This module may only run on the server. Provider credentials must never reach a client bundle. */
 if (typeof window !== "undefined") throw new Error("Access AI is server-only.");
@@ -92,16 +93,13 @@ function configured(): {
   const configuredProvider = process.env.REACH_AI_PROVIDER?.toLowerCase();
   // OpenRouter is an opt-in by complete server configuration when PROVIDER is absent.
   // An explicit provider value, including "disabled", always takes precedence.
-  const inferredOpenRouter = !configuredProvider && Boolean(
-    process.env.OPENROUTER_API_KEY &&
-    (process.env.OPENROUTER_FAST_MODEL || process.env.OPENROUTER_MODEL || process.env.REACH_AI_FAST_MODEL || process.env.REACH_AI_MODEL),
-  );
+  const inferredOpenRouter = !configuredProvider && openRouterKeyConfigured();
   const provider = (inferredOpenRouter ? "openrouter" : configuredProvider) as
     | Provider
     | undefined;
   const model =
     provider === "openrouter"
-      ? (process.env.OPENROUTER_FAST_MODEL || process.env.OPENROUTER_MODEL || process.env.REACH_AI_FAST_MODEL || process.env.REACH_AI_MODEL || "").trim()
+      ? getOpenRouterModels("fast").selected
       : provider === "gemini"
         ? (process.env.GEMINI_MODEL || process.env.REACH_AI_MODEL || "").trim()
         : process.env.REACH_AI_MODEL?.trim();
@@ -210,13 +208,11 @@ function apiUrl(provider: Provider) {
 }
 function noAIMessage(): string {
   const provider = process.env.REACH_AI_PROVIDER?.toLowerCase();
-  const model = provider === "openrouter"
-    ? process.env.OPENROUTER_FAST_MODEL?.trim() || process.env.OPENROUTER_MODEL?.trim() || process.env.REACH_AI_FAST_MODEL?.trim() || process.env.REACH_AI_MODEL?.trim()
-    : process.env.REACH_AI_MODEL?.trim();
-  if (
-    (process.env.REACH_AI_PROVIDER || model) &&
-    !dataPolicyAccepted()
-  )
+  const model =
+    provider === "openrouter"
+      ? getOpenRouterModels("fast").selected
+      : process.env.REACH_AI_MODEL?.trim();
+  if ((process.env.REACH_AI_PROVIDER || model) && !dataPolicyAccepted())
     return "AI preference help is not enabled. Use the travel controls to continue.";
   const configuredProvider = provider;
   if (!configuredProvider || !model)
@@ -234,12 +230,14 @@ function noAIMessage(): string {
 }
 
 function geminiFallbackEnabled(): boolean {
-  return process.env.REACH_AI_GEMINI_FALLBACK === "true" &&
+  return (
+    process.env.REACH_AI_GEMINI_FALLBACK === "true" &&
     process.env.REACH_AI_DATA_POLICY_ACCEPTED === "true" &&
     process.env.REACH_AI_FREE_ONLY === "false" &&
     process.env.REACH_AI_ALLOW_PAID === "true" &&
     Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL?.trim()) &&
-    !/placeholder|your_(?:gemini|api)/i.test(process.env.GEMINI_API_KEY || "");
+    !/placeholder|your_(?:gemini|api)/i.test(process.env.GEMINI_API_KEY || "")
+  );
 }
 
 async function readLimited(
@@ -389,13 +387,14 @@ async function complete<T>(
 ): Promise<T | null> {
   const cfg = configured();
   const fallbackAllowed = geminiFallbackEnabled();
-  const implicitOpenRouter = !process.env.REACH_AI_PROVIDER && Boolean(
-    process.env.OPENROUTER_API_KEY &&
-    (process.env.OPENROUTER_FAST_MODEL || process.env.OPENROUTER_MODEL || process.env.REACH_AI_FAST_MODEL || process.env.REACH_AI_MODEL),
-  );
+  const implicitOpenRouter =
+    !process.env.REACH_AI_PROVIDER && openRouterKeyConfigured();
   const useOpenRouter = cfg?.provider === "openrouter" || implicitOpenRouter;
   const providerSetting = process.env.REACH_AI_PROVIDER?.toLowerCase();
-  if (useOpenRouter || (fallbackAllowed && (!providerSetting || providerSetting === "openrouter"))) {
+  if (
+    useOpenRouter ||
+    (fallbackAllowed && (!providerSetting || providerSetting === "openrouter"))
+  ) {
     if (!dataPolicyAccepted()) return null;
     const result = await openRouterJson({
       role: "fast",
@@ -415,7 +414,12 @@ async function complete<T>(
   )
     return null;
   if (cfg.freeOnly && cfg.provider !== "openrouter") return null;
-  if (cfg.provider === "gemini" ? !reserveSharedAIUsage(feature) : !takeQuota(feature)) return null;
+  if (
+    cfg.provider === "gemini"
+      ? !reserveSharedAIUsage(feature)
+      : !takeQuota(feature)
+  )
+    return null;
   const fetcher = opts?.fetch ?? fetch;
   const controller = new AbortController();
   const abort = () => controller.abort(opts?.signal?.reason);
@@ -474,10 +478,7 @@ async function complete<T>(
             { once: true },
           );
         });
-        if (
-          cfg.provider === "gemini" &&
-          !reserveSharedAIUsage(feature)
-        ) {
+        if (cfg.provider === "gemini" && !reserveSharedAIUsage(feature)) {
           recordFailure();
           return null;
         }
@@ -610,9 +611,14 @@ export async function interpretPreferences(
 ): Promise<PreferenceResult> {
   const message = noAIMessage();
   const cfg = configured();
-  if (!cfg && !geminiFallbackEnabled()) return { status: "unavailable", message };
+  if (!cfg && !geminiFallbackEnabled())
+    return { status: "unavailable", message };
   if (!dataPolicyAccepted()) return { status: "unavailable", message };
-  if (cfg && cfg.freeOnly && (cfg.provider === "groq" || cfg.provider === "gemini"))
+  if (
+    cfg &&
+    cfg.freeOnly &&
+    (cfg.provider === "groq" || cfg.provider === "gemini")
+  )
     return {
       status: "unavailable",
       message:

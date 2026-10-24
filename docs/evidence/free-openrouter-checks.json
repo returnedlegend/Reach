@@ -1,0 +1,26 @@
+{
+  "clientDate": "2026-10-23",
+  "initialLocalCommit": "dce920b",
+  "syncedStartingCommit": "8b8d8bc",
+  "branch": "main",
+  "baselineTestsAfterOriginIsolation": 504,
+  "finalUnitTests": 517,
+  "finalUnitFiles": 54,
+  "independentFreeRouterTests": 10,
+  "workflowTests": 3,
+  "retainedBrowserPasses": 20,
+  "newBrowserFinalPasses": 6,
+  "initialBrowserFailures": "4 new empty-message Send expectations; corrected tests and reran all 6 new cases",
+  "typecheck": "passed",
+  "dataValidation": "passed",
+  "productionBuild": "passed",
+  "publicCatalog": "HTTP 200; router eligible with all reported prices zero",
+  "liveInference": "not exercised: key unavailable and data-policy acknowledgement false",
+  "actualStatusEndpoint": {
+    "http": 200,
+    "state": "unavailable",
+    "code": "credentials",
+    "model": "openrouter/free"
+  },
+  "publicDeployment": false
+}

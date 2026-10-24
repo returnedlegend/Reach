@@ -23,6 +23,30 @@ type Props = {
   onClose: () => void;
   returnFocusTo?: HTMLElement | null;
 };
+type AiStatus = {
+  state: "configured" | "disabled" | "unavailable";
+  code:
+    | null
+    | "disabled"
+    | "privacy"
+    | "credentials"
+    | "configuration"
+    | "cost-policy";
+};
+
+function aiStatusCopy(status: AiStatus | null) {
+  if (!status)
+    return "AI availability could not be checked. You can still send a request or use the published-information planner.";
+  if (status.state === "configured")
+    return "AI interpretation is configured, though it may not be available for every request. Computed trip results remain available.";
+  if (status.state === "disabled" || status.code === "disabled")
+    return "AI interpretation is off. You can still use the published-information trip planner.";
+  if (status.code === "privacy")
+    return "AI interpretation is unavailable for this session. You can still use the published-information trip planner.";
+  if (status.code === "credentials")
+    return "AI is not connected on this Reach server yet. You can still send a request or use the published-information planner.";
+  return "AI interpretation is not currently available. You can still send your request or use the published-information planner.";
+}
 
 function defaultInput(
   location: SelectedLocation | null,
@@ -178,6 +202,8 @@ export function ReachAssistant({
   const [reply, setReply] = useState<AssistantResponse | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [aiStatus, setAiStatus] = useState<AiStatus | null>(null);
+  const [aiStatusChecked, setAiStatusChecked] = useState(false);
   const [outreachId, setOutreachId] = useState<string | null>(null);
   const [preferences, setPreferences] = useState<Partial<AccessInput>>({});
   const [turns, setTurns] = useState<
@@ -208,6 +234,56 @@ export function ReachAssistant({
           opener.focus();
       });
     };
+  }, []);
+  useEffect(() => {
+    const statusController = new AbortController();
+    void fetch("/api/ai/status", {
+      method: "GET",
+      credentials: "same-origin",
+      cache: "no-store",
+      referrerPolicy: "no-referrer",
+      signal: statusController.signal,
+    })
+      .then(async (response) => {
+        if (!response.ok) throw new Error("status unavailable");
+        const value: unknown = await response.json();
+        if (!value || typeof value !== "object")
+          throw new Error("status unavailable");
+        const candidate = value as Record<string, unknown>;
+        if (
+          !["configured", "disabled", "unavailable"].includes(
+            String(candidate.state),
+          )
+        )
+          throw new Error("status unavailable");
+        if (
+          candidate.code !== null &&
+          ![
+            "disabled",
+            "privacy",
+            "credentials",
+            "configuration",
+            "cost-policy",
+          ].includes(String(candidate.code))
+        )
+          throw new Error("status unavailable");
+        if (
+          typeof candidate.message !== "string" ||
+          typeof candidate.model !== "string"
+        )
+          throw new Error("status unavailable");
+        setAiStatus({
+          state: candidate.state as AiStatus["state"],
+          code: candidate.code as AiStatus["code"],
+        });
+      })
+      .catch(() => {
+        if (!statusController.signal.aborted) setAiStatus(null);
+      })
+      .finally(() => {
+        if (!statusController.signal.aborted) setAiStatusChecked(true);
+      });
+    return () => statusController.abort();
   }, []);
   useEffect(() => {
     generation.current += 1;
@@ -335,6 +411,15 @@ export function ReachAssistant({
         Describe what would help and how you prefer to travel. Your message is
         sent only when you select Send. Precise coordinates and account details
         are excluded from the optional AI interpretation.
+      </p>
+      <p
+        className="reach-assistant__ai-status"
+        role="status"
+        aria-live="polite"
+      >
+        {aiStatusChecked
+          ? aiStatusCopy(aiStatus)
+          : "Checking AI availability. You can still send a request or use the planner."}
       </p>
       <div className="reach-assistant__controls">
         <label>

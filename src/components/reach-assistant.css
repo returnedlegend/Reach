@@ -96,6 +96,19 @@
   line-height: 1.45;
   opacity: 0.82;
 }
+.reach-assistant__ai-status {
+  margin: 0.5rem 0;
+  padding: 0.65rem 0.75rem;
+  border-left: 3px solid var(--color-primary);
+  border-radius: 0.35rem;
+  background: color-mix(
+    in srgb,
+    var(--color-primary) 8%,
+    var(--color-base-100)
+  );
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
 .reach-assistant__reply {
   display: grid;
   gap: 0.65rem;

@@ -67,20 +67,20 @@ Resend's SMTP guide does not specify a stable opaque provider response-ID gramma
 The root `.env.local` now includes:
 
 ```dotenv
-REACH_AI_PROVIDER=disabled
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-OPENROUTER_MODEL=liquid/lfm-2.5-2.6b:free
+REACH_AI_PROVIDER=openrouter
+OPENROUTER_API_KEY=
+OPENROUTER_MODEL=openrouter/free
 OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
 REACH_AI_DATA_POLICY_ACCEPTED=false
 REACH_AI_FREE_ONLY=true
 REACH_AI_ALLOW_PAID=false
 ```
 
-The compact default model was selected from an actual public catalog response advertising `tools` and `structured_outputs` and explicit zero prices. That establishes a dated candidate, not model-quality, endpoint, privacy, quota, billing or live-inference verification. All configured models are checked again before use. Existing nonempty model variables are preserved; `OPENROUTER_FAST_MODEL` and `OPENROUTER_PRIMARY_MODEL` take priority over the general model setting. No paid model is selected automatically.
+The current default is the free router, which chooses a compatible free model. Every free-profile request checks zero catalog prices and required capabilities, applies zero-price routing limits, and validates the actual returned model. Role settings still take precedence over the general model. See [the current free setup](FREE-OPENROUTER.md) for cost, privacy, caching and verification limits. No paid model or Gemini fallback is selected by the free profile.
 
 To enable it, paste your API key privately into `OPENROUTER_API_KEY`, set `REACH_AI_PROVIDER=openrouter`, review provider terms and then set `REACH_AI_DATA_POLICY_ACCEPTED=true`. Restart Reach. Keep free-only enabled unless you deliberately authorize paid use. The base URL must remain the canonical HTTPS endpoint to prevent credentials being redirected to an arbitrary server. Provider `require_parameters`, zero price ceilings, privacy routing controls, strict local schemas, bounded retries/timeouts and shared rate limits remain enforced.
 
-For optional Gemini fallback, supply `GEMINI_API_KEY` and `GEMINI_MODEL`, and explicitly set `REACH_AI_GEMINI_FALLBACK=true`, `REACH_AI_FREE_ONLY=false`, `REACH_AI_ALLOW_PAID=true` and accepted policy. This can incur charges; it is disabled by default. Gemini is used only after eligible transient failures or explicit Gemini-only configuration. It cannot mask invalid output, a pricing/capability failure, authentication failure or a long server-directed retry delay. Direct navigation and outreach calls share this boundary. See [AI-CONFIGURATION.md](AI-CONFIGURATION.md).
+Outside the free profile, the retained explicitly paid configuration can opt into Gemini fallback. Supply `GEMINI_API_KEY` and `GEMINI_MODEL`, and explicitly set `REACH_AI_GEMINI_FALLBACK=true`, `REACH_AI_FREE_ONLY=false`, `REACH_AI_ALLOW_PAID=true` and accepted policy. This can incur charges; it is disabled by default. Gemini is used only after eligible transient failures or explicit Gemini-only configuration. It cannot mask invalid output, a pricing/capability failure, authentication failure or a long server-directed retry delay. Direct navigation and outreach calls share this boundary. See [AI-CONFIGURATION.md](AI-CONFIGURATION.md).
 
 ## Verification and remaining setup
 
