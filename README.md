@@ -1,5 +1,11 @@
 # Reach
 
+## Documentation
+
+Start with the [documentation index](docs/README.md). The [development and maintenance guide](docs/DEVELOPMENT.md) covers Windows/POSIX setup, testing, layout conventions and troubleshooting. Use the [demonstration guide](docs/DEMO.md) for a real-directory walkthrough and the separately labeled fictional planner. The [architecture overview](docs/ARCHITECTURE.md) explains the current database, provider and authorization boundaries.
+
+The latest alignment pass centers the guided progress/form/community panels, balances tablet search, corrects empty-state SVG alignment and tidies the footer. See [before/after evidence and recorded checks](docs/FINAL-POLISH.md#follow-up-alignment-polish--october-23-2026). Dated live-provider observations are recorded separately in [OpenRouter verification](docs/FREE-OPENROUTER-VERIFICATION.md); they are not a guarantee of future availability or email delivery.
+
 ## Final polish and demo checks
 
 The latest pass simplifies the home-to-pantry journey, restores the official district-boundary map toggle, hardens the retained planner API, makes travel-intent and email approval safer, and repairs Windows test/runtime portability. See [audit, changed files, verification, and demo steps](docs/FINAL-POLISH.md).

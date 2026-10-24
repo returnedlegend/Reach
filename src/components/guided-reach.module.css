@@ -29,7 +29,7 @@
 .quickStart {
   display: grid;
   gap: 10px;
-  max-width: 680px;
+  width: 100%;
   margin: 0 0 16px;
 }
 
@@ -105,6 +105,9 @@
 }
 
 .heroCompact.heroCompact {
+  width: 100%;
+  max-width: var(--reach-focus-width);
+  margin-inline: auto;
   padding-bottom: 18px;
 }
 
@@ -428,13 +431,13 @@
     align-items: center;
     max-width: none;
     margin: 0;
-    padding: 28px 0 36px;
+    padding: 16px 0 32px;
   }
   .hero:not(.heroCompact) .heroLinks {
     grid-column: 1 / -1;
     margin-top: 0;
   }
-  .hero.hero h1 {
+  .hero.hero:not(.heroCompact) h1 {
     font-size: clamp(42px, 4.4vw, 60px);
   }
   .heroCompact .heroControls {

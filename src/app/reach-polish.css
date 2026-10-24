@@ -686,3 +686,59 @@ a.btn-error {
   flex-wrap: wrap;
   gap: 12px;
 }
+
+/* One centered reading rail for the guided journey. Keep map/results wide. */
+.reach-app {
+  --reach-focus-width: 820px;
+}
+.reach-app
+  :is(.reach-flow, .reach-progress, .reach-community-invite, .reach-saved) {
+  width: 100%;
+  max-width: var(--reach-focus-width);
+  margin-inline: auto;
+}
+.reach-app .reach-progress {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.reach-app .reach-progress > span {
+  min-width: 0;
+  align-items: center;
+}
+.reach-app .reach-progress b {
+  flex-shrink: 0;
+}
+.reach-app .reach-footer {
+  width: 100%;
+  max-width: var(--reach-focus-width);
+  margin: 32px auto 0;
+  border-top: 1px solid var(--line);
+  padding-block: 28px;
+  text-align: center;
+}
+.reach-app .reach-footer > p {
+  margin-inline: auto;
+}
+.reach-app .reach-footer > div {
+  justify-content: center;
+}
+.reach-app .reach-footer .reach-disclosure {
+  max-width: 680px;
+  margin-inline: auto;
+}
+.reach-app .reach-footer .reach-disclosure > p {
+  max-width: none;
+  text-align: left;
+}
+@media (min-width: 960px) {
+  .reach-app .reach-content {
+    padding-top: 24px;
+  }
+}
+
+/* SVGs are block-level under the reset; text-align alone cannot center them. */
+.reach-app .reach-empty > svg {
+  margin-inline: auto;
+}
