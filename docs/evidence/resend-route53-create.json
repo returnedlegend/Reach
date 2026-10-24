@@ -1,0 +1,57 @@
+{
+  "Comment": "Reach Resend sending authentication. CREATE only; existing records cause failure. Inspect zone/delegation before applying.",
+  "Changes": [
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "resend._domainkey.reachemail.com.",
+        "Type": "TXT",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "\"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcKnAOdf7R3frpmTdja3YDlVrsN6nASRPFCSbwV2eNUGU7BTk5uf9W3o37S3RF04eoM+rwtRpkzky8d1mhUHGw+SB6GtC3plGCR/9+v9yvu/ua16TyIho7P0b0ZF2EzgSmxRijbIyipAen9vEuwjU/rxWNnXC32MGse7wC1Nw0LQIDAQAB\""
+          }
+        ]
+      }
+    },
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "send.reachemail.com.",
+        "Type": "MX",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "10 feedback-smtp.us-east-1.amazonses.com."
+          }
+        ]
+      }
+    },
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "send.reachemail.com.",
+        "Type": "TXT",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "\"v=spf1 include:amazonses.com ~all\""
+          }
+        ]
+      }
+    },
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "rsend.reachemail.com.",
+        "Type": "CNAME",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "send.forge.rmta.net."
+          }
+        ]
+      }
+    }
+  ]
+}

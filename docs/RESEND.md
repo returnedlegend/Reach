@@ -1,5 +1,7 @@
 # Resend email setup
 
+For the current `reachemail.com` domain, exact API-provided DNS records, conflict audit and blocked verification status, see [the live DNS setup report](RESEND-DNS.md).
+
 Reach sends account verification, recovery, security notices and consent-based
 notifications through one server-side mail delivery service. The current local
 workflow remains private preview: it writes captures to a private directory and

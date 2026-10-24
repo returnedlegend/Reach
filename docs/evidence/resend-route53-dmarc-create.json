@@ -1,0 +1,18 @@
+{
+  "Comment": "Optional initial Reach DMARC policy. Apply only after owner reviews existing DMARC and all mail services. CREATE only.",
+  "Changes": [
+    {
+      "Action": "CREATE",
+      "ResourceRecordSet": {
+        "Name": "_dmarc.reachemail.com.",
+        "Type": "TXT",
+        "TTL": 3600,
+        "ResourceRecords": [
+          {
+            "Value": "\"v=DMARC1; p=none;\""
+          }
+        ]
+      }
+    }
+  ]
+}
