@@ -1,0 +1,10 @@
+# Reach state recovered before OSM implementation
+
+- Context skill discovery: cloud catalog lists only cloud-environment-onboarding:setup; executor catalog is empty; no workspace SKILL.md was found. No context skill was invoked. Recovery used actual files and existing reports.
+- Existing app: Next.js16.4.2 / React19.3.1 / TypeScript / Node24. Existing isolated checkout /workspace/Reach; branch work has no commits and application files are untracked. Preserve all local files.
+- Baseline actually rerun: data validation, types, 116 unit tests and production build passed. Full browser baseline started separately; prior report records54productionpasses+4explicitmapruntime skips and16controlledmap checks.
+- Guided need/location/travel/results flow, precise opt-in GPS/manual coordinates, current-clock Chicago missed-bus, BTD static timetable, legacy pantry round trips, save/download/print are implemented. English is the only reviewed UI language; source records include Spanish service information, not a bilingual interface.
+- Google services currently isolated in google-services.ts +APIjourney/geocode and journey-map.tsx. Browser map has no configured keys; backend routes unavailable without keys. External Google Maps directions links are key-free and should remain as optional handoffs.
+- Prompt's six unresolved pins are outdated: all8 have sourced distribution-site coordinates from the v3 audit. Preserve UMC hours/game-day exception, Lincoln suffix conflict, Salvation andBridge older-map conflicts; no field-reviewed pedestrian entrances or guaranteed food/bed/bus-shelter availability.
+- BTD originalGTFSsnapshot valid through2026-12-31 pluswebsiteholidayoverlay, unresolvedPDF/web/GTFSconflict, exact-stop-only fallback, one transfer. Nolivefeed. BryanISDrestrictedstudenttransport staysseparate.
+- Migration scope: replace normal Google map/geocode/streetrouting dependency with configurable OSM stack; preserve plannerengine and demo storage/textexports. No publicdeploy. Offline fallback text only; no tile downloads.

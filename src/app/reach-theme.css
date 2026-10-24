@@ -1,0 +1,77 @@
+@layer theme, base, vendor, legacy, components, utilities, reach;
+@import "tailwindcss" source("../");
+@import "./globals.css" layer(legacy);
+@import "./design-system.css" layer(legacy);
+@import "./reach-polish.css" layer(reach);
+
+@plugin "daisyui" {
+  themes: false;
+  logs: false;
+}
+
+@plugin "daisyui/theme" {
+  name: "reach";
+  default: true;
+  color-scheme: light;
+  --color-base-100: #ffffff;
+  --color-base-200: #f8fafc;
+  --color-base-300: #dce5eb;
+  --color-base-content: #0f172a;
+  --color-primary: #0f766e;
+  --color-primary-content: #ffffff;
+  --color-secondary: #334155;
+  --color-secondary-content: #ffffff;
+  --color-accent: #f59e0b;
+  --color-accent-content: #422006;
+  --color-neutral: #1e293b;
+  --color-neutral-content: #f8fafc;
+  --color-info: #075985;
+  --color-info-content: #ffffff;
+  --color-success: #166534;
+  --color-success-content: #ffffff;
+  --color-warning: #92400e;
+  --color-warning-content: #ffffff;
+  --color-error: #b91c1c;
+  --color-error-content: #ffffff;
+  --radius-selector: 0.625rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.125rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "reach-dark";
+  color-scheme: dark;
+  --color-base-100: #15232d;
+  --color-base-200: #0c161e;
+  --color-base-300: #344957;
+  --color-base-content: #edf5fa;
+  --color-primary: #5eead4;
+  --color-primary-content: #042f2e;
+  --color-secondary: #cbd5e1;
+  --color-secondary-content: #0f172a;
+  --color-accent: #fbbf24;
+  --color-accent-content: #422006;
+  --color-neutral: #253746;
+  --color-neutral-content: #edf5fa;
+  --color-info: #7dd3fc;
+  --color-info-content: #082f49;
+  --color-success: #86efac;
+  --color-success-content: #052e16;
+  --color-warning: #fcd34d;
+  --color-warning-content: #422006;
+  --color-error: #fca5a5;
+  --color-error-content: #450a0a;
+  --radius-selector: 0.625rem;
+  --radius-field: 0.75rem;
+  --radius-box: 1.125rem;
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}

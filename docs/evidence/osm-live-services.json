@@ -1,0 +1,346 @@
+{
+  "at": "2026-10-17T14:56:17.591Z",
+  "requests": [
+    {
+      "host": "nominatim.openstreetmap.org",
+      "path": "/search",
+      "started": 1792248974089,
+      "status": 200,
+      "elapsedMs": 918
+    },
+    {
+      "host": "nominatim.openstreetmap.org",
+      "path": "/reverse",
+      "started": 1792248975189,
+      "status": 200,
+      "elapsedMs": 782
+    },
+    {
+      "host": "valhalla1.openstreetmap.de",
+      "path": "/route",
+      "started": 1792248975976,
+      "costing": "pedestrian",
+      "status": 200,
+      "elapsedMs": 1606
+    }
+  ],
+  "search": {
+    "status": "available",
+    "candidates": [
+      {
+        "label": "Bryan, Brazos County, Texas, United States",
+        "coordinates": {
+          "lat": 30.6743643,
+          "lng": -96.3699632
+        }
+      }
+    ],
+    "attribution": [
+      {
+        "label": "© OpenStreetMap contributors",
+        "url": "https://www.openstreetmap.org/copyright"
+      }
+    ]
+  },
+  "searchCachedEqual": true,
+  "reverse": {
+    "status": "available",
+    "candidates": [
+      {
+        "label": "Texas Avenue North, Bryan, Brazos County, Texas, 77803, United States",
+        "coordinates": {
+          "lat": 30.6747309,
+          "lng": -96.3695491
+        }
+      }
+    ],
+    "attribution": [
+      {
+        "label": "© OpenStreetMap contributors",
+        "url": "https://www.openstreetmap.org/copyright"
+      }
+    ]
+  },
+  "route": {
+    "status": "available",
+    "distanceMiles": 2.1576,
+    "durationMinutes": 40.85491666666667,
+    "steps": [
+      {
+        "instruction": "Walk west on East William J Bryan Parkway/FM 158."
+      },
+      {
+        "instruction": "Bear left onto Texas Avenue North/TX 6 Business."
+      },
+      {
+        "instruction": "Turn right onto South Coulter Drive."
+      },
+      {
+        "instruction": "Turn left onto Cavitt Avenue."
+      },
+      {
+        "instruction": "Turn left."
+      },
+      {
+        "instruction": "Your destination is on the left."
+      }
+    ],
+    "paths": [
+      {
+        "id": "osm-0",
+        "mode": "walking",
+        "coordinates": [
+          [
+            -96.369806,
+            30.67436
+          ],
+          [
+            -96.369815,
+            30.674361
+          ],
+          [
+            -96.369905,
+            30.674326
+          ],
+          [
+            -96.370035,
+            30.673367
+          ],
+          [
+            -96.37005,
+            30.673257
+          ],
+          [
+            -96.370091,
+            30.672958
+          ],
+          [
+            -96.370136,
+            30.672641
+          ],
+          [
+            -96.37017,
+            30.672416
+          ],
+          [
+            -96.370217,
+            30.672046
+          ],
+          [
+            -96.370234,
+            30.671928
+          ],
+          [
+            -96.370291,
+            30.671477
+          ],
+          [
+            -96.37031,
+            30.671341
+          ],
+          [
+            -96.370413,
+            30.670609
+          ],
+          [
+            -96.370427,
+            30.67051
+          ],
+          [
+            -96.370445,
+            30.670388
+          ],
+          [
+            -96.370567,
+            30.669564
+          ],
+          [
+            -96.370597,
+            30.66935
+          ],
+          [
+            -96.370694,
+            30.668664
+          ],
+          [
+            -96.370754,
+            30.668185
+          ],
+          [
+            -96.370997,
+            30.666517
+          ],
+          [
+            -96.371143,
+            30.665526
+          ],
+          [
+            -96.371214,
+            30.664999
+          ],
+          [
+            -96.371302,
+            30.664399
+          ],
+          [
+            -96.371334,
+            30.664177
+          ],
+          [
+            -96.371385,
+            30.663815
+          ],
+          [
+            -96.371483,
+            30.663104
+          ],
+          [
+            -96.371637,
+            30.662015
+          ],
+          [
+            -96.371652,
+            30.661913
+          ],
+          [
+            -96.371718,
+            30.66142
+          ],
+          [
+            -96.371719,
+            30.661202
+          ],
+          [
+            -96.371687,
+            30.661033
+          ],
+          [
+            -96.371608,
+            30.660841
+          ],
+          [
+            -96.371457,
+            30.66061
+          ],
+          [
+            -96.371381,
+            30.660509
+          ],
+          [
+            -96.371312,
+            30.660408
+          ],
+          [
+            -96.371065,
+            30.660107
+          ],
+          [
+            -96.370728,
+            30.659748
+          ],
+          [
+            -96.37037,
+            30.659403
+          ],
+          [
+            -96.369314,
+            30.658435
+          ],
+          [
+            -96.369402,
+            30.658363
+          ],
+          [
+            -96.369611,
+            30.658164
+          ],
+          [
+            -96.369549,
+            30.658085
+          ],
+          [
+            -96.369298,
+            30.657766
+          ],
+          [
+            -96.368977,
+            30.65736
+          ],
+          [
+            -96.368171,
+            30.656335
+          ],
+          [
+            -96.368008,
+            30.656128
+          ],
+          [
+            -96.367256,
+            30.655172
+          ],
+          [
+            -96.36693,
+            30.654752
+          ],
+          [
+            -96.366617,
+            30.654347
+          ],
+          [
+            -96.366243,
+            30.653865
+          ],
+          [
+            -96.365625,
+            30.653069
+          ],
+          [
+            -96.365535,
+            30.65295
+          ],
+          [
+            -96.364933,
+            30.652158
+          ],
+          [
+            -96.364051,
+            30.650997
+          ],
+          [
+            -96.363085,
+            30.649739
+          ],
+          [
+            -96.362127,
+            30.648455
+          ],
+          [
+            -96.361618,
+            30.647777
+          ],
+          [
+            -96.361262,
+            30.647309
+          ],
+          [
+            -96.360861,
+            30.646886
+          ],
+          [
+            -96.360489,
+            30.647187
+          ]
+        ],
+        "label": "OSM walking route"
+      }
+    ],
+    "attribution": [
+      {
+        "label": "© OpenStreetMap contributors",
+        "url": "https://www.openstreetmap.org/copyright"
+      }
+    ],
+    "label": "Valhalla walking estimate · community demo; no production SLA"
+  },
+  "routeCachedEqual": true
+}

@@ -1,0 +1,1018 @@
+{
+  "timezone": "America/Chicago",
+  "validFrom": "2025-07-15",
+  "validTo": "2026-12-31",
+  "minTransferMinutes": 5,
+  "calendars": [
+    {
+      "id": "Service_Period",
+      "startDate": "2025-07-15",
+      "endDate": "2026-12-31",
+      "weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "exceptions": {
+        "2026-01-01": false,
+        "2026-01-19": false,
+        "2026-02-16": false,
+        "2026-04-03": false,
+        "2026-05-25": false,
+        "2026-09-07": false,
+        "2026-11-26": false,
+        "2026-11-27": false,
+        "2026-12-24": false,
+        "2026-12-25": false
+      }
+    }
+  ],
+  "trips": [
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-0500-8c7b671",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "05:00",
+          "departure": "05:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "05:06",
+          "departure": "05:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "05:15",
+          "departure": "05:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-0600-6222465",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "06:00",
+          "departure": "06:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "06:06",
+          "departure": "06:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "06:15",
+          "departure": "06:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-0700-3bfc9c7",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "07:00",
+          "departure": "07:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "07:06",
+          "departure": "07:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "07:15",
+          "departure": "07:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-0800-afcf5e7",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "08:00",
+          "departure": "08:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "08:06",
+          "departure": "08:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "08:15",
+          "departure": "08:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-0900-f3bce76",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "09:00",
+          "departure": "09:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "09:06",
+          "departure": "09:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "09:15",
+          "departure": "09:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1000-019314b",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "10:00",
+          "departure": "10:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "10:06",
+          "departure": "10:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "10:15",
+          "departure": "10:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1100-bc11cc1",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "11:00",
+          "departure": "11:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "11:06",
+          "departure": "11:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "11:15",
+          "departure": "11:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1200-7ba35b7",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "12:00",
+          "departure": "12:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "12:06",
+          "departure": "12:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "12:15",
+          "departure": "12:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1300-9dc53cd",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "13:00",
+          "departure": "13:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "13:06",
+          "departure": "13:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "13:15",
+          "departure": "13:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1400-ae0dd66",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "14:00",
+          "departure": "14:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "14:06",
+          "departure": "14:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "14:15",
+          "departure": "14:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1500-d8d79cc",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "15:00",
+          "departure": "15:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "15:06",
+          "departure": "15:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "15:15",
+          "departure": "15:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1600-aa4a55b",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "16:00",
+          "departure": "16:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "16:06",
+          "departure": "16:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "16:15",
+          "departure": "16:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1700-4ddcd12",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "17:00",
+          "departure": "17:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "17:06",
+          "departure": "17:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "17:15",
+          "departure": "17:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1800-5e43553",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "18:00",
+          "departure": "18:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "18:06",
+          "departure": "18:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "18:15",
+          "departure": "18:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-IB-1900-794a49d",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "151",
+          "arrival": "19:00",
+          "departure": "19:00"
+        },
+        {
+          "stopId": "154",
+          "arrival": "19:06",
+          "departure": "19:06"
+        },
+        {
+          "stopId": "126",
+          "arrival": "19:15",
+          "departure": "19:15"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-0548-6c9074a",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "05:48",
+          "departure": "05:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "05:49",
+          "departure": "05:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "05:53",
+          "departure": "05:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "06:01",
+          "departure": "06:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "06:20",
+          "departure": "06:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-0648-a21c7f2",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "06:48",
+          "departure": "06:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "06:49",
+          "departure": "06:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "06:53",
+          "departure": "06:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "07:01",
+          "departure": "07:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "07:20",
+          "departure": "07:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-0748-99526e9",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "07:48",
+          "departure": "07:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "07:49",
+          "departure": "07:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "07:53",
+          "departure": "07:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "08:01",
+          "departure": "08:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "08:20",
+          "departure": "08:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-0848-8afdbb1",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "08:48",
+          "departure": "08:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "08:49",
+          "departure": "08:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "08:53",
+          "departure": "08:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "09:01",
+          "departure": "09:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "09:20",
+          "departure": "09:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-0948-b1b40b8",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "09:48",
+          "departure": "09:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "09:49",
+          "departure": "09:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "09:53",
+          "departure": "09:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "10:01",
+          "departure": "10:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "10:20",
+          "departure": "10:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1048-b87b96d",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "10:48",
+          "departure": "10:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "10:49",
+          "departure": "10:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "10:53",
+          "departure": "10:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "11:01",
+          "departure": "11:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "11:20",
+          "departure": "11:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1148-ffbd6e9",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "11:48",
+          "departure": "11:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "11:49",
+          "departure": "11:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "11:53",
+          "departure": "11:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "12:01",
+          "departure": "12:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "12:20",
+          "departure": "12:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1248-57e8f05",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "12:48",
+          "departure": "12:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "12:49",
+          "departure": "12:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "12:53",
+          "departure": "12:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "13:01",
+          "departure": "13:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "13:20",
+          "departure": "13:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1348-bd78d88",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "13:48",
+          "departure": "13:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "13:49",
+          "departure": "13:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "13:53",
+          "departure": "13:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "14:01",
+          "departure": "14:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "14:20",
+          "departure": "14:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1448-e96e83b",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "14:48",
+          "departure": "14:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "14:49",
+          "departure": "14:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "14:53",
+          "departure": "14:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "15:01",
+          "departure": "15:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "15:20",
+          "departure": "15:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1548-efa76d4",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "15:48",
+          "departure": "15:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "15:49",
+          "departure": "15:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "15:53",
+          "departure": "15:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "16:01",
+          "departure": "16:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "16:20",
+          "departure": "16:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1648-8eda114",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "16:48",
+          "departure": "16:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "16:49",
+          "departure": "16:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "16:53",
+          "departure": "16:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "17:01",
+          "departure": "17:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "17:20",
+          "departure": "17:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1748-1da9981",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "17:48",
+          "departure": "17:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "17:49",
+          "departure": "17:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "17:53",
+          "departure": "17:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "18:01",
+          "departure": "18:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "18:20",
+          "departure": "18:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1848-11b4968",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "18:48",
+          "departure": "18:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "18:49",
+          "departure": "18:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "18:53",
+          "departure": "18:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "19:01",
+          "departure": "19:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "19:20",
+          "departure": "19:20"
+        }
+      ]
+    },
+    {
+      "id": "Service_Period-Weekday-BryOrange-A-OB-1948-84d432f",
+      "route": "BTD Route 00 Orange",
+      "serviceId": "Service_Period",
+      "sourceIds": [
+        "btd-gtfs",
+        "btd-holidays"
+      ],
+      "stops": [
+        {
+          "stopId": "126",
+          "arrival": "19:48",
+          "departure": "19:48"
+        },
+        {
+          "stopId": "127",
+          "arrival": "19:49",
+          "departure": "19:49"
+        },
+        {
+          "stopId": "134",
+          "arrival": "19:53",
+          "departure": "19:53"
+        },
+        {
+          "stopId": "142",
+          "arrival": "20:01",
+          "departure": "20:01"
+        },
+        {
+          "stopId": "151",
+          "arrival": "20:20",
+          "departure": "20:20"
+        }
+      ]
+    }
+  ],
+  "stops": [
+    {
+      "id": "126",
+      "name": "BTD Bryan Terminal - Roy Kelly Parking Garage",
+      "lat": 30.6729992,
+      "lon": -96.3718935
+    },
+    {
+      "id": "127",
+      "name": "26th St @ Parker Ave",
+      "lat": 30.6739985,
+      "lon": -96.3748688
+    },
+    {
+      "id": "134",
+      "name": "Sandy Point @ Forest Park Apartments",
+      "lat": 30.679081,
+      "lon": -96.3930479
+    },
+    {
+      "id": "142",
+      "name": "Texas Ave @ Sims",
+      "lat": 30.6904378,
+      "lon": -96.3743035
+    },
+    {
+      "id": "151",
+      "name": "Old Hearne Rd @ McHaney Dr",
+      "lat": 30.7051202,
+      "lon": -96.3777352
+    },
+    {
+      "id": "154",
+      "name": "Hwy 21 @ 16th",
+      "lat": 30.6851201,
+      "lon": -96.379074
+    }
+  ],
+  "sources": [
+    {
+      "id": "btd-gtfs",
+      "title": "BTD official GTFS — March 25, 2026 version; times conflict with PDF",
+      "url": "https://www.btd.org/2025btdgtfs/",
+      "checkedOn": "2026-10-15",
+      "verificationMethod": "website"
+    },
+    {
+      "id": "btd-holidays",
+      "title": "BTD official fixed-route 2026 holiday closures",
+      "url": "https://www.btd.org/fixed-routes/",
+      "checkedOn": "2026-10-15",
+      "verificationMethod": "website"
+    }
+  ]
+}

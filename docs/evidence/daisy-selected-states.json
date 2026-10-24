@@ -1,0 +1,3245 @@
+{
+  "check": "Final production ordinary-motion selected-control contrast; email/management UI fixtures do not exercise delivery or server permissions",
+  "measurements": [
+    {
+      "project": "android",
+      "name": "Account mode",
+      "colorScheme": "light",
+      "active": "Create account",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "android",
+      "name": "Community view",
+      "colorScheme": "light",
+      "active": "Sign in",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "android",
+      "name": "Planner travel mode",
+      "colorScheme": "light",
+      "active": "Walk only",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "android",
+      "name": "Planner navigation",
+      "colorScheme": "light",
+      "active": "Saved trips",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "android",
+      "name": "Planner result filter",
+      "colorScheme": "light",
+      "active": "Fits\n2",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "android",
+      "name": "Busy-time weekday",
+      "colorScheme": "light",
+      "active": "Sun",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "android",
+      "name": "Map resources/directions",
+      "colorScheme": "light",
+      "active": "Browse places",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgb(255, 255, 255)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "android",
+      "name": "Management section",
+      "colorScheme": "light",
+      "active": "Audit log",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "android",
+      "name": "Pantry editing section",
+      "colorScheme": "light",
+      "active": "Hours & closures",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "android",
+      "name": "Account mode",
+      "colorScheme": "dark",
+      "active": "Create account",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "android",
+      "name": "Community view",
+      "colorScheme": "dark",
+      "active": "Sign in",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "android",
+      "name": "Planner travel mode",
+      "colorScheme": "dark",
+      "active": "Walk only",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "android",
+      "name": "Planner navigation",
+      "colorScheme": "dark",
+      "active": "Saved trips",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "android",
+      "name": "Planner result filter",
+      "colorScheme": "dark",
+      "active": "Fits\n2",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "android",
+      "name": "Busy-time weekday",
+      "colorScheme": "dark",
+      "active": "Sun",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "android",
+      "name": "Map resources/directions",
+      "colorScheme": "dark",
+      "active": "Browse places",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgb(21, 35, 45)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "android",
+      "name": "Management section",
+      "colorScheme": "dark",
+      "active": "Audit log",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "android",
+      "name": "Pantry editing section",
+      "colorScheme": "dark",
+      "active": "Hours & closures",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "desktop",
+      "name": "Account mode",
+      "colorScheme": "light",
+      "active": "Create account",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "desktop",
+      "name": "Community view",
+      "colorScheme": "light",
+      "active": "Sign in",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "desktop",
+      "name": "Planner travel mode",
+      "colorScheme": "light",
+      "active": "Walk only",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "desktop",
+      "name": "Planner navigation",
+      "colorScheme": "light",
+      "active": "Saved trips",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "desktop",
+      "name": "Planner result filter",
+      "colorScheme": "light",
+      "active": "Fits\n2",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "desktop",
+      "name": "Busy-time weekday",
+      "colorScheme": "light",
+      "active": "Sun",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "desktop",
+      "name": "Map resources/directions",
+      "colorScheme": "light",
+      "active": "Browse places",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgb(255, 255, 255)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "desktop",
+      "name": "Management section",
+      "colorScheme": "light",
+      "active": "Audit log",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "desktop",
+      "name": "Pantry editing section",
+      "colorScheme": "light",
+      "active": "Hours & closures",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "desktop",
+      "name": "Account mode",
+      "colorScheme": "dark",
+      "active": "Create account",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "desktop",
+      "name": "Community view",
+      "colorScheme": "dark",
+      "active": "Sign in",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "desktop",
+      "name": "Planner travel mode",
+      "colorScheme": "dark",
+      "active": "Walk only",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "desktop",
+      "name": "Planner navigation",
+      "colorScheme": "dark",
+      "active": "Saved trips",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "desktop",
+      "name": "Planner result filter",
+      "colorScheme": "dark",
+      "active": "Fits\n2",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "desktop",
+      "name": "Busy-time weekday",
+      "colorScheme": "dark",
+      "active": "Sun",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "desktop",
+      "name": "Map resources/directions",
+      "colorScheme": "dark",
+      "active": "Browse places",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgb(21, 35, 45)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "desktop",
+      "name": "Management section",
+      "colorScheme": "dark",
+      "active": "Audit log",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "desktop",
+      "name": "Pantry editing section",
+      "colorScheme": "dark",
+      "active": "Hours & closures",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "mobile",
+      "name": "Account mode",
+      "colorScheme": "light",
+      "active": "Create account",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "mobile",
+      "name": "Community view",
+      "colorScheme": "light",
+      "active": "Sign in",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "mobile",
+      "name": "Planner travel mode",
+      "colorScheme": "light",
+      "active": "Walk only",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "mobile",
+      "name": "Planner navigation",
+      "colorScheme": "light",
+      "active": "Saved trips",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "mobile",
+      "name": "Planner result filter",
+      "colorScheme": "light",
+      "active": "Fits\n2",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "mobile",
+      "name": "Busy-time weekday",
+      "colorScheme": "light",
+      "active": "Sun",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "mobile",
+      "name": "Map resources/directions",
+      "colorScheme": "light",
+      "active": "Browse places",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgb(255, 255, 255)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "mobile",
+      "name": "Management section",
+      "colorScheme": "light",
+      "active": "Audit log",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "mobile",
+      "name": "Pantry editing section",
+      "colorScheme": "light",
+      "active": "Hours & closures",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "mobile",
+      "name": "Account mode",
+      "colorScheme": "dark",
+      "active": "Create account",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "mobile",
+      "name": "Community view",
+      "colorScheme": "dark",
+      "active": "Sign in",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "mobile",
+      "name": "Planner travel mode",
+      "colorScheme": "dark",
+      "active": "Walk only",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "mobile",
+      "name": "Planner navigation",
+      "colorScheme": "dark",
+      "active": "Saved trips",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "mobile",
+      "name": "Planner result filter",
+      "colorScheme": "dark",
+      "active": "Fits\n2",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "mobile",
+      "name": "Busy-time weekday",
+      "colorScheme": "dark",
+      "active": "Sun",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "mobile",
+      "name": "Map resources/directions",
+      "colorScheme": "dark",
+      "active": "Browse places",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgb(21, 35, 45)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "mobile",
+      "name": "Management section",
+      "colorScheme": "dark",
+      "active": "Audit log",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "mobile",
+      "name": "Pantry editing section",
+      "colorScheme": "dark",
+      "active": "Hours & closures",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "tablet",
+      "name": "Account mode",
+      "colorScheme": "light",
+      "active": "Create account",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "tablet",
+      "name": "Community view",
+      "colorScheme": "light",
+      "active": "Sign in",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "tablet",
+      "name": "Planner travel mode",
+      "colorScheme": "light",
+      "active": "Walk only",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "tablet",
+      "name": "Planner navigation",
+      "colorScheme": "light",
+      "active": "Saved trips",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "tablet",
+      "name": "Planner result filter",
+      "colorScheme": "light",
+      "active": "Fits\n2",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "tablet",
+      "name": "Busy-time weekday",
+      "colorScheme": "light",
+      "active": "Sun",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "tablet",
+      "name": "Map resources/directions",
+      "colorScheme": "light",
+      "active": "Browse places",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgb(255, 255, 255)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          255,
+          255,
+          255
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 1,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.85253496299567
+      },
+      "stateContrast": 5.473250081210842
+    },
+    {
+      "project": "tablet",
+      "name": "Management section",
+      "colorScheme": "light",
+      "active": "Audit log",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "tablet",
+      "name": "Pantry editing section",
+      "colorScheme": "light",
+      "active": "Hours & closures",
+      "selected": {
+        "foregroundCss": "rgb(255, 255, 255)",
+        "componentBackgroundCss": "rgb(15, 118, 110)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          15,
+          118,
+          110
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.14184213847720065,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 5.473250081210842
+      },
+      "other": {
+        "foregroundCss": "rgb(15, 23, 42)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "adjacentBackgroundRgb": [
+          248,
+          250,
+          252
+        ],
+        "componentLuminance": 0.9535594780808019,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 17.062933971317335
+      },
+      "stateContrast": 5.23117332848158
+    },
+    {
+      "project": "tablet",
+      "name": "Account mode",
+      "colorScheme": "dark",
+      "active": "Create account",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "tablet",
+      "name": "Community view",
+      "colorScheme": "dark",
+      "active": "Sign in",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "tablet",
+      "name": "Planner travel mode",
+      "colorScheme": "dark",
+      "active": "Walk only",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "tablet",
+      "name": "Planner navigation",
+      "colorScheme": "dark",
+      "active": "Saved trips",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "tablet",
+      "name": "Planner result filter",
+      "colorScheme": "dark",
+      "active": "Fits\n2",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "tablet",
+      "name": "Busy-time weekday",
+      "colorScheme": "dark",
+      "active": "Sun",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "tablet",
+      "name": "Map resources/directions",
+      "colorScheme": "dark",
+      "active": "Browse places",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgb(21, 35, 45)",
+        "borderWidth": "1px",
+        "componentBackgroundRgb": [
+          21,
+          35,
+          45
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.015509545571663102,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 14.533983903837301
+      },
+      "stateContrast": 10.834876983438441
+    },
+    {
+      "project": "tablet",
+      "name": "Management section",
+      "colorScheme": "dark",
+      "active": "Audit log",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    },
+    {
+      "project": "tablet",
+      "name": "Pantry editing section",
+      "colorScheme": "dark",
+      "active": "Hours & closures",
+      "selected": {
+        "foregroundCss": "rgb(4, 47, 46)",
+        "componentBackgroundCss": "rgb(94, 234, 212)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          94,
+          234,
+          212
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.6597878675099242,
+        "textDecorationLine": "underline",
+        "textDecorationThickness": "2px",
+        "ratio": 9.781948344411779
+      },
+      "other": {
+        "foregroundCss": "rgb(237, 245, 250)",
+        "componentBackgroundCss": "rgba(0, 0, 0, 0)",
+        "borderWidth": "0px",
+        "componentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "adjacentBackgroundRgb": [
+          12,
+          22,
+          30
+        ],
+        "componentLuminance": 0.007457188015344724,
+        "textDecorationLine": "none",
+        "textDecorationThickness": "auto",
+        "ratio": 16.5708541224115
+      },
+      "stateContrast": 12.353334578788745
+    }
+  ]
+}

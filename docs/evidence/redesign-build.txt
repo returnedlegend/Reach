@@ -1,0 +1,73 @@
+npm notice run reach@0.1.0 build
+npm notice run next build
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 64ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 890ms
+  Running TypeScript ...
+  Finished TypeScript in 6.9s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/12) ...
+  Generating static pages using 4 workers (3/12) 
+  Generating static pages using 4 workers (6/12) 
+  Generating static pages using 4 workers (9/12) 
+✓ Generating static pages using 4 workers (12/12) in 682ms
+Turbopack build encountered 1 warning:
+./src/lib/postal-delivery.ts:348:35
+Warning: Dynamic filesystem access causes tracing of the whole project
+  [90m346 |[0m       );
+  [90m347 |[0m       [36mfor[0m ([36mconst[0m served [36mof[0m [[32m"public"[0m, [32m".next"[0m, [32m"out"[0m]) {
+[33m[1m>[0m [90m348 |[0m         [36mconst[0m location = relative(resolve(served), dir);
+  [90m    |[0m                                   [33m[1m^^^^^^^^^^^^^^^[0m
+  [90m349 |[0m         [36mif[0m (
+  [90m350 |[0m           !location ||
+  [90m351 |[0m           (location !== [32m".."[0m &&
+
+Static analysis determined that this filesystem access causes the whole project to be traced and included in the output.
+This is usually unintentional and leads to all source files (including the public folder) to be deployed as part of the server code.
+This can slow down deployments or lead to failures when size limits are exceeded.
+To resolve this, you can
+- make sure the path is statically scoped to some subfolder, for example path.join(process.cwd(), 'data', bar), or
+- only use them in development, or
+- opt out by adding an ignore comment to the highlighted call: path.resolve(/*turbopackIgnore: true*/ ...), or
+- remove them.
+
+Import trace:
+  App Route:
+    ./src/lib/postal-delivery.ts
+    ./src/lib/notifications-api.ts
+    ./src/app/api/notifications/[[...path]]/route.ts
+
+
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ○ /account
+├ ƒ /api/account/[...path]
+├ ƒ /api/community/[...path]
+├ ƒ /api/crowd/[pantryId]
+├ ƒ /api/geocode
+├ ƒ /api/journey
+├ ƒ /api/notifications/[[...path]]
+├ ƒ /api/pantries/[[...path]]
+├ ƒ /api/plan
+├ ƒ /api/postal/webhook
+├ ƒ /api/reverse-geocode
+├ ƒ /api/volunteer/[[...path]]
+├ ƒ /food-hotspots
+├ ○ /manage
+├ ƒ /pantries/[id]
+├ ƒ /pantry-planner
+├ ○ /privacy
+├ ○ /terms
+├ ○ /unsubscribe
+└ ○ /volunteer
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

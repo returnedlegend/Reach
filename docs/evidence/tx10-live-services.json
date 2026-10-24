@@ -1,0 +1,397 @@
+{
+  "checkedOn": "2026-10-22",
+  "scope": "Public street/site points for bounded verification; not user location or production uptime.",
+  "routing": [
+    {
+      "mode": "walking",
+      "httpStatus": 200,
+      "result": {
+        "status": "available",
+        "distanceMiles": 0.6881,
+        "durationMinutes": 13.110316666666668,
+        "steps": [
+          {
+            "instruction": "Walk southeast on Kent Street."
+          },
+          {
+            "instruction": "Turn right onto Memorial Drive."
+          },
+          {
+            "instruction": "Turn left."
+          },
+          {
+            "instruction": "Turn left."
+          },
+          {
+            "instruction": "Your destination is on the left."
+          }
+        ],
+        "paths": [
+          {
+            "id": "osm-0",
+            "mode": "walking",
+            "coordinates": [
+              [
+                -96.352802,
+                30.654341
+              ],
+              [
+                -96.351347,
+                30.653105
+              ],
+              [
+                -96.351162,
+                30.652988
+              ],
+              [
+                -96.350961,
+                30.652888
+              ],
+              [
+                -96.350842,
+                30.652847
+              ],
+              [
+                -96.350668,
+                30.652823
+              ],
+              [
+                -96.349298,
+                30.652939
+              ],
+              [
+                -96.349071,
+                30.652961
+              ],
+              [
+                -96.348282,
+                30.653037
+              ],
+              [
+                -96.346557,
+                30.653177
+              ],
+              [
+                -96.346425,
+                30.653187
+              ],
+              [
+                -96.345629,
+                30.653252
+              ],
+              [
+                -96.345573,
+                30.652801
+              ],
+              [
+                -96.345529,
+                30.652458
+              ],
+              [
+                -96.345451,
+                30.651833
+              ],
+              [
+                -96.345355,
+                30.651073
+              ],
+              [
+                -96.344991,
+                30.651106
+              ],
+              [
+                -96.34449,
+                30.651158
+              ],
+              [
+                -96.344521,
+                30.651388
+              ]
+            ],
+            "label": "OSM walking route"
+          }
+        ],
+        "attribution": [
+          {
+            "label": "\u00a9 OpenStreetMap contributors",
+            "url": "https://www.openstreetmap.org/copyright"
+          },
+          {
+            "label": "Routing: Valhalla / FOSSGIS",
+            "url": "https://routing.openstreetmap.de/about.html"
+          },
+          {
+            "label": "Improve the map",
+            "url": "https://www.openstreetmap.org/fixthemap"
+          }
+        ],
+        "label": "Valhalla walking estimate \u00b7 community demo; no production SLA"
+      }
+    },
+    {
+      "mode": "driving",
+      "httpStatus": 200,
+      "result": {
+        "status": "available",
+        "distanceMiles": 0.8236,
+        "durationMinutes": 3.3972166666666666,
+        "steps": [
+          {
+            "instruction": "Drive southeast on Kent Street."
+          },
+          {
+            "instruction": "Turn right onto East Villa Maria Road."
+          },
+          {
+            "instruction": "Keep left to stay on East Villa Maria Road."
+          },
+          {
+            "instruction": "Turn left onto Briarcrest Drive/FM 1179."
+          },
+          {
+            "instruction": "Turn left onto Memorial Drive."
+          },
+          {
+            "instruction": "Turn right."
+          },
+          {
+            "instruction": "Turn left."
+          },
+          {
+            "instruction": "Your destination is on the left."
+          }
+        ],
+        "paths": [
+          {
+            "id": "osm-0",
+            "mode": "driving",
+            "coordinates": [
+              [
+                -96.352802,
+                30.654341
+              ],
+              [
+                -96.351347,
+                30.653105
+              ],
+              [
+                -96.351162,
+                30.652988
+              ],
+              [
+                -96.350961,
+                30.652888
+              ],
+              [
+                -96.350842,
+                30.652847
+              ],
+              [
+                -96.350668,
+                30.652823
+              ],
+              [
+                -96.349298,
+                30.652939
+              ],
+              [
+                -96.349071,
+                30.652961
+              ],
+              [
+                -96.348282,
+                30.653037
+              ],
+              [
+                -96.348206,
+                30.652448
+              ],
+              [
+                -96.348202,
+                30.652413
+              ],
+              [
+                -96.348143,
+                30.65195
+              ],
+              [
+                -96.348134,
+                30.651865
+              ],
+              [
+                -96.348106,
+                30.65167
+              ],
+              [
+                -96.348096,
+                30.651587
+              ],
+              [
+                -96.348006,
+                30.650903
+              ],
+              [
+                -96.347925,
+                30.650291
+              ],
+              [
+                -96.347894,
+                30.650075
+              ],
+              [
+                -96.347851,
+                30.649972
+              ],
+              [
+                -96.347825,
+                30.649872
+              ],
+              [
+                -96.347775,
+                30.649742
+              ],
+              [
+                -96.347702,
+                30.64965
+              ],
+              [
+                -96.347581,
+                30.649751
+              ],
+              [
+                -96.347565,
+                30.649765
+              ],
+              [
+                -96.347319,
+                30.649966
+              ],
+              [
+                -96.347284,
+                30.649992
+              ],
+              [
+                -96.347175,
+                30.650057
+              ],
+              [
+                -96.347068,
+                30.650115
+              ],
+              [
+                -96.346892,
+                30.650186
+              ],
+              [
+                -96.34677,
+                30.650222
+              ],
+              [
+                -96.34664,
+                30.65025
+              ],
+              [
+                -96.346523,
+                30.650264
+              ],
+              [
+                -96.345828,
+                30.650333
+              ],
+              [
+                -96.345791,
+                30.650337
+              ],
+              [
+                -96.34527,
+                30.650391
+              ],
+              [
+                -96.345332,
+                30.650888
+              ],
+              [
+                -96.345355,
+                30.651073
+              ],
+              [
+                -96.344991,
+                30.651106
+              ],
+              [
+                -96.34449,
+                30.651158
+              ],
+              [
+                -96.344521,
+                30.651388
+              ]
+            ],
+            "label": "OSM driving route"
+          }
+        ],
+        "attribution": [
+          {
+            "label": "\u00a9 OpenStreetMap contributors",
+            "url": "https://www.openstreetmap.org/copyright"
+          },
+          {
+            "label": "Routing: Valhalla / FOSSGIS",
+            "url": "https://routing.openstreetmap.de/about.html"
+          },
+          {
+            "label": "Improve the map",
+            "url": "https://www.openstreetmap.org/fixthemap"
+          }
+        ],
+        "label": "Valhalla driving estimate \u00b7 community demo; no production SLA"
+      }
+    }
+  ],
+  "geocoding": {
+    "status": "available",
+    "candidates": [
+      {
+        "label": "1201, Pine Street, Bastrop, Bastrop County, Texas, 78602, United States",
+        "coordinates": {
+          "lat": 30.109358,
+          "lng": -97.3136494
+        }
+      }
+    ],
+    "attribution": [
+      {
+        "label": "\u00a9 OpenStreetMap contributors",
+        "url": "https://www.openstreetmap.org/copyright"
+      }
+    ]
+  },
+  "browser": {
+    "mapReady": true,
+    "pageErrors": [],
+    "walking": {
+      "destination": "Faith Mission, Brenham",
+      "distanceMiles": 0.3126,
+      "durationMinutes": 6.03685,
+      "steps": 5,
+      "shapePoints": 10,
+      "firstInstruction": "Walk north on the walkway."
+    },
+    "drivingFirstInstruction": "Drive north on North Baylor Street.",
+    "certificateCaveat": "Cloud browser proxy CA required test-only ignoreHTTPSErrors. Application certificate verification remained enabled."
+  },
+  "attribution": [
+    {
+      "label": "OpenStreetMap contributors",
+      "url": "https://www.openstreetmap.org/copyright"
+    },
+    {
+      "label": "Valhalla / FOSSGIS",
+      "url": "https://routing.openstreetmap.de/about.html"
+    },
+    {
+      "label": "OpenFreeMap",
+      "url": "https://openfreemap.org/"
+    }
+  ]
+}

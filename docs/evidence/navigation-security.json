@@ -1,0 +1,24 @@
+{
+  "checkedOn": "2026-10-23",
+  "checkedScopes": [
+    "src",
+    "tests",
+    "docs",
+    "scripts"
+  ],
+  "literalCredentialPatternMatches": [],
+  "patterns": [
+    "Google Maps API key format",
+    "OpenRouter API key format",
+    "Resend API key format"
+  ],
+  "envLocalExists": true,
+  "envLocalIgnored": true,
+  "envLocalMode": "0600",
+  "limitations": [
+    "Pattern checks cannot prove the absence of every possible credential.",
+    "No external inference, real email or authenticated provider call was made."
+  ],
+  "clientBundleFilesChecked": 30,
+  "privateEmailOrOpenRouterClientReferencesInBrowserBundles": []
+}

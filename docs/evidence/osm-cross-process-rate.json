@@ -1,0 +1,26 @@
+{
+  "fixture": "fetch replaced independently in each process; no external requests",
+  "requests": [
+    {
+      "pid": 90447,
+      "dispatch": 1792272457713,
+      "path": "/search"
+    },
+    {
+      "pid": 90448,
+      "dispatch": 1792272458812,
+      "path": "/reverse"
+    },
+    {
+      "pid": 90449,
+      "dispatch": 1792272459914,
+      "path": "/search"
+    }
+  ],
+  "dispatchIntervalsMs": [
+    1099,
+    1102
+  ],
+  "passed": true,
+  "criterion": "Each aggregate dispatch gap is at least 1000ms, matching public Nominatim policy; configured buffer is 1100ms."
+}

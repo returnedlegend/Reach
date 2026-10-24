@@ -1,0 +1,27 @@
+[
+  {
+    "path": "me",
+    "status": 503,
+    "cache": "no-store"
+  },
+  {
+    "path": "discovery",
+    "status": 503,
+    "cache": "no-store"
+  },
+  {
+    "path": "mine",
+    "status": 503,
+    "cache": "no-store"
+  },
+  {
+    "path": "moderation",
+    "status": 503,
+    "cache": "no-store"
+  },
+  {
+    "path": "auth/signup",
+    "status": 503,
+    "cache": "no-store"
+  }
+]

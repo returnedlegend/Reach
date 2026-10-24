@@ -1,0 +1,57 @@
+{
+  "name": "reach",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev-community.mjs",
+    "build": "next build",
+    "start": "next start --hostname 0.0.0.0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "node --import tsx node_modules/@playwright/test/cli.js test",
+    "data:validate": "tsx scripts/validate-data.ts",
+    "check": "npm run data:validate && npm run typecheck && npm test && npm run build",
+    "data:import": "python3 scripts/import-btd.py",
+    "dev:community": "node scripts/dev-community.mjs",
+    "community:admin": "tsx scripts/community-admin.ts",
+    "account:admin": "tsx scripts/account-admin.ts",
+    "data:migrate": "tsx scripts/import-pantries.ts",
+    "data:prune": "tsx scripts/prune-crowd.ts",
+    "mail:worker": "tsx scripts/mail-worker.ts",
+    "outreach:worker": "tsx scripts/outreach-worker.ts",
+    "outreach:admin": "tsx scripts/outreach-admin.ts",
+    "access:evaluate": "tsx scripts/evaluate-access.ts"
+  },
+  "dependencies": {
+    "@node-rs/argon2": "2.2.2",
+    "jose": "^6.2.13",
+    "lucide-react": "^0.468.0",
+    "maplibre-gl": "6.14.0",
+    "next": "16.4.2",
+    "nodemailer": "^10.2.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "resend": "6.34.1",
+    "sharp": "0.35.5",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.1",
+    "@playwright/test": "1.64.1",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "^24.0.0",
+    "@types/nodemailer": "^8.0.2",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "daisyui": "5.7.50",
+    "prettier": "3.6.2",
+    "tailwindcss": "4.3.3",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "5.0.5"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  }
+}

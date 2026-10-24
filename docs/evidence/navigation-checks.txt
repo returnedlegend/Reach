@@ -1,0 +1,24 @@
+Final main-agent checks — 2026-10-23
+Node 24.19.0; Next.js 16.4.2. No public deployment.
+
+npm test: 411 passed across 41 files.
+npm run typecheck: passed before and after build.
+npm run data:validate: passed (24 production sites; 6 separately labeled fictional demo records).
+npm run build: passed (optimized production build and TypeScript).
+npm run access:evaluate: 3 synthetic scenarios, 0 known constraint violations, 0 AI calls.
+
+Independent reviewer: 7 safety unit tests; 6 new browser cases (mobile + desktop).
+Retained browser regression: 18 unique cases across access-flow, workflow and accessibility passed. Initial run was 17/18 because a development reload interrupted an axe evaluation; the affected mobile fixture case then passed on its focused rerun. No assertions were weakened.
+Final visual/CSS recheck: driving fixture case passed on mobile and desktop (2 additional checks); no horizontal overflow or serious/critical axe findings.
+Thus 24 unique browser cases passed, with 3 focused rechecks in addition.
+
+Node 24 retained-test collection initially required a JSON module loader. The test:e2e script now uses the existing tsx loader; both retained and new tests collect and execute through it. No dependency or application data import was changed for this harness fix.
+Browser server: isolated /tmp/reach-navigation-qa SQLite storage, preview-only mail, disabled AI and disabled routing. New route and model responses were explicitly synthetic browser fixtures.
+
+Parent live requests, separate from independent browser verification:
+- OpenRouter public model catalog: HTTP 200; 468 models, 5 free entries advertising both tools and structured_outputs with zero reported prices. No authenticated request or inference.
+- Configured Valhalla driving adapter: public BTD Bryan Terminal to maintained Brazos Church Pantry coordinates, actual routed distance/duration/geometry returned.
+- Actual access handler using the live adapter and isolated DB: HTTP 200, outbound + return driving routes, status confirm, costs/stock/eligibility/pickup policy unknown, 0 AI calls.
+No live email, inbound callback, model inference, food inventory, pedestrian entrance or parking verification was performed.
+
+Security: .env.local exists, ignored and mode 0600. Public-source credential pattern scan found no matches. 30 browser JavaScript bundles contained no private OpenRouter/email key references or OpenRouter completion-client code. These checks are scoped evidence, not a universal security guarantee.

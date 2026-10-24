@@ -1,0 +1,104 @@
+{
+  "capturedAt": "2026-10-22T03:00:51.477Z",
+  "target": "Frozen local production build at https://localhost:3072",
+  "evidenceBoundary": "Real application and MapLibre rendering. Neutral cartography and synthetic provider paths/instructions are intercepted browser fixtures, not live routing or safe travel advice.",
+  "pantryId": "bridge-ministries",
+  "origin": {
+    "lat": 30.6481234,
+    "lng": -96.3595678
+  },
+  "destination": {
+    "lat": 30.6472913,
+    "lng": -96.3606034
+  },
+  "viewports": [
+    {
+      "width": 390,
+      "height": 844,
+      "colorScheme": "light",
+      "theme": "reach",
+      "requests": [
+        {
+          "origin": {
+            "lat": 30.6481234,
+            "lng": -96.3595678
+          },
+          "destination": {
+            "lat": 30.6472913,
+            "lng": -96.3606034
+          },
+          "mode": "walking",
+          "missedBus": false
+        }
+      ],
+      "errors": [],
+      "documentWidth": 390
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "colorScheme": "dark",
+      "theme": "reach-dark",
+      "requests": [
+        {
+          "origin": {
+            "lat": 30.6481234,
+            "lng": -96.3595678
+          },
+          "destination": {
+            "lat": 30.6472913,
+            "lng": -96.3606034
+          },
+          "mode": "walking",
+          "missedBus": false
+        }
+      ],
+      "errors": [],
+      "documentWidth": 390
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "colorScheme": "light",
+      "theme": "reach",
+      "requests": [
+        {
+          "origin": {
+            "lat": 30.6481234,
+            "lng": -96.3595678
+          },
+          "destination": {
+            "lat": 30.6472913,
+            "lng": -96.3606034
+          },
+          "mode": "walking",
+          "missedBus": false
+        }
+      ],
+      "errors": [],
+      "documentWidth": 1425
+    },
+    {
+      "width": 1440,
+      "height": 1000,
+      "colorScheme": "dark",
+      "theme": "reach-dark",
+      "requests": [
+        {
+          "origin": {
+            "lat": 30.6481234,
+            "lng": -96.3595678
+          },
+          "destination": {
+            "lat": 30.6472913,
+            "lng": -96.3606034
+          },
+          "mode": "walking",
+          "missedBus": false
+        }
+      ],
+      "errors": [],
+      "documentWidth": 1425
+    }
+  ]
+}

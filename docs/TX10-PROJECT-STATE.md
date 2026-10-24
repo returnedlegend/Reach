@@ -1,0 +1,13 @@
+# Recovered project state and integration decision
+
+Reviewed October 22, 2026 before the TX-10 integration. The existing application is Next.js 16.4.2, React 19.3.1, TypeScript and MapLibre GL JS 6.14.0 on Node 24. Its mobile guided flow, persistent SQLite pantry directory/accounts, community and volunteer features, saved trips, text downloads, printing, and separate static BTD timetable engine already exist. They were retained.
+
+The repository has an unborn Git history and untracked project files in this workspace; no earlier commits are available to recover. Existing documentation records previous sessions. The fresh pre-change `npm run check` baseline passed data validation, TypeScript, **295 unit tests in 23 files**, and the production build. Earlier browser counts are historical reports, not a newly executed baseline.
+
+Before this change the production directory contained eight pantry records. MapLibre/OpenFreeMap was already the normal map, with optional disabled-by-default Nominatim and Valhalla server adapters; Google was only an optional external handoff and a retained legacy adapter. The primary resource action still opened an external map. Manual selection and one-shot browser geolocation worked, but continuous follow was absent. Existing BTD schedule conflicts and unreviewed pedestrian links prevented reliable general pantry transit trips.
+
+The smallest integration reuses those adapters and map components: make Get directions primary in Reach, share one selected location including its accuracy and source metadata, add an optional high-accuracy watch, and visualize actual provider paths and instructions. Valhalla supports separate pedestrian and auto costing; no driving geometry is reused as walking or transit. The keyless community service is an explicit low-volume single-host prototype configuration, not guaranteed production infrastructure. Nominatim remains explicit-submit only and requires an informed single-instance opt-in. Both public-service gates enforce a 1.1-second shared-host interval and bounded caching/queues.
+
+District admission uses the actual Census 2024 TIGER/Line 119th-Congress GEOID 4810 geometry, cross-referenced with TxDOT. The geometry is stored separately and served only when coverage is requested. New pickup records require authoritative service/address evidence and a defensible coordinate; uncertainty stays explicit and no record is invented for a quota.
+
+See [final implementation](TX10-IMPLEMENTATION.md), [data evidence](TX10-DATA.md), and [independent verification](TX10-VERIFICATION.md) for the resulting state and current checks.

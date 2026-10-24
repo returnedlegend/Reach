@@ -1,0 +1,109 @@
+{
+  "auditDate": "2026-10-17",
+  "timezone": "America/Chicago",
+  "scope": "Pantry site-pin provenance, BTD GTFS source freshness, and limits on interpreting map and stop coordinates.",
+  "pantryPinSummary": {
+    "total": 8,
+    "withPublishedSiteEvidence": 8,
+    "previouslyUnverifiedPinsNowSourced": 6,
+    "entrancesVerified": false,
+    "walkingRoutesVerified": false,
+    "sheltersVerified": false,
+    "organizationsContacted": false,
+    "lastChecked": "2026-10-17",
+    "attemptStatus": "BVFB directory fetch succeeded (HTTP 200); its Last-Modified value is 2026-10-16T21:13:45Z. Provider detail pages were reviewed 2026-10-16 in the cited audit. This fetch confirms page availability, not current service details."
+  },
+  "discrepancies": [
+    {
+      "id": "first-united-methodist-time-and-game-day",
+      "category": "pantry_schedule",
+      "entity": "First United Methodist Church / Manna Market",
+      "status": "unresolved",
+      "finding": "BVFB lists first Saturday 11:30am-1:30pm; the named BVFB map feature says 10:30am. The provider says first Saturdays except game days.",
+      "impact": "Confirm the applicable time and game-day closure for the intended date. The site pin is sourced; the schedule is not reconciled.",
+      "sources": [
+        { "title": "BVFB Public Pantry Distributions", "url": "https://www.bvfb.org/find-food", "sourcePublishedOrModified": "Last-Modified 2026-10-16T21:13:45Z", "lastChecked": "2026-10-17", "attemptStatus": "HTTP 200; directory hours observed" },
+        { "title": "BVFB Pantry Interactive Map", "url": "https://www.google.com/maps/d/u/0/viewer?mid=1hrPlvqqr4B99C7_5rLHaAA845di2q-g", "sourcePublishedOrModified": null, "lastChecked": "2026-10-16", "attemptStatus": "Named feature and 10:30am label observed" },
+        { "title": "First UMC College Station — Manna Market", "url": "https://1stcollegestation.org/", "sourcePublishedOrModified": null, "lastChecked": "2026-10-16", "attemptStatus": "Provider says first Saturday except game days; no date-specific confirmation" }
+      ]
+    },
+    {
+      "id": "lincoln-house-address-suffix",
+      "category": "pantry_address",
+      "entity": "Lincoln House of Hope",
+      "status": "unresolved",
+      "finding": "BVFB directory and named map feature identify 1013 Eleanor Dr.; separate Directions result labels 1013 Eleanor St. and returns 30.599305,-96.330241. Named feature geometry is 30.5994015,-96.33023.",
+      "impact": "Keep the sourced site pin and disclose the suffix mismatch when giving precise navigation. No separate provider page was found.",
+      "sources": [
+        { "title": "BVFB Public Pantry Distributions", "url": "https://www.bvfb.org/find-food", "sourcePublishedOrModified": "Last-Modified 2026-10-16T21:13:45Z", "lastChecked": "2026-10-17", "attemptStatus": "HTTP 200; Eleanor Dr. listing observed" },
+        { "title": "BVFB Pantry Interactive Map", "url": "https://www.google.com/maps/d/u/0/viewer?mid=1hrPlvqqr4B99C7_5rLHaAA845di2q-g", "sourcePublishedOrModified": null, "lastChecked": "2026-10-16", "attemptStatus": "Named feature address and point geometry observed" },
+        { "title": "BVFB-linked Directions", "url": "https://goo.gl/maps/2s8kkvH5yh52", "sourcePublishedOrModified": null, "lastChecked": "2026-10-16", "attemptStatus": "Generic Eleanor St. result observed" }
+      ]
+    },
+    {
+      "id": "salvation-army-older-bvfb-map-points",
+      "category": "pantry_location",
+      "entity": "The Salvation Army, Bryan College Station Corps",
+      "status": "selected-site-sourced-older-map-conflicts-retained",
+      "finding": "Provider pantry page and official locator identify 2506 Cavitt Ave.; locator point is 30.64562,-96.36042. BVFB says Cavitt St.; its Directions point 30.645423,-96.360395 is nearby, while its map feature point 30.6407231,-96.3702719 is about 1 km away.",
+      "impact": "Use the address-confirmed official locator point for the site and retain the two older BVFB map conflicts. No entrance or walk was verified.",
+      "sources": [
+        { "title": "Salvation Army Brazos County Corps — Food Pantry", "url": "https://salvationarmybcs.org/bryan-collegestation/food-pantry", "sourcePublishedOrModified": null, "lastChecked": "2026-10-16", "attemptStatus": "Provider pantry address and hours observed" },
+        { "title": "The Salvation Army — Bryan location", "url": "https://www.salvationarmyusa.org/tx/bryan/", "sourcePublishedOrModified": null, "lastChecked": "2026-10-16", "attemptStatus": "Official locator address and coordinates observed" },
+        { "title": "BVFB Public Pantry Distributions", "url": "https://www.bvfb.org/find-food", "sourcePublishedOrModified": "Last-Modified 2026-10-16T21:13:45Z", "lastChecked": "2026-10-17", "attemptStatus": "HTTP 200; Cavitt St. listing observed" },
+        { "title": "BVFB-linked Directions", "url": "https://goo.gl/maps/P7JzQGGDz6T2", "sourcePublishedOrModified": null, "lastChecked": "2026-10-16", "attemptStatus": "Nearby destination point observed" },
+        { "title": "BVFB Pantry Interactive Map", "url": "https://www.google.com/maps/d/u/0/viewer?mid=1hrPlvqqr4B99C7_5rLHaAA845di2q-g", "sourcePublishedOrModified": null, "lastChecked": "2026-10-16", "attemptStatus": "Older named-feature point about 1 km away observed" }
+      ]
+    },
+    {
+      "id": "bridge-ministries-older-bvfb-map-location",
+      "category": "pantry_location",
+      "entity": "The Bridge Ministries",
+      "status": "provider-published-site-sourced-older-map-conflict-retained",
+      "finding": "Provider get-food page publishes 304 Post Office St. and links a named Food Pantry destination at 30.6472913,-96.3606034. BVFB has an older conflicting map location.",
+      "impact": "Retain the provider-published site coordinate and disclose the older BVFB map conflict. The provider page was not independently renewed in the v3 audit; no entrance or walking route was checked.",
+      "sources": [
+        { "title": "The Bridge Ministries — Get Food", "url": "https://thebridgeministries.org/get-food/", "sourcePublishedOrModified": null, "lastChecked": "2026-10-16", "attemptStatus": "Previously observed published address and linked named pantry feature; later independent request returned HTTP 403" },
+        { "title": "BVFB Public Pantry Distributions", "url": "https://www.bvfb.org/find-food", "sourcePublishedOrModified": "Last-Modified 2026-10-16T21:13:45Z", "lastChecked": "2026-10-17", "attemptStatus": "HTTP 200; conflicting older map provenance retained from prior audit" }
+      ]
+    },
+    {
+      "id": "btd-gtfs-vs-fixed-route-pdf-times",
+      "category": "transit_timetable",
+      "entity": "Brazos Transit District fixed routes",
+      "status": "unresolved",
+      "finding": "Existing provenance records differing timetable values in official GTFS and the official BCS Fixed Route Map PDF. Current projection retains GTFS times and flags affected results for confirmation. No provider confirmation was obtained.",
+      "impact": "Do not describe projected times as provider-confirmed. Require rider confirmation for affected results.",
+      "sources": [
+        { "title": "BTD GTFS download page", "url": "https://www.btd.org/2025btdgtfs/", "sourcePublishedOrModified": "Linked ZIP Last-Modified 2026-03-25T21:33:07Z; feed_info Updated: Mar 25, 2026, 2:20 PM", "lastChecked": "2026-10-17", "attemptStatus": "HTTP 200; downloaded linked ZIP SHA-256 matches checked-in snapshot exactly" },
+        { "title": "BCS Fixed Route Map PDF", "url": "https://www.btd.org/wp-content/uploads/2025/11/BCS_FixedRouteMap.pdf", "sourcePublishedOrModified": "Last-Modified 2025-11-13T19:54:37Z", "lastChecked": "2026-10-17", "attemptStatus": "HTTP 200; existing provenance records timetable conflict; no BTD clarification sought" }
+      ]
+    }
+  ],
+  "transitSnapshot": {
+    "agency": "Brazos Transit District",
+    "snapshotFile": "data/transit/btd-2026-10-15.zip",
+    "snapshotCheckedOn": "2026-10-15",
+    "refetchedOn": "2026-10-17",
+    "sourceUrl": "https://www.btd.org/2025btdgtfs/",
+    "resolvedFeedUrl": "https://www.btd.org/wp-content/uploads/2025/01/2025BTDGTFS.zip",
+    "sha256": "d2b7948582883f6c8191d613ea3c7f80f64db48e86a467057a69725538e4825b",
+    "refetchMatchesSnapshot": true,
+    "feedVersion": "Updated: Mar 25, 2026, 2:20 PM",
+    "validFrom": "2025-07-15",
+    "validThrough": "2026-12-31",
+    "timezone": "America/Chicago",
+    "holidayOverlay": {
+      "sourceUrl": "https://www.btd.org/fixed-routes/",
+      "lastChecked": "2026-10-17",
+      "sourcePublishedOrModified": "Page metadata modified 2025-12-29T15:20:09Z",
+      "attemptStatus": "HTTP 200; published 2026 holiday closure dates match provenance overlay",
+      "sourceCalendarDatesEmpty": true,
+      "dates": ["2026-01-01", "2026-01-19", "2026-02-16", "2026-04-03", "2026-05-25", "2026-09-07", "2026-11-26", "2026-11-27", "2026-12-24", "2026-12-25"],
+      "futureYearDatesInferred": false
+    },
+    "projection": "Route 00 Orange only; six selected stop IDs. GTFS stop points do not verify boarding entrances, shelters, or walking connections.",
+    "productionDataChanged": false,
+    "freshFeedImported": false
+  }
+}

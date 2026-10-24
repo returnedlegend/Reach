@@ -1,0 +1,42 @@
+{
+  "checkedAt": "2026-10-22T23:38:38.373Z",
+  "kind": "live configured walking provider through actual access API handler; temporary database; public landmark origin",
+  "httpStatus": 200,
+  "elapsedMs": 2083,
+  "returnedOptions": 24,
+  "routingCalls": 2,
+  "aiCalls": 0,
+  "destination": "Brazos Church Pantry",
+  "status": "confirm",
+  "outbound": {
+    "departure": 480,
+    "arrival": 486,
+    "walkingMinutes": 6,
+    "walkingMiles": 0.2701,
+    "fare": 0,
+    "pathPoints": 24,
+    "steps": 4,
+    "source": "routed"
+  },
+  "returnJourney": {
+    "departure": 590,
+    "arrival": 596,
+    "walkingMinutes": 6,
+    "walkingMiles": 0.2701,
+    "fare": 0,
+    "pathPoints": 24,
+    "steps": 4,
+    "source": "routed"
+  },
+  "reasons": [
+    "A route fits the checked timing limits; the listed information still needs confirmation."
+  ],
+  "warnings": [
+    "Eligibility, service-area and document requirements have not been confirmed for you.",
+    "Food availability is unknown or its report has expired.",
+    "Pedestrian pickup permission is not verified.",
+    "Walking time is a routing estimate. Sidewalk safety, step-free access and pedestrian entrances are not verified.",
+    "Availability is not confirmed for the expected service time.",
+    "Published pickup policy or schedule requires confirmation."
+  ]
+}

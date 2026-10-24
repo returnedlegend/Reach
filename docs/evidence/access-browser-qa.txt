@@ -1,0 +1,12 @@
+Independent browser QA: 2026-10-23
+
+Access flow: 6/6 Playwright tests passed (3 flows x mobile/desktop projects).
+Targeted final CSS regression: planner fixture passed 2/2 (mobile/desktop); next-day checkbox measured 24x24 px and its label is at least 44 px high. No overflow and no serious/critical axe violations.
+Retained workflow and accessibility regression: 12/12 passed in the immediately preceding QA run (workflow.spec.ts and accessibility.spec.ts x mobile/desktop).
+Access browser tests exercise explicit location denial/manual coordinate entry, coordinate limits, routing-disabled honest results, synthetic plan preference retention/map selection, and a reviewed synthetic outreach preview/reply flow.
+Axe: synthetic planner result screen had zero serious/critical violations; retained accessibility suite reported no WCAG A/AA violations.
+Viewport: all access-flow cases assert documentElement.scrollWidth <= innerWidth; all passed.
+Environment: Next.js development server at 127.0.0.1:3111, fresh isolated SQLite DB and preview capture under /tmp/reach-access-qa, REACH_EMAIL_PROVIDER=preview, REACH_AI_PROVIDER=disabled, OSM_ROUTER_MODE=disabled. Pantry API preflight returned 24 records; account status returned preview mode.
+
+No real email, AI inference, route provider call, or pantry transaction occurred in browser QA. The synthetic response fixture is labeled as synthetic and is not evidence of live service availability. Parent agent separately performed live route/planner checks; this report does not claim to have reproduced them.
+Screenshots: access-mobile-planner.png, access-desktop-planner.png, access-mobile-outreach-private.png, access-desktop-outreach-private.png, access-mobile-next-day-checkbox.png, access-desktop-next-day-checkbox.png.

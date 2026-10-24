@@ -1,0 +1,33 @@
+{
+  "dataset": "Texas Congressional District 10 boundary",
+  "district": {
+    "state_fips": "48",
+    "district_code": "10",
+    "geoid": "4810",
+    "geoidfq": "5001900US4810",
+    "congress": "119",
+    "session_vintage": "2025-2027"
+  },
+  "source": {
+    "publisher": "U.S. Census Bureau",
+    "dataset": "2024 TIGER/Line Shapefiles: 119th Congressional Districts (CD119)",
+    "url": "https://www2.census.gov/geo/tiger/TIGER2024/CD/tl_2024_48_cd119.zip",
+    "downloaded_utc": "2026-10-22T01:10:06Z",
+    "archive_sha256": "4540c83129ceb810be75e132f060719a3453886bd56ba5d4661954cea0e5da45",
+    "feature_selection": "GEOID = 4810"
+  },
+  "reference": {
+    "publisher": "Texas Department of Transportation",
+    "url": "https://www.txdot.gov/data-maps/reference-maps/congressional-district-maps.html",
+    "map": "District 10, 119th Congress",
+    "map_pdf_url": "https://www.txdot.gov/content/dam/docs/division/tpp/maps/congressional/cong-district-10-119th.pdf"
+  },
+  "geometry": {
+    "file": "tx10-119.geojson",
+    "sha256": "b23a75611d681b91c452e99a324bbbcfd1d87972a045aa230d4307b930976e0a",
+    "crs": "OGC:CRS84 (WGS 84 longitude, latitude; equivalent to EPSG:4326 for GeoJSON coordinates)",
+    "source_crs": "EPSG:4269 (NAD83)",
+    "transformation": "Reprojected from source NAD83 to WGS 84; no simplification or coordinate rounding applied.",
+    "source_geometry": "TIGER/Line detailed boundary, not a cartographic-boundary generalized file."
+  }
+}

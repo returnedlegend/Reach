@@ -1,0 +1,14 @@
+npm notice run reach@0.1.0 test
+npm notice run vitest run
+
+ RUN  v5.0.5 /workspace/Reach
+
+
+ Test Files  23 passed (23)
+      Tests  295 passed (295)
+   Start at  02:51:59
+   Duration  5.22s (tests 69%, import 26%, transform 4%, worker 1%)
+
+    Isolate  23 workers spawned · ~164ms startup each (spawn + environment, per file)
+             at least ~1.09s faster with isolate: false — reuses workers across files instead of one per file
+

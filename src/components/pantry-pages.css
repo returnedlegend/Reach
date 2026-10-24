@@ -1,0 +1,714 @@
+@layer legacy {
+  .pantry-page {
+    --pantry-ink: var(--color-base-content);
+    --pantry-muted: color-mix(
+      in oklab,
+      var(--color-base-content) 66%,
+      transparent
+    );
+    --pantry-line: var(--color-base-300);
+    --pantry-surface: var(--color-base-100);
+    --pantry-soft: var(--color-base-200);
+    --pantry-green: var(--color-primary);
+    --pantry-warn: var(--color-warning);
+    max-width: 1040px;
+    margin: 0 auto;
+    padding: 24px 28px 72px;
+    color: var(--pantry-ink);
+    background: var(--color-base-200);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 15px;
+    overflow-wrap: anywhere;
+    line-height: 1.6;
+  }
+  .pantry-page * {
+    box-sizing: border-box;
+  }
+  .pantry-page h1,
+  .pantry-page h2,
+  .pantry-page h3,
+  .pantry-page h4 {
+    font-family: inherit;
+  }
+  .pantry-page h1 {
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    max-width: 820px;
+    margin: 7px 0 12px;
+    line-height: 1.12;
+  }
+  .pantry-page h2 {
+    font-size: 1.25rem;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
+    margin: 0 0 16px;
+  }
+  .pantry-page h3 {
+    font-size: 0.95rem;
+    margin: 23px 0 9px;
+  }
+  .pantry-page p {
+    margin: 0 0 16px;
+  }
+  .pantry-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 18px;
+    padding: 0 0 16px;
+    border-bottom: 1px solid var(--pantry-line);
+    font-size: 0.875rem;
+  }
+  .pantry-nav a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .pantry-back {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    font-weight: 700;
+  }
+  .pantry-hero {
+    padding: 28px 0 22px;
+  }
+  .pantry-eyebrow {
+    text-transform: uppercase;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--pantry-green);
+    margin-bottom: 9px !important;
+  }
+  .pantry-address {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    font-size: 0.9375rem;
+    color: var(--pantry-muted);
+  }
+  .pantry-address svg {
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .pantry-muted {
+    font-size: 0.88rem;
+    color: var(--pantry-muted);
+  }
+  .pantry-section {
+    background: var(--pantry-surface);
+    border: 1px solid var(--pantry-line);
+    border-radius: 14px;
+    padding: 25px;
+    margin: 0 0 20px;
+    min-width: 0;
+  }
+  .pantry-section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .pantry-section-heading h2 {
+    margin-bottom: 15px;
+  }
+  .pantry-detail-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .pantry-detail-grid > .pantry-section {
+    height: fit-content;
+  }
+  .pantry-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 16px 0;
+  }
+  .pantry-page button,
+  .pantry-button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 9px;
+    padding: 10px 16px;
+    background: var(--pantry-green);
+    color: var(--color-primary-content);
+    font: inherit;
+    font-weight: 700;
+    line-height: 1.4;
+    border: 1px solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .pantry-page button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .pantry-page button.pantry-secondary {
+    background: var(--pantry-soft);
+    color: var(--pantry-ink);
+    border-color: var(--pantry-line);
+  }
+  .pantry-page button.pantry-danger {
+    background: var(--color-error);
+    color: var(--color-error-content);
+  }
+  .pantry-tag {
+    display: inline-flex;
+    padding: 5px 10px;
+    gap: 6px;
+    border-radius: 6px;
+    background: var(--pantry-soft);
+    font-size: 0.78rem;
+    color: var(--pantry-ink);
+    font-weight: 700;
+    line-height: 1.5;
+    width: fit-content;
+  }
+  .pantry-page details {
+    border-top: 1px solid var(--pantry-line);
+    margin: 18px 0 8px;
+    padding-top: 4px;
+  }
+  .pantry-page summary {
+    font-weight: 700;
+    cursor: pointer;
+    padding: 14px 0;
+    min-height: 48px;
+    line-height: 1.45;
+  }
+  .pantry-page details[open] > summary {
+    margin-bottom: 6px;
+  }
+  .pantry-schedule {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+  }
+  .pantry-schedule li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--pantry-line);
+  }
+  .pantry-schedule li:last-child {
+    border-bottom: 0;
+    padding-bottom: 4px;
+  }
+  .pantry-schedule li strong {
+    font-size: 0.9rem;
+    font-weight: 650;
+  }
+  .pantry-registration {
+    margin: 12px 0;
+    padding: 10px 12px;
+    background: var(--color-base-200);
+    border-left: 2px solid var(--pantry-line);
+    border-radius: 0 6px 6px 0;
+  }
+  .pantry-schedule .pantry-registration-label {
+    color: var(--pantry-ink);
+    font-size: 0.75rem;
+    font-weight: 650;
+    margin-bottom: 4px;
+  }
+  .pantry-today {
+    border-radius: 9px;
+    background: var(--pantry-soft);
+    padding: 15px 16px;
+  }
+  .pantry-today h3 {
+    margin: 0 0 7px;
+  }
+  .pantry-today p {
+    margin-bottom: 5px;
+  }
+  .pantry-today p:last-child {
+    margin-bottom: 0;
+  }
+  .pantry-sign-in {
+    margin-bottom: 0 !important;
+  }
+  .pantry-hero-actions .pantry-status {
+    margin-right: auto;
+  }
+  .pantry-hero-actions button {
+    font-size: 0.8125rem;
+  }
+  .pantry-directions-actions > a:not(.pantry-button) {
+    display: inline-flex;
+    gap: 7px;
+    align-items: center;
+    min-height: 44px;
+    font-weight: 600;
+  }
+  .pantry-visit-details details {
+    margin: 0;
+  }
+  .pantry-visit-details details:last-child > summary {
+    padding-bottom: 0;
+  }
+  .pantry-visit-details details[open]:last-child > summary {
+    padding-bottom: 14px;
+  }
+  .pantry-privacy-details {
+    font-size: 0.875rem;
+  }
+  .pantry-schedule li strong,
+  .pantry-schedule li span {
+    display: block;
+  }
+  .pantry-schedule li span {
+    font-size: 0.88rem;
+    color: var(--pantry-muted);
+  }
+  .pantry-warning {
+    color: var(--pantry-warn) !important;
+  }
+  .pantry-empty {
+    padding: 20px;
+    border: 1px solid var(--pantry-line);
+    background: var(--color-base-200);
+    border-radius: 9px;
+    margin: 16px 0;
+  }
+  .pantry-empty p:last-child {
+    margin-bottom: 0;
+  }
+  .pantry-notice {
+    background: var(--pantry-soft);
+    border-left: 4px solid var(--pantry-green);
+    border-radius: 9px;
+    padding: 15px 18px;
+    margin: 14px 0 24px;
+  }
+  .pantry-inventory {
+    padding: 0;
+    list-style: none;
+  }
+  .pantry-inventory li {
+    padding: 18px 0;
+    border-top: 1px solid var(--pantry-line);
+  }
+  .pantry-inventory li > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .pantry-inventory p {
+    font-size: 0.86rem;
+    margin-bottom: 5px;
+  }
+  .pantry-form > fieldset {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .pantry-page label {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+  .pantry-page input,
+  .pantry-page select,
+  .pantry-page textarea {
+    font: inherit;
+    font-size: 16px;
+    font-weight: 400;
+    background: var(--pantry-surface);
+    border: 1px solid var(--color-base-300);
+    border-radius: 9px;
+    padding: 11px 12px;
+    min-height: 46px;
+    color: var(--pantry-ink);
+    width: 100%;
+    max-width: 100%;
+    accent-color: var(--pantry-green);
+  }
+  .pantry-page textarea {
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .pantry-page input:focus-visible,
+  .pantry-page select:focus-visible,
+  .pantry-page textarea:focus-visible,
+  .pantry-page button:focus-visible,
+  .pantry-page a:focus-visible,
+  .pantry-page summary:focus-visible {
+    outline: 3px solid var(--color-primary);
+    outline-offset: 3px;
+  }
+  .pantry-field-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 18px;
+  }
+  .pantry-page .pantry-check {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    min-height: 44px;
+    margin-bottom: 5px;
+    font-weight: 500;
+  }
+  .pantry-page .pantry-check input {
+    width: 20px;
+    min-height: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    padding: 0;
+  }
+  .pantry-edit-row {
+    padding: 18px !important;
+    border: 1px solid var(--pantry-line) !important;
+    border-radius: 12px !important;
+    margin-bottom: 15px !important;
+    min-width: 0;
+  }
+  .pantry-edit-row legend {
+    font-weight: 700;
+    padding: 0 7px;
+  }
+  .pantry-inline-field {
+    display: flex;
+    align-items: end;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .pantry-inline-field label {
+    flex: 1;
+    margin: 0;
+  }
+  .pantry-inline-field button {
+    flex-shrink: 0;
+  }
+  .pantry-weekday-checks {
+    display: flex;
+    gap: 5px 18px;
+    flex-wrap: wrap;
+  }
+  .pantry-tabs,
+  .busy-days {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin: 0 0 22px;
+  }
+  .pantry-tabs button,
+  .busy-days button {
+    background: var(--pantry-soft);
+    color: var(--pantry-ink);
+    font-size: 0.86rem;
+    border: 1px solid var(--pantry-line);
+  }
+  .pantry-tabs button[aria-pressed="true"],
+  .busy-days button[aria-pressed="true"] {
+    background: var(--pantry-green);
+    color: var(--color-primary-content);
+    border-color: var(--pantry-green);
+  }
+  .busy-days {
+    margin: 22px 0 15px;
+  }
+  .busy-days button {
+    flex: 1;
+    padding: 9px 12px;
+  }
+  .busy-chart {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 10px 0 18px;
+    scrollbar-width: thin;
+  }
+  .busy-column {
+    min-width: 48px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+  }
+  .busy-column > span {
+    font-size: 0.69rem;
+    white-space: nowrap;
+    color: var(--pantry-muted);
+  }
+  .busy-track {
+    height: 150px;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    background: var(--pantry-soft);
+    border-radius: 7px;
+  }
+  .pantry-page .busy-bar {
+    min-height: 44px;
+    width: 100%;
+    padding: 0;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--pantry-green);
+  }
+  .pantry-page .busy-missing {
+    height: 100%;
+    background: transparent;
+    color: var(--pantry-muted);
+    border: 1px dashed var(--color-base-300);
+  }
+  .pantry-report {
+    margin-top: 25px !important;
+  }
+  .pantry-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 24px;
+  }
+  .pantry-pagination span {
+    font-size: 0.84rem;
+    color: var(--pantry-muted);
+  }
+  .pantry-search {
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    margin-bottom: 22px;
+  }
+  .pantry-search label {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  .pantry-directory > article {
+    border-top: 1px solid var(--pantry-line);
+    padding: 20px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .pantry-directory h3 {
+    margin: 0 0 6px;
+  }
+  .pantry-directory p {
+    margin-bottom: 9px;
+  }
+  .pantry-directory > article > div {
+    min-width: 0;
+  }
+  .pantry-directory > article > button {
+    flex-shrink: 0;
+  }
+  .pantry-directory .pantry-actions {
+    margin: 0;
+    justify-content: flex-end;
+  }
+  .pantry-directory .pantry-actions a {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  .pantry-preserve {
+    white-space: pre-wrap;
+    margin-top: 12px !important;
+  }
+  .pantry-manager-list {
+    padding: 0;
+    list-style: none;
+  }
+  .pantry-manager-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--pantry-line);
+  }
+  .pantry-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .pantry-review-notes {
+    margin-top: 20px;
+  }
+  .pantry-page .location-picker {
+    padding: 0;
+    background: transparent;
+  }
+  .pantry-page .location-picker form {
+    margin: 18px 0;
+  }
+  .pantry-page .location-picker fieldset button {
+    margin-bottom: 10px;
+  }
+  .pantry-page .location-picker .location-suggestions button {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    text-align: left;
+  }
+  .pantry-page a:not(.pantry-button) {
+    color: var(--pantry-green);
+  }
+  @media (max-width: 720px) {
+    .pantry-page {
+      padding: 12px 16px 40px;
+    }
+    .pantry-hero {
+      padding: 22px 0 18px;
+    }
+    .pantry-nav {
+      padding-bottom: 14px;
+    }
+    .pantry-detail-grid {
+      display: block;
+    }
+    .pantry-section {
+      padding: 20px 18px;
+      border-radius: 12px;
+      margin-bottom: 16px;
+    }
+    .pantry-page h1 {
+      font-size: 1.75rem;
+    }
+    .pantry-field-grid {
+      grid-template-columns: 1fr;
+    }
+    .pantry-directory > article {
+      flex-direction: column;
+      gap: 14px;
+    }
+    .pantry-directory .pantry-actions {
+      justify-content: flex-start;
+    }
+    .busy-days {
+      gap: 4px;
+    }
+    .busy-days button {
+      flex: 1 0 44px;
+      white-space: nowrap;
+      font-size: 0.75rem;
+      padding: 8px 4px;
+    }
+    .busy-track {
+      height: 125px;
+    }
+    .pantry-inline-field {
+      align-items: stretch;
+      flex-direction: column;
+    }
+    .pantry-search {
+      flex-wrap: wrap;
+    }
+    .pantry-search label {
+      min-width: 170px;
+    }
+    .pantry-actions {
+      gap: 10px;
+    }
+    .pantry-section-heading {
+      gap: 8px;
+    }
+    .pantry-pagination button {
+      padding: 9px 12px;
+    }
+    .pantry-pagination span {
+      font-size: 0.75rem;
+    }
+  }
+  .pantry-page-embedded {
+    padding-top: 12px;
+  }
+  .pantry-page-embedded .pantry-hero {
+    padding-top: 8px;
+  }
+
+  .pantry-page fieldset {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .pantry-page .location-picker input,
+  .pantry-page .location-picker select {
+    font-size: 16px;
+  }
+  .pantry-page .location-picker .location-suggestions button {
+    color: var(--pantry-ink);
+    background: var(--pantry-surface);
+  }
+  .pantry-page .location-picker .location-suggestions button:hover {
+    background: var(--pantry-soft);
+  }
+  .pantry-page button:not(:disabled):hover,
+  .pantry-page a.pantry-button:hover {
+    filter: brightness(0.96);
+  }
+  .pantry-page .pantry-directory h3 {
+    font-size: 1rem;
+  }
+  .pantry-page .pantry-tabs {
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--pantry-line);
+  }
+  .pantry-page .pantry-tabs button {
+    font-size: 0.8125rem;
+  }
+  @media (max-width: 420px) {
+    .pantry-page {
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+    .pantry-section {
+      padding: 18px 15px;
+    }
+    .pantry-hero-actions .pantry-status {
+      flex-basis: 100%;
+      width: fit-content;
+      max-width: 100%;
+    }
+    .pantry-directions-actions > a {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+    }
+    .pantry-search label {
+      min-width: 0;
+      flex-basis: 100%;
+    }
+    .pantry-directory .pantry-actions {
+      width: 100%;
+    }
+    .pantry-pagination {
+      gap: 10px;
+    }
+    .pantry-pagination span {
+      flex-basis: 100%;
+      order: -1;
+    }
+  }
+}

@@ -1,0 +1,741 @@
+{
+  "check": "Final production rendered form-control boundary contrast",
+  "measurements": [
+    {
+      "project": "android",
+      "name": "Account email",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/account",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "android",
+      "name": "Hero address",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "android",
+      "name": "Unchecked map boundary checkbox",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "android",
+      "name": "Planner starting stop",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/pantry-planner",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "android",
+      "name": "Account email",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/account",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "android",
+      "name": "Hero address",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "android",
+      "name": "Unchecked map boundary checkbox",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "android",
+      "name": "Planner starting stop",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/pantry-planner",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "desktop",
+      "name": "Account email",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/account",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "desktop",
+      "name": "Hero address",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "desktop",
+      "name": "Unchecked map boundary checkbox",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "desktop",
+      "name": "Planner starting stop",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/pantry-planner",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "desktop",
+      "name": "Account email",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/account",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "desktop",
+      "name": "Hero address",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "desktop",
+      "name": "Unchecked map boundary checkbox",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "desktop",
+      "name": "Planner starting stop",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/pantry-planner",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "mobile",
+      "name": "Account email",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/account",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "mobile",
+      "name": "Hero address",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "mobile",
+      "name": "Unchecked map boundary checkbox",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "mobile",
+      "name": "Planner starting stop",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/pantry-planner",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "mobile",
+      "name": "Account email",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/account",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "mobile",
+      "name": "Hero address",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "mobile",
+      "name": "Unchecked map boundary checkbox",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "mobile",
+      "name": "Planner starting stop",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/pantry-planner",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "tablet",
+      "name": "Account email",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/account",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "tablet",
+      "name": "Hero address",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "tablet",
+      "name": "Unchecked map boundary checkbox",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "tablet",
+      "name": "Planner starting stop",
+      "colorScheme": "light",
+      "url": "https://localhost:3072/pantry-planner",
+      "foregroundCss": "color(srgb 0.529412 0.545098 0.582353)",
+      "componentBackgroundCss": "rgb(255, 255, 255)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "adjacentBackgroundRgb": [
+        255,
+        255,
+        255
+      ],
+      "componentLuminance": 1,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 3.410634498010555
+    },
+    {
+      "project": "tablet",
+      "name": "Account email",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/account",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "tablet",
+      "name": "Hero address",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "tablet",
+      "name": "Unchecked map boundary checkbox",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    },
+    {
+      "project": "tablet",
+      "name": "Planner starting stop",
+      "colorScheme": "dark",
+      "url": "https://localhost:3072/pantry-planner",
+      "foregroundCss": "color(srgb 0.505882 0.54902 0.578431)",
+      "componentBackgroundCss": "rgb(21, 35, 45)",
+      "borderWidth": "1px",
+      "componentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "adjacentBackgroundRgb": [
+        21,
+        35,
+        45
+      ],
+      "componentLuminance": 0.015509545571663102,
+      "textDecorationLine": "none",
+      "textDecorationThickness": "auto",
+      "ratio": 4.660370921219882
+    }
+  ]
+}

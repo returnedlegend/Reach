@@ -1,0 +1,46 @@
+@layer legacy {
+  .notification-preferences {
+    overflow-wrap: anywhere;
+  }
+  .notification-preferences p {
+    line-height: 1.6;
+  }
+  .notification-preferences fieldset > button {
+    margin: 0 8px 12px 0;
+  }
+  .notification-legend {
+    font-weight: 700;
+  }
+  .notification-help {
+    color: color-mix(in oklab, var(--color-base-content) 66%, transparent);
+    font-size: 14px;
+  }
+  .notification-mode {
+    padding: 14px;
+    background: color-mix(
+      in oklab,
+      var(--color-warning) 14%,
+      var(--color-base-100)
+    );
+    border-radius: 10px;
+  }
+  .notification-preferences summary {
+    cursor: pointer;
+    min-height: 44px;
+    padding: 12px 0;
+    font-weight: 700;
+  }
+  .notification-preferences details {
+    margin-top: 20px;
+    border-top: 1px solid var(--color-base-300);
+  }
+  .notification-preferences li {
+    padding: 8px 0;
+  }
+  .notification-preferences [role="alert"] {
+    color: var(--color-error);
+  }
+  .notification-preferences [role="status"] {
+    color: var(--color-primary);
+  }
+}

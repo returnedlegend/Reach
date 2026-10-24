@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-23T00:07:37.861Z",
+  "scope": "final production client JavaScript",
+  "assetsChecked": 30,
+  "clientBundleSecretVariableHits": [],
+  "clientBundleConfiguredSecretValueHits": [],
+  "localEnvExists": true,
+  "localEnvMode": "0o600",
+  "localEnvIgnored": true,
+  "localEnvTracked": false,
+  "dependenciesAdded": false
+}

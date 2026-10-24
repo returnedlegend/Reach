@@ -1,0 +1,541 @@
+[
+  {
+    "id": "anderson-food-pantry",
+    "name": "Anderson Food Pantry",
+    "address": "367 Fanthorp St., Anderson, TX 77830",
+    "coordinates": {
+      "lat": 30.4867446,
+      "lng": -95.9850672
+    },
+    "phone": "936-873-5005",
+    "hours": "1st Thursday 9am–12pm",
+    "offering": "BVFB lists drive-through food distribution.",
+    "eligibility": "Serves all counties; monthly visit limit. Other eligibility rules unknown.",
+    "accessibility": "Drive-through distribution; accessible parking/loading details unknown.",
+    "notes": "Actual food distribution pickup site; source lists recurring first-Thursday hours.",
+    "city": "Anderson",
+    "postalCode": "77830",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Grimes County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/367+Fanthorp+St,+Anderson,+TX+77830/@30.4867446,-95.9872559,17z/data=!3m1!4b1!4m5!3m4!1s0x8646ec01bd1ebc5b:0x85477e575cf14b42!8m2!3d30.4867446!4d-95.9850672?shorturl=1",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/367+Fanthorp+St,+Anderson,+TX+77830/@30.4867446,-95.9872559,17z/data=!3m1!4b1!4m5!3m4!1s0x8646ec01bd1ebc5b:0x85477e575cf14b42!8m2!3d30.4867446!4d-95.9850672?shorturl=1",
+      "method": "Destination point embedded in BVFB-linked Google Maps place URL (!8m2!3d...!4d...), address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "bedias-food-pantry",
+    "name": "Bedias Food Pantry",
+    "address": "3202 Main St., Bedias, TX 77831",
+    "coordinates": {
+      "lat": 30.7756755,
+      "lng": -95.9540024
+    },
+    "phone": "281-610-5300",
+    "hours": "3rd Saturday 9am–12pm",
+    "offering": "BVFB lists drive-through food distribution.",
+    "eligibility": "Serves Grimes County; twice-monthly visit limit. Other eligibility rules unknown.",
+    "accessibility": "Drive-through; Spanish translators available. Accessible parking/loading details unknown.",
+    "notes": "Directory lists address as 3202 Main St.; linked Maps destination resolves to 3203 Main St. Flag one-digit address discrepancy for confirmation.",
+    "city": "Bedias",
+    "postalCode": "77831",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Grimes County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/3203+Main+St,+Bedias,+TX+77831/@30.7756755,-95.9561911,17z/data=!3m1!4b1!4m5!3m4!1s0x864658917a2b2087:0xb23d522b3fcda48b!8m2!3d30.7756755!4d-95.9540024?shorturl=1",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/3203+Main+St,+Bedias,+TX+77831/@30.7756755,-95.9561911,17z/data=!3m1!4b1!4m5!3m4!1s0x864658917a2b2087:0xb23d522b3fcda48b!8m2!3d30.7756755!4d-95.9540024?shorturl=1",
+      "method": "Destination point embedded in BVFB-linked Google Maps place URL; coordinate is for Maps 3203 Main St. Directory address says 3202 Main St., so address-pin mismatch is retained."
+    },
+    "verificationStatus": "needs-confirmation"
+  },
+  {
+    "id": "christian-community-services-navasota",
+    "name": "Christian Community Services",
+    "address": "814 N. LaSalle St., Navasota, TX 77868",
+    "coordinates": {
+      "lat": 30.3940759,
+      "lng": -96.0939322
+    },
+    "phone": "936-825-7454",
+    "hours": "Monday, Tuesday, Thursday 9–11am; 2nd Saturday 9–11am",
+    "offering": "BVFB lists walk-in food pantry with partial client choice.",
+    "eligibility": "Serves Grimes County; monthly visit limit. Other eligibility rules unknown.",
+    "accessibility": "Walk-in; step-free access and accommodations unknown.",
+    "notes": "Directory publishes actual pantry hours and pickup address.",
+    "city": "Navasota",
+    "postalCode": "77868",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Grimes County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/814+N+Lasalle+St,+Navasota,+TX+77868/@30.3940759,-96.0961209,17z/data=!3m1!4b1!4m5!3m4!1s0x86469566812d2121:0xf087cc78364318b3!8m2!3d30.3940759!4d-96.0939322?shorturl=1",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/814+N+Lasalle+St,+Navasota,+TX+77868/@30.3940759,-96.0961209,17z/data=!3m1!4b1!4m5!3m4!1s0x86469566812d2121:0xf087cc78364318b3!8m2!3d30.3940759!4d-96.0939322?shorturl=1",
+      "method": "Destination point embedded in BVFB-linked Google Maps place URL (!8m2!3d...!4d...), address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "elizabeth-lutheran-caldwell",
+    "name": "Elizabeth Lutheran Church Pantry",
+    "address": "165 County Road 307, Caldwell, TX 77836",
+    "coordinates": {
+      "lat": 30.5530143,
+      "lng": -96.6754552
+    },
+    "phone": "979-567-4286",
+    "hours": "3rd Saturday 7:30–10am",
+    "offering": "BVFB lists drive-through food distribution.",
+    "eligibility": "Serves Burleson County; monthly visit limit. Emergency appointment may be requested. Other eligibility rules unknown.",
+    "accessibility": "Drive-through; accessible parking/loading details unknown.",
+    "notes": "No registration hours stated separately. Monthly distribution hours are published.",
+    "city": "Caldwell",
+    "postalCode": "77836",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Burleson County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/165+Co+Rd+307,+Caldwell,+TX+77836/@30.5530189,-96.6776439,17z/data=!3m1!4b1!4m5!3m4!1s0x864437454ebafe83:0x5e2e95387df740f3!8m2!3d30.5530143!4d-96.6754552",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/165+Co+Rd+307,+Caldwell,+TX+77836/@30.5530189,-96.6776439,17z/data=!3m1!4b1!4m5!3m4!1s0x864437454ebafe83:0x5e2e95387df740f3!8m2!3d30.5530143!4d-96.6754552",
+      "method": "Destination point embedded in BVFB-linked Google Maps URL (!8m2!3d...!4d...), matches address."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "in-gods-hands-caldwell",
+    "name": "In God's Hands Ministry",
+    "address": "680 Lakeview Dr., Caldwell, TX 77836",
+    "coordinates": {
+      "lat": 30.5111388,
+      "lng": -96.7807077
+    },
+    "phone": "979-406-0157",
+    "hours": "2nd and 4th Saturday 10am–12:30pm",
+    "offering": "BVFB lists drive-through food distribution.",
+    "eligibility": "Serves all counties; monthly visit limit. Emergency appointment may be requested. Other eligibility rules unknown.",
+    "accessibility": "Drive-through; accessible parking/loading details unknown.",
+    "notes": "Actual pickup site per BVFB's county directory.",
+    "city": "Caldwell",
+    "postalCode": "77836",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Burleson County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/680+Lakeview+Dr,+Caldwell,+TX+77836/@30.5111434,-96.7828964,17z/data=!3m1!4b1!4m5!3m4!1s0x864447b7f972fd3d:0x404ee873ff666061!8m2!3d30.5111388!4d-96.7807077",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/680+Lakeview+Dr,+Caldwell,+TX+77836/@30.5111434,-96.7828964,17z/data=!3m1!4b1!4m5!3m4!1s0x864447b7f972fd3d:0x404ee873ff666061!8m2!3d30.5111388!4d-96.7807077",
+      "method": "Destination point embedded in BVFB-linked Google Maps URL (!8m2!3d...!4d...), address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "grimes-mobile-pantry",
+    "name": "Grimes Mobile Pantry",
+    "address": "Grimes County Expo/Fairgrounds, 5220 FM 3455, Navasota, TX",
+    "coordinates": {
+      "lat": 30.4173493,
+      "lng": -96.0618299
+    },
+    "phone": "512-853-0091",
+    "hours": "2nd Thursday 10–11:30am; listed 2026 dates include Nov 12 and Dec 10",
+    "offering": "BVFB lists drive-through mobile food distribution.",
+    "eligibility": "Serves Grimes and Washington Counties; monthly visit limit. Other eligibility rules unknown.",
+    "accessibility": "Drive-through; accessible parking/loading details unknown.",
+    "notes": "Fairgrounds is the distribution venue, not BVFB's warehouse. Hours/dates may change; confirm current flyer before travel.",
+    "city": "Navasota",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Grimes County listing and linked distribution schedule)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/Grimes+County+Fairgrounds/@30.4154217,-96.0587796,17z/data=!4m13!1m7!3m6!1s0x8646eac639462b2b:0x2b2b58a16b8f40a0!2sFM+3455+Rd,+Texas+77868!3b1!8m2!3d30.4154217!4d-96.0565909!3m4!1m7!3m6!1s0x8646eacfb56a58fb:0x1a665617a11af08!8m2!3d30.4173493!4d-96.0618299",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/Grimes+County+Fairgrounds/@30.4154217,-96.0587796,17z/data=!4m13!1m7!3m6!1s0x8646eac639462b2b:0x2b2b58a16b8f40a0!2sFM+3455+Rd,+Texas+77868!3b1!8m2!3d30.4154217!4d-96.0565909!3m4!1m7!3m6!1s0x8646eacfb56a58fb:0x1a665617a11af08!8m2!3d30.4173493!4d-96.0618299",
+      "method": "Named Grimes County Fairgrounds Maps destination encoded in BVFB-linked URL. Destination coordinate is !2d30.4173493 (latitude), !1d-96.0618299 (longitude); camera center is not used. Exact event-serving point/gate remains unconfirmed."
+    },
+    "verificationStatus": "needs-confirmation"
+  },
+  {
+    "id": "madison-mobile-pantry",
+    "name": "Madison Mobile Pantry",
+    "address": "Madison County Fairgrounds, 599 Industrial Park Ln., Madisonville, TX 77864",
+    "coordinates": {
+      "lat": 30.9727148,
+      "lng": -95.9010858
+    },
+    "phone": "979-779-3663",
+    "hours": "4th Thursday 11am–12:30pm; listed 2026 dates include Oct 22, Nov 19, Dec 17",
+    "offering": "BVFB lists drive-through mobile food distribution.",
+    "eligibility": "Serves Madison County; monthly visit limit. Other eligibility rules unknown.",
+    "accessibility": "Drive-through; accessible parking/loading details unknown.",
+    "notes": "Recurring mobile distribution at county fairgrounds; date list is BVFB-published schedule.",
+    "city": "Madisonville",
+    "postalCode": "77864",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Madison County listing and linked distribution schedule)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/Madison+County+Fairgrounds/@30.9713142,-95.905426,17z/data=!4m13!1m7!3m6!1s0x8646456136d18449:0x258f0e5feb2fc89f!2s402+Industrial+Park,+Madisonville,+TX+77864!3b1!8m2!3d30.9716535!4d-95.903532!3m4!1m7!3m6!1s0x864645619c967847:0x5011c0294c9a41b4!8m2!3d30.9727148!4d-95.9010858",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/Madison+County+Fairgrounds/@30.9713142,-95.905426,17z/data=!4m13!1m7!3m6!1s0x8646456136d18449:0x258f0e5feb2fc89f!2s402+Industrial+Park,+Madisonville,+TX+77864!3b1!8m2!3d30.9716535!4d-95.903532!3m4!1m7!3m6!1s0x864645619c967847:0x5011c0294c9a41b4!8m2!3d30.9727148!4d-95.9010858",
+      "method": "Named Madison County Fairgrounds Maps destination encoded in BVFB-linked URL. Destination coordinate is !2d30.9727148 (latitude), !1d-95.9010858 (longitude); camera center is not used."
+    },
+    "verificationStatus": "needs-confirmation"
+  },
+  {
+    "id": "prairie-hill-food-pantry",
+    "name": "Prairie Hill Food Pantry",
+    "address": "St. John's Lutheran Church, 6605 Old Independence Rd., Brenham, TX 77833",
+    "coordinates": {
+      "lat": 30.2494694,
+      "lng": -96.3784024
+    },
+    "phone": "979-836-8666",
+    "hours": "2nd and 4th Tuesday 6:30–8am",
+    "offering": "BVFB lists drive-through food distribution.",
+    "eligibility": "Serves Washington County; twice-monthly visit limit. Other eligibility rules unknown.",
+    "accessibility": "Drive-through; accessible parking/loading details unknown.",
+    "notes": "Pickup is at the named church site; no registration cutoff published.",
+    "city": "Brenham",
+    "postalCode": "77833",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Washington County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/St+John+Lutheran+Church/@30.2494694,-96.3805911,17z/data=!3m1!4b1!4m5!3m4!1s0x8646a710fd934087:0xbce2ddda01fd1873!8m2!3d30.2494694!4d-96.3784024",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/St+John+Lutheran+Church/@30.2494694,-96.3805911,17z/data=!3m1!4b1!4m5!3m4!1s0x8646a710fd934087:0xbce2ddda01fd1873!8m2!3d30.2494694!4d-96.3784024",
+      "method": "Destination point embedded in BVFB-linked Maps church place URL (!8m2!3d...!4d...), church/address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "faith-mission-brenham",
+    "name": "Faith Mission",
+    "address": "500 E. Academy St., Brenham, TX 77833",
+    "coordinates": {
+      "lat": 30.171432,
+      "lng": -96.3949904
+    },
+    "phone": "979-830-1488",
+    "hours": "Thursday 9:30am–12:30pm",
+    "offering": "BVFB lists drive-through food distribution.",
+    "eligibility": "Serves Washington County; once-monthly visit limit. Other eligibility rules unknown.",
+    "accessibility": "Drive-through; Spanish translators available; accessible parking/loading details unknown.",
+    "notes": "BVFB directory confirms recurring food distribution at this address.",
+    "city": "Brenham",
+    "postalCode": "77833",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Washington County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/500+E+Academy+St,+Brenham,+TX+77833/@30.171432,-96.3971791,17z/data=!3m1!4b1!4m5!3m4!1s0x8646a810da51a82d:0x5d53113360625c36!8m2!3d30.171432!4d-96.3949904?shorturl=1",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/500+E+Academy+St,+Brenham,+TX+77833/@30.171432,-96.3971791,17z/data=!3m1!4b1!4m5!3m4!1s0x8646a810da51a82d:0x5d53113360625c36!8m2!3d30.171432!4d-96.3949904?shorturl=1",
+      "method": "Destination point embedded in BVFB-linked Google Maps URL (!8m2!3d...!4d...), address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "washington-mobile-pantry-brenham",
+    "name": "Washington Mobile Pantry",
+    "address": "St. Peter's Episcopal Church, 2310 Airline Dr., Brenham, TX",
+    "coordinates": null,
+    "phone": "979-836-7248",
+    "hours": "1st Friday 10:30am–12pm; BVFB lists dates Nov 6 and Dec 4, 2026",
+    "offering": "BVFB lists drive-through mobile food distribution.",
+    "eligibility": "Serves Washington County; monthly visit limit. Other eligibility rules unknown.",
+    "accessibility": "Drive-through; accessible parking/loading details unknown.",
+    "notes": "Distribution venue is the church. Confirm current schedule before visiting. The BVFB-linked Maps URL contains only the map camera center, not a destination point; coordinates are intentionally unset pending an authoritative venue pin.",
+    "city": "Brenham",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Washington County listing and linked schedule)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/St.+Peter's+Episcopal+Church/@30.1466506,-96.3953505,15z/data=!4m2!3m1!1s0x0:0xd0425d444a8e1cc3?sa=X",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/St.+Peter%27s+Episcopal+Church/@30.1466506,-96.3953505,15z/data=!4m2!3m1!1s0x0:0xd0425d444a8e1cc3?sa=X",
+      "method": "No coordinates assigned: URL @30.1466506,-96.3953505 is a camera center at zoom 15 and the place data has no destination geometry. Confirm exact pickup site and pin."
+    },
+    "verificationStatus": "needs-confirmation"
+  },
+  {
+    "id": "progressive-missionary-baptist-hearne",
+    "name": "Progressive Missionary Baptist Church",
+    "address": "1013 N. Colorado St., Hearne, TX 77859",
+    "coordinates": {
+      "lat": 30.8803057,
+      "lng": -96.6081407
+    },
+    "phone": "979-279-3844",
+    "hours": "2nd Wednesday 11:30am–1:30pm (produce distribution); 2nd and 4th Thursday 11:30am–1:30pm",
+    "offering": "BVFB lists walk-in pantry and separate produce distribution.",
+    "eligibility": "Serves Robertson County; weekly visit limit. Spanish translators available. Other eligibility rules unknown.",
+    "accessibility": "Walk-in; step-free access and accommodations unknown.",
+    "notes": "Do not confuse this pantry address with a separate fresh-food directory entry that lists 609 N. Colorado St.; directory has distinct listing/address conflict to resolve before deduplicating.",
+    "city": "Hearne",
+    "postalCode": "77859",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Robertson County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/Progressive+Baptist+Church/@30.8803103,-96.6103294,17z/data=!3m1!4b1!4m5!3m4!1s0x8645cfbb0ee94749:0x5d796adb1e727d9e!8m2!3d30.8803057!4d-96.6081407",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/Progressive+Baptist+Church/@30.8803103,-96.6103294,17z/data=!3m1!4b1!4m5!3m4!1s0x8645cfbb0ee94749:0x5d796adb1e727d9e!8m2!3d30.8803057!4d-96.6081407",
+      "method": "Destination point embedded in BVFB-linked Google Maps church place URL (!8m2!3d...!4d...), directory address identifies North Colorado St. site."
+    },
+    "verificationStatus": "needs-confirmation"
+  },
+  {
+    "id": "robertson-county-cares-franklin",
+    "name": "Robertson County Cares",
+    "address": "201 S. Calvert St., Franklin, TX 77856",
+    "coordinates": {
+      "lat": 31.0248416,
+      "lng": -96.4888592
+    },
+    "phone": "979-828-2372",
+    "hours": "Saturday 9am–12pm",
+    "offering": "BVFB lists walk-in food distribution.",
+    "eligibility": "Serves Franklin ISD; weekly visit limit. Spanish translators available. Other rules unknown.",
+    "accessibility": "Walk-in; step-free access and accommodations unknown.",
+    "notes": "Published distribution hours and address; the service area is Franklin ISD, not inferred from county alone.",
+    "city": "Franklin",
+    "postalCode": "77856",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Robertson County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/201+Calvert+St,+Franklin,+TX+77856/@31.0248416,-96.4910479,17z/data=!3m1!4b1!4m5!3m4!1s0x8645dea6b960ada7:0xd3954edc157a3514!8m2!3d31.0248416!4d-96.4888592",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/201+Calvert+St,+Franklin,+TX+77856/@31.0248416,-96.4910479,17z/data=!3m1!4b1!4m5!3m4!1s0x8645dea6b960ada7:0xd3954edc157a3514!8m2!3d31.0248416!4d-96.4888592",
+      "method": "Destination point embedded in BVFB-linked Google Maps URL (!8m2!3d...!4d...), address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "call-for-help-hearne",
+    "name": "Call for Help",
+    "address": "110 W. 4th St., Hearne, TX 77859",
+    "coordinates": {
+      "lat": 30.8816284,
+      "lng": -96.5957858
+    },
+    "phone": "979-255-5821",
+    "hours": "Monday 1–4pm",
+    "offering": "BVFB lists walk-in food distribution.",
+    "eligibility": "Serves Robertson County; weekly visit limit. Spanish translators available. Other rules unknown.",
+    "accessibility": "Walk-in; step-free access and accommodations unknown.",
+    "notes": "The directory entry identifies an actual food pickup provider, not simply the organization's office.",
+    "city": "Hearne",
+    "postalCode": "77859",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Robertson County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/110+W+4th+St,+Hearne,+TX+77859/@30.8816284,-96.5979745,17z/data=!3m1!4b1!4m5!3m4!1s0x8645cfc6c0583a81:0xacb5a30097e31d95!8m2!3d30.8816284!4d-96.5957858?shorturl=1",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/110+W+4th+St,+Hearne,+TX+77859/@30.8816284,-96.5979745,17z/data=!3m1!4b1!4m5!3m4!1s0x8645cfc6c0583a81:0xacb5a30097e31d95!8m2!3d30.8816284!4d-96.5957858?shorturl=1",
+      "method": "Destination point embedded in BVFB-linked Google Maps URL (!8m2!3d...!4d...), address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "caldwell-christians-care",
+    "name": "Caldwell Christians Care",
+    "address": "208 W. Buck St., Caldwell, TX 77836",
+    "coordinates": {
+      "lat": 30.5313346,
+      "lng": -96.693284
+    },
+    "phone": "979-567-9711",
+    "hours": "Tuesday and Wednesday 9–11:30am",
+    "offering": "BVFB lists walk-in, client-choice food distribution.",
+    "eligibility": "Serves Burleson County; monthly visit limit. Other eligibility unknown.",
+    "accessibility": "Walk-in; step-free access and accommodations unknown.",
+    "notes": "BVFB-linked destination and pickup address agree.",
+    "city": "Caldwell",
+    "postalCode": "77836",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Burleson County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/208+W+Buck+St,+Caldwell,+TX+77836/@30.5313346,-96.6954727,17z/data=!3m1!4b1!4m5!3m4!1s0x864439dafb6bcbdf:0x7eb87549e09c4f45!8m2!3d30.5313346!4d-96.693284?shorturl=1",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/208+W+Buck+St,+Caldwell,+TX+77836/@30.5313346,-96.6954727,17z/data=!3m1!4b1!4m5!3m4!1s0x864439dafb6bcbdf:0x7eb87549e09c4f45!8m2!3d30.5313346!4d-96.693284?shorturl=1",
+      "method": "Destination point embedded in BVFB-linked Google Maps URL (!8m2!3d30.5313346!4d-96.693284); address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "lee-chapel-united-methodist-bryan",
+    "name": "Lee Chapel United Methodist Church",
+    "address": "903 N. Washington Ave., Bryan, TX 77803",
+    "coordinates": {
+      "lat": 30.68144,
+      "lng": -96.369896
+    },
+    "phone": "979-703-8816",
+    "hours": "Last Saturday 10am–12pm",
+    "offering": "BVFB lists drive-through food distribution.",
+    "eligibility": "Serves Brazos Valley; monthly visit limit. Other eligibility unknown.",
+    "accessibility": "Drive-through; accessible loading details unknown.",
+    "notes": "Directory phone label and clickable number differ: displayed (979) 703-6346, tel link (979) 703-8816. Keep linked phone and confirm.",
+    "city": "Bryan",
+    "postalCode": "77803",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Brazos County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/903+N+Washington+Ave,+Bryan,+TX+77803/@30.68144,-96.3720847,17z/data=!3m1!4b1!4m5!3m4!1s0x864681a60e6d54a5:0x8cc36124f1e54bc!8m2!3d30.68144!4d-96.369896?shorturl=1",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/903+N+Washington+Ave,+Bryan,+TX+77803/@30.68144,-96.3720847,17z/data=!3m1!4b1!4m5!3m4!1s0x864681a60e6d54a5:0x8cc36124f1e54bc!8m2!3d30.68144!4d-96.369896?shorturl=1",
+      "method": "Destination point embedded in resolved BVFB-linked Google Maps URL (!8m2!3d30.68144!4d-96.369896), address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "new-zion-food-pantry-bryan",
+    "name": "New Zion Food Pantry",
+    "address": "1505 Dansby St., Bryan, TX 77803",
+    "coordinates": {
+      "lat": 30.6818233,
+      "lng": -96.358382
+    },
+    "phone": "979-823-7766",
+    "hours": "3rd Tuesday 5–6pm",
+    "offering": "BVFB lists drive-through food distribution.",
+    "eligibility": "Serves Brazos County; monthly visit limit. Other eligibility unknown.",
+    "accessibility": "Drive-through; accessible loading details unknown.",
+    "notes": "Directory publishes distribution hours separately from no registration period; no registration cutoff found.",
+    "city": "Bryan",
+    "postalCode": "77803",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Brazos County listing)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-21"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/1505+Dansby+St,+Bryan,+TX+77803/@30.6818279,-96.3605707,17z/data=!3m1!4b1!4m5!3m4!1s0x8646810f6a4cdb21:0xbc3aafd0a2b7bb5c!8m2!3d30.6818233!4d-96.358382",
+        "checkedOn": "2026-10-21"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://www.google.com/maps/place/1505+Dansby+St,+Bryan,+TX+77803/@30.6818279,-96.3605707,17z/data=!3m1!4b1!4m5!3m4!1s0x8646810f6a4cdb21:0xbc3aafd0a2b7bb5c!8m2!3d30.6818233!4d-96.358382",
+      "method": "Destination point embedded in BVFB-linked Google Maps URL (!8m2!3d30.6818233!4d-96.358382), address matches directory."
+    },
+    "verificationStatus": "confirmed-site"
+  }
+]

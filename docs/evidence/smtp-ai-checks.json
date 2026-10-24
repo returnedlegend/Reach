@@ -1,0 +1,26 @@
+{
+  "date_utc": "2026-10-23",
+  "client_date_chicago": "2026-10-22",
+  "baseline_unit": 411,
+  "final_unit": 444,
+  "test_files": 46,
+  "independent_assistant_browser": 6,
+  "retained_browser_distinct": 24,
+  "retained_initial": {
+    "passed": 23,
+    "failed": 1
+  },
+  "retained_focused_recheck": {
+    "passed": 1,
+    "failed": 0
+  },
+  "typecheck": "passed",
+  "data_validation": "passed",
+  "production_build": "passed",
+  "live_authenticated_ai": "not exercised",
+  "live_smtp": "not exercised",
+  "live_inbound_callback": "not exercised",
+  "public_catalog_http": 200,
+  "private_identifiers_in_client_js": 0,
+  "public_deployment": false
+}

@@ -1,0 +1,36 @@
+{
+  "fixtureScope": "synthetic only",
+  "now": "2026-10-22T12:00:00.000Z",
+  "scenarios": [
+    {
+      "label": "closest-site-closes-before-arrival",
+      "nearestBaseline": "near-closed",
+      "selected": "far-open",
+      "selectedStatus": "fits",
+      "usableOptions": 1,
+      "knownConstraintViolations": 0,
+      "aiCalls": 0,
+      "latencyMs": 9.98
+    },
+    {
+      "label": "near-site-stock-report-expired",
+      "nearestBaseline": "near-stale",
+      "selected": "far-current",
+      "selectedStatus": "fits",
+      "usableOptions": 2,
+      "knownConstraintViolations": 0,
+      "aiCalls": 0,
+      "latencyMs": 0.77
+    },
+    {
+      "label": "nearest-option-exceeds-walking-limit",
+      "nearestBaseline": "near-over-budget",
+      "selected": "far-within-budget",
+      "selectedStatus": "fits",
+      "usableOptions": 1,
+      "knownConstraintViolations": 0,
+      "aiCalls": 0,
+      "latencyMs": 0.43
+    }
+  ]
+}

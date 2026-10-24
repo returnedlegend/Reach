@@ -1,0 +1,200 @@
+[
+  {
+    "id": "bastrop-county-emergency-food-pantry",
+    "name": "Bastrop County Emergency Food Pantry",
+    "address": "1201 Pine Street, Bastrop, TX 78602",
+    "coordinates": {
+      "lat": 30.1094814,
+      "lng": -97.3137301
+    },
+    "phone": "512-303-0033",
+    "website": "https://bastropfoodpantry.org/",
+    "hours": "Food Assistance: Monday, Wednesday, Friday 8:30\u201311:30 a.m. and 1:30\u20133:00 p.m., by appointment only. Community Market: 2nd, 3rd and 4th Thursday monthly, 9:30\u201311:30 a.m., walk-ins welcome. Fresh Foods for Families: 3rd Friday monthly, 10\u201311 a.m., first-come, first-served.",
+    "offering": "Grocery food assistance by appointment; a walk-in choice-based Community Market; and monthly Fresh Foods for Families produce, fruit and bread distribution.",
+    "eligibility": "Food Assistance: Bastrop County resident, age 18 or older, and head of household; one assistance visit every 30 days after intake. Community Market: no eligibility restriction stated; county service area. Fresh Foods for Families: open to all residences. For Fresh Foods, guests age 18 and above need identification. The pantry says proof of identification and Bastrop County residency are preferred for Food Assistance intake.",
+    "accessibility": "Not stated on reviewed pages.",
+    "notes": "The official contact page distinguishes general office hours from food pickup hours. Food Assistance requires an appointment. Community Market page says 2nd, 3rd and 4th Thursdays monthly and also labels visit frequency Weekly; the specific days are retained. Fresh Foods for Families is a separate monthly program at this address.",
+    "city": "Bastrop",
+    "postalCode": "78602",
+    "sources": [
+      {
+        "title": "Bastrop County Emergency Food Pantry \u2014 Food Assistance",
+        "url": "https://bastropfoodpantry.org/programs/food-assistance/",
+        "checkedOn": "2026-10-22"
+      },
+      {
+        "title": "Bastrop County Emergency Food Pantry \u2014 Contact",
+        "url": "https://bastropfoodpantry.org/contact/",
+        "checkedOn": "2026-10-22"
+      },
+      {
+        "title": "Bastrop County Emergency Food Pantry \u2014 Community Market",
+        "url": "https://bastropfoodpantry.org/programs/community-market/",
+        "checkedOn": "2026-10-22"
+      },
+      {
+        "title": "Bastrop County Emergency Food Pantry \u2014 Fresh Foods for Families",
+        "url": "https://bastropfoodpantry.org/programs/fresh-foods-for-families/",
+        "checkedOn": "2026-10-22"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=1201%20Pine%20Street%2C%20Bastrop%2C%20TX%2078602&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current matched 1201 PINE ST, BASTROP, TX 78602; returned address-range/interpolated street coordinate, not an entrance survey. Point falls inside the official TX-10 119th Congress geometry."
+    },
+    "verificationStatus": "confirmed-site",
+    "windows": [
+      {
+        "program": "Food Assistance",
+        "days": "Monday, Wednesday, Friday",
+        "hours": "8:30\u201311:30 a.m.; 1:30\u20133:00 p.m.",
+        "appointment": "Required"
+      },
+      {
+        "program": "Community Market",
+        "days": "2nd, 3rd and 4th Thursday monthly",
+        "hours": "9:30\u201311:30 a.m.",
+        "appointment": "Not required; walk-ins welcome"
+      },
+      {
+        "program": "Fresh Foods for Families",
+        "days": "3rd Friday monthly",
+        "hours": "10\u201311 a.m.",
+        "appointment": "Not stated; first-come, first-served"
+      }
+    ]
+  },
+  {
+    "id": "giddings-area-care-center-food-pantry",
+    "name": "Giddings Food Pantry (Giddings Area C.A.R.E. Center)",
+    "address": "190 North Harris Street, Giddings, TX 78942",
+    "coordinates": {
+      "lat": 30.1827404,
+      "lng": -96.9319146
+    },
+    "phone": "979-540-6310",
+    "website": "https://giddingsfoodpantry.org/",
+    "hours": "Official calendar displayed individual dated pickup events: Oct. 8, 2026 3:30\u20135:30 p.m.; Oct. 9 and 10, 2026 7:30\u20139:30 a.m.; and H.O.P.E. & Fresh Foods Oct. 23, 2026 9:30\u201311:30 a.m. These are dated entries, not a verified recurring weekly schedule.",
+    "offering": "Food pantry and food distribution for people in crisis, hardship or poverty; the organization directs applicants to complete an application.",
+    "eligibility": "Application required; further eligibility requirements not stated on the reviewed homepage.",
+    "accessibility": "Not stated on reviewed page.",
+    "notes": "The nonprofit website identifies this pantry as a food distribution site and directs visitors to its calendar for each month\u2019s dates and times. The calendar currently lists the dated October 2026 events recorded in hours; do not infer that they recur on the same weekdays. Address, organization contact, current dated calendar entries, and the address geocode agree.",
+    "city": "Giddings",
+    "postalCode": "78942",
+    "sources": [
+      {
+        "title": "Giddings Food Pantry \u2014 Home",
+        "url": "https://giddingsfoodpantry.org/",
+        "checkedOn": "2026-10-22"
+      },
+      {
+        "title": "Giddings Food Pantry \u2014 Calendar",
+        "url": "https://giddingsfoodpantry.org/calendar",
+        "checkedOn": "2026-10-22"
+      },
+      {
+        "title": "Giddings Food Pantry \u2014 Contact Us",
+        "url": "https://giddingsfoodpantry.org/contact-us",
+        "checkedOn": "2026-10-22"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=190%20North%20Harris%20Street%2C%20Giddings%2C%20TX%2078942&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current matched 190 N HARRIS ST, GIDDINGS, TX 78942; returned address-range/interpolated street coordinate, not an entrance survey. Point falls inside the official TX-10 119th Congress geometry."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "amen-la-grange",
+    "name": "AMEN La Grange Food Pantry",
+    "address": "851 South Reynolds Street, La Grange, TX 78945",
+    "coordinates": {
+      "lat": 29.9067902,
+      "lng": -96.8587729
+    },
+    "phone": "979-968-3943",
+    "website": "https://amenlagrange.org/",
+    "hours": "Mondays 9:00 a.m.\u201311:45 a.m.; 1st and 3rd Thursday monthly 4:30\u20136:00 p.m.",
+    "offering": "Choice pantry food pickup; emergency food is also available for people passing through, according to the nonprofit.",
+    "eligibility": "Supplemental assistance for Fayette County residents experiencing financial hardship. Emergency food for people passing through is mentioned, but its terms are not specified.",
+    "accessibility": "Not stated on reviewed pages.",
+    "notes": "The nonprofit homepage describes a food pantry and food shopping; contact page explicitly says to come during the listed hours for food pickup or to apply for assistance. Address is explicitly labeled as AMEN La Grange. Website says call with questions; hours and eligibility have not been provider-confirmed by phone.",
+    "city": "La Grange",
+    "postalCode": "78945",
+    "sources": [
+      {
+        "title": "AMEN La Grange \u2014 Home",
+        "url": "https://amenlagrange.org/",
+        "checkedOn": "2026-10-22"
+      },
+      {
+        "title": "AMEN La Grange \u2014 Contact Us / Food Pickup",
+        "url": "https://amenlagrange.org/contact",
+        "checkedOn": "2026-10-22"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=851%20South%20Reynolds%20Street%2C%20La%20Grange%2C%20TX%2078945&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current matched 851 S REYNOLDS ST, LA GRANGE, TX 78945; returned address-range/interpolated street coordinate, not an entrance survey. Point falls inside official TX-10 119th Congress geometry."
+    },
+    "verificationStatus": "confirmed-site",
+    "windows": [
+      {
+        "days": "Monday",
+        "hours": "9:00\u201311:45 a.m.",
+        "purpose": "Food pickup or apply for assistance"
+      },
+      {
+        "days": "1st and 3rd Thursday monthly",
+        "hours": "4:30\u20136:00 p.m.",
+        "purpose": "Food pickup or apply for assistance"
+      }
+    ]
+  },
+  {
+    "id": "schulenburg-area-food-pantry",
+    "name": "Schulenburg Area Food Pantry",
+    "address": "304 East Avenue, Schulenburg, TX 78956",
+    "coordinates": {
+      "lat": 29.6845284,
+      "lng": -96.8988019
+    },
+    "phone": "979-561-6487",
+    "website": "https://schulenburgfoodpantry.com/",
+    "hours": "Every Thursday 9:00\u201311:00 a.m.",
+    "offering": "Modified client-choice food pantry; clients sign in and select food from stocked shelves. New clients welcome; emergency food is also available for people passing through.",
+    "eligibility": "Supplementary food for qualifying families in the Schulenburg area. Pantry's About page says clients use the pantry once per month. Further qualification details are not stated in the reviewed pages.",
+    "accessibility": "Not stated on reviewed pages.",
+    "notes": "The pantry's official site explicitly identifies the facility as a food distribution center, publishes Thursday distribution hours, phone and physical address, and describes the choice-pantry procedure. Coordinates are address-range/interpolated, not an entrance survey.",
+    "city": "Schulenburg",
+    "postalCode": "78956",
+    "sources": [
+      {
+        "title": "Schulenburg Area Food Pantry \u2014 Home / Hours and Distribution",
+        "url": "https://schulenburgfoodpantry.com/",
+        "checkedOn": "2026-10-22"
+      },
+      {
+        "title": "Schulenburg Area Food Pantry \u2014 Contact Us",
+        "url": "https://schulenburgfoodpantry.com/contact-us",
+        "checkedOn": "2026-10-22"
+      },
+      {
+        "title": "Schulenburg Area Food Pantry \u2014 About Us",
+        "url": "https://schulenburgfoodpantry.com/about-us",
+        "checkedOn": "2026-10-22"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=304%20East%20Avenue%2C%20Schulenburg%2C%20TX%2078956&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current matched 304 EAST AVE, SCHULENBURG, TX 78956; returned address-range/interpolated street coordinate, not an entrance survey. Point falls inside official TX-10 119th Congress geometry."
+    },
+    "verificationStatus": "confirmed-site",
+    "windows": [
+      {
+        "days": "Every Thursday",
+        "hours": "9:00\u201311:00 a.m."
+      }
+    ]
+  }
+]

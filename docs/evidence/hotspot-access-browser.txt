@@ -1,0 +1,39 @@
+npm notice run reach@0.1.0 npx
+npm notice run 'playwright' test tests/hotspot-access.spec.ts tests/accessibility.spec.ts --workers=2 --output=/tmp/reach-hotspots-verified-results
+
+Running 16 tests using 2 workers
+
+(node:74477) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:74478) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [mobile] › tests/hotspot-access.spec.ts:3:1 › hotspot shortcut preserves the selected starting point and progress (3.5s)
+  ✓   3 [mobile] › tests/hotspot-access.spec.ts:48:1 › hotspot entry remains clear when the community service is disabled (1.6s)
+  ✓   4 [mobile] › tests/hotspot-access.spec.ts:73:1 › hotspot creation resumes after signup and requires organizer approval (2.5s)
+  ✓   1 [mobile] › tests/accessibility.spec.ts:4:1 › key screens have no detected WCAG A/AA violations (7.9s)
+(node:74887) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:74897) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   6 [android] › tests/hotspot-access.spec.ts:3:1 › hotspot shortcut preserves the selected starting point and progress (2.6s)
+  ✓   7 [android] › tests/hotspot-access.spec.ts:48:1 › hotspot entry remains clear when the community service is disabled (1.5s)
+  ✓   8 [android] › tests/hotspot-access.spec.ts:73:1 › hotspot creation resumes after signup and requires organizer approval (2.3s)
+(node:75294) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 [android] › tests/accessibility.spec.ts:4:1 › key screens have no detected WCAG A/AA violations (7.2s)
+(node:75342) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  10 [tablet] › tests/hotspot-access.spec.ts:3:1 › hotspot shortcut preserves the selected starting point and progress (2.5s)
+  ✓  11 [tablet] › tests/hotspot-access.spec.ts:48:1 › hotspot entry remains clear when the community service is disabled (1.5s)
+  ✓   9 [tablet] › tests/accessibility.spec.ts:4:1 › key screens have no detected WCAG A/AA violations (6.9s)
+  ✓  12 [tablet] › tests/hotspot-access.spec.ts:73:1 › hotspot creation resumes after signup and requires organizer approval (2.2s)
+(node:75713) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:75726) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  14 [desktop] › tests/hotspot-access.spec.ts:3:1 › hotspot shortcut preserves the selected starting point and progress (2.9s)
+  ✓  15 [desktop] › tests/hotspot-access.spec.ts:48:1 › hotspot entry remains clear when the community service is disabled (1.5s)
+  ✓  16 [desktop] › tests/hotspot-access.spec.ts:73:1 › hotspot creation resumes after signup and requires organizer approval (2.4s)
+  ✓  13 [desktop] › tests/accessibility.spec.ts:4:1 › key screens have no detected WCAG A/AA violations (7.3s)
+
+  16 passed (33.2s)

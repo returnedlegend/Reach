@@ -1,0 +1,201 @@
+.navigation-ui {
+  --navigation-ink: var(--reach-ink, #253a31);
+  --navigation-muted: var(--reach-muted, #5f6c62);
+  --navigation-accent: var(--reach-green, #285c45);
+  --navigation-surface: var(--reach-surface, #fff);
+  --navigation-line: var(--reach-line, #dce4dc);
+  --navigation-soft: var(--reach-soft, #edf2e9);
+  width: 100%;
+  min-width: 0;
+  color: var(--navigation-ink);
+}
+
+.navigation-ui h2 {
+  margin: 0;
+  color: var(--navigation-accent);
+  font-size: 1.3rem;
+  line-height: 1.25;
+}
+
+.navigation-ui h3 {
+  margin: 0 0 0.5rem;
+  color: var(--navigation-accent);
+  font-size: 1.05rem;
+}
+
+.navigation-ui__intro,
+.navigation-ui__note,
+.navigation-ui__coverage-note {
+  color: var(--navigation-muted);
+  line-height: 1.5;
+}
+
+.navigation-ui__intro {
+  margin: 0.45rem 0 1rem;
+}
+
+.navigation-ui__note,
+.navigation-ui__coverage-note {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+}
+
+.navigation-preferences__primary,
+.navigation-preferences__advanced-content {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.navigation-preferences label:not(.navigation-ui__check-label) {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 650;
+}
+
+.navigation-preferences select {
+  width: 100%;
+  min-height: 44px;
+}
+
+.navigation-preferences__advanced,
+.navigation-guidance__details {
+  margin-top: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.75rem;
+  background: var(--navigation-soft);
+}
+
+.navigation-preferences__advanced summary,
+.navigation-guidance__details summary {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  cursor: pointer;
+  color: var(--navigation-accent);
+  font-weight: 700;
+}
+
+.navigation-preferences__advanced-content {
+  padding: 0.5rem 0 0.25rem;
+}
+
+.navigation-ui .navigation-ui__check-label {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.4rem 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navigation-ui__check-label .checkbox {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+  flex: 0 0 24px;
+}
+
+.navigation-preferences__ai {
+  margin-top: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--navigation-line);
+  border-radius: 0.75rem;
+  background: var(--navigation-surface);
+}
+
+.navigation-guidance {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.navigation-guidance__heading-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.navigation-guidance__ai-label {
+  margin: 0 0 0.25rem;
+  color: var(--navigation-accent);
+  font-size: 0.78rem;
+  font-weight: 750;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.navigation-guidance__status {
+  flex: 0 0 auto;
+  padding: 0.3rem 0.55rem;
+  border-radius: 999px;
+  background: var(--navigation-soft);
+  color: var(--navigation-ink);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.navigation-guidance__choice {
+  display: grid;
+  justify-items: start;
+  gap: 0.5rem;
+}
+
+.navigation-guidance__alternatives {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.navigation-guidance button,
+.navigation-guidance a,
+.navigation-guidance summary {
+  min-height: 44px;
+}
+
+.navigation-guidance__details ul,
+.navigation-guidance__limitations ul {
+  margin: 0.4rem 0;
+  padding-left: 1.25rem;
+}
+
+.navigation-guidance__details li,
+.navigation-guidance__limitations li {
+  margin: 0.35rem 0;
+  line-height: 1.45;
+}
+
+.navigation-guidance__limitations {
+  padding: 0.75rem;
+  border-left: 3px solid var(--navigation-accent);
+  background: var(--navigation-soft);
+}
+
+.navigation-ui :focus-visible {
+  outline: 3px solid #e0a323;
+  outline-offset: 2px;
+}
+
+@media (min-width: 40rem) {
+  .navigation-preferences__primary,
+  .navigation-preferences__advanced-content {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .navigation-preferences__advanced-content > .navigation-ui__check-label {
+    grid-column: 1 / -1;
+  }
+}
+
+.navigation-guidance__heading-row > div {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+.navigation-guidance button {
+  max-width: 100%;
+  height: auto;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}

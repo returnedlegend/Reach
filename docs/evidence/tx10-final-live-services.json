@@ -1,0 +1,239 @@
+{
+  "checkedOn": "2026-10-22T01:44:27.515Z",
+  "build": "final production build; no Google credentials used",
+  "scope": "Public street/site coordinates; manual origin. Browser ignores only test proxy certificate errors; app TLS verification remains enabled.",
+  "routes": [
+    {
+      "mode": "walking",
+      "http": 200,
+      "request": {
+        "origin": {
+          "lat": 30.169001,
+          "lng": -96.398001
+        },
+        "destination": {
+          "lat": 30.171432,
+          "lng": -96.3949904
+        },
+        "mode": "walking",
+        "missedBus": false
+      },
+      "result": {
+        "status": "available",
+        "distanceMiles": 0.3125,
+        "durationMinutes": 6.035433333333333,
+        "steps": [
+          {
+            "instruction": "Walk north on the walkway."
+          },
+          {
+            "instruction": "Turn right."
+          },
+          {
+            "instruction": "Turn left onto North Baylor Street."
+          },
+          {
+            "instruction": "Turn right onto East Academy Street."
+          },
+          {
+            "instruction": "You have arrived at your destination."
+          }
+        ],
+        "paths": [
+          {
+            "id": "osm-0",
+            "mode": "walking",
+            "coordinates": [
+              [
+                -96.397903,
+                30.169021
+              ],
+              [
+                -96.398272,
+                30.170357
+              ],
+              [
+                -96.398225,
+                30.170368
+              ],
+              [
+                -96.39827,
+                30.170525
+              ],
+              [
+                -96.397616,
+                30.170671
+              ],
+              [
+                -96.397389,
+                30.170721
+              ],
+              [
+                -96.397198,
+                30.170763
+              ],
+              [
+                -96.396211,
+                30.171059
+              ],
+              [
+                -96.395366,
+                30.171314
+              ],
+              [
+                -96.395031,
+                30.171421
+              ]
+            ],
+            "label": "OSM walking route"
+          }
+        ],
+        "attribution": [
+          {
+            "label": "© OpenStreetMap contributors",
+            "url": "https://www.openstreetmap.org/copyright"
+          },
+          {
+            "label": "Routing: Valhalla / FOSSGIS",
+            "url": "https://routing.openstreetmap.de/about.html"
+          },
+          {
+            "label": "Improve the map",
+            "url": "https://www.openstreetmap.org/fixthemap"
+          }
+        ],
+        "label": "Valhalla walking estimate · community demo; no production SLA"
+      }
+    },
+    {
+      "mode": "driving",
+      "http": 200,
+      "request": {
+        "origin": {
+          "lat": 30.169001,
+          "lng": -96.398001
+        },
+        "destination": {
+          "lat": 30.171432,
+          "lng": -96.3949904
+        },
+        "mode": "driving",
+        "missedBus": false
+      },
+      "result": {
+        "status": "available",
+        "distanceMiles": 0.3094,
+        "durationMinutes": 1.0281333333333333,
+        "steps": [
+          {
+            "instruction": "Drive north on North Baylor Street."
+          },
+          {
+            "instruction": "Turn right onto East Academy Street."
+          },
+          {
+            "instruction": "You have arrived at your destination."
+          }
+        ],
+        "paths": [
+          {
+            "id": "osm-0",
+            "mode": "driving",
+            "coordinates": [
+              [
+                -96.397837,
+                30.169037
+              ],
+              [
+                -96.398225,
+                30.170368
+              ],
+              [
+                -96.39827,
+                30.170525
+              ],
+              [
+                -96.397616,
+                30.170671
+              ],
+              [
+                -96.397389,
+                30.170721
+              ],
+              [
+                -96.397198,
+                30.170763
+              ],
+              [
+                -96.396211,
+                30.171059
+              ],
+              [
+                -96.395366,
+                30.171314
+              ],
+              [
+                -96.395031,
+                30.171421
+              ]
+            ],
+            "label": "OSM driving route"
+          }
+        ],
+        "attribution": [
+          {
+            "label": "© OpenStreetMap contributors",
+            "url": "https://www.openstreetmap.org/copyright"
+          },
+          {
+            "label": "Routing: Valhalla / FOSSGIS",
+            "url": "https://routing.openstreetmap.de/about.html"
+          },
+          {
+            "label": "Improve the map",
+            "url": "https://www.openstreetmap.org/fixthemap"
+          }
+        ],
+        "label": "Valhalla driving estimate · community demo; no production SLA"
+      }
+    }
+  ],
+  "geocode": {
+    "http": 200,
+    "result": {
+      "status": "available",
+      "candidates": [
+        {
+          "label": "1201, Pine Street, Bastrop, Bastrop County, Texas, 78602, United States",
+          "coordinates": {
+            "lat": 30.109358,
+            "lng": -97.3136494
+          }
+        }
+      ],
+      "attribution": [
+        {
+          "label": "© OpenStreetMap contributors",
+          "url": "https://www.openstreetmap.org/copyright"
+        }
+      ]
+    }
+  },
+  "directoryCount": 24,
+  "mapReady": true,
+  "pageErrors": [],
+  "attribution": [
+    {
+      "label": "OpenStreetMap contributors",
+      "url": "https://www.openstreetmap.org/copyright"
+    },
+    {
+      "label": "Valhalla / FOSSGIS",
+      "url": "https://routing.openstreetmap.de/about.html"
+    },
+    {
+      "label": "OpenFreeMap",
+      "url": "https://openfreemap.org/"
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+.reach-assistant {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 1200;
+  margin: 0 auto;
+  width: min(100%, 46rem);
+  max-height: min(92dvh, 60rem);
+  overflow: auto;
+  padding: 1.25rem max(1rem, env(safe-area-inset-right))
+    max(1rem, env(safe-area-inset-bottom)) max(1rem, env(safe-area-inset-left));
+  border: 1px solid var(--color-base-300);
+  border-radius: 1.25rem 1.25rem 0 0;
+  background: var(--color-base-100);
+  color: var(--color-base-content);
+  box-shadow: 0 -12px 36px rgb(0 0 0 / 18%);
+}
+.reach-assistant::backdrop {
+  background: rgb(17 31 29 / 56%);
+}
+.reach-assistant__transcript {
+  border: 1px solid var(--color-base-300);
+  border-radius: 0.65rem;
+  padding: 0.6rem;
+}
+.reach-assistant__transcript summary {
+  min-height: 36px;
+  cursor: pointer;
+  font-weight: 650;
+}
+
+.reach-assistant__header,
+.reach-assistant__sendrow,
+.reach-assistant__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.reach-assistant__header h2 {
+  margin: 0.2rem 0 0;
+}
+.reach-assistant__controls {
+  display: grid;
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+.reach-assistant__controls label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 650;
+}
+.reach-assistant__controls select {
+  min-height: 44px;
+}
+.reach-assistant__controls input {
+  min-height: 44px;
+}
+.reach-assistant__controls details {
+  border: 1px solid var(--color-base-300);
+  border-radius: 0.75rem;
+  padding: 0.65rem;
+}
+.reach-assistant__controls summary {
+  min-height: 32px;
+  cursor: pointer;
+  font-weight: 650;
+}
+.reach-assistant form {
+  display: grid;
+  gap: 0.5rem;
+}
+.reach-assistant form label {
+  font-weight: 700;
+}
+.reach-assistant textarea {
+  width: 100%;
+  min-height: 6rem;
+  padding: 0.7rem;
+  border: 1px solid var(--color-base-300);
+  border-radius: 0.7rem;
+  background: var(--color-base-100);
+  color: inherit;
+}
+.reach-assistant__sendrow > span {
+  color: var(--color-base-content);
+  opacity: 0.7;
+}
+.reach-assistant__sendrow button,
+.reach-assistant__header button {
+  min-height: 44px;
+}
+.reach-assistant__defaults,
+.reach-assistant__fineprint {
+  font-size: 0.86rem;
+  line-height: 1.45;
+  opacity: 0.82;
+}
+.reach-assistant__reply {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+.reach-assistant__badge {
+  width: fit-content;
+  margin: 0;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+  font-size: 0.83rem;
+  font-weight: 700;
+}
+.reach-assistant__option {
+  display: grid;
+  gap: 0.4rem;
+  padding: 0.9rem;
+  border: 1px solid var(--color-base-300);
+  border-radius: 0.85rem;
+}
+.reach-assistant__option h3,
+.reach-assistant__option p {
+  margin: 0;
+}
+.reach-assistant__actions {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-top: 0.3rem;
+}
+.reach-assistant__actions > * {
+  min-height: 44px;
+}
+.reach-assistant__outreach {
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--color-base-300);
+}
+.reach-assistant__spin {
+  animation: reach-assistant-spin 1s linear infinite;
+}
+@keyframes reach-assistant-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (min-width: 700px) {
+  .reach-assistant {
+    inset: 50% auto auto;
+    transform: translateY(-50%);
+    margin: 0;
+    max-height: 90dvh;
+    border-radius: 1.25rem;
+  }
+}

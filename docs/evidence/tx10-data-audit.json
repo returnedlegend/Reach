@@ -1,0 +1,170 @@
+[
+  {
+    "id": "anderson-food-pantry",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "bedias-food-pantry",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "christian-community-services-navasota",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "elizabeth-lutheran-caldwell",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "in-gods-hands-caldwell",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "grimes-mobile-pantry",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "madison-mobile-pantry",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "prairie-hill-food-pantry",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "faith-mission-brenham",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "washington-mobile-pantry-brenham",
+    "inside": false,
+    "admitted": false,
+    "admission_correct": true
+  },
+  {
+    "id": "progressive-missionary-baptist-hearne",
+    "inside": false,
+    "admitted": false,
+    "admission_correct": true
+  },
+  {
+    "id": "robertson-county-cares-franklin",
+    "inside": false,
+    "admitted": false,
+    "admission_correct": true
+  },
+  {
+    "id": "call-for-help-hearne",
+    "inside": false,
+    "admitted": false,
+    "admission_correct": true
+  },
+  {
+    "id": "caldwell-christians-care",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "lee-chapel-united-methodist-bryan",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "new-zion-food-pantry-bryan",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "bastrop-county-emergency-food-pantry",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "giddings-area-care-center-food-pantry",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "amen-la-grange",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  },
+  {
+    "id": "schulenburg-area-food-pantry",
+    "inside": true,
+    "admitted": true,
+    "admission_correct": true,
+    "coordinates_preserved": true,
+    "hours_preserved": true,
+    "source_urls_preserved": true
+  }
+]

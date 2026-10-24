@@ -1,0 +1,457 @@
+.access-planner {
+  --access-ink: var(--reach-ink, #253a31);
+  --access-muted: var(--reach-muted, #59675e);
+  --access-green: var(--reach-green, #285c45);
+  --access-paper: var(--reach-paper, #f7f8f4);
+  --access-surface: var(--reach-surface, #fff);
+  --access-line: var(--reach-line, #dce4dc);
+  --access-soft: var(--reach-soft, #edf2e9);
+  width: 100%;
+  max-width: 58rem;
+  margin: 0 auto;
+  padding: 1rem;
+  color: var(--access-ink);
+}
+
+.access-planner button,
+.access-planner input,
+.access-planner select,
+.access-planner summary,
+.access-planner a {
+  min-height: 44px;
+}
+
+.access-planner__topbar,
+.access-planner__result-head,
+.access-planner__actions,
+.access-planner__checks,
+.access-planner__diet {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.access-planner__topbar {
+  margin-bottom: 1.25rem;
+  color: var(--access-muted);
+  font-size: 0.9rem;
+}
+
+.access-planner__topbar .btn {
+  flex: 0 0 auto;
+}
+
+.access-planner__hero {
+  padding: 1.5rem;
+  border: 1px solid var(--access-line);
+  border-radius: 1.25rem;
+  background: linear-gradient(
+    135deg,
+    var(--access-soft),
+    var(--access-surface) 72%
+  );
+}
+
+.access-planner__hero h1 {
+  margin: 0.25rem 0 0.5rem;
+  color: var(--access-green);
+  font-size: clamp(1.85rem, 7vw, 2.5rem);
+  line-height: 1.1;
+}
+
+.access-planner__hero p:last-child,
+.access-planner__section > p,
+.access-planner__result-head > p {
+  color: var(--access-muted);
+}
+
+.access-planner__eyebrow {
+  margin: 0;
+  color: var(--access-green);
+  font-size: 0.82rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.access-planner__form,
+.access-planner__results {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.access-planner__section,
+.access-planner__card,
+.access-planner__empty,
+.access-planner__save {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid var(--access-line);
+  border-radius: 1rem;
+  background: var(--access-surface);
+}
+
+.access-planner__section h2,
+.access-planner__results h2 {
+  margin: 0 0 0.85rem;
+  color: var(--access-green);
+  font-size: 1.25rem;
+}
+
+.access-planner__fields,
+.access-planner__diet {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.access-planner__section label {
+  display: grid;
+  align-content: start;
+  gap: 0.35rem;
+  font-weight: 650;
+}
+
+.access-planner__fields input,
+.access-planner__fields select,
+.access-planner__wide select,
+.access-planner__diet input:not([type="checkbox"]),
+.access-planner__return input:not([type="checkbox"]),
+.access-planner__section textarea {
+  width: 100%;
+}
+
+.access-planner__checks {
+  align-items: flex-start;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.access-planner__checks label,
+.access-planner__diet > label:last-child,
+.access-planner__save > label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-weight: 500;
+}
+
+.access-planner__checks input,
+.access-planner__diet input[type="checkbox"],
+.access-planner__save input {
+  flex: 0 0 auto;
+  margin-top: 0.2rem;
+}
+
+.access-planner__wide {
+  margin: 0.5rem 0 1rem;
+}
+
+.access-planner__diet {
+  align-items: end;
+  margin-top: 1rem;
+}
+
+.access-planner__return {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: var(--access-paper);
+}
+
+.access-planner__return summary {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.access-planner__return[open] > :not(summary) {
+  margin-top: 0.75rem;
+}
+
+.access-planner__assist {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: var(--access-soft);
+}
+
+.access-planner__assist pre,
+.access-planner__offline-text {
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.access-planner__search {
+  width: 100%;
+}
+
+.access-planner__message {
+  margin: 1rem 0 0;
+  padding: 0.85rem 1rem;
+  border-left: 4px solid var(--access-green);
+  background: var(--access-soft);
+}
+
+.access-planner__result-head {
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.access-planner__result-head p {
+  margin: 0;
+  font-size: 0.88rem;
+}
+
+.access-planner__timezone-note {
+  margin: 0;
+  color: var(--access-muted);
+  font-size: 0.88rem;
+}
+
+.access-planner__map {
+  overflow: hidden;
+  border: 1px solid var(--access-line);
+  border-radius: 1rem;
+}
+
+.access-planner__map > p {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  color: var(--access-muted);
+  font-size: 0.85rem;
+}
+
+.access-planner__cards {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.access-planner__card.is-selected {
+  border: 2px solid var(--access-green);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--access-green) 12%, transparent);
+}
+
+.access-planner__choose {
+  display: flex;
+  width: 100%;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.access-planner__choose span:first-child {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.access-planner__choose small,
+.access-planner__availability,
+.access-planner__sources {
+  color: var(--access-muted);
+}
+
+.access-planner__fit {
+  flex: 0 0 auto;
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  background: var(--access-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.access-planner__fit--no {
+  background: #f7e8e4;
+  color: #732f21;
+}
+
+.access-planner__availability {
+  font-size: 0.9rem;
+}
+
+.access-planner__published-details {
+  margin: 0.75rem 0;
+  padding: 0.6rem 0.75rem;
+  border-radius: 0.65rem;
+  background: var(--access-paper);
+}
+
+.access-planner__published-details summary {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: var(--access-green);
+  font-weight: 700;
+}
+
+.access-planner__published-details dl {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 0.35fr) 1fr;
+  gap: 0.4rem 0.75rem;
+  margin: 0.75rem 0;
+}
+
+.access-planner__published-details dt {
+  font-weight: 700;
+}
+
+.access-planner__published-details dd {
+  margin: 0;
+}
+
+.access-planner__published-details > p,
+.access-planner__external-directions > p {
+  margin: 0.5rem 0;
+  color: var(--access-muted);
+  font-size: 0.9rem;
+}
+
+.access-planner__source-dates {
+  padding-left: 1.25rem;
+  font-size: 0.88rem;
+}
+
+.access-planner__source-dates a {
+  color: var(--access-green);
+  text-decoration: underline;
+}
+
+.access-planner__external-directions {
+  margin: 0.75rem 0;
+}
+
+.access-planner__warning {
+  padding: 0.65rem;
+  border-left: 3px solid #a46d16;
+  background: #fff8e9;
+}
+
+.access-planner__trip {
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--access-line);
+}
+
+.access-planner__route-check {
+  display: grid;
+  justify-items: start;
+  gap: 0.5rem;
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  background: var(--access-soft);
+}
+
+.access-planner__route-check p {
+  margin: 0;
+}
+
+.access-planner__next-day {
+  display: flex !important;
+  width: fit-content;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  margin-top: 0.25rem;
+  font-weight: 500 !important;
+}
+
+.access-planner__trip h3,
+.access-planner__save h3 {
+  margin: 0.5rem 0;
+  color: var(--access-green);
+  font-size: 1.05rem;
+}
+
+.access-planner__trip ol {
+  padding-left: 1.25rem;
+}
+
+.access-planner__sources a {
+  color: var(--access-green);
+  text-decoration: underline;
+}
+
+.access-planner__save {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.access-planner__offline-text {
+  max-height: 18rem;
+  overflow: auto;
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--access-line);
+  border-radius: 0.5rem;
+  background: var(--access-paper);
+  font-size: 0.85rem;
+}
+
+.access-planner :focus-visible {
+  outline: 3px solid #e0a323;
+  outline-offset: 2px;
+}
+
+@media (min-width: 42rem) {
+  .access-planner {
+    padding: 1.5rem;
+  }
+  .access-planner__section,
+  .access-planner__card,
+  .access-planner__save {
+    padding: 1.25rem;
+  }
+  .access-planner__fields,
+  .access-planner__diet {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .access-planner__search {
+    width: auto;
+    justify-self: start;
+    min-width: 15rem;
+  }
+}
+
+@media print {
+  .access-planner__topbar,
+  .access-planner__form,
+  .access-planner__map,
+  .access-planner__actions,
+  .access-planner__cards,
+  .access-planner__message {
+    display: none !important;
+  }
+  .access-planner__offline-text {
+    max-height: none;
+    overflow: visible;
+  }
+  .access-planner {
+    max-width: none;
+    padding: 0;
+  }
+}
+
+/* Keep the visual checkbox square; its associated label supplies the touch target. */
+.access-planner input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  min-height: 24px;
+  flex-shrink: 0;
+}
+
+.access-planner__checks label,
+.access-planner__diet > label:last-child,
+.access-planner__next-day,
+.access-planner__save > label {
+  min-height: 44px;
+  padding-block: 0.35rem;
+}

@@ -1,0 +1,13 @@
+npm notice run reach@0.1.0 npx
+npm notice run 'playwright' test tests/workflow.spec.ts --project=mobile --project=desktop --workers=2 --grep three outcomes --output=/tmp/reach-redesign-functional-modal-final
+
+Running 2 tests using 2 workers
+
+(node:74274) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:74273) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 [mobile] › tests/workflow.spec.ts:90:1 › three outcomes, details, download, print, saving, and reload work (11.3s)
+  ✓  1 [desktop] › tests/workflow.spec.ts:90:1 › three outcomes, details, download, print, saving, and reload work (11.7s)
+
+  2 passed (13.5s)

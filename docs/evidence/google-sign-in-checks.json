@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-23",
+  "baseline_unit_tests": 444,
+  "final_unit_tests": 466,
+  "test_files": 48,
+  "independent_handler_tests": 10,
+  "signed_jwt_fixture_tests": 12,
+  "production_browser_tests": 20,
+  "production_browser_projects": [
+    "mobile",
+    "desktop"
+  ],
+  "earlier_dev_browser_passed": 21,
+  "earlier_dev_browser_failed": 1,
+  "production_build": "passed",
+  "typecheck": "passed",
+  "data_validation": "passed",
+  "private_server_identifiers_in_browser_bundle": 0,
+  "public_discovery_http": 200,
+  "live_google_oauth": "not verified: Web OAuth client/test user not configured",
+  "gmail_permissions": "not requested",
+  "real_email_sent": false,
+  "public_deployment": false,
+  "visible_button_followup": {
+    "unit_tests": 466,
+    "production_browser_tests": 18,
+    "typecheck": "passed",
+    "production_build": "passed",
+    "unconfigured_button": "visible, opens local owner setup without starting OAuth",
+    "configured_button": "real server start; Google screen intercepted as synthetic fixture",
+    "live_oauth": "blocked by missing operator OAuth client credentials"
+  }
+}

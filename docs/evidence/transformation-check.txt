@@ -1,0 +1,55 @@
+npm notice run reach@0.1.0 check
+npm notice run npm run data:validate && npm run typecheck && npm test && npm run build
+npm notice run reach@0.1.0 data:validate
+npm notice run tsx scripts/validate-data.ts
+fictional demo: data checks passed (6 pantries).
+production: data checks passed (8 pantries).
+npm notice run reach@0.1.0 typecheck
+npm notice run tsc --noEmit
+npm notice run reach@0.1.0 test
+npm notice run vitest run
+
+ RUN  v5.0.5 /workspace/Reach
+
+
+ Test Files  13 passed (13)
+      Tests  184 passed (184)
+   Start at  02:22:35
+   Duration  2.50s (tests 79%, import 16%, transform 3%, worker 1%)
+
+    Isolate  13 workers spawned · ~102ms startup each (spawn + environment, per file)
+             at least ~340ms faster with isolate: false — reuses workers across files instead of one per file
+
+npm notice run reach@0.1.0 build
+npm notice run next build
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 27ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 290ms
+  Running TypeScript ...
+  Finished TypeScript in 2.3s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/10) ...
+  Generating static pages using 4 workers (2/10) 
+  Generating static pages using 4 workers (4/10) 
+  Generating static pages using 4 workers (7/10) 
+✓ Generating static pages using 4 workers (10/10) in 223ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ƒ /api/community/[...path]
+├ ƒ /api/geocode
+├ ƒ /api/journey
+├ ƒ /api/plan
+├ ƒ /api/reverse-geocode
+├ ○ /pantry-planner
+├ ○ /privacy
+└ ○ /terms
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+

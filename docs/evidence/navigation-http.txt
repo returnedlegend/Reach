@@ -1,0 +1,12 @@
+Independent loopback API checks: 2026-10-23
+Server: http://127.0.0.1:3090
+Database: isolated /tmp/reach-navigation-qa/community.sqlite
+AI: disabled. Routing: disabled. Email: preview.
+
+POST /api/access/plan, needs.service=shelter: HTTP 200; 0 options; resource module limited; limitation says no verified shelter catalog and food resources cannot be treated as shelter.
+POST /api/access/plan, needs.service=prepared-meals: HTTP 200; 0 options; resource module limited; limitation says no verified prepared-meal catalog and pantry records do not establish prepared meals.
+POST /api/access/plan, mode=driving, food need: HTTP 200; directory candidates=24; outbound routes=0; AI calls=0. Routing was disabled, and no itinerary was returned.
+POST /api/access/assist, direct text "I need shelter today": HTTP 200; local typed needs recognized as shelter/today; no AI patch returned. AI provider was disabled.
+POST /api/access/plan with unknown `needs` field: HTTP 400; generic field-validation message.
+
+No credentials, user accounts, private locations or live provider responses are in this record. These checks establish API response behavior only, not real service availability or route feasibility.

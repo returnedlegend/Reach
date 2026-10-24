@@ -1,0 +1,71 @@
+npm notice run reach@0.1.0 check
+npm notice run npm run data:validate && npm run typecheck && npm test && npm run build
+npm notice run reach@0.1.0 data:validate
+npm notice run tsx scripts/validate-data.ts
+fictional demo: data checks passed (6 pantries).
+production: data checks passed (24 pantries).
+npm notice run reach@0.1.0 typecheck
+npm notice run tsc --noEmit
+npm notice run reach@0.1.0 test
+npm notice run vitest run
+
+ RUN  v5.0.5 /workspace/Reach
+
+
+ Test Files  28 passed (28)
+      Tests  317 passed (317)
+   Start at  04:18:50
+   Duration  2.54s (tests 72%, import 21%, transform 5%, worker 1%)
+
+    Isolate  28 workers spawned · ~67ms startup each (spawn + environment, per file)
+             at least ~560ms faster with isolate: false — reuses workers across files instead of one per file
+
+npm notice run reach@0.1.0 build
+npm notice run next build
+▲ Next.js 16.4.2 (Turbopack)
+- Environments: .env.local
+✓ Running next.config.ts took 19ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 470ms
+  Running TypeScript ...
+  Finished TypeScript in 4.4s ...
+  Collecting page data using 4 workers ...
+  Generating static pages using 4 workers (0/13) ...
+  Generating static pages using 4 workers (3/13) 
+  Generating static pages using 4 workers (6/13) 
+  Generating static pages using 4 workers (9/13) 
+✓ Generating static pages using 4 workers (13/13) in 160ms
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ○ /_not-found
+├ ○ /account
+├ ƒ /api/account/[...path]
+├ ƒ /api/community/[...path]
+├ ○ /api/coverage
+├ ƒ /api/crowd/[pantryId]
+├ ƒ /api/email/webhook
+├ ƒ /api/geocode
+├ ƒ /api/journey
+├ ƒ /api/notifications/[[...path]]
+├ ƒ /api/pantries/[[...path]]
+├ ƒ /api/plan
+├ ƒ /api/reverse-geocode
+├ ƒ /api/volunteer/[[...path]]
+├ ƒ /food-hotspots
+├ ○ /manage
+├ ƒ /pantries/[id]
+├ ƒ /pantry-planner
+├ ○ /privacy
+├ ○ /terms
+├ ○ /unsubscribe
+└ ○ /volunteer
+
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+Verified command exit status: 0

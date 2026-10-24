@@ -1,0 +1,42 @@
+Production recheck after repairing persistent 320px header overflow.
+Four viewport projects; original failed accessibility/overflow test, header bounds/touch targets, real map rendering and consented drag.
+
+npm notice run reach@0.1.0 npx
+npm notice run 'playwright' test tests/v2-verification.spec.ts tests/postal-ui.spec.ts tests/osm-verification.spec.ts --grep guided flow has no detected|shared app header|real MapLibre renders fixture|real MapLibre origin drag --output=/tmp/reach-postal-regression/recheck-results
+
+Running 16 tests using 2 workers
+
+(node:241319) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:241320) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 [mobile] › tests/osm-verification.spec.ts:287:1 › real MapLibre origin drag changes coordinates only after confirmation (4.7s)
+  ✓   3 [mobile] › tests/postal-ui.spec.ts:450:1 › shared app header keeps account and volunteer links usable at each viewport (1.0s)
+  ✓   1 [mobile] › tests/osm-verification.spec.ts:211:1 › real MapLibre renders fixture tiles, keeps its canvas, and selects pantry pins by keyboard (7.2s)
+(node:241687) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   4 [mobile] › tests/v2-verification.spec.ts:406:1 › guided flow has no detected accessibility violations or narrow-screen overflow (6.8s)
+(node:241833) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   5 [android] › tests/osm-verification.spec.ts:211:1 › real MapLibre renders fixture tiles, keeps its canvas, and selects pantry pins by keyboard (5.8s)
+  ✓   7 [android] › tests/postal-ui.spec.ts:450:1 › shared app header keeps account and volunteer links usable at each viewport (1.4s)
+  ✓   6 [android] › tests/osm-verification.spec.ts:287:1 › real MapLibre origin drag changes coordinates only after confirmation (4.0s)
+(node:242060) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   8 [android] › tests/v2-verification.spec.ts:406:1 › guided flow has no detected accessibility violations or narrow-screen overflow (7.0s)
+(node:242209) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   9 [tablet] › tests/osm-verification.spec.ts:211:1 › real MapLibre renders fixture tiles, keeps its canvas, and selects pantry pins by keyboard (7.6s)
+  ✓  11 [tablet] › tests/postal-ui.spec.ts:450:1 › shared app header keeps account and volunteer links usable at each viewport (1.4s)
+  ✓  10 [tablet] › tests/osm-verification.spec.ts:287:1 › real MapLibre origin drag changes coordinates only after confirmation (4.7s)
+(node:242422) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 [tablet] › tests/v2-verification.spec.ts:406:1 › guided flow has no detected accessibility violations or narrow-screen overflow (6.9s)
+(node:242588) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  13 [desktop] › tests/osm-verification.spec.ts:211:1 › real MapLibre renders fixture tiles, keeps its canvas, and selects pantry pins by keyboard (7.1s)
+  ✓  15 [desktop] › tests/postal-ui.spec.ts:450:1 › shared app header keeps account and volunteer links usable at each viewport (1.3s)
+  ✓  14 [desktop] › tests/osm-verification.spec.ts:287:1 › real MapLibre origin drag changes coordinates only after confirmation (5.1s)
+  ✓  16 [desktop] › tests/v2-verification.spec.ts:406:1 › guided flow has no detected accessibility violations or narrow-screen overflow (8.2s)
+
+  16 passed (48.9s)

@@ -1,0 +1,167 @@
+{
+  "started": "2026-10-17T21:26:14.043Z",
+  "responses": [
+    {
+      "url": "https://tiles.openfreemap.org/styles/liberty",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm.png",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm.json",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/12/951/1682.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/12/952/1682.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/12/952/1681.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/fonts/Noto%20Sans%20Regular/0-255.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/fonts/Noto%20Sans%20Italic/0-255.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/12/951/1681.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3806/6725.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3806/6725.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3806/6725.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3806/6725.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3807/6725.pbf",
+      "status": 200
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3807/6725.pbf",
+      "status": 200
+    }
+  ],
+  "failed": [
+    {
+      "url": "https://tiles.openfreemap.org/styles/liberty",
+      "failure": {
+        "errorText": "net::ERR_BLOCKED_BY_CLIENT.Inspector"
+      }
+    }
+  ],
+  "errors": [
+    "Failed to load resource: net::ERR_BLOCKED_BY_CLIENT.Inspector"
+  ],
+  "googleRequests": [],
+  "status": "Interactive map ready.",
+  "attribution": "OpenFreeMap © OpenMapTiles Data from OpenStreetMap",
+  "markers": 9,
+  "forwarded": [
+    {
+      "url": "https://tiles.openfreemap.org/styles/liberty",
+      "status": 200,
+      "bytes": 43079
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet",
+      "status": 200,
+      "bytes": 19254
+    },
+    {
+      "url": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm.png",
+      "status": 200,
+      "bytes": 49454
+    },
+    {
+      "url": "https://tiles.openfreemap.org/sprites/ofm_f384/ofm.json",
+      "status": 200,
+      "bytes": 27737
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/12/951/1682.pbf",
+      "status": 200,
+      "bytes": 32480
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/12/952/1682.pbf",
+      "status": 200,
+      "bytes": 47220
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/12/952/1681.pbf",
+      "status": 200,
+      "bytes": 39824
+    },
+    {
+      "url": "https://tiles.openfreemap.org/fonts/Noto%20Sans%20Regular/0-255.pbf",
+      "status": 200,
+      "bytes": 76580
+    },
+    {
+      "url": "https://tiles.openfreemap.org/fonts/Noto%20Sans%20Italic/0-255.pbf",
+      "status": 200,
+      "bytes": 79907
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/12/951/1681.pbf",
+      "status": 200,
+      "bytes": 62798
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3806/6725.pbf",
+      "status": 200,
+      "bytes": 36118
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3806/6725.pbf",
+      "status": 200,
+      "bytes": 36118
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3806/6725.pbf",
+      "status": 200,
+      "bytes": 36118
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3806/6725.pbf",
+      "status": 200,
+      "bytes": 36118
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3807/6725.pbf",
+      "status": 200,
+      "bytes": 51244
+    },
+    {
+      "url": "https://tiles.openfreemap.org/planet/20261011_080001_pt/14/3807/6725.pbf",
+      "status": 200,
+      "bytes": 51244
+    }
+  ],
+  "transport": "Real OpenFreeMap HTTP responses forwarded through TLS-validating Node fetch; browser direct TLS unavailable"
+}

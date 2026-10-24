@@ -1,0 +1,30 @@
+{
+  "checkedAt": "2026-10-23T01:16:19.544Z",
+  "kind": "Live configured Valhalla driving adapter; public source-backed coordinates only",
+  "originLabel": "BTD Bryan Terminal - Roy Kelly Parking Garage",
+  "destinationLabel": "Brazos Church Pantry",
+  "status": "available",
+  "mode": "driving",
+  "distanceMiles": 0.2701,
+  "durationMinutes": 1.5156833333333333,
+  "steps": 4,
+  "paths": 1,
+  "attribution": [
+    {
+      "label": "© OpenStreetMap contributors",
+      "url": "https://www.openstreetmap.org/copyright"
+    },
+    {
+      "label": "Routing: Valhalla / FOSSGIS",
+      "url": "https://routing.openstreetmap.de/about.html"
+    },
+    {
+      "label": "Improve the map",
+      "url": "https://www.openstreetmap.org/fixthemap"
+    }
+  ],
+  "limitations": [
+    "Routing estimate only; parking, loading, walk from parking, fuel costs and pantry entrance accessibility were not verified.",
+    "No claim of food, eligibility or open-now status."
+  ]
+}

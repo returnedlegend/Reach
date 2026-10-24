@@ -1,0 +1,16 @@
+{
+  "database": "isolated final QA SQLite",
+  "permissions": "600",
+  "userStats": {
+    "users": 21,
+    "min_hash_length": 128,
+    "min_salt_length": 32
+  },
+  "sessionStats": {
+    "sessions": 22,
+    "min_token_hash_length": 64
+  },
+  "integrity": {
+    "integrity_check": "ok"
+  }
+}

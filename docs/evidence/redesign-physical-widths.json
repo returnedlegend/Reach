@@ -1,0 +1,542 @@
+[
+  {
+    "width": 320,
+    "route": "/",
+    "innerWidth": 320,
+    "clientWidth": 320,
+    "documentWidth": 320,
+    "bodyWidth": 320,
+    "bounds": [
+      {
+        "selector": "reach-header",
+        "left": 0,
+        "right": 320
+      },
+      {
+        "selector": "reach-bottom-nav",
+        "left": 0,
+        "right": 320
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/account",
+    "innerWidth": 320,
+    "clientWidth": 320,
+    "documentWidth": 320,
+    "bodyWidth": 320,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 320
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 320
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/volunteer",
+    "innerWidth": 320,
+    "clientWidth": 320,
+    "documentWidth": 320,
+    "bodyWidth": 320,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 320
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 320
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/food-hotspots",
+    "innerWidth": 320,
+    "clientWidth": 320,
+    "documentWidth": 320,
+    "bodyWidth": 320,
+    "bounds": [
+      {
+        "selector": "reach-header",
+        "left": 0,
+        "right": 320
+      },
+      {
+        "selector": "reach-bottom-nav",
+        "left": 0,
+        "right": 320
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/pantry-planner",
+    "innerWidth": 320,
+    "clientWidth": 320,
+    "documentWidth": 320,
+    "bodyWidth": 320,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 320
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 320
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/manage",
+    "innerWidth": 320,
+    "clientWidth": 320,
+    "documentWidth": 320,
+    "bodyWidth": 320,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 320
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 320
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/privacy",
+    "innerWidth": 320,
+    "clientWidth": 320,
+    "documentWidth": 320,
+    "bodyWidth": 320,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 320
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 320
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/terms",
+    "innerWidth": 320,
+    "clientWidth": 320,
+    "documentWidth": 320,
+    "bodyWidth": 320,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 320
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 320
+      }
+    ]
+  },
+  {
+    "width": 320,
+    "route": "/pantries/bridge-ministries",
+    "innerWidth": 320,
+    "clientWidth": 320,
+    "documentWidth": 320,
+    "bodyWidth": 320,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 320
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 320
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "route": "/",
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "documentWidth": 390,
+    "bodyWidth": 390,
+    "bounds": [
+      {
+        "selector": "reach-header",
+        "left": 0,
+        "right": 390
+      },
+      {
+        "selector": "reach-bottom-nav",
+        "left": 0,
+        "right": 390
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "route": "/account",
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "documentWidth": 390,
+    "bodyWidth": 390,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 390
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 390
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "route": "/volunteer",
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "documentWidth": 390,
+    "bodyWidth": 390,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 390
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 390
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "route": "/food-hotspots",
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "documentWidth": 390,
+    "bodyWidth": 390,
+    "bounds": [
+      {
+        "selector": "reach-header",
+        "left": 0,
+        "right": 390
+      },
+      {
+        "selector": "reach-bottom-nav",
+        "left": 0,
+        "right": 390
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "route": "/pantry-planner",
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "documentWidth": 390,
+    "bodyWidth": 390,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 390
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 390
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "route": "/manage",
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "documentWidth": 390,
+    "bodyWidth": 390,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 390
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 390
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "route": "/privacy",
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "documentWidth": 390,
+    "bodyWidth": 390,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 390
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 390
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "route": "/terms",
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "documentWidth": 390,
+    "bodyWidth": 390,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 390
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 390
+      }
+    ]
+  },
+  {
+    "width": 390,
+    "route": "/pantries/bridge-ministries",
+    "innerWidth": 390,
+    "clientWidth": 390,
+    "documentWidth": 390,
+    "bodyWidth": 390,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 390
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 390
+      }
+    ]
+  },
+  {
+    "width": 412,
+    "route": "/",
+    "innerWidth": 412,
+    "clientWidth": 412,
+    "documentWidth": 412,
+    "bodyWidth": 412,
+    "bounds": [
+      {
+        "selector": "reach-header",
+        "left": 0,
+        "right": 412
+      },
+      {
+        "selector": "reach-bottom-nav",
+        "left": 0,
+        "right": 412
+      }
+    ]
+  },
+  {
+    "width": 412,
+    "route": "/account",
+    "innerWidth": 412,
+    "clientWidth": 412,
+    "documentWidth": 412,
+    "bodyWidth": 412,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 412
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 412
+      }
+    ]
+  },
+  {
+    "width": 412,
+    "route": "/volunteer",
+    "innerWidth": 412,
+    "clientWidth": 412,
+    "documentWidth": 412,
+    "bodyWidth": 412,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 412
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 412
+      }
+    ]
+  },
+  {
+    "width": 412,
+    "route": "/food-hotspots",
+    "innerWidth": 412,
+    "clientWidth": 412,
+    "documentWidth": 412,
+    "bodyWidth": 412,
+    "bounds": [
+      {
+        "selector": "reach-header",
+        "left": 0,
+        "right": 412
+      },
+      {
+        "selector": "reach-bottom-nav",
+        "left": 0,
+        "right": 412
+      }
+    ]
+  },
+  {
+    "width": 412,
+    "route": "/pantry-planner",
+    "innerWidth": 412,
+    "clientWidth": 412,
+    "documentWidth": 412,
+    "bodyWidth": 412,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 412
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 412
+      }
+    ]
+  },
+  {
+    "width": 412,
+    "route": "/manage",
+    "innerWidth": 412,
+    "clientWidth": 412,
+    "documentWidth": 412,
+    "bodyWidth": 412,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 412
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 412
+      }
+    ]
+  },
+  {
+    "width": 412,
+    "route": "/privacy",
+    "innerWidth": 412,
+    "clientWidth": 412,
+    "documentWidth": 412,
+    "bodyWidth": 412,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 412
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 412
+      }
+    ]
+  },
+  {
+    "width": 412,
+    "route": "/terms",
+    "innerWidth": 412,
+    "clientWidth": 412,
+    "documentWidth": 412,
+    "bodyWidth": 412,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 412
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 412
+      }
+    ]
+  },
+  {
+    "width": 412,
+    "route": "/pantries/bridge-ministries",
+    "innerWidth": 412,
+    "clientWidth": 412,
+    "documentWidth": 412,
+    "bodyWidth": 412,
+    "bounds": [
+      {
+        "selector": "site-navigation",
+        "left": 0,
+        "right": 412
+      },
+      {
+        "selector": "site-mobile-navigation",
+        "left": 0,
+        "right": 412
+      }
+    ]
+  }
+]

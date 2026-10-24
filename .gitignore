@@ -1,0 +1,33 @@
+node_modules/
+.next/
+out/
+coverage/
+playwright-report/
+test-results/
+*.tsbuildinfo
+.env*
+!.env.example
+
+# Python importer cache
+__pycache__/
+*.pyc
+
+# Private community development storage (never package accounts or pickup notes)
+.local/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+*.sqlite3
+*.sqlite3-*
+*.db
+*.db-*
+
+# Private credentials and runtime logs
+*.pem
+*.key
+*.log
+
+# Local Obsidian session state; shared documentation remains tracked
+.obsidian/workspace*.json
+.obsidian/cache/

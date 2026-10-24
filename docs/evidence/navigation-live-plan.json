@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-10-23T01:22:54.479Z",
+  "kind": "Actual access handler with configured live Valhalla driving provider, isolated database, public source-backed origin/destination",
+  "httpStatus": 200,
+  "cacheControl": "private, no-store",
+  "destination": "Brazos Church Pantry",
+  "optionStatus": "confirm",
+  "outbound": {
+    "mode": "driving",
+    "distanceMiles": 0.2701,
+    "durationMinutes": 2,
+    "fare": null,
+    "source": "routed"
+  },
+  "returnJourney": {
+    "mode": "driving",
+    "distanceMiles": 0.7215,
+    "durationMinutes": 3,
+    "fare": null
+  },
+  "serviceStart": 570,
+  "warnings": [
+    "Eligibility, service-area and document requirements have not been confirmed for you.",
+    "Food availability is unknown or its report has expired.",
+    "Driving time is a routing estimate. Fuel and parking costs, parking availability, loading time and walking from parking to pickup are unknown; driving arrival is not a verified arrival at the service entrance.",
+    "Availability is not confirmed for the expected service time.",
+    "Published pickup policy or schedule requires confirmation.",
+    "Fuel, parking and other driving costs are unknown, so your budget cannot be confirmed.",
+    "No sufficiently supported crowd pattern is available for the planned pickup hour."
+  ],
+  "routingCalls": 2,
+  "aiCalls": 0,
+  "guidance": {
+    "assistance": "deterministic",
+    "status": "unavailable",
+    "selectedId": "brazos-church-pantry",
+    "modules": [
+      {
+        "name": "needs",
+        "status": "complete"
+      },
+      {
+        "name": "resources",
+        "status": "limited"
+      },
+      {
+        "name": "transport",
+        "status": "complete"
+      },
+      {
+        "name": "ranking",
+        "status": "complete"
+      },
+      {
+        "name": "guidance",
+        "status": "limited"
+      }
+    ]
+  }
+}

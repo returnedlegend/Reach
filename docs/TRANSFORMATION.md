@@ -1,0 +1,25 @@
+# Reach mobile and community transformation
+
+This continues the existing Next.js application. The prior MapLibre/OSM integration, eight source-backed pantry records, BTD static schedule engine and detailed pantry planner remain in place. No public deployment was performed.
+
+## Boundaries and modules
+
+- `guided-reach.tsx` owns the selected origin and travel choices across Explore, Map, Community and Saved. GPS, address matches, confirmed pin changes and restored consented trips all update that state. Asynchronous route and location requests are versioned so old results cannot replace newer choices.
+- `location-picker.tsx` offers local suggestions from the maintained pantry directory, explicit external address search, GPS and an advanced coordinate fallback. Local suggestions do not contact Nominatim. Arbitrary external address autocomplete is not enabled.
+- `journey-map.tsx` stages map corrections until confirmation. `osm-map-canvas.tsx` draws category symbols, the origin, an accuracy circle for GPS and actual supplied route paths. Crowded pins show counts and open a named, keyboard-accessible chooser for touch users; grouping follows the current map projection without changing coordinates. Community offers use broad approximate city areas, never a residential point or an inferred pickup route.
+- `resource-summary.ts` separates recorded facts from deterministic explanations. Chicago-local recurrence checks may identify a **published distribution window**, never live food inventory. Contradictory schedules, unstructured closure caveats and missing facts stay uncertain. Ranking considers verification, published windows and explicitly labeled straight-line proximity; it cannot infer transit access from geometry.
+- `saved-items.ts` validates bounded device-only JSON. Resource saves contain IDs. Guided trip origins and origin-revealing route instructions are included only after explicit consent. Printed/downloaded snapshots remain readable without map tiles. Legacy saved plans remain under the detailed planner.
+- `community-panel.tsx` presents actual development database records and accounts; no inventory is seeded. Polling refreshes discovery, and an expiry clock removes ended records from cards and maps. Forms and server validation independently enforce required fields.
+- `community.ts` and the catch-all `/api/community` route implement SQLite transactions, role checks, moderation, request transitions, hashed sessions, rate limits and privacy-aware responses. `community-photo.ts` limits and re-encodes images, dropping embedded location metadata. See COMMUNITY.md for exact routes and deployment boundaries.
+
+## Security review decisions
+
+Community is disabled by default in production and explicitly labeled as a development pilot when enabled. The local development commands enable it for that process. It requires Node24 and a private durable single-host filesystem. Local registration does not grant organizer or moderator roles. A moderator is provisioned through the CLI, and another account reviews publication. Only public pantry/hotspot facts and approximate offer areas enter discovery; private pickup notes require acceptance and mutual consent. Blocking or takedown cancels pending exchanges. Database files are private and excluded from version control, archives and application tracing.
+
+Users may put identifying information in free text or photographs; metadata removal cannot detect visible private details. Human moderation remains required. Age affirmation, safety attestations and approval do not certify age, food safety or legal compliance. Public release requires account lifecycle/contact ownership, operational moderation, incident response, privacy/retention review and reviewed hosting/backups. No paid AI service is used.
+
+## Validation and known external limits
+
+The independently repeated baseline passed 152 unit tests and 74 browser cases. The final implementation passed 184 unit tests in 13 files, data validation, TypeScript, the production build, and all 176 browser cases across four Chromium profiles. Independent QA passed 26 scoped feature groups and separately documented three blocked release requirements and missing production account lifecycle controls. Consult FEATURE-VERIFICATION.md for evidence, defects and reruns. Real backend workflows use isolated SQLite databases and fictional test submissions, separate from production pantry information. Map, route and geocoder browser fixtures are not live-service evidence. Existing live OSM checks are recorded separately in OSM-VERIFICATION.md; this transformation does not renew their availability claims.
+
+No live bus feed, shelter-bed inventory, pedestrian entrance/accessibility audit or resolved BTD timetable conflict was added. External address search and walking routing need deliberate provider configuration; the default keyless map and local directory suggestions do not. There was no configured lint script at baseline; TypeScript, data validation, unit/browser checks, accessibility checks and the production build are the project's validation tools.

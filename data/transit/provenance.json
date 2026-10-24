@@ -1,0 +1,54 @@
+{
+  "agency": "Brazos Transit District",
+  "sourceUrl": "https://www.btd.org/2025btdgtfs/",
+  "checkedOn": "2026-10-15",
+  "verificationMethod": "website",
+  "snapshotSha256": "d2b7948582883f6c8191d613ea3c7f80f64db48e86a467057a69725538e4825b",
+  "feedVersion": "Updated: Mar 25, 2026, 2:20 PM",
+  "feedValidity": {
+    "from": "2025-07-15",
+    "to": "2026-12-31"
+  },
+  "routeId": "BryOrange",
+  "projectedStopIds": [
+    "126",
+    "127",
+    "134",
+    "142",
+    "151",
+    "154"
+  ],
+  "projectedTripCount": 30,
+  "sourceTripCount": 470,
+  "originalCalendarExceptionCount": 0,
+  "holidayOverlay": {
+    "sourceUrl": "https://www.btd.org/fixed-routes/",
+    "checkedOn": "2026-10-15",
+    "dates": [
+      "2026-01-01",
+      "2026-01-19",
+      "2026-02-16",
+      "2026-04-03",
+      "2026-05-25",
+      "2026-09-07",
+      "2026-11-26",
+      "2026-11-27",
+      "2026-12-24",
+      "2026-12-25"
+    ],
+    "note": "Official website closures are an explicit overlay, not present in the GTFS calendar_dates file."
+  },
+  "conflicts": [
+    {
+      "sources": [
+        "https://www.btd.org/2025btdgtfs/",
+        "https://www.btd.org/wp-content/uploads/2025/11/BCS_FixedRouteMap.pdf"
+      ],
+      "description": "Official GTFS and official PDF publish differing timetable values. GTFS times are retained verbatim; no provider confirmation has resolved the discrepancy. Results must require confirmation."
+    }
+  ],
+  "license": "No explicit redistribution license found in the downloaded GTFS snapshot. Attribute BTD; this is not a license grant.",
+  "projection": "Only six selected Route 00 Orange stops are retained, preserving original stop order and exact minute times. Not the entire route or network.",
+  "walkingReview": "Stop coordinates come from GTFS; they do not establish reviewed pedestrian routes.",
+  "minTransferMinutesNote": "Five-minute planning margin, not a published guaranteed connection."
+}
