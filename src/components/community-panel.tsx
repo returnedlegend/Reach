@@ -561,8 +561,8 @@ export function CommunityPanel({
         <div className="community-empty">
           <h3>Community sharing is not enabled</h3>
           <p>
-            This development pilot is currently unavailable. You can still use
-            the food resources and trip planner.
+            Community sharing is currently unavailable. You can still use the
+            food resources and trip planner.
           </p>
           {error && (
             <p role="alert" className="community-error">
@@ -582,7 +582,7 @@ export function CommunityPanel({
         <>
           {discovery?.mode === "development" && (
             <div className="community-banner">
-              <strong>Development pilot</strong>
+              <strong>Community guidelines</strong>
               <span>
                 Community posts are reviewed before publication. Food, identity,
                 availability and safety are not independently verified. Adults
@@ -1505,7 +1505,7 @@ function PostForm({
       </h3>
       <p>
         {kind === "offer"
-          ? "Offer a small quantity of sealed, nonexpired, shelf-stable food for pickup at a public place. Homemade, opened, damaged or refrigerated food is not accepted in this pilot."
+          ? "Offer a small quantity of sealed, nonexpired, shelf-stable food for pickup at a public place. Homemade, opened, damaged or refrigerated food is not accepted."
           : "Create a public food distribution at a public venue. Check that the address, public venue coordinates and pickup requirements are correct."}
       </p>
       <p className="community-small">

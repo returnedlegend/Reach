@@ -509,7 +509,7 @@ export function createCommunityHandler(databasePath?: string) {
       return response(
         {
           error:
-            "Community is disabled. This development pilot must be explicitly enabled.",
+            "Community sharing is disabled. Food resources and trip planning remain available.",
         },
         503,
       );

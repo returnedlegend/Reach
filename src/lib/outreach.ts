@@ -136,10 +136,7 @@ export function createOutreachHandler(
       accountRate(db, `outreach:${actor.id}`, 40, 3600, +now);
       if (route === "enroll") {
         if (process.env.REACH_COMMUNITY_ENABLED !== "true")
-          throw new AccountError(
-            503,
-            "The household sharing pilot is not enabled.",
-          );
+          throw new AccountError(503, "Household food sharing is not enabled.");
         const b = await readPrivateJson(
           request,
           z.object({ offerId: id, consent: z.literal(true) }).strict(),

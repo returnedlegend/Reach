@@ -4,12 +4,13 @@ export default function Terms() {
       <a href="/">Back to Reach</a>
       <h1>Using Reach</h1>
       <p>
-        Community is a development pilot for adults, not a verified source of
-        food inventory. Offers require moderation and are limited to sealed,
-        in-date, commercially packaged shelf-stable groceries with intact labels
-        and packaging. Homemade meals, perishables and recalled food are not
-        eligible. A listing or approval does not certify food safety. Do not
-        share private home locations; use a mutually agreed public pickup place.
+        Community food sharing is for adults aged 18 and over. Food inventory is
+        not independently verified. Offers require moderation and are limited to
+        sealed, in-date, commercially packaged shelf-stable groceries with
+        intact labels and packaging. Homemade meals, perishables and recalled
+        food are not eligible. A listing or approval does not certify food
+        safety. Do not share private home locations; use a mutually agreed
+        public pickup place.
       </p>
       <p>
         Reach helps you find published food-assistance information and travel

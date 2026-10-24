@@ -146,13 +146,13 @@ export default function Privacy() {
         food and remain after account deletion. Historical patterns are not
         current occupancy.
       </p>
-      <h2>Community development pilot</h2>
+      <h2>Community food sharing</h2>
       <p>
-        Community submissions require an adult account. The development server
-        stores your username, salted password hash, session record, submissions,
-        pickup requests, reports and moderation history. Food offers show only a
-        broad public area. Never put a home address, phone number or private
-        location in a public description or photo.
+        Community submissions require an adult account. Reach stores your
+        username, salted password hash, session record, submissions, pickup
+        requests, reports and moderation history. Food offers show only a broad
+        public area. Never put a home address, phone number or private location
+        in a public description or photo.
       </p>
       <p>
         Private pickup instructions are shared with an accepted recipient only
@@ -161,8 +161,8 @@ export default function Privacy() {
         and landmarks in a photo can still identify a place. Blocking, reporting
         and canceling are available in Community. Email account recovery depends
         on the configured mail service; community-only username accounts can
-        attach and verify an email from Account settings. This pilot has no
-        public service guarantee.
+        attach and verify an email from Account settings. Community sharing has
+        no public service guarantee.
       </p>
       <p>
         Provider requests and responses may be cached briefly in bounded server

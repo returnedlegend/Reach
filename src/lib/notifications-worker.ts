@@ -68,7 +68,7 @@ const copy: Record<
   "new-opportunity": {
     heading: "A food pickup opportunity is available",
     paragraphs: [
-      "A pantry-approved volunteer pickup is available in the Bryan–College Station pilot. Sign in to check the current details and availability before claiming.",
+      "A pantry-approved volunteer pickup is available in Bryan–College Station. Sign in to check the current details and availability before claiming.",
     ],
     path: "/volunteer",
   },
