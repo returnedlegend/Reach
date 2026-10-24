@@ -5,18 +5,31 @@ import { fileURLToPath } from "node:url";
 const next = fileURLToPath(
   new URL("../node_modules/next/dist/bin/next", import.meta.url),
 );
+// Community is opt-in. Normal development respects Next's environment settings.
+const args = process.argv.slice(2);
+const enableCommunity = args.includes("--community");
+const nextArgs = args.filter((arg) => arg !== "--community");
 const child = spawn(
   process.execPath,
   [
     next,
     "dev",
     // Stable private-file preview workflow; Turbopack currently reloads continuously.
-    ...(process.argv.includes("--webpack") || process.argv.includes("--turbopack") || process.argv.includes("--turbo") ? [] : ["--webpack"]),
-    "--hostname", "127.0.0.1", ...process.argv.slice(2),
+    ...(nextArgs.includes("--webpack") ||
+    nextArgs.includes("--turbopack") ||
+    nextArgs.includes("--turbo")
+      ? []
+      : ["--webpack"]),
+    "--hostname",
+    "127.0.0.1",
+    ...nextArgs,
   ],
   {
     stdio: "inherit",
-    env: { ...process.env, REACH_COMMUNITY_ENABLED: "true" },
+    env: {
+      ...process.env,
+      ...(enableCommunity ? { REACH_COMMUNITY_ENABLED: "true" } : {}),
+    },
   },
 );
 child.on("error", () => {

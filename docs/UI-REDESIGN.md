@@ -91,7 +91,8 @@ data; no food inventory, hours, crowd observations or live transit were invented
 ## Run locally
 
 Use Node 24, then `npm ci` and `npm run dev`. The development launcher uses
-Webpack and enables the local community pilot. For production checks, run
+Webpack; the community pilot is now off by default. Use `npm run dev:community`
+only for an explicit local pilot session. For production checks, run
 `npm run check`, then `npm start`; community requires its explicit production
 flag. Do not rebuild beneath an active production test server.
 

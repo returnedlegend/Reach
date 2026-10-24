@@ -12,7 +12,7 @@
     "data:validate": "tsx scripts/validate-data.ts",
     "check": "npm run data:validate && npm run typecheck && npm test && npm run build",
     "data:import": "python3 scripts/import-btd.py",
-    "dev:community": "node scripts/dev-community.mjs",
+    "dev:community": "node scripts/dev-community.mjs --community",
     "community:admin": "tsx scripts/community-admin.ts",
     "account:admin": "tsx scripts/account-admin.ts",
     "data:migrate": "tsx scripts/import-pantries.ts",

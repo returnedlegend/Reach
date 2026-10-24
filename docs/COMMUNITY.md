@@ -1,6 +1,6 @@
 # Development community pilot
 
-This local development pilot adds persistent accounts, moderated food-distribution hotspots, and person-to-person offers to Reach. It is disabled by default in production; `npm run dev` and `npm run dev:community` enable the local pilot. It is not an emergency service, a verified food source, or a production-ready community network. No accounts, organizations, events, meeting places, or offers are seeded.
+This local development pilot adds persistent accounts, moderated food-distribution hotspots, and person-to-person offers to Reach. It is disabled by default in development and production. Normal `npm run dev` respects `REACH_COMMUNITY_ENABLED` in the environment or `.env.local`; use `false` to turn it off. Only the explicit `npm run dev:community` command forces it on for that local process. It is not an emergency service, a verified food source, or a production-ready community network. No accounts, organizations, events, meeting places, or offers are seeded.
 
 Use Node 24 (the built-in `node:sqlite` DatabaseSync API is required):
 

@@ -12,7 +12,7 @@ npx playwright install chromium
 npm run dev
 ```
 
-Open `http://127.0.0.1:3000`. The development script binds to loopback, selects Webpack unless explicitly overridden, and enables the local community pilot for that process. That does not authorize a public food-sharing deployment. Use `npm run dev -- --port 3001` when port 3000 is already occupied.
+Open `http://127.0.0.1:3000`. The development script binds to loopback and selects Webpack unless explicitly overridden. Community is disabled by default; normal development respects `REACH_COMMUNITY_ENABLED` in the environment or `.env.local`. Use `REACH_COMMUNITY_ENABLED=false` to turn it off. `npm run dev:community` deliberately enables the pilot for that process, including the retained browser-test server. That does not authorize a public food-sharing deployment. Use `npm run dev -- --port 3001` when port 3000 is already occupied.
 
 ### Preserve private configuration
 

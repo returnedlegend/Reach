@@ -56,7 +56,8 @@ export default defineConfig({
   webServer: externalTestURL
     ? undefined
     : {
-        command: "npm run dev -- --port 3000",
+        // The retained community workflows explicitly opt in for this test server.
+        command: "npm run dev:community -- --port 3000",
         url: "http://localhost:3000",
         reuseExistingServer: true,
         timeout: 120_000,
