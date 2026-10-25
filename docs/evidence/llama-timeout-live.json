@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-10-25T14:39:47.211Z",
+  "provider": "Local Ollama Llama 3.2 3B",
+  "mode": "real mobile browser, npm run dev",
+  "request": "Food in Bryan",
+  "httpStatus": 200,
+  "response": {
+    "assistance": "ai",
+    "ranking": [
+      {
+        "id": "salvation-army-bryan",
+        "reasons": [
+          "Check before visiting. Wednesday and Thursday, 9–11am; weekly visit limit. Food may run out.. Next published window: Wed, Oct 28, 9:00 AM (Central time).",
+          "BVFB says ID and proof of income or address may be requested, but are never required. No other eligibility or registration rule was found in the reviewed sources."
+        ]
+      },
+      {
+        "id": "a-hopeful-harvest",
+        "reasons": [
+          "Check before visiting. First four Saturdays monthly, 3–5pm; provider says households may visit once monthly or as needed. Provider lists programmed closures August 29 and October 31, 2026. Food availability is not guaranteed.. Next published window: Sat, Nov 7, 3:00 PM (Central time).",
+          "Provider says registration begins at 2:30pm. BVFB says ID and proof of income or address may be requested, but are never required. No other eligibility rule was found in the reviewed sources."
+        ]
+      },
+      {
+        "id": "brazos-church-pantry",
+        "reasons": [
+          "Check before visiting. Monday and Wednesday 1–2:30pm; Tuesday, Thursday, and Friday 9:30–11am; Saturday 10–11:30am. Monthly visit limit. Food may run out.. Next pickup window not verified.",
+          "BVFB says ID and proof of income or address may be requested, but are never required. No registration cutoff is published."
+        ]
+      },
+      {
+        "id": "lee-chapel-united-methodist-bryan",
+        "reasons": [
+          "Check before visiting. Last Saturday 10am–12pm. Next pickup window not verified.",
+          "Serves Brazos Valley; monthly visit limit. Other eligibility unknown."
+        ]
+      },
+      {
+        "id": "new-zion-food-pantry-bryan",
+        "reasons": [
+          "Check before visiting. 3rd Tuesday 5–6pm. Next pickup window not verified.",
+          "Serves Brazos County; monthly visit limit. Other eligibility unknown."
+        ]
+      },
+      {
+        "id": "bridge-ministries",
+        "reasons": [
+          "Check before visiting. Tuesday 3–7pm by signup; Thursday 5:30–7pm drive-through; monthly visit limit. Food may run out.. Next published window: Tue, Oct 27, 3:00 PM · appointment required (Central time).",
+          "Provider requests photo ID; BVFB states ID can never be required to receive food. Tuesday appointment required; Thursday no appointment. BVFB lists all counties."
+        ]
+      }
+    ],
+    "rankedAt": "2026-10-25T14:39:31.627Z",
+    "intent": {
+      "service": "food"
+    }
+  },
+  "firstVisiblePantry": "The Salvation Army",
+  "limitations": "Actual inference and card ordering verified; no food stock, eligibility or travel guarantee. CPU load caused earlier timeouts; directory fallback stayed usable."
+}

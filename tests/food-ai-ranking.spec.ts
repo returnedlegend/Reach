@@ -68,3 +68,37 @@ test("expired comparisons do not replace directory order", async ({ page }) => {
   await expect(page.getByText(/AI helped understand/)).toBeVisible();
   await expect(page.getByText("Stale fixture")).toHaveCount(0);
 });
+
+test("a slow comparison leaves results usable and has an explicit stop button", async ({
+  page,
+}) => {
+  let release!: () => void;
+  const pending = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  await page.route("**/api/food-search", async (route) => {
+    await pending;
+    await route
+      .fulfill({ json: { assistance: "ai", intent: { service: "food" } } })
+      .catch(() => {});
+  });
+  await page.goto("/");
+  await page
+    .getByLabel("What do you need?", { exact: true })
+    .fill("food in Bryan");
+  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await expect(
+    page.getByText(/comparison can take up to two minutes/),
+  ).toBeVisible();
+  await expect(
+    page
+      .getByRole("region", { name: "Places to try", exact: true })
+      .getByRole("article"),
+  ).toHaveCount(3);
+  await page
+    .getByRole("button", { name: "Stop AI comparison", exact: true })
+    .click();
+  release();
+  await expect(page.getByText(/AI comparison stopped/)).toBeVisible();
+  await expect(page.getByText(/AI helped understand/)).toHaveCount(0);
+});

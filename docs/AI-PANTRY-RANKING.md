@@ -86,3 +86,29 @@ This is not an independently certified optimal ranking. Lower-ranked options wit
 incomplete/conflicting schedules still need confirmation; the structured weekday
 guard intentionally does not infer missing facts from prose. Source freshness,
 food availability and trip feasibility remain separate limitations.
+
+## Slower local computers
+
+Local pantry ranking now has a dedicated 120-second server deadline and a
+125-second browser deadline. Other AI tasks retain their existing timeout
+settings; cloud-provider deadlines are unchanged. This ranking budget does not
+use the older 40-second OLLAMA_TIMEOUT_MS setting. The UI keeps directory results
+visible, explains the possible wait and provides “Stop AI comparison.”
+
+Ranking asks for at most 256 output tokens and avoids duplicate freshness dates
+and redundant prompt instructions. It still sends the maintained schedules,
+requirements and uncertainty; facts are not silently truncated. A timeout stays
+an unavailable comparison, never a fabricated AI result. Cancelled requests are
+distinguished from deadlines. A busy/underpowered machine may still exceed two
+minutes: keep Ollama running and close heavy applications before retrying.
+Hosting/proxy time limits can impose a shorter deadline independently.
+
+Timeout-fix verification: 684 unit tests in 75 files, TypeScript, data validation
+and production build passed. All 20 mobile/desktop browser cases passed after
+restarting a stalled development preview. Fake-clock tests explicitly cover a
+50-second successful inference, the two-minute cap, stalled response bodies,
+user cancellation and unchanged cloud deadlines. A real mobile-browser “Food in
+Bryan” request returned HTTP 200 with an accepted AI ranking and displayed The
+Salvation Army first. See [live timeout-fix evidence](evidence/llama-timeout-live.json).
+An earlier live browser attempt did not display an accepted comparison; it is
+not counted as a pass. No success is claimed for the user's separate machine.

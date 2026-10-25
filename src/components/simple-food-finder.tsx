@@ -14,6 +14,7 @@ import {
   Bookmark,
   Sparkles,
 } from "lucide-react";
+import { FOOD_SEARCH_TIMEOUT_MS } from "@/lib/ai-timing";
 import type { FoodRanking } from "@/lib/food-ai-ranking";
 import type { Resource } from "@/data/resources";
 import type { TravelMode } from "@/lib/journey";
@@ -280,7 +281,7 @@ export function SimpleFoodFinder(props: Props) {
         headers: { "Content-Type": "application/json" },
         signal: AbortSignal.any([
           controller.signal,
-          AbortSignal.timeout(45000),
+          AbortSignal.timeout(FOOD_SEARCH_TIMEOUT_MS),
         ]),
         body: JSON.stringify({ message: text, useAI: true }),
       });
@@ -482,7 +483,26 @@ export function SimpleFoodFinder(props: Props) {
         </p>
         <div aria-live="polite" className={styles.feedback}>
           {thinking && (
-            <p>Checking your request with AI. You can use these results now.</p>
+            <div>
+              <p>
+                Checking your request with AI. You can use these results now. On
+                slower computers, comparison can take up to two minutes.
+              </p>
+              <button
+                type="button"
+                className={styles.textButton}
+                onClick={() => {
+                  generation.current++;
+                  aiController.current?.abort();
+                  setThinking(false);
+                  setAiMessage(
+                    "AI comparison stopped. Your pantry results are still available.",
+                  );
+                }}
+              >
+                Stop AI comparison
+              </button>
+            </div>
           )}
           {request && !thinking && (
             <p>
