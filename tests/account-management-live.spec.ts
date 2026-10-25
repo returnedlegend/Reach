@@ -46,7 +46,9 @@ test("real account sessions persist profile/favorites and authorize the pantry l
   let createdId: string | undefined;
   async function signIn(secret: string) {
     await page.goto("/account");
-    await page.getByLabel("Email address", { exact: true }).fill(email);
+    await page
+      .getByLabel("Email address or username", { exact: true })
+      .fill(email);
     await page.getByLabel("Password", { exact: true }).fill(secret);
     const response = page.waitForResponse(
       (response) =>

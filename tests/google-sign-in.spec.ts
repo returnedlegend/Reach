@@ -87,7 +87,9 @@ test("missing Google configuration preserves Reach password sign-in", async ({
   await expect(
     google.getByText(/not configured on this Reach server/),
   ).toBeVisible();
-  await expect(page.getByLabel("Email address", { exact: true })).toBeEnabled();
+  await expect(
+    page.getByLabel("Email address or username", { exact: true }),
+  ).toBeEnabled();
   await expect(
     page.getByRole("button", { name: "Sign in", exact: true }).last(),
   ).toBeEnabled();
@@ -189,7 +191,9 @@ test("real local OAuth startup requires consent and returns safely after synthet
   );
   await page.getByRole("link", { name: "Cancel synthetic sign-in" }).click();
   await expect(page.getByText(/Google sign-in was cancelled/)).toBeVisible();
-  await expect(page.getByLabel("Email address", { exact: true })).toBeEnabled();
+  await expect(
+    page.getByLabel("Email address or username", { exact: true }),
+  ).toBeEnabled();
   await expect(page).toHaveURL(/\/account$/);
   const me = await page.request.get("/api/account/me");
   expect((await me.json()).user).toBeNull();
@@ -226,7 +230,9 @@ test("provider startup failure stays readable and leaves password login availabl
   await expect(
     google.getByRole("button", { name: "Continue with Google", exact: true }),
   ).toBeEnabled();
-  await expect(page.getByLabel("Email address", { exact: true })).toBeEnabled();
+  await expect(
+    page.getByLabel("Email address or username", { exact: true }),
+  ).toBeEnabled();
 });
 
 test("an existing Reach account must explicitly choose linking", async ({

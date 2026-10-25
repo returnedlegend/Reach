@@ -53,7 +53,9 @@ test("real preview signup, verification and password recovery preserve account s
   }
   async function signIn(secret: string) {
     await page.goto("/account");
-    await page.getByLabel("Email address", { exact: true }).fill(email);
+    await page
+      .getByLabel("Email address or username", { exact: true })
+      .fill(email);
     await page.getByLabel("Password", { exact: true }).fill(secret);
     await page
       .getByRole("button", { name: "Sign in", exact: true })
@@ -64,25 +66,18 @@ test("real preview signup, verification and password recovery preserve account s
     ).toBeVisible();
   }
   try {
+    const emailSignup = await page.request.post("/api/account/signup", {
+      headers: { origin: base },
+      data: {
+        name: "Local preview fixture",
+        email,
+        password,
+        adultConfirmed: true,
+      },
+    });
+    expect(emailSignup.status()).toBe(202);
+    expect((await emailSignup.json()).message).toMatch(/a development email preview was saved locally/);
     await page.goto("/account");
-    await page
-      .getByRole("button", { name: "Create account", exact: true })
-      .click();
-    await page
-      .getByLabel("Display name", { exact: true })
-      .fill("Local preview fixture");
-    await page.getByLabel("Email address", { exact: true }).fill(email);
-    await page.getByLabel("Password", { exact: true }).fill(password);
-    await page
-      .getByRole("checkbox", { name: /I confirm I am at least 18/ })
-      .check();
-    await page
-      .getByRole("button", { name: "Create account", exact: true })
-      .last()
-      .click();
-    await expect(
-      page.getByText(/a development email preview was saved locally/),
-    ).toBeVisible();
     const verification = await token("verify");
     expect(
       db

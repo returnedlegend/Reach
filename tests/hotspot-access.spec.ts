@@ -116,7 +116,7 @@ test("a transient community error is not reported as a disabled feature", async 
   ).toBeVisible();
 });
 
-test("hotspot creation resumes after signup and requires organizer approval", async ({
+test("hotspot creation resumes after signup and publishes without moderator approval", async ({
   page,
 }) => {
   test.skip(
@@ -151,17 +151,48 @@ test("hotspot creation resumes after signup and requires organizer approval", as
     .getByRole("button", { name: "Create account", exact: true })
     .click();
   await expect(
-    page.getByRole("heading", { name: "Organizer approval required" }),
+    page.getByRole("button", { name: "Save draft", exact: true }),
   ).toBeVisible();
-  await page
-    .getByRole("button", { name: "Request organizer approval", exact: true })
-    .click();
   await expect(
-    page.getByRole("button", {
-      name: "Organizer request pending",
-      exact: true,
-    }),
-  ).toBeDisabled();
+    page.getByText("Organizer approval required", { exact: true }),
+  ).toHaveCount(0);
+  const created = await page.request.post("/api/community/hotspots", {
+    headers: { origin: new URL(page.url()).origin },
+    data: {
+      title: "Synthetic direct publication",
+      description: "Browser fixture only",
+      organizerName: "Fixture organizer",
+      address: "Fixture venue",
+      lat: 30.6,
+      lng: -96.3,
+      foodCategory: "Groceries",
+      startsAt: new Date(Date.now() - 60000).toISOString(),
+      endsAt: new Date(Date.now() + 3600000).toISOString(),
+      eligibility: "Unknown",
+      accessibility: "Unknown",
+      contact: "Fixture contact",
+      pickupInstructions: "Confirm before visiting",
+    },
+  });
+  expect(created.status()).toBe(201);
+  const id = (await created.json()).record.id;
+  await page.reload();
+  await page.getByRole("button", { name: "My activity", exact: true }).click();
+  // My activity cards are keyed by record but do not expose the discovery DOM id.
+  const post = page
+    .getByTestId("community-dashboard")
+    .locator("article")
+    .filter({ hasText: "Synthetic direct publication" });
+  await post
+    .getByRole("button", { name: "Publish hotspot", exact: true })
+    .click();
+  await expect(post).toContainText("Published · unverified");
+  const discovery = await page.request.get("/api/community/discovery");
+  expect(
+    (await discovery.json()).hotspots.some(
+      (item: { id: string }) => item.id === id,
+    ),
+  ).toBe(true);
   const role = await page.request.get("/api/community/me");
   expect((await role.json()).user.role).toBe("resident");
 });

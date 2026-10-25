@@ -133,6 +133,18 @@ describe("development community authentication and request boundaries", () => {
     expect(await result.json()).toMatchObject({ code: "community_disabled" });
     expect(existsSync(database)).toBe(false);
   });
+  it("allows username authentication with accounts enabled while community posting stays disabled", async () => {
+    delete process.env.REACH_COMMUNITY_ENABLED;
+    process.env.REACH_RELEASE_ACCOUNTS = "true";
+    try {
+      const user = await signup("noemail");
+      expect((await call("discovery", "GET", undefined, user)).status).toBe(503);
+      expect((await call("hotspots", "POST", {}, user)).status).toBe(503);
+      expect((await call("auth/logout", "POST", {}, user)).status).toBe(200);
+    } finally {
+      delete process.env.REACH_RELEASE_ACCOUNTS;
+    }
+  });
   it("requires adult affirmation, strong passwords and strict schemas without role escalation", async () => {
     for (const data of [
       { username: "alice", password, adultConfirmed: false },
@@ -291,10 +303,78 @@ describe("moderation, privacy and food constraints", () => {
         400,
       );
   });
-  it("gates organizers and prevents self-approval", async () => {
+  it("lets a resident publish a hotspot without email or moderator approval, with ownership and expiry checks", async () => {
+    const alice = await signup("alice"),
+      bob = await signup("bob");
+    const data = {
+      title: "Test community distribution",
+      description: "Fixture only",
+      startsAt: new Date(Date.now() - 60000).toISOString(),
+      endsAt: new Date(Date.now() + 3600000).toISOString(),
+      organizerName: "Community member",
+      address: "Fixture address",
+      lat: 30.6,
+      lng: -96.3,
+      foodCategory: "Groceries",
+      eligibility: "Confirm with organizer",
+      accessibility: "Unknown",
+      contact: "Ask organizer",
+      pickupInstructions: "Confirm before visiting",
+    };
+    expect((await call("hotspots", "POST", data)).status).toBe(401);
+    const created = await call("hotspots", "POST", data, alice);
+    expect(created.status).toBe(201);
+    const { record } = await created.json();
+    expect(record.status).toBe("draft");
+    expect(
+      (await call(`hotspots/${record.id}/submit`, "POST", {}, bob)).status,
+    ).toBe(403);
+    const published = await call(
+      `hotspots/${record.id}/submit`,
+      "POST",
+      {},
+      alice,
+    );
+    expect(published.status).toBe(200);
+    expect((await published.json()).record.status).toBe("approved");
+    expect(JSON.stringify(await (await call("discovery")).json())).toContain(
+      record.id,
+    );
+    expect(
+      (await call(`hotspots/${record.id}/submit`, "POST", {}, alice)).status,
+    ).toBe(409);
+    expect(
+      (await call(`hotspots/${record.id}/end`, "POST", {}, alice)).status,
+    ).toBe(200);
+    expect(
+      JSON.stringify(await (await call("discovery")).json()),
+    ).not.toContain(record.id);
+    const legacy = await (await call("hotspots", "POST", data, alice)).json();
+    const db = openCommunityDatabase(database);
+    db.prepare("UPDATE records SET status='pending' WHERE id=?").run(
+      legacy.record.id,
+    );
+    expect(
+      (await call(`hotspots/${legacy.record.id}/submit`, "POST", {}, alice))
+        .status,
+    ).toBe(200);
+    const expired = await (await call("hotspots", "POST", data, alice)).json();
+    db.prepare("UPDATE records SET data=? WHERE id=?").run(
+      JSON.stringify({
+        ...data,
+        endsAt: new Date(Date.now() - 1000).toISOString(),
+      }),
+      expired.record.id,
+    );
+    expect(
+      (await call(`hotspots/${expired.record.id}/submit`, "POST", {}, alice))
+        .status,
+    ).toBe(400);
+  });
+  it("preserves privileged role administration without requiring it for hotspots", async () => {
     const alice = await signup("alice"),
       mod = await moderator();
-    expect((await call("hotspots", "POST", {}, alice)).status).toBe(403);
+    expect((await call("hotspots", "POST", {}, alice)).status).toBe(400);
     await call("organizer-request", "POST", {}, alice);
     expect(
       (

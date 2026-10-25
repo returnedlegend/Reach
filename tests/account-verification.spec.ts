@@ -1,5 +1,50 @@
 import { expect, test } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
+import { randomUUID } from "node:crypto";
+
+test("account page creates and signs in to a community username account without email", async ({
+  page,
+}) => {
+  const username = `account_${randomUUID().replaceAll("-", "").slice(0, 16)}`;
+  const password = `community-${randomUUID()}`;
+  await page.goto("/account");
+  await page
+    .getByRole("button", { name: "Create account", exact: true })
+    .click();
+  await page.getByLabel("Username", { exact: true }).fill(username);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page
+    .getByRole("checkbox", { name: "I confirm I am at least 18 years old and agree to the terms and privacy policy.", exact: true })
+    .check();
+  await page
+    .getByRole("button", { name: "Create account", exact: true })
+    .last()
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Your profile", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".account-identity")).toContainText(username);
+  await expect(
+    page.getByText("Email not verified", { exact: true }),
+  ).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Sign out", exact: true }).click();
+  await expect(
+    page.getByRole("heading", { name: "Welcome back" }),
+  ).toBeVisible();
+  await page
+    .getByLabel("Email address or username", { exact: true })
+    .fill(username);
+  await page.getByLabel("Password", { exact: true }).fill(password);
+  await page
+    .getByRole("button", { name: "Sign in", exact: true })
+    .last()
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Your profile", exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".account-identity")).toContainText(username);
+});
 
 test("account controls expose configuration honestly and remain accessible on narrow screens", async ({
   page,
@@ -8,7 +53,9 @@ test("account controls expose configuration honestly and remain accessible on na
   await expect(page.getByRole("heading", { level: 1 })).toHaveText(
     "Your Reach account",
   );
-  await expect(page.getByLabel("Email address", { exact: true })).toBeVisible();
+  await expect(
+    page.getByLabel("Email address or username", { exact: true }),
+  ).toBeVisible();
   await expect(page.getByLabel("Password", { exact: true })).toBeVisible();
   const status = await (await page.request.get("/api/account/status")).json();
   if (!status.emailConfigured) {
@@ -16,11 +63,15 @@ test("account controls expose configuration honestly and remain accessible on na
       page.getByText(/Email delivery is not configured/),
     ).toBeVisible();
     await expect(
-      page.getByRole("button", { name: "Create account", exact: true }),
-    ).toBeDisabled();
-    await expect(
       page.getByRole("button", { name: "Forgot password", exact: true }),
     ).toBeDisabled();
+    await page
+      .getByRole("button", { name: "Create account", exact: true })
+      .click();
+    await expect(page.getByLabel("Username", { exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: "Create account", exact: true }).last(),
+    ).toBeEnabled();
   }
   expect(
     await page.evaluate(

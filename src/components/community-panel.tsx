@@ -248,6 +248,8 @@ function RecordDetails({ record }: { record: CommunityRecord }) {
       <p className="community-small">
         Availability is reported by the organizer or giver. A listing does not
         guarantee food is still available.
+        {record.kind === "hotspot" &&
+          " Hotspot details are community reported and have not been independently verified."}
       </p>
     </>
   );
@@ -517,7 +519,9 @@ export function CommunityPanel({
         await api(`${endpoint(record)}/${action}`, {});
       },
       action === "submit"
-        ? "Submitted for moderator review. It will appear publicly only after approval."
+        ? record.kind === "hotspot"
+          ? "Hotspot published. Its details are community reported and unverified; check the information before traveling."
+          : "Submitted for moderator review. It will appear publicly only after approval."
         : action === "cancel"
           ? "Listing cancelled. Active requests have been cancelled."
           : "Listing ended. Active requests have been cancelled.",
@@ -592,9 +596,9 @@ export function CommunityPanel({
             <div className="community-banner">
               <strong>Community guidelines</strong>
               <span>
-                Community posts are reviewed before publication. Food, identity,
-                availability and safety are not independently verified. Adults
-                18+ only.
+                Food offers are reviewed before publication. Hotspots are
+                community reported and unverified. Food, identity, availability
+                and safety are not independently verified. Adults 18+ only.
               </span>
             </div>
           )}
@@ -709,7 +713,7 @@ export function CommunityPanel({
                   <p>
                     {search || filter !== "all" || availability !== "all"
                       ? "Try another search or pickup window."
-                      : "New community posts appear here after moderator approval. No food availability is assumed."}
+                      : "Food offers appear after moderator approval. Hotspots are published by signed-in adults and are community reported, not independently verified."}
                   </p>
                 </div>
               ) : (
@@ -724,7 +728,7 @@ export function CommunityPanel({
                       <div className="community-card-top">
                         <span className="community-tag">
                           {record.kind === "hotspot"
-                            ? "Food hotspot"
+                            ? "Food hotspot · community reported, unverified"
                             : "Food offer"}
                         </span>
                         <span className="community-small">
@@ -870,33 +874,6 @@ export function CommunityPanel({
                     Sign in or create account
                   </button>
                 </div>
-              ) : view === "hotspot" && user.role === "resident" ? (
-                <div className="community-empty">
-                  <h3>Organizer approval required</h3>
-                  <p>
-                    Food hotspots are public distributions created by approved
-                    organizers. Moderators review organizer requests before
-                    hotspot creation.
-                  </p>
-                  <p>
-                    Organizer request:{" "}
-                    {mine?.organizerRequested || "not requested"}
-                  </p>
-                  <button
-                    type="button"
-                    disabled={busy || mine?.organizerRequested === "pending"}
-                    onClick={() =>
-                      run(async () => {
-                        await api("organizer-request", {});
-                      }, "Organizer approval requested. A moderator must review your account.")
-                    }
-                    className="btn btn-primary"
-                  >
-                    {mine?.organizerRequested === "pending"
-                      ? "Organizer request pending"
-                      : "Request organizer approval"}
-                  </button>
-                </div>
               ) : (
                 <PostForm
                   key={editing?.id || view}
@@ -908,41 +885,46 @@ export function CommunityPanel({
                     navigate("dashboard");
                   }}
                   onSave={(draft, photo) =>
-                    run(async () => {
-                      const result = await api<{ record: CommunityRecord }>(
-                        editing
-                          ? endpoint(editing)
-                          : view === "offer"
-                            ? "offers"
-                            : "hotspots",
-                        draft,
-                        editing ? "PATCH" : "POST",
-                      );
-                      if (!result.record?.id)
-                        throw new Error(
-                          "The draft response was incomplete. Refresh My activity before trying again.",
+                    run(
+                      async () => {
+                        const result = await api<{ record: CommunityRecord }>(
+                          editing
+                            ? endpoint(editing)
+                            : view === "offer"
+                              ? "offers"
+                              : "hotspots",
+                          draft,
+                          editing ? "PATCH" : "POST",
                         );
-                      setEditing(null);
-                      setView("dashboard");
-                      if (photo) {
-                        try {
-                          const uploaded = await api<{
-                            record: CommunityRecord;
-                          }>(`${endpoint(result.record)}/photo`, {
-                            dataUrl: photo,
-                          });
-                          if (!uploaded.record?.photoUrl)
-                            throw new Error(
-                              "The photo response was incomplete.",
-                            );
-                        } catch (failure) {
-                          await refresh();
+                        if (!result.record?.id)
                           throw new Error(
-                            `Your draft was saved, but its photo was not saved. ${explain(failure)} Edit the draft to try the photo again.`,
+                            "The draft response was incomplete. Refresh My activity before trying again.",
                           );
+                        setEditing(null);
+                        setView("dashboard");
+                        if (photo) {
+                          try {
+                            const uploaded = await api<{
+                              record: CommunityRecord;
+                            }>(`${endpoint(result.record)}/photo`, {
+                              dataUrl: photo,
+                            });
+                            if (!uploaded.record?.photoUrl)
+                              throw new Error(
+                                "The photo response was incomplete.",
+                              );
+                          } catch (failure) {
+                            await refresh();
+                            throw new Error(
+                              `Your draft was saved, but its photo was not saved. ${explain(failure)} Edit the draft to try the photo again.`,
+                            );
+                          }
                         }
-                      }
-                    }, "Draft saved privately. Choose Submit for review in My activity when you are ready.")
+                      },
+                      view === "hotspot"
+                        ? "Draft saved privately. Publish it from My activity when you are ready. Published hotspot details are community reported and unverified."
+                        : "Draft saved privately. Choose Submit for review in My activity when you are ready.",
+                    )
                   }
                 />
               )}
@@ -993,8 +975,10 @@ export function CommunityPanel({
                   </h3>
                   <p>No account is needed to browse approved public posts.</p>
                   <p>
-                    <a href="/account">Sign in or register with email</a>. The
-                    form below is for community username accounts.
+                    <a href="/account">
+                      Use your existing email or Google account
+                    </a>
+                    . The form below is for community username accounts.
                   </p>
                   <form
                     key={authMode}
@@ -1096,8 +1080,10 @@ export function CommunityPanel({
             <div data-testid="community-dashboard">
               <h3>My activity</h3>
               <p className="community-small">
-                Drafts are private. Submitted posts remain hidden until a
-                moderator approves them. Times are shown in America/Chicago.
+                Drafts are private. Food offers stay hidden until a moderator
+                approves them. Publishing a hotspot makes it public immediately;
+                hotspot details are community reported and unverified. Times are
+                shown in America/Chicago.
               </p>
               <h4>My posts</h4>
               {mine && !mine.hotspots.length && !mine.offers.length && (
@@ -1115,11 +1101,14 @@ export function CommunityPanel({
                       <div className="community-card-top">
                         <span className="community-tag">
                           {record.kind === "hotspot"
-                            ? "Food hotspot"
+                            ? "Food hotspot · community reported, unverified"
                             : "Food offer"}
                         </span>
                         <strong className="community-record-status">
-                          {record.status}
+                          {record.kind === "hotspot" &&
+                          record.status === "approved"
+                            ? "Published · unverified"
+                            : record.status}
                         </strong>
                       </div>
                       <h4>{record.title}</h4>
@@ -1147,30 +1136,38 @@ export function CommunityPanel({
                         )}
                       </details>
                       <div className="community-actions">
-                        {["draft", "rejected"].includes(record.status) && (
+                        {(["draft", "rejected"].includes(record.status) ||
+                          (record.kind === "hotspot" &&
+                            record.status === "pending")) && (
                           <>
-                            <button
-                              type="button"
-                              disabled={busy}
-                              onClick={() => {
-                                setEditing(record);
-                                setView(
-                                  record.kind === "offer" ? "offer" : "hotspot",
-                                );
-                                setError("");
-                                setNotice("");
-                              }}
-                              className="btn btn-primary"
-                            >
-                              Edit draft
-                            </button>
+                            {["draft", "rejected"].includes(record.status) && (
+                              <button
+                                type="button"
+                                disabled={busy}
+                                onClick={() => {
+                                  setEditing(record);
+                                  setView(
+                                    record.kind === "offer"
+                                      ? "offer"
+                                      : "hotspot",
+                                  );
+                                  setError("");
+                                  setNotice("");
+                                }}
+                                className="btn btn-primary"
+                              >
+                                Edit draft
+                              </button>
+                            )}
                             <button
                               type="button"
                               disabled={busy}
                               onClick={() => changeRecord(record, "submit")}
                               className="btn btn-primary"
                             >
-                              Submit for review
+                              {record.kind === "hotspot"
+                                ? "Publish hotspot"
+                                : "Submit for review"}
                             </button>
                           </>
                         )}
@@ -1517,9 +1514,11 @@ function PostForm({
           : "Create a public food distribution at a public venue. Check that the address, public venue coordinates and pickup requirements are correct."}
       </p>
       <p className="community-small">
-        Save a private draft first, then submit it for moderator review from My
-        activity. Times display in America/Chicago; date and time inputs below
-        use your device’s timezone.
+        {kind === "hotspot"
+          ? "Save a private draft first, then publish it from My activity. Published hotspot details are community reported and unverified."
+          : "Save a private draft first, then submit it for moderator review from My activity."}{" "}
+        Times display in America/Chicago; date and time inputs below use your
+        device’s timezone.
       </p>
       {formError && (
         <p role="alert" className="community-error">

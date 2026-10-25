@@ -453,8 +453,8 @@ test("daisy enabled form controls retain 3:1 non-text contrast in both themes", 
       };
       await page.goto("/account");
       await check(
-        "Account email",
-        page.getByLabel("Email address", { exact: true }),
+        "Account sign-in identifier",
+        page.getByLabel("Email address or username", { exact: true }),
       );
       await page.goto("/");
       await check("Hero address", page.getByLabel("Address", { exact: true }));
@@ -582,7 +582,10 @@ test("daisy selected controls stay visibly distinct after changing each view", a
       await check(
         "Community view",
         signIn,
-        community.getByRole("button", { name: "Find best resources", exact: true }),
+        community.getByRole("button", {
+          name: "Find best resources",
+          exact: true,
+        }),
       );
 
       await page.goto("/pantry-planner");
