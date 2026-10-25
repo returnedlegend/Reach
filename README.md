@@ -67,4 +67,4 @@ is publicly deployed or that external providers have been verified live.
 
 Read the [judge-style review and engineering response](docs/JUDGE-REVIEW-2026-10-25.md) for reproduced defects, fixes, validation, and remaining competition-readiness work.
 
-The maintained directory contains 41 pantry and distribution sites after the October 25 expansion. Coverage is incomplete; see the [source and district audit](docs/TX10-COVERAGE-AUDIT.md) for the 12 additions and unresolved candidates.
+The maintained directory contains 53 pantry and distribution sites after the October 25 expansion. Coverage is incomplete; see the [source and district audit](docs/TX10-COVERAGE-AUDIT.md) for reviewed additions and unresolved candidates.

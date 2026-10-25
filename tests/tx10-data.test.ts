@@ -64,7 +64,6 @@ describe("TX-10 pantry admissions", () => {
       "progressive-missionary-baptist-hearne",
       "robertson-county-cares-franklin",
       "call-for-help-hearne",
-      "washington-mobile-pantry-brenham",
     ];
     for (const id of excluded)
       expect(
@@ -74,7 +73,7 @@ describe("TX-10 pantry admissions", () => {
   });
 
   it("retains source dates, address metadata and honest schedule uncertainty", () => {
-    expect(foodResources).toHaveLength(41);
+    expect(foodResources).toHaveLength(53);
     for (const id of admittedIds) {
       const resource = foodResources.find((p) => p.id === id)!;
       expect(resource.sources.length, id).toBeGreaterThan(0);

@@ -1,3 +1,4 @@
+import fiftyCandidates from "../../data/research/fifty-tx10-candidates.json";
 import newCandidates from "../../data/research/new-tx10-candidates.json";
 import candidates from "../../data/research/tx10-brazos-candidates.json";
 import expansionCandidates from "../../data/research/tx10-expansion-2026-10-25.json";
@@ -27,13 +28,13 @@ type Candidate = {
   city: string;
   postalCode?: string;
   sources: SourceData[];
-  coordinateSource?: { url: string; method: string };
+  coordinateSource?: { url: string; method: string; title?: string };
   verificationStatus: "confirmed-site" | "needs-confirmation";
 };
 
 // These IDs have a pickup point inside the 119th Congress TX-10 Census polygon.
-// Three Hearne/Franklin candidates are outside; Washington Mobile Pantry has no
-// destination coordinate and is excluded until its pickup pin is confirmed.
+// Three Hearne/Franklin candidates are outside. Washington Mobile Pantry is
+// admitted separately with its resolved coordinate in fiftyCandidates.
 const admittedBrazosIds = [
   "anderson-food-pantry",
   "bedias-food-pantry",
@@ -67,7 +68,9 @@ const newIds = new Set(
     .filter((c) => c.coverage === "inside-119th-tx10")
     .map((c) => c.id),
 );
+const fiftyIds = new Set(fiftyCandidates.map((c) => c.id));
 const providerSpecific = (id: string) =>
+  fiftyIds.has(id) ||
   id === "sealy-christian-pantry" ||
   regionalIds.has(id) ||
   expansionIds.has(id);
@@ -76,6 +79,38 @@ const scheduleRules: Record<
   string,
   { weekday: number; nth: number; opens: string; closes: string }[]
 > = {
+  "lexington-mobile-pantry": [
+    { weekday: 2, nth: 1, opens: "10:00", closes: "11:00" },
+  ],
+  "ridgeway-baptist-paige": [1, 2, 3].map((weekday) => ({
+    weekday,
+    nth: 0,
+    opens: "09:00",
+    closes: "12:00",
+  })),
+  "primera-baptist-bastrop": [1, 3].map((nth) => ({
+    weekday: 6,
+    nth,
+    opens: "07:00",
+    closes: "10:00",
+  })),
+  "acc-elgin-mobile-pantry": [
+    { weekday: 6, nth: 1, opens: "09:00", closes: "10:30" },
+  ],
+  "house-of-help-hempstead": [1, 3].flatMap((nth) =>
+    [3, 6].map((weekday) => ({
+      weekday,
+      nth,
+      opens: "10:00",
+      closes: "15:00",
+    })),
+  ),
+  "pflugerville-first-united-methodist": [
+    { weekday: 2, nth: 0, opens: "10:00", closes: "12:00" },
+  ],
+  "washington-mobile-pantry-brenham": [
+    { weekday: 5, nth: 1, opens: "10:30", closes: "12:00" },
+  ],
   "sealy-christian-pantry": [
     { weekday: 3, nth: 0, opens: "10:00", closes: "18:00" },
   ],
@@ -226,6 +261,7 @@ function asCandidate(c: unknown): Candidate {
 }
 
 const selected = [
+  ...fiftyCandidates.map(asCandidate),
   ...newCandidates.filter((c) => newIds.has(c.id)).map(asCandidate),
   ...candidates
     .filter((c) => admittedBrazosIds.includes(c.id))
@@ -253,10 +289,12 @@ function sourceRefs(c: Candidate): SourceRef[] {
   ) {
     refs.push({
       id: `${c.id}-coordinate-source`,
-      title: "U.S. Census Geocoder — address-range point",
+      title:
+        c.coordinateSource.title ??
+        "U.S. Census Geocoder — address-range point",
       url: c.coordinateSource.url,
       checkedOn:
-        expansionIds.has(c.id) || newIds.has(c.id)
+        expansionIds.has(c.id) || newIds.has(c.id) || fiftyIds.has(c.id)
           ? "2026-10-25"
           : "2026-10-22",
       verificationMethod: "website",

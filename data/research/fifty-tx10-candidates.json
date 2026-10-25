@@ -1,0 +1,1153 @@
+[
+  {
+    "id": "lexington-mobile-pantry",
+    "name": "Lexington Mobile Pantry",
+    "address": "9035 US-77, Lexington, TX 78947",
+    "coordinates": {
+      "lat": 30.42295,
+      "lng": -97.00872
+    },
+    "hours": "First Tuesday, 10–11 a.m.",
+    "offering": "Market-style mobile food distribution. Bring reusable bags or a cart; first come, first served while supplies last.",
+    "eligibility": "Directory says anyone can use this distribution. Identification, income/residency documentation and appointment requirements are not individually verified.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 19372; service IDs 25339. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Lexington",
+    "postalCode": "78947",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 19372; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19372,
+      "regionId": 104,
+      "serviceIds": [25339],
+      "serviceRecords": [
+        {
+          "locationServiceId": 25339,
+          "locationId": 19372,
+          "serviceName": "Mobile Pantry",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 4,
+          "overview": "Anyone can attend this food distribution  to receive nutritious, healthy food immediately. This is a market-style distribution. You will be out of your vehicle to collect food. Please bring reusable bags and carts to help collect groceries. Available on a first come, first serve basis, while supplies last. **Please check the service hours for this distribution.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Mobile Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": "",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25339,
+          "dayOfWeek": 3,
+          "startTime": "1900-01-01T10:00:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Tuesday",
+          "startTimeDescr": "10:00 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 19372,
+          "notes": "",
+          "weeksOfMonth": " 1st",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "website": "https://cityoflexingtontx.com/"
+  },
+  {
+    "id": "waldeck-mobile-pantry",
+    "name": "Waldeck Mobile Pantry",
+    "address": "6915 Waldeck Church Lane, Ledbetter, TX 78946",
+    "coordinates": {
+      "lat": 30.05735,
+      "lng": -96.80366
+    },
+    "hours": "Directory lists Saturday 10–11 a.m. with recurrence “3rd” in a day-of-month field. Confirm the next distribution date; recurrence is not modeled.",
+    "offering": "Market-style mobile food distribution. Bring reusable bags or a cart; first come, first served while supplies last.",
+    "eligibility": "Directory says anyone can use this distribution. Identification, income/residency documentation and appointment requirements are not individually verified.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 19540; service IDs 25556. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Ledbetter",
+    "postalCode": "78946",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 19540; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19540,
+      "regionId": 104,
+      "serviceIds": [25556],
+      "serviceRecords": [
+        {
+          "locationServiceId": 25556,
+          "locationId": 19540,
+          "serviceName": "Mobile Pantry",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 4,
+          "overview": "Anyone can attend this food distribution to receive nutritious, healthy food immediately. This is a market-style distribution. You will be out of your vehicle to collect food. Please bring reusable bags and carts to help collect groceries. Available on a first come, first serve basis, while supplies last. **Please check the service hours for this distribution.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Mobile Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": "",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25556,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T10:00:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "10:00 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 19540,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 3rd",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    },
+    "website": "https://www.facebook.com/WaldeckLutheranChurch/"
+  },
+  {
+    "id": "ridgeway-baptist-paige",
+    "name": "Ridgeway Baptist Church",
+    "address": "153 Ridgeway Cemetery Road, Paige, TX 78659",
+    "coordinates": {
+      "lat": 30.20918,
+      "lng": -97.15492
+    },
+    "hours": "Monday–Wednesday, 9 a.m.–noon.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Directory says anyone can use this distribution. Identification, income/residency documentation and appointment requirements are not individually verified.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 19541; service IDs 25557. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Paige",
+    "postalCode": "78659",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 19541; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19541,
+      "regionId": 104,
+      "serviceIds": [25557],
+      "serviceRecords": [
+        {
+          "locationServiceId": 25557,
+          "locationId": 19541,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25557,
+          "dayOfWeek": 2,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T12:00:00",
+          "weekDayDescr": "Monday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "12:00 PM",
+          "locationId": 19541,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        },
+        {
+          "locationServiceId": 25557,
+          "dayOfWeek": 3,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T12:00:00",
+          "weekDayDescr": "Tuesday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "12:00 PM",
+          "locationId": 19541,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        },
+        {
+          "locationServiceId": 25557,
+          "dayOfWeek": 4,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T12:00:00",
+          "weekDayDescr": "Wednesday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "12:00 PM",
+          "locationId": 19541,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    },
+    "phone": "512-704-6369",
+    "website": "https://www.ridgewaybaptistpaige.org"
+  },
+  {
+    "id": "primera-baptist-bastrop",
+    "name": "Primera Baptist Church",
+    "address": "306 Paul C. Bell St, Bastrop, TX 78602",
+    "coordinates": {
+      "lat": 30.1036,
+      "lng": -97.31801
+    },
+    "hours": "Food distribution: first and third Saturday, 7–10 a.m. Separate Fresh Food for Families produce distribution: first Saturday, 8–11 a.m.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Directory says anyone can use this distribution. Identification, income/residency documentation and appointment requirements are not individually verified.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 19362; service IDs 25329, 30645. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Bastrop",
+    "postalCode": "78602",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 19362; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19362,
+      "regionId": 104,
+      "serviceIds": [25329, 30645],
+      "serviceRecords": [
+        {
+          "locationServiceId": 25329,
+          "locationId": 19362,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        },
+        {
+          "locationServiceId": 30645,
+          "locationId": 19362,
+          "serviceName": "Fresh Food for Families",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Distribution of fresh fruits and vegetables only.&nbsp;",
+          "serviceArea": null,
+          "qualifications": null,
+          "notes": null,
+          "contactName": null,
+          "contactPhone": null,
+          "contactEmail": null,
+          "contactPhoneExt": null,
+          "activeInd": true,
+          "programAudience": null,
+          "intendedAudienceCode": null,
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": " Fruits &amp; Vegetables",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": "",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25329,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T07:00:00",
+          "endTime": "1900-01-01T10:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "7:00 AM",
+          "endTimeDescr": "10:00 AM",
+          "locationId": 19362,
+          "notes": "",
+          "weeksOfMonth": " 1st, 3rd",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 25329,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T07:00:00",
+          "endTime": "1900-01-01T10:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "7:00 AM",
+          "endTimeDescr": "10:00 AM",
+          "locationId": 19362,
+          "notes": "",
+          "weeksOfMonth": " 1st, 3rd",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 30645,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T08:00:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "8:00 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 19362,
+          "notes": "",
+          "weeksOfMonth": " 1st",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "website": "https://www.facebook.com/PrimeraBastrop/"
+  },
+  {
+    "id": "elgin-seventh-day-adventist",
+    "name": "Elgin Seventh Day Adventist",
+    "address": "225 Lexington Road, Elgin, TX 78621",
+    "coordinates": {
+      "lat": 30.35287,
+      "lng": -97.37104
+    },
+    "hours": "Directory lists Saturday 1–5 p.m. with recurrence “3rd” in a day-of-month field. Confirm the next distribution date; recurrence is not modeled.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Directory says anyone can use this distribution. Identification, income/residency documentation and appointment requirements are not individually verified.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 19519; service IDs 25525. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Elgin",
+    "postalCode": "78621",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 19519; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19519,
+      "regionId": 104,
+      "serviceIds": [25525],
+      "serviceRecords": [
+        {
+          "locationServiceId": 25525,
+          "locationId": 19519,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25525,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T13:00:00",
+          "endTime": "1900-01-01T17:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "1:00 PM",
+          "endTimeDescr": "5:00 PM",
+          "locationId": 19519,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 3rd",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    },
+    "website": "https://elgintx.adventistchurch.org/"
+  },
+  {
+    "id": "acc-elgin-mobile-pantry",
+    "name": "ACC Elgin",
+    "address": "1501 U.S. 290, Elgin, TX 78621",
+    "coordinates": {
+      "lat": 30.353581,
+      "lng": -97.406683
+    },
+    "hours": "First Saturday, 9–10:30 a.m.",
+    "offering": "Drive-through mobile food distribution; remain in your vehicle while volunteers load food. Pedestrian pickup needs confirmation.",
+    "eligibility": "Directory says anyone can use this distribution. Identification, income/residency documentation and appointment requirements are not individually verified.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 19620; service IDs 25653. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Elgin",
+    "postalCode": "78621",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 19620; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19620,
+      "regionId": 104,
+      "serviceIds": [25653],
+      "serviceRecords": [
+        {
+          "locationServiceId": 25653,
+          "locationId": 19620,
+          "serviceName": "Mobile Pantry",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 4,
+          "overview": "Anyone can walk into a distribution site to receive nutritious, healthy food immediately. First come, first serve, while supplies last. This is a drive-thru distribution. You will remain in your car as volunteers place food into your vehicle. **Please check the service hours for this distribution.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Mobile Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": "",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25653,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T10:30:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "10:30 AM",
+          "locationId": 19620,
+          "notes": "",
+          "weeksOfMonth": " 1st",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "website": "https://www.centraltexasfoodbank.org/find-food-now"
+  },
+  {
+    "id": "greater-mt-arie-weimar",
+    "name": "Greater Mt. Arie Food Pantry",
+    "address": "401 E Post Office St, Weimar, TX 78962",
+    "coordinates": {
+      "lat": 29.7035078,
+      "lng": -96.7757466
+    },
+    "hours": "Conflicting published hours: structured schedule says Tuesday/Thursday 3–6 p.m.; service notes say fall/winter 2–5 p.m. Call before travel; no opening window is modeled.",
+    "offering": "Food distribution.",
+    "eligibility": "Eligibility, documents and appointment requirements not verified; contact the provider.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 37101; service IDs 46019. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel. Published schedule conflicts remain unresolved; call to confirm hours.",
+    "city": "Weimar",
+    "postalCode": "78962",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 37101; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 37101,
+      "regionId": 49,
+      "serviceIds": [46019],
+      "serviceRecords": [
+        {
+          "locationServiceId": 46019,
+          "locationId": 37101,
+          "serviceName": "Food Pantry",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": null,
+          "serviceArea": null,
+          "qualifications": null,
+          "notes": "<p>Spring/Summer Hours: 3:00 - 6:00 PM</p><p>Fall/Winter: 2:00-5:00 PM</p>",
+          "contactName": null,
+          "contactPhone": null,
+          "contactEmail": null,
+          "contactPhoneExt": null,
+          "activeInd": true,
+          "programAudience": null,
+          "intendedAudienceCode": null,
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 46019,
+          "dayOfWeek": 3,
+          "startTime": "1900-01-01T15:00:00",
+          "endTime": "1900-01-01T18:00:00",
+          "weekDayDescr": "Tuesday",
+          "startTimeDescr": "3:00 PM",
+          "endTimeDescr": "6:00 PM",
+          "locationId": 37101,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 46019,
+          "dayOfWeek": 5,
+          "startTime": "1900-01-01T15:00:00",
+          "endTime": "1900-01-01T18:00:00",
+          "weekDayDescr": "Thursday",
+          "startTimeDescr": "3:00 PM",
+          "endTimeDescr": "6:00 PM",
+          "locationId": 37101,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "phone": "979-493-6470",
+    "website": "https://www.centraltexasfoodbank.org/find-food-now"
+  },
+  {
+    "id": "consider-love-weimar",
+    "name": "Consider Love Food Pantry",
+    "address": "504 Park Dr, Weimar, TX 78962",
+    "coordinates": {
+      "lat": 29.69884,
+      "lng": -96.78483
+    },
+    "hours": "Fourth Thursday, 9–11 a.m.; narrative says distribution may finish between 11 a.m. and noon depending on supply. Holiday distributions move to the third Thursday. Confirm each date.",
+    "offering": "Monthly food distribution at Veterans Hall; directory describes drive-through pickup.",
+    "eligibility": "Directory identifies Weimar residents and income limits, with one-time help/referral for others. Confirm current income thresholds and required documents with the pantry.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 7128; service IDs 8938. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Weimar",
+    "postalCode": "78962",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 7128; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 7128,
+      "regionId": 49,
+      "serviceIds": [8938],
+      "serviceRecords": [
+        {
+          "locationServiceId": 8938,
+          "locationId": 7128,
+          "serviceName": "Consider Love Food Pantry",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "<p><strong>ONCE A MONTH&nbsp; 4TH THURSDAY OF THE MONTH .&nbsp;</strong></p><p><strong>Christ &amp; Christ followers feed those in need for FREE .&nbsp;</strong></p><p><strong>CLIENTS : Weimar Tx citizens.</strong></p><p><strong>We will help others 1 time &amp; find a home pantry for future food distributions . </strong></p><p><strong><span style=\"text-decoration: underline\">1 person family $2248 a month income or less </span></strong></p><p><strong><span style=\"text-decoration: underline\">2 $3041</span></strong></p><p><strong><span style=\"text-decoration: underline\">3 $3833</span></strong></p><p><strong><span style=\"text-decoration: underline\">4 $4625</span></strong></p><p><strong><span style=\"text-decoration: underline\">5 $5418 </span></strong></p><p><strong><span style=\"text-decoration: underline\">6 $6210</span></strong></p><p><strong><span style=\"text-decoration: underline\">7 $7003</span></strong></p><p><strong><span style=\"text-decoration: underline\">8 $7795&nbsp; + $793. each more ..........</span></strong></p><p><strong><span style=\"text-decoration: underline\">&nbsp;</span></strong></p><p><strong><span style=\"text-decoration: underline\">&nbsp;</span></strong></p>",
+          "serviceArea": null,
+          "qualifications": "<p><em>We ask for</em><em>&nbsp;:</em></p><p><em>&nbsp;</em><strong>Name</strong></p><p><strong>Address (in Weimar area)</strong></p><p><strong>Phone#&nbsp;</strong></p><p><strong># in Household&nbsp;</strong></p><p><strong>General Age Group - (0-18), (19-59), (60+) </strong></p><p><strong>Signature</strong></p><p><strong><span style=\"text-decoration: underline\">Are you assisted by any of these?</span></strong></p><p><em><span style=\"text-decoration: underline\">SNAP&nbsp;</span></em><strong></strong><em><span style=\"text-decoration: underline\">&nbsp;</span></em></p><p><em><span style=\"text-decoration: underline\">TANF</span></em></p><p><em><span style=\"text-decoration: underline\">SSI</span></em></p><p><em><span style=\"text-decoration: underline\">NSLP</span></em></p><p><em><span style=\"text-decoration: underline\">MEDICARE</span></em></p><p><strong>If not, we ask your honest Gross Income per&nbsp;<span style=\"text-decoration: underline\">Week, Month or Year</span></strong></p>",
+          "notes": "<strong>Church is a Spiritual Healing Safe Place. We believe here at \"Consider Love Food Pantry \"we need to feed the&nbsp;<span style=\"text-decoration: underline\">Tummy along with the spirit !</span></strong>",
+          "contactName": null,
+          "contactPhone": null,
+          "contactEmail": null,
+          "contactPhoneExt": null,
+          "activeInd": true,
+          "programAudience": null,
+          "intendedAudienceCode": "E",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "English, Spanish",
+          "locationFeatures": "",
+          "foodOfferings": "Dairy, Dairy, Diapers, Eggs, Fruits & Vegetables, Fruits & Vegetables, Meat, Meat, Other, Pet Food / Supplies, Pet Food / Supplies, Shelf Stable/Non-Perishable Goods, Shelf Stable/Non-Perishable Goods",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "CITY:  Weimar, COUNTY:  Colorado",
+          "programUrl": "",
+          "programUrlText": "Weimar Consider Love Food Pantry , PO Box 222 , Weimar Tx 78962",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": false
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 8938,
+          "dayOfWeek": 5,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Thursday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 7128,
+          "notes": "9:00 AM - 11:00 AM (HOLIDAYS DISTRIBUTION TAKES PLACE ON THE 3rd THURSDAY- 9:00-11:00 AM)",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 4th",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "phone": "512-921-2289",
+    "website": "https://www.centraltexasfoodbank.org/find-food-now"
+  },
+  {
+    "id": "house-of-help-hempstead",
+    "name": "House of Help Hempstead",
+    "address": "716 1st St, Hempstead, TX 77445",
+    "coordinates": {
+      "lat": 30.09748,
+      "lng": -96.0676
+    },
+    "hours": "General food pantry: first and third Wednesday and Saturday, 10 a.m.–3 p.m. Separate senior-box program has different eligibility and dates.",
+    "offering": "General food pantry providing supplemental groceries. Separate senior-box program is restricted to low-income adults age 60+ and is not the general pantry schedule.",
+    "eligibility": "Eligibility, documents and appointment requirements not verified; contact the provider.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 16835; service IDs 21928. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Hempstead",
+    "postalCode": "77445",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 16835; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 16835,
+      "regionId": 92,
+      "serviceIds": [21928],
+      "serviceRecords": [
+        {
+          "locationServiceId": 21928,
+          "locationId": 16835,
+          "serviceName": "House of Help Food Pantry",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "<p>Houston Food Bank partner pantries are locations where those in need can receive food with a focus on fresh, nutritious food, particularly fruits and vegetables. Food may be free-choice similar to a grocery store setup or pre-packaged. Sites may be closed during major holidays or inclement weather. </p><p>As a food rescue organization, Houston Food Bank works to help reduce waste and support food access. Neighbors can expect supplemental assistance rather than full grocery replacement and may see produce that might not be as beautiful as in a grocery store - but it will be just as tasty and nutritious! </p>",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "E",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "Accepts Walk-Ins, Indoor Service, TEFAP Program",
+          "languages": "English, Spanish",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": "https://hohhempstead.org/food-pantry-eligibility-requirements/",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 21928,
+          "dayOfWeek": 4,
+          "startTime": "1900-01-01T10:00:00",
+          "endTime": "1900-01-01T15:00:00",
+          "weekDayDescr": "Wednesday",
+          "startTimeDescr": "10:00 AM",
+          "endTimeDescr": "3:00 PM",
+          "locationId": 16835,
+          "notes": "",
+          "weeksOfMonth": " 1st, 3rd",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 21928,
+          "dayOfWeek": 4,
+          "startTime": "1900-01-01T10:00:00",
+          "endTime": "1900-01-01T15:00:00",
+          "weekDayDescr": "Wednesday",
+          "startTimeDescr": "10:00 AM",
+          "endTimeDescr": "3:00 PM",
+          "locationId": 16835,
+          "notes": "",
+          "weeksOfMonth": " 1st, 3rd",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 21928,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T10:00:00",
+          "endTime": "1900-01-01T15:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "10:00 AM",
+          "endTimeDescr": "3:00 PM",
+          "locationId": 16835,
+          "notes": "",
+          "weeksOfMonth": " 1st, 3rd",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 21928,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T10:00:00",
+          "endTime": "1900-01-01T15:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "10:00 AM",
+          "endTimeDescr": "3:00 PM",
+          "locationId": 16835,
+          "notes": "",
+          "weeksOfMonth": " 1st, 3rd",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "phone": "979-826-4445",
+    "website": "http://hohhempstead.org/"
+  },
+  {
+    "id": "pflugerville-first-united-methodist",
+    "name": "Pflugerville First United Methodist Church",
+    "address": "500 East Pecan St, Pflugerville, TX 78660",
+    "coordinates": {
+      "lat": 30.439386,
+      "lng": -97.617268
+    },
+    "hours": "Tuesday, 10 a.m.–noon.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Directory says anyone can use this distribution. Identification, income/residency documentation and appointment requirements are not individually verified.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 19406; service IDs 25379. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Pflugerville",
+    "postalCode": "78660",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 19406; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19406,
+      "regionId": 104,
+      "serviceIds": [25379],
+      "serviceRecords": [
+        {
+          "locationServiceId": 25379,
+          "locationId": 19406,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25379,
+          "dayOfWeek": 3,
+          "startTime": "1900-01-01T10:00:00",
+          "endTime": "1900-01-01T12:00:00",
+          "weekDayDescr": "Tuesday",
+          "startTimeDescr": "10:00 AM",
+          "endTimeDescr": "12:00 PM",
+          "locationId": 19406,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "phone": "512-251-2575",
+    "website": "https://www.pflugervilleumc.org/"
+  },
+  {
+    "id": "st-andrews-presbyterian-austin",
+    "name": "St. Andrews Presbyterian Church",
+    "address": "14311 Wells Port Drive, Austin, TX 78728",
+    "coordinates": {
+      "lat": 30.436988,
+      "lng": -97.674804
+    },
+    "hours": "Directory lists Saturday 9 a.m.–noon with recurrence “2nd, 4th” in a day-of-month field. Confirm the next distribution date; recurrence is not modeled.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Directory says anyone can use this distribution. Identification, income/residency documentation and appointment requirements are not individually verified.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance not verified.",
+    "notes": "Public food-bank locator location 19417; service IDs 25393. This is a distribution site, not an administrative office. Directory coordinates are address-level pins, not verified pickup entrances. Confirm dates, requirements and food supply before travel.",
+    "city": "Austin",
+    "postalCode": "78728",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Published latitude/longitude for public directory location 19417; independently inside the 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19417,
+      "regionId": 104,
+      "serviceIds": [25393],
+      "serviceRecords": [
+        {
+          "locationServiceId": 25393,
+          "locationId": 19417,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25393,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T12:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "12:00 PM",
+          "locationId": 19417,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 2nd, 4th",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        },
+        {
+          "locationServiceId": 25393,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T12:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "12:00 PM",
+          "locationId": 19417,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 2nd, 4th",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    },
+    "website": "https://www.staopen.org/work/serving-neighbors/"
+  },
+  {
+    "id": "washington-mobile-pantry-brenham",
+    "name": "Washington Mobile Pantry",
+    "address": "St. Peter's Episcopal Church, 2310 Airline Dr., Brenham, TX",
+    "coordinates": {
+      "lat": 30.145748981516,
+      "lng": -96.395642421438
+    },
+    "phone": "979-836-7248",
+    "hours": "First Friday 10:30 a.m.–noon. Current published dates include November 6 and December 4, 2026; confirm holiday exceptions.",
+    "offering": "BVFB lists drive-through mobile food distribution.",
+    "eligibility": "Serves Washington County; monthly visit limit. Other eligibility rules unknown.",
+    "accessibility": "Drive-through; accessible parking/loading details unknown.",
+    "notes": "Official food-bank directory identifies St. Peter's Episcopal Church as the distribution site. Census address interpolation resolves the former missing pin; this does not verify the serving gate, food stock or a safe pedestrian entrance.",
+    "city": "Brenham",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food (Washington County listing and linked schedule)",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "BVFB-linked Google Maps destination",
+        "url": "https://www.google.com/maps/place/St.+Peter's+Episcopal+Church/@30.1466506,-96.3953505,15z/data=!4m2!3m1!1s0x0:0xd0425d444a8e1cc3?sa=X",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=2310+Airline+Dr%2C+Brenham%2C+TX+77833&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current unique address-range match 2310 AIRLINE DR, BRENHAM, TX 77833. Point independently classified inside119thCongressTX10; church entrance unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  }
+]

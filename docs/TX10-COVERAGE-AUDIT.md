@@ -87,3 +87,77 @@ and the three unresolved candidates are absent from production. Database import
 regressions pass at the new count, including idempotency and retained source facts.
 These checks do not establish live stock, usable pedestrian entrances, or exhaustive
 regional coverage.
+
+## Follow-up coordinate review
+
+A fresh Census query on October 25 resolved Washington Mobile Pantry's published
+2310 Airline Drive, Brenham address to a unique 2310 AIRLINE DR, BRENHAM, TX 77833
+match: latitude 30.145748981516, longitude -96.395642421438. Independent polygon
+classification returns inside the 119th Congress TX-10 geometry. This is address
+interpolation, not a surveyed church entrance. The BVFB directory currently states
+first Friday 10:30 a.m.–noon and lists November 6 and December 4 distributions.
+
+Additional source conflicts were found: Iola's BVFB listing gives 23471 FM 244 but
+its Directions link targets 23365 FM 39. Macedonia Plantersville's Directions link
+incorrectly opens a search for Christ Church in College Station. Neither linked
+point should be substituted for the stated pickup address. Census variants for
+Iola, Macedonia and Chappell Hill Museum still returned no match in this pass.
+
+## Independent review of the 53-site expansion
+
+The follow-up adds 12 sites: Lexington Mobile Pantry, Waldeck Mobile Pantry,
+Ridgeway Baptist (Paige), Primera Baptist (Bastrop), Elgin Seventh Day Adventist,
+ACC Elgin Mobile Pantry, Greater Mt. Arie (Weimar), Consider Love (Weimar), House
+of Help (Hempstead), Pflugerville First United Methodist, St. Andrews Presbyterian
+(Austin), and the newly resolved Washington Mobile Pantry (Brenham).
+
+For the 11 Central Texas directory records, the review traced the official
+[Find Food Now page](https://www.centraltexasfoodbank.org/find-food-now) to its
+public AccessFood/Vivery locator, then independently inspected the captured
+location, food-program and service-schedule responses. The public widget map ID
+is `99e94cff-7fdf-4d81-8f11-5dccc11469e6`. Evidence IDs and selected raw food-program
+records are retained in `data/research/fifty-tx10-candidates.json`; no authenticated
+endpoint was used. Some listings belong to the shared food-bank network, so listing
+in this locator does not establish Central Texas Food Bank ownership of a site.
+
+All 11 final coordinates exactly match the directory's published latitude and
+longitude. A separately executed polygon check returns inside TX-10 for all 12
+additions. Washington's coordinate instead comes from the unique Census address
+match described above. These are address-level points, not verified serving gates.
+Names, pickup addresses, service text and schedule joins were inspected against
+the captured responses rather than inferred from a map marker.
+
+The review caught and excluded two candidates: Bellville Methodist is the same
+234 S. Masonic Street distribution already listed as Bellville Christian Food
+Pantry; Waller County Library's active-marked service was a children-only summer
+meal program whose published dates ended July 31, 2026. It is not a current pantry.
+
+Other checked distinctions:
+
+- House of Help general pantry service **21928** supplies its first/third
+  Wednesday and Saturday schedule. Senior-box service **21927** has separate
+  age/income restrictions and dates; those are not mixed into general access.
+- Consider Love uses food-pantry service **8938**, not unrelated nurse/WIC services.
+  Weimar residency/income conditions and holiday schedule exceptions remain visible.
+- ACC Elgin service **25653** explicitly says anyone can attend; no student-only
+  restriction was inferred. Its explicit drive-through instruction is preserved,
+  and pedestrian pickup requires confirmation despite generic walk-in wording.
+- Primera's grocery distribution and supplemental produce distribution are distinct.
+- Greater Mt. Arie's structured hours conflict with fall/winter prose. No opening
+  window is generated. Waldeck, Elgin SDA and St. Andrews have ambiguous recurrence
+  field encoding; their prose remains visible without invented opening windows.
+- No additional St. Andrews/Wells Port record was found in existing production
+  research datasets; the shared-network directory record is admitted once.
+
+This is a source and implementation review, not an on-site visit or confirmation
+of current stock. Fifty-three searchable food-assistance sites does not mean every
+TX-10 pantry has been found. The three unresolved BVFB sites, provider-directory
+reconciliation, current entrances, exceptions and future district boundaries remain
+open coverage work. Final automated test counts belong to the main verification
+report, not this source audit.
+
+Final integration checks for the 53-site expansion: `npm run check` passed,
+including production data validation, TypeScript, 660 unit tests across 80 files,
+and the production build. The new admission regression checks boundary inclusion,
+search-by-name, and unique IDs for the reviewed expansions. These automated checks
+are separate from the independent official-source review above.
