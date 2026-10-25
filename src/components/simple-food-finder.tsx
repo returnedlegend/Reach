@@ -75,6 +75,9 @@ export function SimpleFoodFinder(props: Props) {
   const [thinking, setThinking] = useState(false);
   const [aiAttempted, setAiAttempted] = useState(false);
   const [aiMessage, setAiMessage] = useState("");
+  const [aiSummary, setAiSummary] = useState<
+    { id: string; name: string; text: string }[]
+  >([]);
   const [aiRanking, setAiRanking] = useState<{
     items: FoodRanking;
     expires: number;
@@ -317,6 +320,7 @@ export function SimpleFoodFinder(props: Props) {
     setAiAttempted(false);
     setAiMessage("");
     setAiRanking(null);
+    setAiSummary([]);
     const local = discoverFood(resources, text).intent;
     if (local.mode) props.onModeChange(local.mode);
     if (!useAI || !text.trim())
@@ -360,6 +364,19 @@ export function SimpleFoodFinder(props: Props) {
       }
       if (typeof data.aiMessage === "string")
         setAiMessage(data.aiMessage.slice(0, 500));
+      if (data.assistance === "ai" && Array.isArray(data.summary)) {
+        setAiSummary(
+          data.summary
+            .filter(
+              (item: { id?: unknown; name?: unknown; text?: unknown }) =>
+                typeof item.id === "string" &&
+                typeof item.name === "string" &&
+                typeof item.text === "string" &&
+                item.text.length <= 280,
+            )
+            .slice(0, 3),
+        );
+      }
       if (data.intent) {
         if (Array.isArray(data.ranking) && typeof data.rankedAt === "string") {
           const valid = data.ranking.every(
@@ -430,6 +447,7 @@ export function SimpleFoodFinder(props: Props) {
                 searchInFlight.current = false;
                 setThinking(false);
                 setAiRanking(null);
+                setAiSummary([]);
                 setAiMessage(
                   "Request changed. Search again to compare these options.",
                 );
@@ -484,6 +502,7 @@ export function SimpleFoodFinder(props: Props) {
                   searchInFlight.current = false;
                   setThinking(false);
                   setAiRanking(null);
+                  setAiSummary([]);
                 }
               }}
             />{" "}
@@ -516,6 +535,7 @@ export function SimpleFoodFinder(props: Props) {
             searchInFlight.current = false;
             setThinking(false);
             setAiRanking(null);
+            setAiSummary([]);
             props.onLocationChange(value);
           }}
           resources={resources}
@@ -543,6 +563,7 @@ export function SimpleFoodFinder(props: Props) {
                   searchInFlight.current = false;
                   setThinking(false);
                   setAiRanking(null);
+                  setAiSummary([]);
                   props.onModeChange(id);
                 }}
               >
@@ -581,6 +602,34 @@ export function SimpleFoodFinder(props: Props) {
                 ? `Showing matches for ${found.area}. Add your starting point for travel help.`
                 : "Showing selected central Texas pantries. Add your location or enter a city to narrow the list."}
         </p>
+        {aiRanking &&
+          now &&
+          now.getTime() < aiRanking.expires &&
+          aiSummary.length > 0 &&
+          !thinking && (
+            <section
+              className={styles.comparisonCard}
+              aria-labelledby="ai-summary-heading"
+              aria-live="polite"
+            >
+              <h3 id="ai-summary-heading">AI’s quick take</h3>
+              <ul>
+                {aiSummary
+                  .filter((item) =>
+                    recommended.some((match) => match.resource.id === item.id),
+                  )
+                  .map((item) => (
+                    <li key={item.id}>
+                      <strong>{item.name}:</strong> {item.text}
+                    </li>
+                  ))}
+              </ul>
+              <small>
+                AI-generated from listed facts. Confirm pickup details and
+                availability before traveling.
+              </small>
+            </section>
+          )}
         {recommended.length > 0 && (
           <section aria-labelledby="ai-comparison-title">
             <h3 id="ai-comparison-title">

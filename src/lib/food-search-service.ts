@@ -113,7 +113,11 @@ export function createFoodSearchHandler(
                 }
               : {}),
             ...("ranking" in result
-              ? { ranking: result.ranking, rankedAt: result.rankedAt }
+              ? {
+                  ranking: result.ranking,
+                  rankedAt: result.rankedAt,
+                  summary: result.summary,
+                }
               : {}),
             intent: {
               ...local,

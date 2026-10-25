@@ -366,3 +366,55 @@ it("uses measured travel scores over model order and excludes checked infeasible
   expect(result.ranking[0].comparison?.score).toBe(-15);
   expect(generate.mock.calls[0][0].prompt).toContain("travelMinutes");
 });
+
+it("returns short generated summaries attached to real final options", async () => {
+  const generate = vi.fn().mockResolvedValue({
+    ...response(["a"]),
+    value: {
+      order: ["a"],
+      reason: "requirements",
+      summaries: [
+        {
+          id: "a",
+          text: "This option lists groceries, but check the appointment requirement before traveling.",
+        },
+      ],
+    },
+  });
+  const result = await rankFoodWithAI("food in Bryan", {
+    resources: [site("a")],
+    now,
+    generate,
+  });
+  expect(result.status).toBe("available");
+  if (result.status !== "available") throw new Error("Missing result");
+  expect(result.summary).toEqual([
+    {
+      id: "a",
+      name: "Fixture Pantry a",
+      text: "This option lists groceries, but check the appointment requirement before traveling.",
+    },
+  ]);
+});
+it.each([
+  { id: "invented", text: "Visit this invented site." },
+  { id: "a", text: "Food is guaranteed here." },
+  { id: "a", text: "<script>unsafe</script>" },
+])(
+  "discards invalid generated summaries while preserving real ranked options",
+  async (summary) => {
+    const generate = vi.fn().mockResolvedValue({
+      ...response(["a"]),
+      value: { order: ["a"], reason: "schedule", summaries: [summary] },
+    });
+    const result = await rankFoodWithAI("food in Bryan", {
+      resources: [site("a")],
+      now,
+      generate,
+    });
+    expect(result.status).toBe("available");
+    if (result.status !== "available") throw new Error("Missing result");
+    expect(result.summary).toEqual([]);
+    expect(result.ranking[0].id).toBe("a");
+  },
+);
