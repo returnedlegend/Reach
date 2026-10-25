@@ -1,5 +1,7 @@
 # Reach
 
+The latest work replaces the questionnaire-first home screen with immediate food options and a short request, then checks arrival/return feasibility from an optional selected location. Read the [food-first implementation and candid assessment](docs/FOOD-FIRST-RELEASE.md) and [verification evidence](docs/FOOD-FIRST-VERIFICATION.md). AI/routing failures keep pantry details and external directions usable; live provider capacity is not promised.
+
 The latest implemented release boundary and evidence are in [First public release candidate](docs/FIRST-RELEASE.md). Production defaults to the anonymous core: optional account, Google identity, email, AI, community and volunteer services are gated in both UI and server. Public hosting and production routing remain explicit external setup steps.
 
 ## Current readiness assessment — October 24, 2026
@@ -30,7 +32,7 @@ The guided flow lets people search for a food site by name, city, address, or ZI
 
 ## Find food I can reach
 
-The home page now offers an anonymous, mobile-first feasibility planner using the existing map and real routing boundary. Set walking/fare/transfer limits, arrival or return deadlines, and optional mobility/dietary requirements. Results distinguish known failures from missing information, evaluate availability at arrival, and explain the actual itinerary. Optional AI preference interpretation is disabled by default; manual controls always work. **Check availability** opens reviewed inquiries to enrolled contacts with a verified account. Sending stays in private preview here; real receiving requires separate Resend configuration. No production contacts or inventory are fabricated.
+The home page starts with immediate food options and a short request. For the retained detailed feasibility planner, choose **Step-by-step trip controls**, then **Find food I can reach**; it uses the existing map and real routing boundary. Set walking/fare/transfer limits, arrival or return deadlines, and optional mobility/dietary requirements. Results distinguish known failures from missing information, evaluate availability at arrival, and explain the actual itinerary. Optional AI preference interpretation is disabled by default; manual controls always work. **Check availability** opens reviewed inquiries to enrolled contacts with a verified account. Sending stays in private preview here; real receiving requires separate Resend configuration. No production contacts or inventory are fabricated.
 
 See [planner setup, limits and outreach](docs/ACCESS-PLANNER.md), [independent checks](docs/ACCESS-VERIFICATION.md), [official integration research](docs/ACCESS-INTEGRATIONS.md), and [fixture evaluation](docs/ACCESS-EVALUATION.md), and [changed files](docs/ACCESS-FILES.md). `npm run access:evaluate` compares synthetic scenarios to a proximity-only baseline. The mail worker now dispatches both consent-based notifications and separately authorized inquiries. Private inquiry history is retained separately from the metadata-only notification queue.
 
@@ -42,7 +44,7 @@ The existing food-access planner now has optional service, urgency, household-si
 
 ## Conversational assistant and SMTP
 
-Open **Reach AI assistant** from the home/map experience or pantry details. It connects the selected starting point, existing public pantry data and deterministic routing to optional OpenRouter interpretation; computed results remain available without AI. **Ask about availability** opens editable, explicitly approved inquiries. Resend SMTP is now an explicit alternative to the existing Resend API transport, with TLS, bounded delivery, durable status and duplicate safeguards. Local preview remains the selected unconfigured workflow; no live delivery/inference is claimed. See [exact SMTP/AI setup](docs/SMTP-AI-SETUP.md), [independent verification](docs/SMTP-AI-VERIFICATION.md), and [changed files](docs/SMTP-AI-FILES.md).
+Use the home screen’s optional AI interpretation checkbox when configured. The retained **Reach AI assistant** dialog is available from Map, Step-by-step trip controls, or pantry details when enabled. It connects the selected starting point, existing public pantry data and deterministic routing to optional OpenRouter interpretation; computed results remain available without AI. **Ask about availability** opens editable, explicitly approved inquiries. Resend SMTP is now an explicit alternative to the existing Resend API transport, with TLS, bounded delivery, durable status and duplicate safeguards. Local preview remains the selected unconfigured workflow; no live delivery/inference is claimed. See [exact SMTP/AI setup](docs/SMTP-AI-SETUP.md), [independent verification](docs/SMTP-AI-VERIFICATION.md), and [changed files](docs/SMTP-AI-FILES.md).
 
 ## Mobile design
 

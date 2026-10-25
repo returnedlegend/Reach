@@ -4,6 +4,8 @@ Start here to run Reach, understand its data, rehearse a demonstration, or maint
 
 ## Current release decision
 
+Read the [food-first follow-up](FOOD-FIRST-RELEASE.md) and [its verification](FOOD-FIRST-VERIFICATION.md) for the current home flow, automatic feasibility checks, independent review fixes and provider limits. Older questionnaire walkthroughs below are historical.
+
 Start with the [implemented first-release candidate](FIRST-RELEASE.md), its readiness table, maintenance process and current verification evidence. Earlier assessments below are dated history.
 
 - [Executive readiness report](REACH-CEO-READINESS-REPORT.md): detailed feature assessment, implemented improvements, remaining repairs and release priorities.

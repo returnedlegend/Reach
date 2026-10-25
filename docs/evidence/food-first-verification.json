@@ -1,0 +1,76 @@
+{
+  "checkedAt": "2026-10-25T00:50:12.258Z",
+  "baseCommit": "0f0878b7ff7029e225b14528022531591fa1c952",
+  "sourceCommit": "f3b0fb8ed4179274ad73f947cffca675a524063c",
+  "branch": "improve/food-first-experience",
+  "unit": {
+    "passed": 638,
+    "files": 73
+  },
+  "data": {
+    "maintained": 24,
+    "separateDemoFixtures": 6
+  },
+  "productionBuild": "passed",
+  "browser": {
+    "core": {
+      "mobileAndDesktop": 74,
+      "androidSizedAndTablet": 18,
+      "profile": "core",
+      "runtimeGoogleVariables": "empty",
+      "providers": "controlled responses; real local directory and standalone build"
+    },
+    "optionalAI": {
+      "mobileAndDesktop": 8,
+      "profile": "extended with AI explicitly configured; provider requests intercepted"
+    },
+    "totalDistinctCases": 100
+  },
+  "independentReview": {
+    "boundedAudits": "gpt-6-luna/high",
+    "criticalFeasibilityGate": "gpt-6-astra/ultra",
+    "result": "passed after reproduced defects were fixed and rechecked",
+    "scope": "Synthetic provider browser responses and focused source/unit checks; not live service/field certification"
+  },
+  "notPerformed": [
+    "public deployment",
+    "merge to main",
+    "DNS record modification",
+    "external outreach or email sending",
+    "physical-device or screen-reader field testing"
+  ],
+  "sourceHashes": {
+    ".github/workflows/ci.yml": "3b541a4324c14f71e1265759bef1c8e967dd4a0257c8436f552613d3a959f85a",
+    "package.json": "2e6807a7edfb5b10c7e021adb669d2dec6e6562db9d3d45658060dc6e5c93613",
+    "scripts/start-production.mjs": "26d887e85f9de43c2467dce161d1a1596ac897474b3e36f15cb09af3caabf9a7",
+    "src/app/api/food-search/plan/route.ts": "62948f946661deed04ed56ecc190565138dad08d0ecb09215722e32982a7015c",
+    "src/app/api/food-search/route.ts": "cfdef3f5f6a810610b107a8474ae825e93df7d33d08e9bf5a182ede1afcc3375",
+    "src/app/globals.css": "957390a5e149f731420bda2b523f923dabb0d66509ae27304367f5844248efd3",
+    "src/app/icon.svg": "2fdffd244b6c98ea696b573427dce5a234fd15799ad53f422d222501513fbc9d",
+    "src/app/layout.tsx": "cc505d25ab05023a59ba9ece039eb384eb3b7b09aee1d1b462d76bc78d327a11",
+    "src/components/access-planner.tsx": "0aab81e7148dcbe136fac761ab80840d793e0ffb6426217426154a06d4ed2080",
+    "src/components/guided-reach.tsx": "2b840417379ce846a0ecc086f731beb0e96d98ae102f0c5192ea1efc05a897d9",
+    "src/components/location-picker.tsx": "8fb1fad5def82160e4af6a2f248b8f3a18c0af7fe81070710c72dbcb18beb364",
+    "src/components/osm-map-canvas.css": "90c48361bded43df593b5f84e8b221c31b48a556e3483310c97f01bdf6e7f9e6",
+    "src/components/simple-food-finder.module.css": "76662e6c2d005e304d446a0b625660d533f7a6e8555424ecbf58ccf9f969cebf",
+    "src/components/simple-food-finder.tsx": "4e66bd3f0e241c31aedd313bb611154233f740d90976dd63468113e92cc03528",
+    "src/lib/access-service.ts": "6f906a168314dedec85ea5b2fa638a1c972731dd9c3c4d6a0115515a5643da6f",
+    "src/lib/food-plan-service.ts": "4fc467c694e3abd69597c180ca6e4e9e3382998c433e7c7db04c5a04770f9a76",
+    "src/lib/food-search-service.ts": "84f1fecb6ac6832181822564a594860d6d84445b51d5032b7c09242467e35247",
+    "src/lib/food-trip.ts": "106f76bbab562a10196ea5ec173f1f1d1557a5c6bc2de59226757acf32f61f6a",
+    "src/lib/simple-food.ts": "eb6a6b4a992dcd172bbcf3cb5294c8ce670305b9dee7a92d46e8da7dc074c834",
+    "tests/fixtures/food-check.ts": "270be460e8627e4050aee459eb2dfcae5058ff725d233a5f93cef2248e095886",
+    "tests/food-plan-service.test.ts": "dea72220616a6494a416fe853210ce88bfd6da8093689cb2c84e670011e366b4",
+    "tests/food-search-service.test.ts": "9ca6556750075c9fb1d1dd639ca37ba68109e1309561ab82e80eecac1e305f6f",
+    "tests/food-trip.test.ts": "e120f960d0cbb2ce60622b8d3870bec3f6a34fa2e9401bd5f3258dcb0677b591",
+    "tests/location-follow.spec.ts": "3337bcf944773389fbbddef1763ea11274131999944c82d66c87cfe1ff6a8c89",
+    "tests/osm-verification.spec.ts": "af554921552ba9056a4dea92160a6310c4dd083bd19b8c11cb158140b3050555",
+    "tests/pantry-recommendation.spec.ts": "acfddcbe17d9d160d3a8f9a0a7ff87c696dd288676042ec188b6f6370bd722e0",
+    "tests/release-core.spec.ts": "fe58050e4b8e975155165a7685443ffe03adcd1636cba30cdd3b55e802e487b1",
+    "tests/release-journey.spec.ts": "d160b3fd16282c011b5ff34ebe2b336e41a482e4c4c32e500ed6c4a749fe95fa",
+    "tests/simple-food-ai.spec.ts": "d2df4d6185dc462f603740f7734e8dd4aa6312a58f07fcfd24090b1cd83b97b3",
+    "tests/simple-food-trip.spec.ts": "0d98c6ab954087edce3a9c6fa3795d8f4e64ecad69f9506a3aa74e6bb1f68298",
+    "tests/simple-food.spec.ts": "eb01213700976282cac8b32485899e90e64440f888311e82cc20c5cd6562b142",
+    "tests/simple-food.test.ts": "a9f805c733aee030d24221d1cc7d381ef3530b3c5a7e2256dc8718687da845d4"
+  }
+}

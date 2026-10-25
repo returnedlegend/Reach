@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-10-25T00:24:01.759Z",
+  "conditions": "Local standalone production build over loopback HTTPS, cold browser contexts, warm server, unthrottled host CPU/network, real maintained directory, external requests blocked. Synthetic local TLS exception only; no external TLS disabled. Single observations, not field Core Web Vitals, real-device measurements, or a baseline comparison.",
+  "records": [
+    {
+      "viewport": "mobile",
+      "width": 390,
+      "height": 844,
+      "dclMs": 92.5,
+      "loadMs": 321.70000000018626,
+      "fcpMs": 280,
+      "lcpMs": 280,
+      "cls": 0,
+      "jsEncodedBytes": 205845,
+      "resourceRequests": 14,
+      "apiRequests": 0,
+      "overflow": false,
+      "axeViolations": 0,
+      "runtimeErrors": []
+    },
+    {
+      "viewport": "tablet",
+      "width": 820,
+      "height": 1180,
+      "dclMs": 280.10000000009313,
+      "loadMs": 351.3000000002794,
+      "fcpMs": 288,
+      "lcpMs": 288,
+      "cls": 0.0694504746832325,
+      "jsEncodedBytes": 205845,
+      "resourceRequests": 14,
+      "apiRequests": 0,
+      "overflow": false,
+      "axeViolations": 0,
+      "runtimeErrors": []
+    },
+    {
+      "viewport": "desktop",
+      "width": 1280,
+      "height": 900,
+      "dclMs": 235.20000000018626,
+      "loadMs": 299.39999999990687,
+      "fcpMs": 264,
+      "lcpMs": 264,
+      "cls": 0,
+      "jsEncodedBytes": 205845,
+      "resourceRequests": 14,
+      "apiRequests": 0,
+      "overflow": false,
+      "axeViolations": 0,
+      "runtimeErrors": []
+    }
+  ]
+}

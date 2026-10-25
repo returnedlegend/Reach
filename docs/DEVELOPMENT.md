@@ -53,6 +53,17 @@ npm run build
 
 `npm run check` runs those four stages in order and stops at the first failing stage. No separate lint command is currently configured. Use Prettier on the files you changed rather than reformatting unrelated historical reports.
 
+### Start a production build
+
+```sh
+npm run build
+npm start
+```
+
+`npm start` launches Next's generated `.next/standalone/server.js` directly, as required by `output: "standalone"`; it does not use `next start`. The launcher loads root Next environment files into the process without printing their values, then copies only `.next/static` and `public` into the standalone output. It does not copy root environment files or the private SQLite database. Relative database paths are resolved against the project root before the standalone server changes directory, preserving the existing local store. The default bind address is loopback (`127.0.0.1`). For a container or host that routes traffic to the process, opt in to an external bind address with `REACH_BIND_HOST=0.0.0.0 npm start`. `npm start -- --port 3100 --hostname 127.0.0.1` preserves the familiar CLI overrides; explicit CLI options take precedence over `PORT` and `REACH_BIND_HOST`.
+
+The command runs the standalone production build locally; it does not establish production TLS, proxy headers, secret injection, provider connectivity, or a public deployment. Production account, access and assistant endpoints still require a canonical HTTPS `REACH_APP_ORIGIN`.
+
 If Python is not available under the platform default name, specify its installed executable for the GTFS unit check:
 
 ```powershell

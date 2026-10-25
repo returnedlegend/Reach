@@ -1,0 +1,82 @@
+{
+  "checkedAt": "2026-10-25T00:50:22.340Z",
+  "scope": "Actual OpenFreeMap assets for one map viewport, retrieved by trusted Node HTTPS/session proxy and fulfilled unchanged into real MapLibre due managed Chromium proxy-CA trust failure. No external TLS disabled, fixture tiles, bulk prefetch, GPS, routing, or Google service request. Direct end-user transport and future uptime are unverified.",
+  "assets": [
+    {
+      "path": "/styles/liberty",
+      "httpStatus": 200,
+      "bytes": 43079
+    },
+    {
+      "path": "/planet",
+      "httpStatus": 200,
+      "bytes": 19254
+    },
+    {
+      "path": "/sprites/ofm_f384/ofm.png",
+      "httpStatus": 200,
+      "bytes": 49454
+    },
+    {
+      "path": "/sprites/ofm_f384/ofm.json",
+      "httpStatus": 200,
+      "bytes": 27737
+    },
+    {
+      "path": "/planet/20261018_080001_pt/12/952/1681.pbf",
+      "httpStatus": 200,
+      "bytes": 39985
+    },
+    {
+      "path": "/planet/20261018_080001_pt/12/951/1682.pbf",
+      "httpStatus": 200,
+      "bytes": 32508
+    },
+    {
+      "path": "/planet/20261018_080001_pt/12/952/1682.pbf",
+      "httpStatus": 200,
+      "bytes": 47526
+    },
+    {
+      "path": "/planet/20261018_080001_pt/12/951/1681.pbf",
+      "httpStatus": 200,
+      "bytes": 63142
+    },
+    {
+      "path": "/fonts/Noto%20Sans%20Italic/0-255.pbf",
+      "httpStatus": 200,
+      "bytes": 79907
+    },
+    {
+      "path": "/fonts/Noto%20Sans%20Regular/0-255.pbf",
+      "httpStatus": 200,
+      "bytes": 76580
+    },
+    {
+      "path": "/planet/20261018_080001_pt/7/29/52.pbf",
+      "httpStatus": 200,
+      "bytes": 135339
+    },
+    {
+      "path": "/planet/20261018_080001_pt/7/29/53.pbf",
+      "httpStatus": 200,
+      "bytes": 93316
+    },
+    {
+      "path": "/planet/20261018_080001_pt/7/30/52.pbf",
+      "httpStatus": 200,
+      "bytes": 161915
+    },
+    {
+      "path": "/planet/20261018_080001_pt/7/30/53.pbf",
+      "httpStatus": 200,
+      "bytes": 55364
+    }
+  ],
+  "canvasCount": 1,
+  "mapUnavailable": 0,
+  "attribution": {
+    "color": "rgb(20, 91, 81)",
+    "background": "rgb(255, 255, 255)"
+  }
+}
