@@ -63,3 +63,11 @@ for 127.0.0.1 returned HTTP 200 and `assistance: ai` from local Llama3.2.
 See [recorded live response](evidence/llama-local-origin.json).
 This environment's success does not establish that a user's separate local
 Ollama installation is running or has the model installed.
+
+## Pantry comparisons
+
+The main food search now uses Llama to shortlist and order up to six confirmed
+matching sites using the person's request and maintained pantry facts.
+[AI pantry comparison](AI-PANTRY-RANKING.md) documents the algorithm, guardrails
+and limits. The model chooses IDs and a supporting fact key; Reach supplies the
+actual schedule/requirements text and keeps trip feasibility separate.

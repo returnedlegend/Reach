@@ -40,6 +40,7 @@ export type DeepSeekJsonInput<T> = {
   signal?: AbortSignal;
   fetch?: typeof fetch;
   maxAttempts?: 1 | 2;
+  nativeSchema?: boolean;
 };
 const RESPONSE_LIMIT = 128 * 1024;
 const GLOBAL_DAILY_LIMIT = 128;
@@ -319,7 +320,17 @@ export async function deepseekJson<T>(
                 },
                 { role: "user", content: input.prompt },
               ],
-              response_format: { type: "json_object" },
+              response_format:
+                usesLlama() && input.nativeSchema
+                  ? {
+                      type: "json_schema",
+                      json_schema: {
+                        name: "reach_response",
+                        strict: true,
+                        schema: input.jsonSchema,
+                      },
+                    }
+                  : { type: "json_object" },
               ...(usesLlama()
                 ? { temperature: 0 }
                 : {

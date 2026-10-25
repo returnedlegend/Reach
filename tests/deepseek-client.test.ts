@@ -229,3 +229,17 @@ describe("direct DeepSeek client", () => {
     },
   );
 });
+
+it("uses Ollama native JSON schema constraints for pantry comparisons", async () => {
+  vi.stubEnv("REACH_AI_PROVIDER", "ollama");
+  const fetcher = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+    expect(JSON.parse(String(init?.body)).response_format).toEqual({
+      type: "json_schema",
+      json_schema: { name: "reach_response", strict: true, schema: jsonSchema },
+    });
+    return completion();
+  });
+  expect(await run(fetcher, { nativeSchema: true })).toMatchObject({
+    status: "available",
+  });
+});
