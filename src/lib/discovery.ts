@@ -96,6 +96,16 @@ export function nextPublishedWindow(
   resource: Resource,
   now: Date,
 ): PublishedWindow | null {
+  if (resource.communityHotspot) {
+    const start = new Date(resource.communityHotspot.startsAt);
+    const end = new Date(resource.communityHotspot.endsAt);
+    if (!Number.isFinite(start.getTime()) || start <= now || end <= now)
+      return null;
+    return {
+      startsAt: start.toISOString(),
+      label: `${start.toLocaleString("en-US", { timeZone: "America/Chicago", weekday: "short", month: "short", day: "numeric", hour: "numeric", minute: "2-digit" })} · organizer-reported; confirm before visiting`,
+    };
+  }
   const localNow = chicagoDateAndMinute(now);
   if (!localNow || !resource.windows?.length) return null;
   if (closureCaveat.test(resource.scheduleNotes ?? "")) return null;

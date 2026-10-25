@@ -185,3 +185,52 @@ it("keeps both explicitly allowed weekdays and preserves unknown schedules", asy
     "Next pickup window not verified",
   );
 });
+
+describe("approved community hotspots in AI comparison", () => {
+  const hotspot = site("community-hotspot:fixture", {
+    name: "Fixture community groceries",
+    verificationStatus: "needs-confirmation",
+    pedestrianPickup: "unknown",
+    communityHotspot: {
+      recordId: "fixture",
+      startsAt: "2026-10-25T13:00:00Z",
+      endsAt: "2026-10-25T15:00:00Z",
+    },
+    hours: "Organizer reports one-time Sunday pickup; confirm before visiting.",
+  });
+  it("offers an approved hotspot even when six confirmed sites precede it, with honest model evidence", async () => {
+    const generate = vi.fn().mockResolvedValue(response([hotspot.id]));
+    const result = await rankFoodWithAI("food in Bryan", {
+      resources: [
+        ...Array.from({ length: 8 }, (_, i) => site(String(i))),
+        hotspot,
+      ],
+      now,
+      generate,
+    });
+    expect(result.status).toBe("available");
+    if (result.status !== "available")
+      throw new Error("Expected AI comparison");
+    expect(result.ranking[0].id).toBe(hotspot.id);
+    const prompt = generate.mock.calls[0][0].prompt;
+    expect(prompt).toContain(hotspot.id);
+    expect(prompt).toContain("not independently verified");
+    expect(prompt).toContain("Organizer-reported");
+  });
+  it("excludes expired and day-incompatible hotspots from the model candidate set", async () => {
+    const generate = vi.fn();
+    const expired = await rankFoodWithAI("food in Bryan", {
+      resources: [hotspot],
+      now: new Date("2026-10-25T15:00:00Z"),
+      generate,
+    });
+    expect(expired.status).toBe("unavailable");
+    const wrongDay = await rankFoodWithAI("food in Bryan only Tuesday", {
+      resources: [hotspot],
+      now,
+      generate,
+    });
+    expect(wrongDay.status).toBe("unavailable");
+    expect(generate).not.toHaveBeenCalled();
+  });
+});

@@ -732,9 +732,11 @@ export function SimpleFoodFinder(props: Props) {
                 <div className={styles.cardTop}>
                   <span>
                     <Check size={15} aria-hidden="true" />
-                    {resource.verificationStatus === "confirmed-site"
-                      ? "Pickup site checked"
-                      : "Location needs confirmation"}
+                    {resource.communityHotspot
+                      ? "Community food hotspot · confirm details"
+                      : resource.verificationStatus === "confirmed-site"
+                        ? "Pickup site checked"
+                        : "Location needs confirmation"}
                   </span>
                   <button
                     className="btn btn-ghost"
@@ -777,12 +779,18 @@ export function SimpleFoodFinder(props: Props) {
                 <p>{summary.offering}</p>
                 <p className={styles.when}>
                   <strong>
-                    {summary.availabilityLabel ===
-                    "Published distribution window"
-                      ? "A published distribution window is in progress. Call to confirm."
-                      : next
-                        ? `Next published start: ${next.label} (Central time)`
-                        : "Call to check the next pickup time."}
+                    {resource.communityHotspot &&
+                    now &&
+                    Date.parse(resource.communityHotspot.startsAt) <=
+                      now.getTime() &&
+                    Date.parse(resource.communityHotspot.endsAt) > now.getTime()
+                      ? "The organizer reports a pickup window in progress. Confirm food availability before going."
+                      : summary.availabilityLabel ===
+                          "Published distribution window"
+                        ? "A published distribution window is in progress. Call to confirm."
+                        : next
+                          ? `Next published start: ${next.label} (Central time)`
+                          : "Call to check the next pickup time."}
                   </strong>
                 </p>
                 {metric ? (
@@ -888,12 +896,21 @@ export function SimpleFoodFinder(props: Props) {
                   >
                     View on map
                   </button>
-                  <button
-                    className={styles.textButton}
-                    onClick={() => props.onDetails(resource.id)}
-                  >
-                    More pantry details
-                  </button>
+                  {resource.communityHotspot ? (
+                    <a
+                      className={styles.textButton}
+                      href={`/food-hotspots#community-item-${encodeURIComponent(resource.communityHotspot.recordId)}`}
+                    >
+                      Community listing details
+                    </a>
+                  ) : (
+                    <button
+                      className={styles.textButton}
+                      onClick={() => props.onDetails(resource.id)}
+                    >
+                      More pantry details
+                    </button>
+                  )}
                   {!found.blockedMode && (
                     <button
                       className={styles.textButton}

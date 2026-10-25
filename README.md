@@ -130,3 +130,5 @@ See [OSM migration verification](docs/OSM-VERIFICATION.md), [independent verific
 Primary AI: [Run Llama 3.2 with Ollama](docs/LLAMA.md). The main food search uses Llama to compare and order matching pantry options by default. See [how pantry comparisons work](docs/AI-PANTRY-RANKING.md). Travel feasibility stays separate and computed; suggestions do not guarantee food availability.
 
 Latest interface loading and email cleanup: [implementation, checks and remaining release limits](docs/UI-POLISH.md), with [independent review](docs/QUALITY-REVIEW.md).
+
+Approved community food hotspots can now appear in the main pantry search and AI comparison, clearly labeled as community-reported. See [hotspot search eligibility and limitations](docs/HOTSPOT-SEARCH.md).

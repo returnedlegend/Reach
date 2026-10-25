@@ -41,6 +41,7 @@ const normalize = (text: string) =>
     .replace(/[\u0300-\u036f]/g, "")
     .toLowerCase();
 const pilot = (r: Resource) =>
+  !!r.communityHotspot ||
   /\b(?:bryan|college station)\b/i.test(`${r.city ?? ""} ${r.address}`);
 
 /** Small, transparent fallback. It interprets requests, never supplies new facts. */
@@ -128,6 +129,9 @@ export function discoverFood(
     );
   const allowed = resources.filter(
     (resource) =>
+      (!resource.communityHotspot ||
+        Date.parse(resource.communityHotspot.endsAt) >
+          (options.now ?? new Date()).getTime()) &&
       !deniedCities.some((city) =>
         new RegExp(`\\b${escapedCity(city)}\\b`).test(
           normalize(`${resource.city ?? ""} ${resource.address}`),
@@ -277,6 +281,13 @@ export function discoverFood(
     if (
       !sorted.some(({ resource, summary }) => {
         if (summary.availabilityLabel === "Published distribution window")
+          return true;
+        if (
+          resource.communityHotspot &&
+          Date.parse(resource.communityHotspot.startsAt) <=
+            options.now!.getTime() &&
+          Date.parse(resource.communityHotspot.endsAt) > options.now!.getTime()
+        )
           return true;
         const next = nextPublishedWindow(resource, options.now!);
         return next && localDay(new Date(next.startsAt)) === today;

@@ -5,6 +5,8 @@ import { pantryVerification } from "./pantry-verification";
 import { tx10ResourceMetadata } from "./tx10-pantries";
 import timetable from "./btd-timetable.json";
 export type Resource = {
+  /** Approved community distribution; not an independently verified pantry. */
+  communityHotspot?: { recordId: string; startsAt: string; endsAt: string };
   id: string;
   name: string;
   address: string;

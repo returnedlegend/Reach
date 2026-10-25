@@ -130,9 +130,15 @@ export function verifiedFacts(resource: Resource): VerifiedFacts {
 export function summarizeResource(resource: Resource, now?: Date): UserSummary {
   return {
     ...verifiedFacts(resource),
-    availabilityLabel: isPublishedWindow(resource, now)
-      ? "Published distribution window"
-      : "Check before visiting",
+    availabilityLabel: resource.communityHotspot
+      ? now &&
+        Date.parse(resource.communityHotspot.startsAt) <= now.getTime() &&
+        Date.parse(resource.communityHotspot.endsAt) > now.getTime()
+        ? "Organizer-reported pickup window · confirm availability"
+        : "Scheduled community pickup · confirm availability"
+      : isPublishedWindow(resource, now)
+        ? "Published distribution window"
+        : "Check before visiting",
   };
 }
 

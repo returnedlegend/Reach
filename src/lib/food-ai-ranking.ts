@@ -61,6 +61,19 @@ export async function rankFoodWithAI(
         )
       : [];
   const fitsKnownDay = (resource: Resource) => {
+    if (resource.communityHotspot && requestedDays.length) {
+      const weekday = (instant: number) =>
+        new Intl.DateTimeFormat("en-US", {
+          timeZone: "America/Chicago",
+          weekday: "long",
+        })
+          .format(new Date(instant))
+          .toLowerCase();
+      return [
+        Date.parse(resource.communityHotspot.startsAt),
+        Date.parse(resource.communityHotspot.endsAt) - 1,
+      ].some((time) => requestedDays.includes(dayNames.indexOf(weekday(time))));
+    }
     const windows = resource.windows ?? [];
     if (
       !requestedDays.length ||
@@ -78,23 +91,33 @@ export async function rankFoodWithAI(
           : requestedDays.includes(rule.weekday),
     );
   };
-  // Unconfirmed pins and mismatched alternatives cannot become top AI picks.
-  const matches = found.matches
-    .filter(
-      ({ resource }) =>
-        resource.verificationStatus === "confirmed-site" &&
-        fitsKnownDay(resource) &&
-        !(
-          found.mode !== "driving" &&
-          resource.pedestrianPickup === "not-allowed"
-        ),
-    )
-    .slice(0, 6);
+  // Only confirmed directory sites or approved community distributions are eligible.
+  // Community reports remain explicitly unverified facts, never instructions.
+  const eligible = found.matches.filter(
+    ({ resource }) =>
+      (resource.verificationStatus === "confirmed-site" ||
+        !!resource.communityHotspot) &&
+      fitsKnownDay(resource) &&
+      !(
+        found.mode !== "driving" && resource.pedestrianPickup === "not-allowed"
+      ),
+  );
+  // Reserve space for up to two community options so directory trust ordering
+  // cannot hide every hotspot before the model sees the candidates.
+  const community = eligible
+    .filter(({ resource }) => resource.communityHotspot)
+    .slice(0, 2);
+  const matches = [
+    ...eligible
+      .filter(({ resource }) => !resource.communityHotspot)
+      .slice(0, 6 - community.length),
+    ...community,
+  ];
   if (found.blockedMode || !matches.length)
     return {
       status: "unavailable" as const,
       message:
-        "No confirmed matching pickup sites are available for AI comparison. Directory alternatives remain below.",
+        "No eligible matching pickup sites are available for AI comparison. Directory alternatives remain below.",
     };
   const candidates = matches.map(({ resource, summary }) => {
     const next = nextPublishedWindow(resource, now);
@@ -106,7 +129,9 @@ export async function rankFoodWithAI(
         schedule: `${summary.availabilityLabel}. ${resource.hours}. ${next ? `Next published window: ${next.label} (Central time).` : "Next pickup window not verified."}`,
         requirements: resource.eligibility || "Requirements not verified.",
         access: `${resource.accessibility || "Accessibility not verified."} Pickup on foot: ${resource.pedestrianPickup ?? "unknown"}.`,
-        verification: `Pickup site confirmed. ${resource.detailsNeedConfirmation ? "Other details need confirmation." : ""} Sources checked: ${[...new Set(resource.sources.map((s) => s.checkedOn ?? "unknown"))].join(", ")}`,
+        verification: resource.communityHotspot
+          ? "Community food hotspot approved for publication. Organizer-reported location and pickup window; not independently verified. Confirm before traveling."
+          : `Pickup site confirmed. ${resource.detailsNeedConfirmation ? "Other details need confirmation." : ""} Sources checked: ${[...new Set(resource.sources.map((s) => s.checkedOn ?? "unknown"))].join(", ")}`,
       },
     };
   });

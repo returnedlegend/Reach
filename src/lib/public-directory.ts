@@ -4,6 +4,8 @@ import {
   openPantryDatabase,
 } from "./pantry-store";
 import type { Resource } from "@/data/resources";
+import { listHotspotResources } from "./hotspot-resources";
+import { featureEnabled } from "./release-features";
 import type { Pantry } from "./types";
 
 /** Public results always come from the active database, never a stale seed fallback. */
@@ -15,7 +17,10 @@ export function publicDirectory(): {
   try {
     const db = openPantryDatabase();
     return {
-      resources: listPantryResources(db),
+      resources: [
+        ...listPantryResources(db),
+        ...(featureEnabled("community") ? listHotspotResources(db) : []),
+      ],
       pantries: listPlannerPantries(db),
       error: "",
     };

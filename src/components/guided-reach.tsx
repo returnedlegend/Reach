@@ -948,14 +948,15 @@ export function GuidedReach({
           <p>{summary.requirements}</p>
           <p>{summary.accessibilityLabel}</p>
         </details>
-        {foodResources.some((pantry) => pantry.id === resource.id) && (
-          <button
-            className="btn btn-ghost reach-text-button"
-            onClick={() => setDetailId(resource.id)}
-          >
-            Pantry information & busy times
-          </button>
-        )}
+        {!resource.communityHotspot &&
+          foodResources.some((pantry) => pantry.id === resource.id) && (
+            <button
+              className="btn btn-ghost reach-text-button"
+              onClick={() => setDetailId(resource.id)}
+            >
+              Pantry information & busy times
+            </button>
+          )}
         {detailed && (
           <SourceDetails resource={resource} now={clock ?? undefined} />
         )}
@@ -1184,14 +1185,15 @@ export function GuidedReach({
               Ask Reach AI assistant
             </button>
           )}
-        {foodResources.some((pantry) => pantry.id === selected.id) && (
-          <button
-            className="btn btn-ghost reach-text-button"
-            onClick={() => setDetailId(selected.id)}
-          >
-            Pantry information & busy times
-          </button>
-        )}
+        {!selected.communityHotspot &&
+          foodResources.some((pantry) => pantry.id === selected.id) && (
+            <button
+              className="btn btn-ghost reach-text-button"
+              onClick={() => setDetailId(selected.id)}
+            >
+              Pantry information & busy times
+            </button>
+          )}
         <button
           className="btn btn-ghost reach-text-button"
           onClick={() => {
