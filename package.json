@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "node scripts/dev-community.mjs",
     "build": "next build",
-    "start": "next start --hostname 0.0.0.0",
+    "start": "node scripts/start-production.mjs",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:e2e": "node --import tsx node_modules/@playwright/test/cli.js test",

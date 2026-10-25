@@ -39,12 +39,20 @@ test.beforeEach(async ({ page }) => {
 
 async function startingLocation(page: Page) {
   await page.goto("/");
+  await page
+    .getByRole("button", {
+      name: "Step-by-step trip controls",
+      exact: true,
+    })
+    .click();
   await page.getByRole("button", { name: /^Food\b/ }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByText("Advanced: enter coordinates", { exact: true }).click();
 }
 
-async function pantryDirectory(page: Page): Promise<{ coordinates: unknown }[]> {
+async function pantryDirectory(
+  page: Page,
+): Promise<{ coordinates: unknown }[]> {
   const response = await page.request.get("/api/pantries?pageSize=100");
   expect(response.ok()).toBe(true);
   return (await response.json()).pantries;
@@ -184,7 +192,9 @@ test("tile outage leaves all pantry cards and coordinate correction usable witho
   );
   await foodOptions(page);
   const options = page.getByRole("region", { name: "Food assistance options" });
-  await expect(options.getByRole("article")).toHaveCount((await pantryDirectory(page)).length);
+  await expect(options.getByRole("article")).toHaveCount(
+    (await pantryDirectory(page)).length,
+  );
   await options
     .getByRole("button", { name: "Parkway Baptist", exact: true })
     .focus();
@@ -393,7 +403,10 @@ test("map provider failure is announced and retry restores real rendering", asyn
     map
       .getByRole("list", { name: "Map pantry alternatives" })
       .getByRole("button"),
-  ).toHaveCount((await pantryDirectory(page)).filter((resource) => resource.coordinates).length);
+  ).toHaveCount(
+    (await pantryDirectory(page)).filter((resource) => resource.coordinates)
+      .length,
+  );
   unavailable = false;
   await map.getByRole("button", { name: "Retry map", exact: true }).click();
   await expect(

@@ -59,6 +59,8 @@ import type {
 import { formatTime } from "@/lib/time";
 import { CORE_FEATURES, type PublicFeatures } from "@/lib/public-feature-types";
 import { serviceFreshness } from "@/lib/service-freshness";
+import { SimpleFoodFinder } from "./simple-food-finder";
+import { foodTripIsFresh, type CheckedFoodTrip } from "@/lib/food-trip";
 import styles from "./guided-reach.module.css";
 
 type Tab = "explore" | "map" | "community" | "saved";
@@ -163,6 +165,10 @@ export function GuidedReach({
       setCommunityLoaded(true);
   }, [tab]);
   const [step, setStep] = useState(0);
+  const [simpleExplore, setSimpleExplore] = useState(true);
+  const [simpleRequest, setSimpleRequest] = useState("");
+  const [checkedFoodTrip, setCheckedFoodTrip] =
+    useState<CheckedFoodTrip | null>(null);
   const flowPanel = useRef<HTMLElement>(null);
   const previousStep = useRef(step);
   useEffect(() => {
@@ -389,7 +395,7 @@ export function GuidedReach({
   useEffect(() => {
     setSaved(loadSavedItems());
     setClock(new Date());
-    const timer = setInterval(() => setClock(new Date()), 60_000);
+    const timer = setInterval(() => setClock(new Date()), 15_000);
     return () => clearInterval(timer);
   }, []);
   useEffect(() => {
@@ -422,6 +428,7 @@ export function GuidedReach({
     setRoute(null);
     setBusy(false);
     setSearchedAt("");
+    setCheckedFoodTrip(null);
   }
   function changeLocation(value: SelectedLocation) {
     if (
@@ -460,6 +467,7 @@ export function GuidedReach({
     const version = ++requestVersion.current;
     setBusy(true);
     setRoute(null);
+    setCheckedFoodTrip(null);
     const now = new Date(),
       local = chicagoNow(now);
     setSearchedAt(`${local.date} ${local.time} America/Chicago`);
@@ -598,6 +606,79 @@ export function GuidedReach({
     setNavigationActive(false);
     setPreviewOpen(false);
   }
+  function showCheckedFoodTrip(trip: CheckedFoodTrip) {
+    const out = trip.option.outbound;
+    if (!out) return;
+    routingEnabled.current = false;
+    clearRoute();
+    selectResource(trip.option.id);
+    const checkedMode =
+      out.mode ?? (out.source === "scheduled" ? "transit" : mode);
+    setMode(checkedMode);
+    setCheckedFoodTrip(trip);
+    setClock(new Date());
+    setRoute({
+      status: out.source === "scheduled" ? "scheduled" : "available",
+      label: "Checked itinerary — published times and routed estimates",
+      message: `Checked for ${trip.date} in America/Chicago. Distance and duration below describe the outbound leg. ${trip.option.returnJourney ? "The requested return is included in these instructions and map paths." : "No return itinerary was retrieved."}`,
+      ...(out.distanceMiles !== undefined
+        ? { distanceMiles: out.distanceMiles }
+        : {}),
+      ...(out.durationMinutes !== undefined
+        ? { durationMinutes: out.durationMinutes }
+        : {}),
+      paths: [
+        ...out.paths.map((p) => ({ ...p, id: `checked-out-${p.id}` })),
+        ...(trip.option.returnJourney?.paths ?? []).map((p) => ({
+          ...p,
+          id: `checked-back-${p.id}`,
+        })),
+      ],
+      steps: [
+        {
+          instruction: `Outbound: ${formatTime(out.departure)}–${formatTime(out.arrival)} Central time.`,
+        },
+        ...out.steps.map((instruction) => ({ instruction })),
+        ...(trip.option.serviceStart !== null && trip.option.serviceEnd !== null
+          ? [
+              {
+                instruction: `Modeled pantry visit: ${formatTime(trip.option.serviceStart)}–${formatTime(trip.option.serviceEnd)}. Confirm admission and food availability.`,
+              },
+            ]
+          : []),
+        ...(trip.option.returnJourney
+          ? [
+              {
+                instruction: `Return: ${formatTime(trip.option.returnJourney.departure)}–${formatTime(trip.option.returnJourney.arrival)} Central time.`,
+              },
+              ...trip.option.returnJourney.steps.map((instruction) => ({
+                instruction,
+              })),
+            ]
+          : []),
+      ],
+      attribution: [
+        ...new Map(
+          [
+            ...out.attribution,
+            ...(trip.option.returnJourney?.attribution ?? []),
+          ].map((a) => [a.url, a]),
+        ).values(),
+      ],
+    });
+    setPreviewOpen(false);
+    setDetailId(null);
+    setNavigationActive(true);
+    setDirectionsVisible(true);
+    setSheetExpanded(true);
+    setTab("map");
+    requestAnimationFrame(() => directionsHeading.current?.focus());
+  }
+  function recheckFoodOptions() {
+    endDirections();
+    setSimpleExplore(true);
+    setTab("explore");
+  }
   function persist(next: SavedItems) {
     if (!storeSavedItems(next)) {
       setNotice(
@@ -688,8 +769,11 @@ export function GuidedReach({
     const anchor = document.createElement("a");
     anchor.href = url;
     anchor.download = "reach-saved-trip.txt";
+    document.body.appendChild(anchor);
     anchor.click();
-    URL.revokeObjectURL(url);
+    anchor.remove();
+    // Keep the blob alive until the browser has started the download.
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   async function shareResource(resource: Resource) {
     const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resource.coordinates ? `${resource.coordinates.lat},${resource.coordinates.lng}` : resource.address)}`;
@@ -1112,6 +1196,7 @@ export function GuidedReach({
           onClick={() => {
             setPreviewOpen(false);
             setTab("explore");
+            setSimpleExplore(false);
             setStep(location ? 3 : 1);
           }}
         >
@@ -1244,6 +1329,7 @@ export function GuidedReach({
             onClick={() => {
               setPreviewOpen(false);
               setTab(id);
+              if (id === "explore") setSimpleExplore(true);
             }}
           >
             <Icon size={21} />
@@ -1253,7 +1339,29 @@ export function GuidedReach({
       </nav>
       <div className="reach-content">
         {directoryError && <p role="alert">{directoryError}</p>}
-        {tab === "explore" && (
+        {tab === "explore" && simpleExplore && (
+          <SimpleFoodFinder
+            resources={foodResources}
+            location={location}
+            onLocationChange={changeLocation}
+            mode={mode}
+            onModeChange={(value) => {
+              clearRoute();
+              setMode(value);
+            }}
+            onDirections={startDirections}
+            onCheckedDirections={showCheckedFoodTrip}
+            initialRequest={simpleRequest}
+            onRequestChange={setSimpleRequest}
+            onDetails={setDetailId}
+            onSave={toggleSaved}
+            savedIds={saved.resourceIds}
+            onAdvanced={() => setSimpleExplore(false)}
+            aiAvailable={features.ai}
+            directoryError={directoryError}
+          />
+        )}
+        {tab === "explore" && !simpleExplore && (
           <>
             <section
               className={`reach-intro ${styles.hero} ${step > 0 ? styles.heroCompact : ""}`}
@@ -1650,6 +1758,7 @@ export function GuidedReach({
                 className="btn btn-outline reach-action"
                 onClick={() => {
                   setTab("explore");
+                  setSimpleExplore(false);
                   advance(1);
                 }}
               >
@@ -1819,19 +1928,79 @@ export function GuidedReach({
                               </span>
                             </aside>
                           )}
-                        <button
-                          className="btn btn-primary reach-primary"
-                          disabled={busy || !location || !selected.coordinates}
-                          onClick={() => {
-                            routingEnabled.current = true;
-                            setRouteRequest((value) => value + 1);
-                          }}
-                        >
-                          {route
-                            ? "Recalculate directions"
-                            : "Calculate route here"}
-                        </button>
-                        {mode === "transit" && (
+                        {checkedFoodTrip ? (
+                          <>
+                            <p>
+                              Checked at{" "}
+                              {new Date(
+                                checkedFoodTrip.checkedAt,
+                              ).toLocaleTimeString("en-US", {
+                                timeZone: "America/Chicago",
+                              })}{" "}
+                              Central time. This is a saved calculation, not
+                              live guidance.
+                            </p>
+                            {clock &&
+                              !foodTripIsFresh(
+                                {
+                                  options: [checkedFoodTrip.option],
+                                  recommendation: {
+                                    selectedId: checkedFoodTrip.option.id,
+                                  },
+                                  searchedAt: checkedFoodTrip.checkedAt,
+                                  planningDate: checkedFoodTrip.date,
+                                },
+                                new Date(
+                                  +clock + (checkedFoodTrip.clockOffsetMs ?? 0),
+                                ),
+                              ) && (
+                                <p role="alert">
+                                  This trip check has expired. Recheck before
+                                  relying on a departure or pickup time.
+                                </p>
+                              )}
+                            <button
+                              className="btn btn-primary reach-primary"
+                              onClick={recheckFoodOptions}
+                            >
+                              {mode === "transit"
+                                ? "Missed a bus? Recheck food options"
+                                : "Recheck food options"}
+                            </button>
+                            <details className="reach-disclosure">
+                              <summary>
+                                Checked requirements and assumptions
+                              </summary>
+                              <ul>
+                                {[
+                                  ...new Set([
+                                    ...checkedFoodTrip.assumptions,
+                                    ...checkedFoodTrip.option.reasons,
+                                    ...checkedFoodTrip.option.warnings,
+                                  ]),
+                                ].map((item) => (
+                                  <li key={item}>{item}</li>
+                                ))}
+                              </ul>
+                            </details>
+                          </>
+                        ) : (
+                          <button
+                            className="btn btn-primary reach-primary"
+                            disabled={
+                              busy || !location || !selected.coordinates
+                            }
+                            onClick={() => {
+                              routingEnabled.current = true;
+                              setRouteRequest((value) => value + 1);
+                            }}
+                          >
+                            {route
+                              ? "Recalculate directions"
+                              : "Calculate route here"}
+                          </button>
+                        )}
+                        {mode === "transit" && !checkedFoodTrip && (
                           <button
                             className="btn btn-outline reach-action"
                             disabled={

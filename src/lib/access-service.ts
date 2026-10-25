@@ -153,6 +153,8 @@ export function createAccessHandler(
     pantriesOnly?: boolean;
     routeFactory?: typeof accessJourneyLookup;
     now?: () => Date;
+    /** Internal search scope. A client cannot add or mutate pantry records. */
+    pantryIds?: ReadonlySet<string>;
   } = {},
 ) {
   return async (request: Request) => {
@@ -173,7 +175,11 @@ export function createAccessHandler(
       const db = openPantryDatabase(databasePath),
         now = handlerOptions.now?.() ?? new Date(),
         actor = getAccountActor(db, request, now);
-      const resources = listPantryResources(db),
+      const resources = listPantryResources(db).filter(
+          (resource) =>
+            !handlerOptions.pantryIds ||
+            handlerOptions.pantryIds.has(resource.id),
+        ),
         pantries = listPlannerPantries(db);
       const configuredLimit = process.env.REACH_ACCESS_CANDIDATES ?? "8";
       if (!/^[1-9]\d*$/.test(configuredLimit) || Number(configuredLimit) > 24)

@@ -124,15 +124,13 @@ test("saving in embedded pantry details updates Saved immediately without a relo
     .getByRole("button", { name: "Use these coordinates", exact: true })
     .click();
   await page
-    .getByRole("button", { name: "Find food near me", exact: true })
-    .click();
-  await page
-    .getByRole("button", { name: "Brazos Church Pantry", exact: true })
-    .click();
+    .getByLabel("What do you need?", { exact: true })
+    .fill("Brazos Church Pantry");
+  await page.getByRole("button", { name: "Find food", exact: true }).click();
   await page
     .getByRole("article", { name: "Brazos Church Pantry", exact: true })
     .getByRole("button", {
-      name: "Pantry information & busy times",
+      name: "More pantry details",
       exact: true,
     })
     .first()

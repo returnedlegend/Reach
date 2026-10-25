@@ -3,6 +3,9 @@ import { readFile } from "node:fs/promises";
 
 async function choosePantry(page: import("@playwright/test").Page) {
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Step-by-step trip controls", exact: true })
+    .click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   const picker = page.getByRole("region", {
     name: "Choose a starting location",
@@ -119,6 +122,9 @@ test("denied location and blocked storage keep manual discovery usable", async (
     };
   });
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Step-by-step trip controls", exact: true })
+    .click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   const picker = page.getByRole("region", {
     name: "Choose a starting location",

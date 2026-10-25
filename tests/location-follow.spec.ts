@@ -2,6 +2,9 @@ import { expect, test, type Page } from "@playwright/test";
 
 async function openPicker(page: Page) {
   await page.goto("/");
+  await page
+    .getByRole("button", { name: "Step-by-step trip controls", exact: true })
+    .click();
   await page.getByRole("button", { name: /^Food\b/ }).click();
   await page.getByRole("button", { name: "Continue", exact: true }).click();
   await page.getByText("Advanced: enter coordinates", { exact: true }).click();

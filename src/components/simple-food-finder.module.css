@@ -1,0 +1,412 @@
+.finder {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-bottom: 42px;
+  color: var(--color-base-content);
+}
+.welcome {
+  max-width: 670px;
+  padding: 8px 0 12px;
+}
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-primary);
+  font-size: 11px;
+  font-weight: 750;
+  letter-spacing: 0.08em;
+}
+.welcome h1 {
+  margin: 15px 0 12px;
+  font-size: clamp(38px, 6vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+.welcome h1 span {
+  color: var(--color-primary);
+}
+.welcome > p {
+  max-width: 470px;
+  margin-bottom: 22px;
+  font-size: 18px;
+  line-height: 1.5;
+}
+.ask {
+  display: grid;
+  padding: 12px;
+  gap: 12px;
+  border: 1px solid var(--color-base-300);
+  border-radius: 20px;
+  background: var(--color-base-100);
+  box-shadow: 0 10px 35px #0000000d;
+}
+.ask label {
+  font-weight: 700;
+  font-size: 15px;
+}
+.ask textarea {
+  width: 100%;
+  min-height: 64px;
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--color-base-200);
+  border: 1px solid var(--color-base-300);
+  color: inherit;
+  resize: vertical;
+  font: inherit;
+  font-size: 17px;
+  line-height: 1.5;
+}
+.ask button {
+  min-height: 50px;
+  justify-content: center;
+  font-size: 16px;
+  border-radius: 12px;
+}
+.finder :global(.btn) {
+  min-height: 46px;
+  height: auto;
+  white-space: normal;
+}
+.finder button:focus-visible,
+.finder a:focus-visible,
+.finder textarea:focus-visible,
+.finder summary:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 3px;
+}
+.chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.chips button {
+  border-radius: 99px;
+  font-weight: 550;
+  padding: 10px 16px;
+}
+.aiChoice {
+  display: flex;
+  gap: 10px;
+  align-items: start;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.aiChoice input {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+.start {
+  margin: 6px 0 32px;
+  padding: 20px;
+  background: var(--color-base-200);
+  border-radius: 18px;
+  border: 1px solid var(--color-base-300);
+}
+.start h2 {
+  margin: 0 0 6px;
+  font-size: 19px;
+  letter-spacing: -0.02em;
+}
+.start > div > p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.start :global(.location-picker) {
+  margin: 12px 0 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+.start :global(.location-picker) > p:first-child {
+  display: none;
+}
+.start :global(.location-picker) > button:first-of-type {
+  margin-bottom: 8px;
+  width: 100%;
+  border-radius: 12px;
+}
+.start :global(.location-address-disclosure) {
+  padding: 0 0 5px;
+}
+.start summary {
+  min-height: 44px;
+  padding: 12px 0;
+  cursor: pointer;
+  font-size: 14px;
+}
+.start :global(.location-advanced) {
+  font-size: 13px;
+}
+.start :global(.location-advanced):not([open]) {
+  margin-top: 0;
+}
+.start :global(.location-picker) form {
+  display: flex;
+  flex-wrap: wrap;
+}
+.start :global(.location-picker) form label {
+  min-width: 180px;
+  flex: 1;
+}
+.travel {
+  display: flex;
+  gap: 8px;
+  margin-top: 15px;
+  padding: 0;
+  border: 0;
+  flex-wrap: wrap;
+}
+.travel legend {
+  font-size: 14px;
+  font-weight: 650;
+  margin-bottom: 9px;
+}
+.travel button {
+  flex: 1;
+}
+.travel button[aria-pressed="true"] {
+  color: var(--color-primary-content);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.resultHeading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 12px;
+}
+.resultHeading h2 {
+  scroll-margin-top: 90px;
+  margin: 8px 0 0;
+  font-size: 27px;
+  letter-spacing: -0.03em;
+}
+.resultHeading > span {
+  font-size: 13px;
+  white-space: nowrap;
+}
+.context,
+.feedback {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.context {
+  margin: 12px 0 18px;
+  max-width: 650px;
+}
+.feedback:empty {
+  display: none;
+}
+.feedback p {
+  margin: 12px 0;
+}
+.notice {
+  border-left: 3px solid var(--color-primary);
+  padding: 10px 14px;
+  background: var(--color-base-200);
+  border-radius: 0 10px 10px 0;
+}
+.cards {
+  display: grid;
+  gap: 16px;
+}
+.tripCheck {
+  padding: 18px;
+  margin: 18px 0;
+  border-radius: 16px;
+  border: 1px solid var(--color-base-300);
+  background: var(--color-base-200);
+}
+.tripCheck h3 {
+  margin: 8px 0;
+  font-size: 21px;
+}
+.tripCheck p,
+.tripCheck li {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.tripCheck summary {
+  min-height: 46px;
+  padding: 12px 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+.card {
+  padding: 22px;
+  background: var(--color-base-100);
+  border: 1px solid var(--color-base-300);
+  border-radius: 20px;
+}
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: -6px 0 4px;
+}
+.cardTop > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-primary);
+}
+.cardTop button {
+  flex-shrink: 0;
+  width: 46px;
+  padding: 0;
+}
+.card h3 {
+  margin: 0 0 10px;
+  font-size: 23px;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+}
+.card p {
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 10px 0;
+}
+.address {
+  display: flex;
+  gap: 7px;
+  align-items: start;
+}
+.address svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.when {
+  padding-top: 3px;
+}
+.distance {
+  font-weight: 650;
+}
+.card p.caution {
+  font-size: 13px;
+  padding: 10px 12px;
+  background: var(--color-base-200);
+  border-radius: 10px;
+}
+.cardActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 17px;
+}
+.cardActions a:first-child {
+  flex: 1;
+}
+.card p.caption {
+  font-size: 12px;
+  margin: 10px 0 16px;
+}
+.visit {
+  border-top: 1px solid var(--color-base-300);
+  border-bottom: 1px solid var(--color-base-300);
+}
+.visit summary {
+  padding: 14px 0;
+  min-height: 48px;
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.visit a {
+  display: block;
+  padding: 10px 0;
+  text-decoration: underline;
+  color: var(--color-primary);
+  overflow-wrap: anywhere;
+}
+.more {
+  display: flex;
+  gap: 14px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.textButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.showMore {
+  width: 100%;
+  margin: 18px 0 0;
+  border-radius: 12px;
+}
+.help {
+  padding: 22px 0 12px;
+  margin-top: 20px;
+  border-top: 1px solid var(--color-base-300);
+}
+.help h3 {
+  margin: 0;
+  font-size: 19px;
+}
+.help p {
+  font-size: 14px;
+  line-height: 1.5;
+}
+.help > div {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.help > div > a:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-height: 44px;
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+@media (min-width: 780px) {
+  .cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+  .cards > :first-child {
+    grid-column: 1 / -1;
+  }
+  .start {
+    max-width: 670px;
+  }
+}
+@media (max-width: 420px) {
+  .card {
+    padding: 17px;
+  }
+  .cardActions a:first-child {
+    flex-basis: 100%;
+  }
+  .welcome {
+    padding-top: 0;
+  }
+  .welcome > p {
+    font-size: 16px;
+  }
+  .start {
+    padding: 16px;
+  }
+  .eyebrow {
+    font-size: 10px;
+  }
+}

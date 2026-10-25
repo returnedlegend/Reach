@@ -12,7 +12,7 @@ concurrency:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,5 +26,29 @@ jobs:
           python-version: "3.12"
       - run: npm ci
       - run: npm run check
+      - name: Install Chromium for browser smoke tests
+        run: npx playwright install --with-deps chromium
+      - name: Run core release browser smoke tests
+        env:
+          REACH_RELEASE_PROFILE: core
+          REACH_APP_ORIGIN: http://localhost:3000
+        run: >-
+          npm run test:e2e --
+          tests/simple-food.spec.ts
+          tests/simple-food-trip.spec.ts
+          tests/release-journey.spec.ts
+          tests/theme-default.spec.ts
+          tests/pantry-recommendation.spec.ts
+          tests/location-follow.spec.ts
+          --project=mobile
+          --project=desktop
       - name: Build the production image without runtime credentials
         run: docker build --tag reach:ci .
+      - name: Upload browser failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: browser-smoke-failures
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 7
