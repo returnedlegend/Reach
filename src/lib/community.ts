@@ -500,6 +500,48 @@ export function createModerator(
   });
 }
 
+/** Trusted local administration only; never exposed as a public API. */
+export function setSoleModerator(email: string, path?: string) {
+  const address = z.string().trim().toLowerCase().email().max(254).parse(email);
+  const db = openCommunityDatabase(path);
+  return transaction(db, () => {
+    const target = get(
+      db,
+      "SELECT id,email_verified_at FROM users WHERE lower(email)=?",
+      address,
+    );
+    if (!target?.email_verified_at)
+      throw new Error(
+        "Sign in with this email and verify it first. No moderator roles were changed.",
+      );
+    const others = all(
+      db,
+      "SELECT id FROM users WHERE role='moderator' AND id<>?",
+      String(target.id),
+    );
+    for (const other of others) {
+      db.prepare("UPDATE users SET role='resident' WHERE id=?").run(other.id);
+      db.prepare("DELETE FROM sessions WHERE user_id=?").run(other.id);
+      audit(
+        db,
+        String(target.id),
+        "moderator-revoked",
+        String(other.id),
+        "Trusted sole-moderator assignment",
+      );
+    }
+    db.prepare("UPDATE users SET role='moderator' WHERE id=?").run(target.id);
+    audit(
+      db,
+      String(target.id),
+      "sole-moderator-assigned",
+      String(target.id),
+      "Trusted local administrator command",
+    );
+    return { revoked: others.length };
+  });
+}
+
 /** The optional database path makes real HTTP handlers testable against isolated databases. */
 export function createCommunityHandler(databasePath?: string) {
   return async function handle(

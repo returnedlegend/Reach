@@ -75,3 +75,17 @@ All paths below start with `/api/community`. Errors include a human-readable `{e
 Production release is blocked on verified email/contact ownership, password recovery and account lifecycle controls, abuse-resistant signup beyond this global limiter, durable hosting/backups and restore drills, trained staffed moderation and incident response, and legal review of food safety, liability, privacy, age policy, and retention. The current global limiter deliberately favors a small trusted development pilot and can be exhausted by one abusive visitor. It is not a public-scale abuse prevention system. There are no delivery, payment, chat, notification, nutritional guarantee, or emergency-service features. Manual moderation and user affirmations cannot establish food safety.
 
 Run `npx vitest run tests/community.test.ts tests/community-photo.test.ts` for backend security, privacy, status, transaction and image checks. HTTP/browser integration is checked separately against Next because its request URL may use the bind hostname.
+
+## Assign exactly one moderator
+
+A trusted server operator can make an existing, email-verified account the sole community moderator:
+
+```sh
+npm run community:admin -- set-sole-moderator owner@example.com
+```
+
+Run this on the same server/database used by Reach. If the application uses a custom database, explicitly set `REACH_COMMUNITY_DB` to that path for the command. The CLI uses the process environment and defaults to `.local/community.sqlite`; it does not automatically load `.env.local`.
+
+The command refuses missing or unverified accounts without changing roles. It atomically promotes the target, demotes other community moderators to residents, revokes their sessions and records an audit entry. It preserves accounts and posts; pantry administrator/manager roles are separate. Ordinary registration never grants moderator access. Sign in through the verified email identity (including configured Google sign-in) first. As with other privileged local tools, a server operator can change this assignment later.
+
+Hotspots remain available with organizer approval and moderator publication review. A moderator cannot approve their own submission; with a single moderator, other approved organizers submit posts for that moderator to review.
