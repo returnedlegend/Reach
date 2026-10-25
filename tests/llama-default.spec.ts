@@ -41,9 +41,7 @@ test("an unavailable model leaves real pantry results usable", async ({
     .getByLabel("What do you need?", { exact: true })
     .fill("Food in Bryan");
   await page.getByRole("button", { name: "Find food", exact: true }).click();
-  await expect(
-    page.getByText(/The AI service could not be reached/),
-  ).toBeVisible();
+  await expect(page.getByText(/Synthetic stopped model server/)).toBeVisible();
   await expect(
     page
       .getByRole("region", { name: "Places to try", exact: true })

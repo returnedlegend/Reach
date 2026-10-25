@@ -39,3 +39,27 @@ The food-search page previously skipped its API request when a server-rendered f
 The generic phrase “near me” is normalized to “nearby” before interpretation; it no longer trips the sensitive-location filter. Actual coordinates and addresses remain protected and the selected starting point is still used only by the planner.
 
 On October25, a real mobile-browser “Find food near me” request reached local Llama3.2 under the core profile with explicit AI enablement, returned `assistance: ai` and showed three maintained records. The updated655 unit tests,14 controlled browser cases, TypeScript, data validation and build passed. See [live evidence](evidence/llama-ai-fix-verification.json). The installed/deployed copy still needs this code and a running Ollama model service. No hosted deployment was performed by this fix.
+
+## Local development origin fix (October 25, 2026)
+
+The old generic “AI service could not be reached” banner also covered non-2xx
+responses from Reach itself, including origin rejection before inference.
+With `npm run dev`, a configured `http://127.0.0.1:3000` and browser
+`http://localhost:3000` could disagree. Anonymous food-search now accepts
+same-origin requests using either loopback alias in development, provided the
+configured origin is also local with matching protocol and port. Direct Host and
+request URL must be loopback; forwarded headers do not grant access.
+Production and account authentication keep their existing strict checks.
+For a configured public URL or different port, correct `REACH_APP_ORIGIN` to
+the intended site rather than bypassing validation.
+
+The UI now displays the bounded error returned by Reach, while retaining pantry
+results. This does not disguise an unavailable model as AI success.
+Verification: 665 unit tests, TypeScript, data validation and production build
+passed. Of 14 mobile/desktop controlled browser cases, 13 initially passed;
+one mobile click timed out and passed on an isolated rerun. A separate real
+mobile-browser submission using localhost against a development server configured
+for 127.0.0.1 returned HTTP 200 and `assistance: ai` from local Llama3.2.
+See [recorded live response](evidence/llama-local-origin.json).
+This environment's success does not establish that a user's separate local
+Ollama installation is running or has the model installed.

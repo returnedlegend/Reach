@@ -266,9 +266,11 @@ export function SimpleFoodFinder(props: Props) {
       if (version !== generation.current) return;
       if (!response.ok) {
         setAiMessage(
-          response.status === 429
-            ? "AI is busy. Please wait a moment and try again."
-            : "The AI service could not be reached. Your pantry results are still available.",
+          typeof data.error === "string" && data.error.trim()
+            ? `${data.error.slice(0, 300)} Your pantry results are still available.`
+            : response.status === 429
+              ? "AI is busy. Please wait a moment and try again."
+              : "Reach could not process the AI request. Your pantry results are still available.",
         );
         return;
       }

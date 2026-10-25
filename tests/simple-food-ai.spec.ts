@@ -60,9 +60,7 @@ test("failed AI keeps food results and discloses attempted interpretation", asyn
     .getByLabel("What do you need?", { exact: true })
     .fill("I need food in Bryan");
   await page.getByRole("button", { name: "Find food", exact: true }).click();
-  await expect(
-    page.getByText(/The AI service could not be reached/),
-  ).toBeVisible();
+  await expect(page.getByText(/Synthetic unavailable provider/)).toBeVisible();
   await expect(
     page
       .getByRole("region", { name: "Places to try", exact: true })
