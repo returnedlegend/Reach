@@ -146,3 +146,11 @@ The API independently enforces moderator access for records and photos.
 Food photos have a preview before submission, a private original-image link in
 review, and an explicit no-photo message when no attachment was saved. Optional
 test-ID images are separate and expire; they are not food photos.
+
+### Top-three AI comparison
+AI is prompted to select three suitable options, or fewer when fewer fit.
+Only validated model-selected IDs appear in the top-three comparison; other
+directory listings remain separately available. Comparison cards use stored
+pickup schedules, requirements, food and access facts, with explicit unknowns.
+Distances in this comparison are labeled straight-line estimates, not routing
+results. Selection does not guarantee food availability or eligibility.

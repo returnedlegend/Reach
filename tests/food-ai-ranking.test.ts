@@ -302,3 +302,19 @@ it("uses selected origin for approximate proximity without exposing coordinates 
   expect(prompt).not.toContain("30.67123");
   expect(prompt).not.toContain("-96.37123");
 });
+
+it("returns only the top three validated model selections", async () => {
+  const generate = vi.fn().mockResolvedValue(response(["d", "b", "a", "c"]));
+  const result = await rankFoodWithAI("food in Bryan", {
+    resources: ["a", "b", "c", "d"].map((id) => site(id)),
+    now,
+    generate,
+  });
+  expect(result.status).toBe("available");
+  if (result.status !== "available") throw new Error("Expected comparison");
+  expect(result.ranking.map((item) => item.id)).toEqual(["d", "b", "a"]);
+  expect(result.ranking.every((item) => item.reasons.length > 0)).toBe(true);
+  expect(generate.mock.calls[0][0].prompt).toContain(
+    "Return exactly three when at least three are suitable",
+  );
+});

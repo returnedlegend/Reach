@@ -410,3 +410,23 @@
     font-size: 10px;
   }
 }
+
+.comparisonGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+  margin-block: 1rem;
+}
+.comparisonCard {
+  border: 1px solid currentColor;
+  border-radius: 1rem;
+  padding: 1rem;
+  overflow-wrap: anywhere;
+}
+.comparisonCard dt {
+  font-weight: 700;
+  margin-top: 0.75rem;
+}
+.comparisonCard dd {
+  margin: 0.25rem 0 0.75rem;
+}

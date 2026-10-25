@@ -144,7 +144,17 @@ export function SimpleFoodFinder(props: Props) {
           return rank(a.resource.id) - rank(b.resource.id);
         })
       : directoryChoices;
-  const visible = showAll ? choices : choices.slice(0, 3);
+  const recommended = activeRanking
+    .flatMap((rank) => {
+      const match = found.matches.find((item) => item.resource.id === rank.id);
+      return match ? [match] : [];
+    })
+    .slice(0, 3);
+  const visible = showAll
+    ? choices
+    : activeRanking.length
+      ? recommended
+      : choices.slice(0, 3);
   const candidateKey = choices
     .slice(0, 3)
     .map((item) => item.resource.id)
@@ -538,6 +548,63 @@ export function SimpleFoodFinder(props: Props) {
                 ? `Showing matches for ${found.area}. Add your starting point for travel help.`
                 : "Showing selected central Texas pantries. Add your location or enter a city to narrow the list."}
         </p>
+        {recommended.length > 0 && (
+          <section aria-labelledby="ai-comparison-title">
+            <h3 id="ai-comparison-title">
+              Your top {recommended.length} AI{" "}
+              {recommended.length === 1 ? "option" : "options"}
+            </h3>
+            {recommended.length < 3 && (
+              <p>
+                AI selected fewer than three suitable matches. More directory
+                listings are available below.
+              </p>
+            )}
+            <p>
+              Compare reported details before choosing. Food availability is not
+              guaranteed.
+            </p>
+            <div className={styles.comparisonGrid}>
+              {recommended.map(
+                ({ resource, summary, straightLineMiles }, index) => (
+                  <article className={styles.comparisonCard} key={resource.id}>
+                    <h4>
+                      {index + 1}. {resource.name}
+                    </h4>
+                    <dl>
+                      <dt>Food</dt>
+                      <dd>{resource.shortOffering || summary.offering}</dd>
+                      <dt>Pickup times</dt>
+                      <dd>{resource.hours || "Hours not verified."}</dd>
+                      <dt>Requirements</dt>
+                      <dd>
+                        {resource.eligibility || "Requirements not verified."}
+                      </dd>
+                      <dt>Distance</dt>
+                      <dd>
+                        {straightLineMiles === undefined
+                          ? "Unknown — select a starting point; some pickup locations are approximate."
+                          : `${straightLineMiles.toFixed(1)} straight-line miles, not routed travel distance.`}
+                      </dd>
+                      <dt>Access</dt>
+                      <dd>
+                        {resource.accessibility ||
+                          "Accessibility not verified."}
+                      </dd>
+                    </dl>
+                    <button
+                      type="button"
+                      className="btn"
+                      onClick={() => props.onDirections(resource)}
+                    >
+                      Directions to option {index + 1}
+                    </button>
+                  </article>
+                ),
+              )}
+            </div>
+          </section>
+        )}
         <div aria-live="polite" className={styles.feedback}>
           {thinking && (
             <div>
@@ -962,7 +1029,7 @@ export function SimpleFoodFinder(props: Props) {
             );
           })}
         </div>
-        {!showAll && choices.length > 3 && (
+        {!showAll && choices.length > visible.length && (
           <button
             className={`btn btn-outline ${styles.showMore}`}
             onClick={() => setShowAll(true)}
