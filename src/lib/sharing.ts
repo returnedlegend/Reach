@@ -1,4 +1,4 @@
-import { MAX_PICKUP_WINDOW_MS } from "./sharing-policy";
+import { MAX_PICKUP_WINDOW_MS, pickupWindowError } from "./sharing-policy";
 import { createHash, randomUUID } from "node:crypto";
 import { z } from "zod";
 import type { DatabaseSync } from "node:sqlite";
@@ -125,22 +125,8 @@ function validatedData(
   const data = parsed.data as Record<string, unknown>,
     start = Date.parse(String(data.startsAt)),
     end = Date.parse(String(data.endsAt));
-  if (
-    !Number.isFinite(start) ||
-    !Number.isFinite(end) ||
-    start <= Date.now() ||
-    end <= Date.now() ||
-    end <= start ||
-    end - start > MAX_PICKUP_WINDOW_MS
-  )
-    throw Object.assign(
-      new Error("Choose a future pickup window lasting at most 7 days."),
-      { status: 400 },
-    );
-  if (start > Date.now() + 30 * 86400000)
-    throw Object.assign(new Error("Choose a pickup window within 30 days."), {
-      status: 400,
-    });
+  const windowError = pickupWindowError(start, end, Date.now());
+  if (windowError) throw Object.assign(new Error(windowError), { status: 400 });
   if (data.useBy) {
     const day = new Intl.DateTimeFormat("en-CA", {
       timeZone: "America/Chicago",

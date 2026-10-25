@@ -341,8 +341,9 @@ export function ShareFoodForm() {
               Pickup starts
               <input name="startsAt" type="datetime-local" required />
               <small>
-                Choose a future start within 30 days. Pickup can last up to 7
-                days; food must remain within its use-by date.
+                Pickup can already be underway or start within 30 days. It can
+                last up to 7 days and must end in the future, within the food’s
+                use-by date.
               </small>
             </label>
             <label>

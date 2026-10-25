@@ -102,6 +102,23 @@ afterEach(() => {
   rmSync(dir, { recursive: true, force: true });
 });
 describe("account-free sharing moderation", () => {
+  it("submits an ongoing one-day pickup instead of rejecting its past start", async () => {
+    const data = offer();
+    data.startsAt = new Date(Date.now() - 60000).toISOString();
+    data.endsAt = new Date(Date.parse(data.startsAt) + 86400000).toISOString();
+    const response = await postSharingSubmission(
+      new Request("https://reach.example/api/sharing/submissions", {
+        method: "POST",
+        headers: {
+          origin: "https://reach.example",
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(submission(randomUUID(), { data })),
+      }),
+    );
+    expect(response.status).toBe(201);
+  });
+
   it("blocks temporary-password moderators from private submissions", async () => {
     const db = openCommunityDatabase(path);
     db.prepare(

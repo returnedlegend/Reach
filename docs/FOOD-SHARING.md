@@ -95,7 +95,8 @@ Forwarded headers are not trusted. Production still requires the configured
 canonical HTTPS origin. After pulling this fix, restart npm run dev.
 
 ### Pickup windows and review alerts
-Pickup windows may last up to seven days, with a future start within 30 days.
+Pickup windows may last up to seven days. They may already be underway, or start
+within the next 30 days; the end must still be in the future.
 Food must remain within its use-by date throughout pickup. This is a continuous
 pickup window, not a recurring daily schedule; choose times you can actually
 honor. The same duration limit applies at submission, approval, and discovery.
@@ -124,3 +125,8 @@ The first login redirects to `/admin/change-password`. Until changed, sharing
 review APIs reject access to submissions and private uploads. New passwords need
 at least 12 characters, and changing a password invalidates existing sessions.
 The admin page also links to the password-change page for later changes.
+
+Ongoing pickups are accepted even if their start passed while completing the
+form. Validation distinguishes ended pickups, reversed dates, invalid dates,
+starts too far ahead, and windows longer than seven days. All remain subject to
+moderator approval and use-by checks.
