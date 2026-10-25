@@ -1,3 +1,4 @@
+import sixtyCandidates from "../../data/research/sixty-tx10-candidates.json";
 import fiftyCandidates from "../../data/research/fifty-tx10-candidates.json";
 import newCandidates from "../../data/research/new-tx10-candidates.json";
 import candidates from "../../data/research/tx10-brazos-candidates.json";
@@ -68,8 +69,10 @@ const newIds = new Set(
     .filter((c) => c.coverage === "inside-119th-tx10")
     .map((c) => c.id),
 );
+const sixtyIds = new Set(sixtyCandidates.map((c) => c.id));
 const fiftyIds = new Set(fiftyCandidates.map((c) => c.id));
 const providerSpecific = (id: string) =>
+  sixtyIds.has(id) ||
   fiftyIds.has(id) ||
   id === "sealy-christian-pantry" ||
   regionalIds.has(id) ||
@@ -79,6 +82,31 @@ const scheduleRules: Record<
   string,
   { weekday: number; nth: number; opens: string; closes: string }[]
 > = {
+  "smithville-golden-harvest": [
+    { weekday: 5, nth: 2, opens: "09:00", closes: "11:00" },
+  ],
+  "smithville-community-garden-csfp": [
+    { weekday: 3, nth: 4, opens: "09:30", closes: "11:00" },
+  ],
+  "st-vincent-de-paul-round-rock": [1, 5].map((weekday) => ({
+    weekday,
+    nth: 0,
+    opens: "09:00",
+    closes: "12:00",
+  })),
+  "brookshire-pattison-food-pantry": [1, 3, 4].map((weekday) => ({
+    weekday,
+    nth: 0,
+    opens: "09:00",
+    closes: "11:30",
+  })),
+  "lake-travis-crisis-ministries": [
+    { weekday: 3, nth: 0, opens: "17:00", closes: "19:00" },
+    { weekday: 4, nth: 0, opens: "10:00", closes: "12:00" },
+  ],
+  "helping-hands-spicewood": [
+    { weekday: 2, nth: 0, opens: "16:00", closes: "18:00" },
+  ],
   "lexington-mobile-pantry": [
     { weekday: 2, nth: 1, opens: "10:00", closes: "11:00" },
   ],
@@ -222,6 +250,10 @@ const scheduleRules: Record<
 };
 
 const publishedServiceAreas: Record<string, string> = {
+  "lake-travis-crisis-ministries":
+    "People living or working within Lake Travis ISD",
+  "colorado-county-mobile-eagle-lake": "Colorado County",
+  "eagle-lake-food-pantry": "Colorado County",
   "anderson-food-pantry": "All counties",
   "bedias-food-pantry": "Grimes County",
   "christian-community-services-navasota": "Grimes County",
@@ -261,6 +293,7 @@ function asCandidate(c: unknown): Candidate {
 }
 
 const selected = [
+  ...sixtyCandidates.map(asCandidate),
   ...fiftyCandidates.map(asCandidate),
   ...newCandidates.filter((c) => newIds.has(c.id)).map(asCandidate),
   ...candidates
@@ -294,7 +327,10 @@ function sourceRefs(c: Candidate): SourceRef[] {
         "U.S. Census Geocoder — address-range point",
       url: c.coordinateSource.url,
       checkedOn:
-        expansionIds.has(c.id) || newIds.has(c.id) || fiftyIds.has(c.id)
+        expansionIds.has(c.id) ||
+        newIds.has(c.id) ||
+        fiftyIds.has(c.id) ||
+        sixtyIds.has(c.id)
           ? "2026-10-25"
           : "2026-10-22",
       verificationMethod: "website",

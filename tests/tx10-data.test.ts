@@ -73,7 +73,7 @@ describe("TX-10 pantry admissions", () => {
   });
 
   it("retains source dates, address metadata and honest schedule uncertainty", () => {
-    expect(foodResources).toHaveLength(53);
+    expect(foodResources).toHaveLength(66);
     for (const id of admittedIds) {
       const resource = foodResources.find((p) => p.id === id)!;
       expect(resource.sources.length, id).toBeGreaterThan(0);

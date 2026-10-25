@@ -7,7 +7,7 @@ describe("maintained pantry evidence", () => {
     expect(Object.keys(pantryVerification).sort()).toEqual(
       realPantries.map((p) => p.id).sort(),
     );
-    expect(new Set(foodResources.map((p) => p.id)).size).toBe(53);
+    expect(new Set(foodResources.map((p) => p.id)).size).toBe(66);
     for (const p of foodResources) {
       expect(
         p.sources.every(

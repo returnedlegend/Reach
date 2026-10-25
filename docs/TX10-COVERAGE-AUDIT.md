@@ -161,3 +161,24 @@ including production data validation, TypeScript, 660 unit tests across 80 files
 and the production build. The new admission regression checks boundary inclusion,
 search-by-name, and unique IDs for the reviewed expansions. These automated checks
 are separate from the independent official-source review above.
+
+## Follow-up expansion to 66 sites
+
+A broader official food-bank locator search yielded 13 additional distinct,
+in-district food-assistance sites. The directory now contains 66 maintained sites,
+including three explicitly restricted older-adult grocery programs. This is not a
+claim that all 66 are unrestricted walk-in pantries or that coverage is exhaustive.
+
+See [the independent 66-site review](TX10-SIXTY-REVIEW.md) for location/service IDs,
+source reconciliation, excluded summer-only programs and non-food offices, and
+remaining uncertainties. Raw selected location, food-program and schedule evidence
+is retained in `data/research/sixty-tx10-candidates.json`. The public source is the
+[Central Texas Food Bank locator](https://www.centraltexasfoodbank.org/find-food-now),
+including shared-network listings, with direct provider corroboration where available.
+
+`npm run check` passed: production validation (66 sites), TypeScript, 661 unit tests
+across 80 files, and production build. Regression checks cover district inclusion,
+name search, unique IDs, restricted-program wording and unmodeled ambiguous
+schedules. No live AI-provider request, on-site visit, or fresh browser run was
+performed for this data-only expansion. Food availability, pickup entrances and
+unpublished eligibility remain unverified.

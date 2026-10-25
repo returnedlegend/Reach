@@ -1,0 +1,2133 @@
+[
+  {
+    "id": "smithville-golden-harvest",
+    "name": "Meals on Wheels Rural Capital — Golden Harvest Senior Groceries",
+    "address": "106 Royston Street, Smithville, TX 78957",
+    "coordinates": {
+      "lat": 30.00867,
+      "lng": -97.16346
+    },
+    "hours": "Second Friday, 9–11 a.m.",
+    "offering": "Restricted older-adult grocery distribution. Apply at the distribution site and complete an eligibility process; this is not a general-access pantry.",
+    "eligibility": "Published program is for adults over 60 and requires an eligibility process. ID, address and income will be requested. Confirm enrollment, current income limits and whether nonresidents of the host site may attend.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 19929; selected food service IDs 26063. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel.",
+    "city": "Smithville",
+    "postalCode": "78957",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=19929%7C104&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=19929&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 19929 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19929,
+      "regionId": 104,
+      "serviceIds": [
+        26063
+      ],
+      "locationRecord": {
+        "locationId": 19929,
+        "organizationId": 15420,
+        "locationName": "Meals on Wheels Rural Capital",
+        "address1": "106 Royston Street",
+        "address2": "",
+        "city": "Smithville",
+        "state": "TX",
+        "zipCode": "78957    ",
+        "country": null,
+        "phone": "512-237-3282",
+        "latitude": 30.00867,
+        "longitude": -97.16346,
+        "serviceArea": "",
+        "website": "https://www.ccaction.com/meals-on-wheels-rural-capital-area",
+        "aboutUs": "",
+        "contactName": null,
+        "contactPhone": "",
+        "contactEmail": null,
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Older Adult Programs",
+        "regionId": 104,
+        "sendSmsInd": false,
+        "numMiles": 29.62,
+        "regionMapId": null,
+        "inNetWorkInd": 1,
+        "showBadge": true,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[{\"RegionId\":104,\"RegionName\":\"Central Texas Food Bank\",\"LogoBlobNameSmall\":\"74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png\",\"Website\":\"https:\\/\\/www.centraltexasfoodbank.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 104,
+            "regionName": "Central Texas Food Bank",
+            "logoBlobNameSmall": "74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png",
+            "website": "https://www.centraltexasfoodbank.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 26063,
+          "locationId": 19929,
+          "serviceName": "Golden Harvest",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 6,
+          "overview": "Adults over 60 years old can apply at the market-style pantry and undergo an eligibility process to pick nutritious, healthy food.\n**ID, Address, and Income will be requested.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Older Adult Programs",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 26063,
+          "dayOfWeek": 6,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Friday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 19929,
+          "notes": "",
+          "weeksOfMonth": " 2nd",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "phone": "512-237-3282",
+    "website": "https://www.ccaction.com/meals-on-wheels-rural-capital-area"
+  },
+  {
+    "id": "smithville-community-garden-csfp",
+    "name": "Smithville Community Garden — Senior Grocery Boxes (CSFP)",
+    "address": "107 SW 2nd St, Smithville, TX 78957",
+    "coordinates": {
+      "lat": 30.0048594,
+      "lng": -97.1618757
+    },
+    "hours": "Fourth Wednesday, 9:30–11 a.m.",
+    "offering": "Restricted older-adult grocery distribution. Apply at the distribution site and complete an eligibility process; this is not a general-access pantry.",
+    "eligibility": "Published program is for adults over 60 and requires an eligibility process. ID, address and income will be requested. Confirm enrollment, current income limits and whether nonresidents of the host site may attend.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 48288; selected food service IDs 58836. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel.",
+    "city": "Smithville",
+    "postalCode": "78957",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=48288%7C104&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=48288&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 48288 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 48288,
+      "regionId": 104,
+      "serviceIds": [
+        58836
+      ],
+      "locationRecord": {
+        "locationId": 48288,
+        "organizationId": 26170,
+        "locationName": "Smithville Community Garden ",
+        "address1": "107 SW 2nd St",
+        "address2": null,
+        "city": "Smithville",
+        "state": "TX",
+        "zipCode": "78957    ",
+        "country": null,
+        "phone": null,
+        "latitude": 30.0048594,
+        "longitude": -97.1618757,
+        "serviceArea": "",
+        "website": null,
+        "aboutUs": null,
+        "contactName": null,
+        "contactPhone": null,
+        "contactEmail": null,
+        "notes": null,
+        "contactPhoneExt": null,
+        "phoneExt": null,
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Older Adult Programs",
+        "regionId": 104,
+        "sendSmsInd": null,
+        "numMiles": 29.73,
+        "regionMapId": null,
+        "inNetWorkInd": 1,
+        "showBadge": true,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": null,
+        "networkAffiliations": "[]",
+        "networkAffiliationsList": []
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 58836,
+          "locationId": 48288,
+          "serviceName": "Smithville Community Garden CSFP",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 6,
+          "overview": "Adults over 60 years old can apply at the distribution site and undergo an eligibility process to receive a 25 to 30-pound box of nutritious, non-perishable groceries from this program. **ID, Address, and Income will be requested.",
+          "serviceArea": null,
+          "qualifications": null,
+          "notes": null,
+          "contactName": null,
+          "contactPhone": null,
+          "contactEmail": null,
+          "contactPhoneExt": null,
+          "activeInd": true,
+          "programAudience": null,
+          "intendedAudienceCode": null,
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Older Adult Programs",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": "",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 58836,
+          "dayOfWeek": 4,
+          "startTime": "1900-01-01T09:30:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Wednesday",
+          "startTimeDescr": "9:30 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 48288,
+          "notes": "",
+          "weeksOfMonth": " 4th",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "cambridge-villas-csfp",
+    "name": "Cambridge Villas Apartments — Senior Grocery Boxes (CSFP)",
+    "address": "15711 Dessau Rd., Pflugerville, TX 78660",
+    "coordinates": {
+      "lat": 30.431398,
+      "lng": -97.621026
+    },
+    "hours": "Directory lists Monday 9:30–10:30 a.m. with “1st” in a day-of-month field. Confirm the next distribution date; recurrence is not modeled.",
+    "offering": "Restricted older-adult grocery distribution. Apply at the distribution site and complete an eligibility process; this is not a general-access pantry.",
+    "eligibility": "Published program is for adults over 60 and requires an eligibility process. ID, address and income will be requested. Confirm enrollment, current income limits and whether nonresidents of the host site may attend.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 19429; selected food service IDs 25411. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel.",
+    "city": "Pflugerville",
+    "postalCode": "78660",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=19429%7C104&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=19429&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 19429 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19429,
+      "regionId": 104,
+      "serviceIds": [
+        25411
+      ],
+      "locationRecord": {
+        "locationId": 19429,
+        "organizationId": 15039,
+        "locationName": "Cambridge Villas Apartments",
+        "address1": "15711 Dessau Rd.",
+        "address2": "",
+        "city": "Pflugerville",
+        "state": "TX",
+        "zipCode": "78660    ",
+        "country": null,
+        "phone": "512-990-2348",
+        "latitude": 30.431398,
+        "longitude": -97.621026,
+        "serviceArea": "",
+        "website": "https://www.cambridgevillasseniorpflugerville.com/",
+        "aboutUs": "",
+        "contactName": null,
+        "contactPhone": "",
+        "contactEmail": null,
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Older Adult Programs",
+        "regionId": 104,
+        "sendSmsInd": false,
+        "numMiles": 49.79,
+        "regionMapId": null,
+        "inNetWorkInd": 1,
+        "showBadge": false,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[{\"RegionId\":104,\"RegionName\":\"Central Texas Food Bank\",\"LogoBlobNameSmall\":\"74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png\",\"Website\":\"https:\\/\\/www.centraltexasfoodbank.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 104,
+            "regionName": "Central Texas Food Bank",
+            "logoBlobNameSmall": "74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png",
+            "website": "https://www.centraltexasfoodbank.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 25411,
+          "locationId": 19429,
+          "serviceName": "CSFP",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 6,
+          "overview": "Adults over 60 years old can apply at the distribution site and undergo an eligibility process to receive a 25 to 30-pound box of nutritious, non-perishable groceries from this program.\n**ID, Address, and Income will be requested.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Older Adult Programs",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25411,
+          "dayOfWeek": 2,
+          "startTime": "1900-01-01T09:30:00",
+          "endTime": "1900-01-01T10:30:00",
+          "weekDayDescr": "Monday",
+          "startTimeDescr": "9:30 AM",
+          "endTimeDescr": "10:30 AM",
+          "locationId": 19429,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 1st",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    },
+    "phone": "512-990-2348",
+    "website": "https://www.cambridgevillasseniorpflugerville.com/"
+  },
+  {
+    "id": "new-prairie-view-baptist-san-felipe",
+    "name": "New Prairie View Baptist Church",
+    "address": "4795 Sealy Rd, San Felipe, TX 77473",
+    "coordinates": {
+      "lat": 29.7940407,
+      "lng": -96.0981296
+    },
+    "hours": "Directory lists Tuesday 11 a.m.–1 p.m. (“2nd, 4th”), Friday 11 a.m.–1 p.m. (“3rd”) and Saturday 9–11 a.m. (“1st”), with ordinals in day-of-month fields. Confirm actual dates; recurrence is not modeled. Senior-box hours are separate.",
+    "offering": "Mobile food distribution focused on fresh produce; other items may occasionally be available. Directory lists walk-in outdoor service.",
+    "eligibility": "Eligibility, documents and appointment requirements are not published in the selected service record; confirm with the provider.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 17042; selected food service IDs 22148. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel. Separate senior-box program is not included in the general pantry schedule.",
+    "city": "San Felipe",
+    "postalCode": "77473",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=17042%7C92&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=17042&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 17042 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 17042,
+      "regionId": 92,
+      "serviceIds": [
+        22148
+      ],
+      "locationRecord": {
+        "locationId": 17042,
+        "organizationId": 12993,
+        "locationName": "New Prairie View Baptist Church",
+        "address1": "4795 Sealy Rd",
+        "address2": "",
+        "city": "San Felipe",
+        "state": "TX",
+        "zipCode": "77473    ",
+        "country": null,
+        "phone": "979-885-6836",
+        "latitude": 29.7940407,
+        "longitude": -96.0981296,
+        "serviceArea": "",
+        "website": "https://thenewpvbc.org/",
+        "aboutUs": "New Prairie View Baptist Church&nbsp;is a distributing partner of the Houston Food Bank. See below for more information about the mobile food distribution and Senior Box programs at this location. ",
+        "contactName": "",
+        "contactPhone": "",
+        "contactEmail": "",
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": " Accepts Walk-Ins, CSFP Program, Indoor Service, Outdoor Service, Pre-Packed Boxes/Bags",
+        "serviceLanguages": " English",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Food Distribution",
+        "regionId": 92,
+        "sendSmsInd": false,
+        "numMiles": 54.64,
+        "regionMapId": null,
+        "inNetWorkInd": 0,
+        "showBadge": false,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": null,
+        "networkAffiliations": "[{\"RegionId\":92,\"RegionName\":\"Houston Food Bank\",\"LogoBlobNameSmall\":\"2359517e-6b3c-4083-af22-063f8be30f81.jpg\",\"Website\":\"https:\\/\\/www.houstonfoodbank.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 92,
+            "regionName": "Houston Food Bank",
+            "logoBlobNameSmall": "2359517e-6b3c-4083-af22-063f8be30f81.jpg",
+            "website": "https://www.houstonfoodbank.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 22148,
+          "locationId": 17042,
+          "serviceName": "New Prairie View Baptist Church Mobile Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Houston Food Bank mobile food distribution sites are locations where those in need can receive food. As part of our Fresh Forward initiative, mobile distributions focus on fresh produce - providing fruits and vegetables to support healthy eating. Other items may periodically be available in smaller amounts. Sites may be closed during major holidays or inclement weather.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "E",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "Accepts Walk-Ins, Outdoor Service",
+          "languages": "English",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": "",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 22148,
+          "dayOfWeek": 3,
+          "startTime": "1900-01-01T11:00:00",
+          "endTime": "1900-01-01T13:00:00",
+          "weekDayDescr": "Tuesday",
+          "startTimeDescr": "11:00 AM",
+          "endTimeDescr": "1:00 PM",
+          "locationId": 17042,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 2nd, 4th",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 22148,
+          "dayOfWeek": 3,
+          "startTime": "1900-01-01T11:00:00",
+          "endTime": "1900-01-01T13:00:00",
+          "weekDayDescr": "Tuesday",
+          "startTimeDescr": "11:00 AM",
+          "endTimeDescr": "1:00 PM",
+          "locationId": 17042,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 2nd, 4th",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 22148,
+          "dayOfWeek": 6,
+          "startTime": "1900-01-01T11:00:00",
+          "endTime": "1900-01-01T13:00:00",
+          "weekDayDescr": "Friday",
+          "startTimeDescr": "11:00 AM",
+          "endTimeDescr": "1:00 PM",
+          "locationId": 17042,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 3rd",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 22148,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 17042,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 1st",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "phone": "979-885-6836",
+    "website": "https://thenewpvbc.org/"
+  },
+  {
+    "id": "st-vincent-de-paul-round-rock",
+    "name": "St. Vincent De Paul Society Round Rock",
+    "address": "620 Round Rock West, Round Rock, TX 78681",
+    "coordinates": {
+      "lat": 30.50086,
+      "lng": -97.68818
+    },
+    "hours": "Monday and Friday, 9 a.m.–noon.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Provider describes assistance within parish boundaries; whether this restriction applies to food pickup needs confirmation. Call 512-255-2330 on arrival. Confirm other documents, residency and appointment requirements.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 19410; selected food service IDs 25384. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel. Provider directs visitors to Building 7 on the St. William campus and to call 512-255-2330 on arrival.",
+    "city": "Round Rock",
+    "postalCode": "78681",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=19410%7C104&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=19410&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "St. Vincent de Paul Round Rock — provider pantry instructions",
+        "url": "https://svdprr.com/",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 19410 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19410,
+      "regionId": 104,
+      "serviceIds": [
+        25384
+      ],
+      "locationRecord": {
+        "locationId": 19410,
+        "organizationId": 15022,
+        "locationName": "St. Vincent De Paul Society Round Rock",
+        "address1": "620 Round Rock West",
+        "address2": "",
+        "city": "Round Rock",
+        "state": "TX",
+        "zipCode": "78681    ",
+        "country": null,
+        "phone": "",
+        "latitude": 30.50086,
+        "longitude": -97.68818,
+        "serviceArea": "",
+        "website": "https://svdprr.com/",
+        "aboutUs": "",
+        "contactName": null,
+        "contactPhone": "",
+        "contactEmail": null,
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Food Distribution",
+        "regionId": 104,
+        "sendSmsInd": false,
+        "numMiles": 54.73,
+        "regionMapId": null,
+        "inNetWorkInd": 1,
+        "showBadge": false,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[{\"RegionId\":104,\"RegionName\":\"Central Texas Food Bank\",\"LogoBlobNameSmall\":\"74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png\",\"Website\":\"https:\\/\\/www.centraltexasfoodbank.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 104,
+            "regionName": "Central Texas Food Bank",
+            "logoBlobNameSmall": "74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png",
+            "website": "https://www.centraltexasfoodbank.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 25384,
+          "locationId": 19410,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25384,
+          "dayOfWeek": 2,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T12:00:00",
+          "weekDayDescr": "Monday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "12:00 PM",
+          "locationId": 19410,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        },
+        {
+          "locationServiceId": 25384,
+          "dayOfWeek": 6,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T12:00:00",
+          "weekDayDescr": "Friday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "12:00 PM",
+          "locationId": 19410,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    },
+    "website": "https://svdprr.com/"
+  },
+  {
+    "id": "colorado-county-mobile-eagle-lake",
+    "name": "Colorado County Mobile Food Distribution",
+    "address": "First United Methodist Church, 200 W Prairie Ave, Eagle Lake, TX 77434",
+    "coordinates": {
+      "lat": 29.59371,
+      "lng": -96.3314
+    },
+    "hours": "Directory lists Monday 8:30–11 a.m. with “2nd” in a day-of-month field. Call to register and confirm the next distribution date; recurrence is not modeled.",
+    "offering": "Mobile food distribution at First United Methodist Church; call 361-578-0591 to register.",
+    "eligibility": "Serves Colorado County. Registration by phone is required; other eligibility/documents need confirmation.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 6668; selected food service IDs 8392. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel. Directory ZIP suffix is incomplete (77434-173); normalized to its five-digit ZIP, with original retained in evidence.",
+    "city": "Eagle Lake",
+    "postalCode": "77434",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=6668%7C49&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=6668&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 6668 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 6668,
+      "regionId": 49,
+      "serviceIds": [
+        8392
+      ],
+      "locationRecord": {
+        "locationId": 6668,
+        "organizationId": 5649,
+        "locationName": "Colorado County Mobile Food Distribution",
+        "address1": "First United Methodist Church",
+        "address2": "200 W Prairie Ave",
+        "city": "Eagle Lake",
+        "state": "TX",
+        "zipCode": "77434-173",
+        "country": null,
+        "phone": "",
+        "latitude": 29.59371,
+        "longitude": -96.3314,
+        "serviceArea": "",
+        "website": null,
+        "aboutUs": "",
+        "contactName": "Connie",
+        "contactPhone": "361-578-0591",
+        "contactEmail": "",
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "COUNTY:  Colorado",
+        "servicePrograms": "",
+        "foodPrograms": " Food Distribution",
+        "regionId": 49,
+        "sendSmsInd": true,
+        "numMiles": 56.3,
+        "regionMapId": null,
+        "inNetWorkInd": 0,
+        "showBadge": true,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[{\"RegionId\":49,\"RegionName\":\"Food Bank of the Golden Crescent\",\"LogoBlobNameSmall\":\"285914fc-5ff8-4345-9007-442c69c1037d.png\",\"Website\":\"https:\\/\\/www.tfbgc.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 49,
+            "regionName": "Food Bank of the Golden Crescent",
+            "logoBlobNameSmall": "285914fc-5ff8-4345-9007-442c69c1037d.png",
+            "website": "https://www.tfbgc.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 8392,
+          "locationId": 6668,
+          "serviceName": "Mobile Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Call 361-578-0591 to register",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "Connie",
+          "contactPhone": "361-578-0591",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "COUNTY:  Colorado",
+          "programUrl": "",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": false
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 8392,
+          "dayOfWeek": 2,
+          "startTime": "1900-01-01T08:30:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Monday",
+          "startTimeDescr": "8:30 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 6668,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 2nd",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "phone": "361-578-0591"
+  },
+  {
+    "id": "eagle-lake-food-pantry",
+    "name": "Eagle Lake Food Pantry",
+    "address": "527 N Lake Ave, Eagle Lake, TX 77434",
+    "coordinates": {
+      "lat": 29.5910306,
+      "lng": -96.3286306
+    },
+    "hours": "Directory lists Monday 9–11 a.m. with “2nd, 4th” in a day-of-month field. Confirm actual dates; recurrence is not modeled.",
+    "offering": "Supplemental food pantry distribution; current stock and pickup format need confirmation.",
+    "eligibility": "Directory lists Colorado County service area. Documents, income limits and appointment requirements need confirmation.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 6690; selected food service IDs 8414. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel.",
+    "city": "Eagle Lake",
+    "postalCode": "77434",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=6690%7C49&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=6690&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 6690 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 6690,
+      "regionId": 49,
+      "serviceIds": [
+        8414
+      ],
+      "locationRecord": {
+        "locationId": 6690,
+        "organizationId": 5680,
+        "locationName": "Eagle Lake Food Pantry",
+        "address1": "527 N Lake Ave",
+        "address2": "",
+        "city": "Eagle Lake",
+        "state": "TX",
+        "zipCode": "77434    ",
+        "country": null,
+        "phone": "",
+        "latitude": 29.5910306,
+        "longitude": -96.3286306,
+        "serviceArea": "",
+        "website": "",
+        "aboutUs": "",
+        "contactName": "",
+        "contactPhone": "979-234-2571",
+        "contactEmail": "",
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "COUNTY:  Colorado",
+        "servicePrograms": "",
+        "foodPrograms": " Food Distribution",
+        "regionId": 49,
+        "sendSmsInd": false,
+        "numMiles": 56.55,
+        "regionMapId": null,
+        "inNetWorkInd": 0,
+        "showBadge": true,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": null,
+        "networkAffiliations": "[{\"RegionId\":49,\"RegionName\":\"Food Bank of the Golden Crescent\",\"LogoBlobNameSmall\":\"285914fc-5ff8-4345-9007-442c69c1037d.png\",\"Website\":\"https:\\/\\/www.tfbgc.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 49,
+            "regionName": "Food Bank of the Golden Crescent",
+            "logoBlobNameSmall": "285914fc-5ff8-4345-9007-442c69c1037d.png",
+            "website": "https://www.tfbgc.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 8414,
+          "locationId": 6690,
+          "serviceName": "Food Pantry",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "979-234-2571",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "COUNTY:  Colorado",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": false
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 8414,
+          "dayOfWeek": 2,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Monday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 6690,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 2nd, 4th",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 8414,
+          "dayOfWeek": 2,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T11:00:00",
+          "weekDayDescr": "Monday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "11:00 AM",
+          "locationId": 6690,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 2nd, 4th",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "phone": "979-234-2571"
+  },
+  {
+    "id": "hangar-unity-center-brookshire",
+    "name": "The Hangar Unity Center",
+    "address": "4010 4th St, Brookshire, TX 77423",
+    "coordinates": {
+      "lat": 29.78878,
+      "lng": -95.95336
+    },
+    "hours": "Directory lists Friday 7–9 a.m. (“4th”) and Saturday 11 a.m.–1 p.m. (“2nd”), with ordinals in day-of-month fields. Confirm actual dates; recurrence is not modeled.",
+    "offering": "Mobile food distribution focused on fresh produce; other items may occasionally be available. Directory lists walk-in outdoor service.",
+    "eligibility": "Eligibility, documents and appointment requirements are not published in the selected service record; confirm with the provider.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 17209; selected food service IDs 22363. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel.",
+    "city": "Brookshire",
+    "postalCode": "77423",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=17209%7C92&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=17209&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 17209 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 17209,
+      "regionId": 92,
+      "serviceIds": [
+        22363
+      ],
+      "locationRecord": {
+        "locationId": 17209,
+        "organizationId": 13122,
+        "locationName": "The Hangar Unity Center",
+        "address1": "4010 4th St",
+        "address2": null,
+        "city": "Brookshire",
+        "state": "TX",
+        "zipCode": "77423    ",
+        "country": null,
+        "phone": null,
+        "latitude": 29.78878,
+        "longitude": -95.95336,
+        "serviceArea": "",
+        "website": null,
+        "aboutUs": "The Hangar Unity Center&nbsp;hosts Eyes On Me, a distributing partner of the Houston Food Bank. See below for more information about the mobile food distribution at this location. ",
+        "contactName": null,
+        "contactPhone": null,
+        "contactEmail": null,
+        "notes": null,
+        "contactPhoneExt": null,
+        "phoneExt": null,
+        "foodServiceTypes": " Accepts Walk-Ins, Outdoor Service",
+        "serviceLanguages": " English",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Food Distribution",
+        "regionId": 92,
+        "sendSmsInd": null,
+        "numMiles": 61.76,
+        "regionMapId": null,
+        "inNetWorkInd": 0,
+        "showBadge": false,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[]",
+        "networkAffiliationsList": []
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 22363,
+          "locationId": 17209,
+          "serviceName": "Eyes On Me Mobile Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Houston Food Bank mobile food distribution sites are locations where those in need can receive food. As part of our Fresh Forward initiative, mobile distributions focus on fresh produce - providing fruits and vegetables to support healthy eating. Other items may periodically be available in smaller amounts. Sites may be closed during major holidays or inclement weather. ",
+          "serviceArea": null,
+          "qualifications": null,
+          "notes": null,
+          "contactName": null,
+          "contactPhone": null,
+          "contactEmail": null,
+          "contactPhoneExt": null,
+          "activeInd": true,
+          "programAudience": null,
+          "intendedAudienceCode": "E",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "Accepts Walk-Ins, Outdoor Service",
+          "languages": "English",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": "https://www.eyesonmeinc.com",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 22363,
+          "dayOfWeek": 6,
+          "startTime": "1900-01-01T07:00:00",
+          "endTime": "1900-01-01T09:00:00",
+          "weekDayDescr": "Friday",
+          "startTimeDescr": "7:00 AM",
+          "endTimeDescr": "9:00 AM",
+          "locationId": 17209,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 4th",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 22363,
+          "dayOfWeek": 7,
+          "startTime": "1900-01-01T11:00:00",
+          "endTime": "1900-01-01T13:00:00",
+          "weekDayDescr": "Saturday",
+          "startTimeDescr": "11:00 AM",
+          "endTimeDescr": "1:00 PM",
+          "locationId": 17209,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 2nd",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    }
+  },
+  {
+    "id": "reveal-resource-center-cedar-park",
+    "name": "Reveal Resource Center",
+    "address": "1150 S. Bell Blvd., Cedar Park, TX 78613",
+    "coordinates": {
+      "lat": 30.497948,
+      "lng": -97.812814
+    },
+    "hours": "General pantry: directory lists Monday 7–8 p.m. with “3rd” in a day-of-month field. Confirm the next date; recurrence is not modeled. Separate senior-box service lists different hours.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Directory describes food distribution open to anyone. Confirm identification, income/residency documentation and appointment requirements.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 19358; selected food service IDs 25630. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel. Separate senior-box program is not included in the general pantry schedule.",
+    "city": "Cedar Park",
+    "postalCode": "78613",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=19358%7C104&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=19358&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 19358 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19358,
+      "regionId": 104,
+      "serviceIds": [
+        25630
+      ],
+      "locationRecord": {
+        "locationId": 19358,
+        "organizationId": 14974,
+        "locationName": "Reveal Resource Center",
+        "address1": "1150 S. Bell Blvd.",
+        "address2": "",
+        "city": "Cedar Park",
+        "state": "TX",
+        "zipCode": "78613    ",
+        "country": null,
+        "phone": "512-981-7721",
+        "latitude": 30.497948,
+        "longitude": -97.812814,
+        "serviceArea": "",
+        "website": "https://revealresourcecenter.com/",
+        "aboutUs": "",
+        "contactName": null,
+        "contactPhone": "",
+        "contactEmail": null,
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Food Distribution, Older Adult Programs",
+        "regionId": 104,
+        "sendSmsInd": false,
+        "numMiles": 61.9,
+        "regionMapId": null,
+        "inNetWorkInd": 1,
+        "showBadge": false,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[{\"RegionId\":104,\"RegionName\":\"Central Texas Food Bank\",\"LogoBlobNameSmall\":\"74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png\",\"Website\":\"https:\\/\\/www.centraltexasfoodbank.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 104,
+            "regionName": "Central Texas Food Bank",
+            "logoBlobNameSmall": "74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png",
+            "website": "https://www.centraltexasfoodbank.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 25630,
+          "locationId": 19358,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25630,
+          "dayOfWeek": 2,
+          "startTime": "1900-01-01T19:00:00",
+          "endTime": "1900-01-01T20:00:00",
+          "weekDayDescr": "Monday",
+          "startTimeDescr": "7:00 PM",
+          "endTimeDescr": "8:00 PM",
+          "locationId": 19358,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 3rd",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    },
+    "phone": "512-981-7721",
+    "website": "https://revealresourcecenter.com/"
+  },
+  {
+    "id": "brookshire-pattison-food-pantry",
+    "name": "Brookshire-Pattison Food Pantry",
+    "address": "531 FM 359 S, Brookshire, TX 77423",
+    "coordinates": {
+      "lat": 29.77434,
+      "lng": -95.95076
+    },
+    "hours": "Monday, Wednesday and Thursday, 9–11:30 a.m. Additional Thursday 4–6 p.m. listing has “1st” in a day-of-month field; confirm that evening date before travel.",
+    "offering": "Supplemental food pantry; directory lists walk-in indoor service and English/Spanish support.",
+    "eligibility": "Eligibility, documents and appointment requirements are not published in the selected service record; confirm with the provider.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 16765; selected food service IDs 21844. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel.",
+    "city": "Brookshire",
+    "postalCode": "77423",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=16765%7C92&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=16765&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 16765 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 16765,
+      "regionId": 92,
+      "serviceIds": [
+        21844
+      ],
+      "locationRecord": {
+        "locationId": 16765,
+        "organizationId": 12773,
+        "locationName": "Brookshire-Pattison Food Pantry",
+        "address1": "531 FM 359 S",
+        "address2": "",
+        "city": "Brookshire",
+        "state": "TX",
+        "zipCode": "77423    ",
+        "country": null,
+        "phone": "281-822-4200",
+        "latitude": 29.77434,
+        "longitude": -95.95076,
+        "serviceArea": "",
+        "website": null,
+        "aboutUs": "The&nbsp;Brookshire-Pattison Food Pantry is a distributing partner of the Houston Food Bank. See below for more information about the food pantry program at this location. ",
+        "contactName": "",
+        "contactPhone": "",
+        "contactEmail": "",
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": " Accepts Walk-Ins, Indoor Service, TEFAP Program",
+        "serviceLanguages": " English, Spanish",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": " Brookshire-Pattison CAP Program",
+        "foodPrograms": " Food Distribution",
+        "regionId": 92,
+        "sendSmsInd": false,
+        "numMiles": 62.46,
+        "regionMapId": null,
+        "inNetWorkInd": 0,
+        "showBadge": true,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[{\"RegionId\":92,\"RegionName\":\"Houston Food Bank\",\"LogoBlobNameSmall\":\"2359517e-6b3c-4083-af22-063f8be30f81.jpg\",\"Website\":\"https:\\/\\/www.houstonfoodbank.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 92,
+            "regionName": "Houston Food Bank",
+            "logoBlobNameSmall": "2359517e-6b3c-4083-af22-063f8be30f81.jpg",
+            "website": "https://www.houstonfoodbank.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 21844,
+          "locationId": 16765,
+          "serviceName": "Brookshire-Pattison Food Pantry",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "<p>Houston Food Bank partner pantries are locations where those in need can receive food with a focus on fresh, nutritious food, particularly fruits and vegetables. Food may be free-choice similar to a grocery store setup or pre-packaged. Sites may be closed during major holidays or inclement weather. </p><p>As a food rescue organization, Houston Food Bank works to help reduce waste and support food access. Neighbors can expect supplemental assistance rather than full grocery replacement and may see produce that might not be as beautiful as in a grocery store - but it will be just as tasty and nutritious! </p>",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "E",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "Accepts Walk-Ins, Indoor Service, TEFAP Program",
+          "languages": "English, Spanish",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": "https://www.brookshiretxedc.org/econ-dev/page/food-distribution",
+          "programUrlText": "",
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 21844,
+          "dayOfWeek": 2,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T11:30:00",
+          "weekDayDescr": "Monday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "11:30 AM",
+          "locationId": 16765,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 21844,
+          "dayOfWeek": 4,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T11:30:00",
+          "weekDayDescr": "Wednesday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "11:30 AM",
+          "locationId": 16765,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 21844,
+          "dayOfWeek": 5,
+          "startTime": "1900-01-01T09:00:00",
+          "endTime": "1900-01-01T11:30:00",
+          "weekDayDescr": "Thursday",
+          "startTimeDescr": "9:00 AM",
+          "endTimeDescr": "11:30 AM",
+          "locationId": 16765,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        },
+        {
+          "locationServiceId": 21844,
+          "dayOfWeek": 5,
+          "startTime": "1900-01-01T16:00:00",
+          "endTime": "1900-01-01T18:00:00",
+          "weekDayDescr": "Thursday",
+          "startTimeDescr": "4:00 PM",
+          "endTimeDescr": "6:00 PM",
+          "locationId": 16765,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": " 1st",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": false
+        }
+      ]
+    },
+    "phone": "281-822-4200"
+  },
+  {
+    "id": "lake-travis-crisis-ministries",
+    "name": "Lake Travis Crisis Ministries",
+    "address": "1304 RR 620 North, Suite 100, Lakeway, TX 78734",
+    "coordinates": {
+      "lat": 30.3912,
+      "lng": -97.9379
+    },
+    "hours": "Wednesday 5–7 p.m.; Thursday 10 a.m.–noon.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Provider serves people living or working within Lake Travis ISD. Provider says no appointment is needed and new clients complete paperwork. Confirm current service boundaries; locator generic anyone language is less specific.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 19388; selected food service IDs 25360. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel.",
+    "city": "Lakeway",
+    "postalCode": "78734",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=19388%7C104&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=19388&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Lake Travis Crisis Ministries — services and eligibility",
+        "url": "https://ltcrisisministries.org/services",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 19388 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19388,
+      "regionId": 104,
+      "serviceIds": [
+        25360
+      ],
+      "locationRecord": {
+        "locationId": 19388,
+        "organizationId": 15002,
+        "locationName": "Lake Travis Crisis Ministries",
+        "address1": "1304 RR 620 North",
+        "address2": "",
+        "city": "Lakeway",
+        "state": "TX",
+        "zipCode": "78734    ",
+        "country": null,
+        "phone": "",
+        "latitude": 30.3912,
+        "longitude": -97.9379,
+        "serviceArea": "",
+        "website": "https://ltcrisisministries.org/",
+        "aboutUs": "",
+        "contactName": null,
+        "contactPhone": "",
+        "contactEmail": null,
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Food Distribution",
+        "regionId": 104,
+        "sendSmsInd": false,
+        "numMiles": 68.16,
+        "regionMapId": null,
+        "inNetWorkInd": 1,
+        "showBadge": false,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[{\"RegionId\":104,\"RegionName\":\"Central Texas Food Bank\",\"LogoBlobNameSmall\":\"74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png\",\"Website\":\"https:\\/\\/www.centraltexasfoodbank.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 104,
+            "regionName": "Central Texas Food Bank",
+            "logoBlobNameSmall": "74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png",
+            "website": "https://www.centraltexasfoodbank.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 25360,
+          "locationId": 19388,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25360,
+          "dayOfWeek": 4,
+          "startTime": "1900-01-01T17:00:00",
+          "endTime": "1900-01-01T19:00:00",
+          "weekDayDescr": "Wednesday",
+          "startTimeDescr": "5:00 PM",
+          "endTimeDescr": "7:00 PM",
+          "locationId": 19388,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        },
+        {
+          "locationServiceId": 25360,
+          "dayOfWeek": 5,
+          "startTime": "1900-01-01T10:00:00",
+          "endTime": "1900-01-01T12:00:00",
+          "weekDayDescr": "Thursday",
+          "startTimeDescr": "10:00 AM",
+          "endTimeDescr": "12:00 PM",
+          "locationId": 19388,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    },
+    "website": "https://ltcrisisministries.org/"
+  },
+  {
+    "id": "travis-county-community-center-jonestown",
+    "name": "Travis County Community Center - Jonestown",
+    "address": "18649 FM 1431 #6A, Jonestown, TX 78645",
+    "coordinates": {
+      "lat": 30.492921,
+      "lng": -97.923348
+    },
+    "hours": "Directory lists Monday–Friday, 8 a.m.–5 p.m. Confirm food pickup hours and any midday closure with the center.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Directory describes food distribution open to anyone. Confirm identification, income/residency documentation and appointment requirements.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 19430; selected food service IDs 25412. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel.",
+    "city": "Jonestown",
+    "postalCode": "78645",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=19430%7C104&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=19430&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 19430 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19430,
+      "regionId": 104,
+      "serviceIds": [
+        25412
+      ],
+      "locationRecord": {
+        "locationId": 19430,
+        "organizationId": 15038,
+        "locationName": "Travis County Community Center - Jonestown",
+        "address1": "18649 FM 1431 #6A",
+        "address2": "",
+        "city": "Jonestown",
+        "state": "TX",
+        "zipCode": "78645    ",
+        "country": null,
+        "phone": "",
+        "latitude": 30.492921,
+        "longitude": -97.923348,
+        "serviceArea": "",
+        "website": "",
+        "aboutUs": "",
+        "contactName": null,
+        "contactPhone": "",
+        "contactEmail": null,
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Food Distribution",
+        "regionId": 104,
+        "sendSmsInd": false,
+        "numMiles": 68.28,
+        "regionMapId": null,
+        "inNetWorkInd": 1,
+        "showBadge": false,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[{\"RegionId\":104,\"RegionName\":\"Central Texas Food Bank\",\"LogoBlobNameSmall\":\"74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png\",\"Website\":\"https:\\/\\/www.centraltexasfoodbank.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 104,
+            "regionName": "Central Texas Food Bank",
+            "logoBlobNameSmall": "74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png",
+            "website": "https://www.centraltexasfoodbank.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 25412,
+          "locationId": 19430,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25412,
+          "dayOfWeek": 2,
+          "startTime": "1900-01-01T08:00:00",
+          "endTime": "1900-01-01T17:00:00",
+          "weekDayDescr": "Monday",
+          "startTimeDescr": "8:00 AM",
+          "endTimeDescr": "5:00 PM",
+          "locationId": 19430,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        },
+        {
+          "locationServiceId": 25412,
+          "dayOfWeek": 3,
+          "startTime": "1900-01-01T08:00:00",
+          "endTime": "1900-01-01T17:00:00",
+          "weekDayDescr": "Tuesday",
+          "startTimeDescr": "8:00 AM",
+          "endTimeDescr": "5:00 PM",
+          "locationId": 19430,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        },
+        {
+          "locationServiceId": 25412,
+          "dayOfWeek": 4,
+          "startTime": "1900-01-01T08:00:00",
+          "endTime": "1900-01-01T17:00:00",
+          "weekDayDescr": "Wednesday",
+          "startTimeDescr": "8:00 AM",
+          "endTimeDescr": "5:00 PM",
+          "locationId": 19430,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        },
+        {
+          "locationServiceId": 25412,
+          "dayOfWeek": 5,
+          "startTime": "1900-01-01T08:00:00",
+          "endTime": "1900-01-01T17:00:00",
+          "weekDayDescr": "Thursday",
+          "startTimeDescr": "8:00 AM",
+          "endTimeDescr": "5:00 PM",
+          "locationId": 19430,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        },
+        {
+          "locationServiceId": 25412,
+          "dayOfWeek": 6,
+          "startTime": "1900-01-01T08:00:00",
+          "endTime": "1900-01-01T17:00:00",
+          "weekDayDescr": "Friday",
+          "startTimeDescr": "8:00 AM",
+          "endTimeDescr": "5:00 PM",
+          "locationId": 19430,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    }
+  },
+  {
+    "id": "helping-hands-spicewood",
+    "name": "Helping Hands Crisis Ministry of Spicewood",
+    "address": "512 Pace Bend Rd. North, Spicewood, TX 78669",
+    "coordinates": {
+      "lat": 30.41954,
+      "lng": -98.04745
+    },
+    "hours": "Tuesday, 4–6 p.m.",
+    "offering": "Food pantry distribution; directory describes walk-in food pickup.",
+    "eligibility": "Directory describes food distribution open to anyone. Confirm identification, income/residency documentation and appointment requirements.",
+    "accessibility": "Step-free access, accessible parking and pedestrian entrance are not verified.",
+    "notes": "Public food-bank locator location 19463; selected food service IDs 25455. Published map point is address-level, not a verified pickup entrance. Confirm dates, requirements and food supply before travel.",
+    "city": "Spicewood",
+    "postalCode": "78669",
+    "sources": [
+      {
+        "title": "Central Texas Food Bank — Find Food Now public partner directory (including shared food-bank network listings)",
+        "url": "https://www.centraltexasfoodbank.org/find-food-now",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — selected food service evidence",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServices?LocationIds=19463%7C104&PreviewMode=false&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Public food-bank locator — service schedules",
+        "url": "https://api.accessfood.org/api/MapInformation/LocationServiceSchedules?LocationIds=19463&MapRegionId=104",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "title": "Food-bank directory — published address-level map point",
+      "url": "https://www.centraltexasfoodbank.org/find-food-now",
+      "method": "Public directory location 19463 latitude/longitude, independently classified inside the checked-in 119th Congress TX-10 polygon. Entrance and pedestrian approach unverified."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10",
+    "directoryEvidence": {
+      "locationId": 19463,
+      "regionId": 104,
+      "serviceIds": [
+        25455
+      ],
+      "locationRecord": {
+        "locationId": 19463,
+        "organizationId": 15062,
+        "locationName": "Helping Hands Crisis Ministry of Spicewood",
+        "address1": "512 Pace Bend Rd. North",
+        "address2": "",
+        "city": "Spicewood",
+        "state": "TX",
+        "zipCode": "78669    ",
+        "country": null,
+        "phone": "",
+        "latitude": 30.41954,
+        "longitude": -98.04745,
+        "serviceArea": "",
+        "website": "https://helpinghandspicewood.org/current-events",
+        "aboutUs": "",
+        "contactName": null,
+        "contactPhone": "",
+        "contactEmail": null,
+        "notes": "",
+        "contactPhoneExt": "",
+        "phoneExt": "",
+        "foodServiceTypes": "",
+        "serviceLanguages": "",
+        "locationFeatures": "",
+        "foodOfferings": "",
+        "dietRestrictions": "",
+        "serviceAreas": "",
+        "servicePrograms": "",
+        "foodPrograms": " Food Distribution",
+        "regionId": 104,
+        "sendSmsInd": false,
+        "numMiles": 74.85,
+        "regionMapId": null,
+        "inNetWorkInd": 1,
+        "showBadge": false,
+        "timeZoneName": "Central Standard Time",
+        "timeZoneCode": "CT",
+        "offsetHours": -5,
+        "useLatLongForDirections": false,
+        "networkAffiliations": "[{\"RegionId\":104,\"RegionName\":\"Central Texas Food Bank\",\"LogoBlobNameSmall\":\"74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png\",\"Website\":\"https:\\/\\/www.centraltexasfoodbank.org\\/\"}]",
+        "networkAffiliationsList": [
+          {
+            "regionId": 104,
+            "regionName": "Central Texas Food Bank",
+            "logoBlobNameSmall": "74bf0441-7844-4fcb-9bf1-e8108c2b0ab4.png",
+            "website": "https://www.centraltexasfoodbank.org/"
+          }
+        ]
+      },
+      "serviceRecords": [
+        {
+          "locationServiceId": 25455,
+          "locationId": 19463,
+          "serviceName": "Food Distribution",
+          "serviceCategoryId": 1,
+          "foodProgramTypeId": 1,
+          "overview": "Anyone can walk into the pantry to receive nutritious, healthy food immediately.\n**Please check the service hours for this site.",
+          "serviceArea": null,
+          "qualifications": "",
+          "notes": "",
+          "contactName": "",
+          "contactPhone": "",
+          "contactEmail": "",
+          "contactPhoneExt": "",
+          "activeInd": true,
+          "programAudience": "",
+          "intendedAudienceCode": "",
+          "serviceCategoryDescription": "Food Program",
+          "foodProgramTypeDescription": "Food Distribution",
+          "foodServiceTypes": "",
+          "languages": "",
+          "locationFeatures": "",
+          "foodOfferings": "",
+          "dietRestrictions": "",
+          "audienceTypes": "",
+          "serviceAreas": "",
+          "programUrl": null,
+          "programUrlText": null,
+          "orderingInformation": null,
+          "noServiceAreaRestrictionsInd": null
+        }
+      ],
+      "scheduleRecords": [
+        {
+          "locationServiceId": 25455,
+          "dayOfWeek": 3,
+          "startTime": "1900-01-01T16:00:00",
+          "endTime": "1900-01-01T18:00:00",
+          "weekDayDescr": "Tuesday",
+          "startTimeDescr": "4:00 PM",
+          "endTimeDescr": "6:00 PM",
+          "locationId": 19463,
+          "notes": "",
+          "weeksOfMonth": "",
+          "daysOfMonth": "",
+          "contactForHoursMessage": null,
+          "everyOtherWeekInd": null
+        }
+      ]
+    },
+    "website": "https://helpinghandspicewood.org/current-events"
+  }
+]

@@ -97,8 +97,8 @@ afterEach(() => {
   rmSync(dir, { recursive: true, force: true });
 });
 describe("persistent pantry database", () => {
-  it("imports 53 records idempotently, retaining source dates, planner metadata and unknown inventory", () => {
-    expect(listPantryResources(db)).toHaveLength(53);
+  it("imports 66 records idempotently, retaining source dates, planner metadata and unknown inventory", () => {
+    expect(listPantryResources(db)).toHaveLength(66);
     expect(importPantries(db)).toBe(0);
     for (const source of foodResources) {
       const p = getPantryRecord(source.id, db)!;
@@ -121,7 +121,7 @@ describe("persistent pantry database", () => {
     expect(planner.documents).toEqual(original.documents);
     expect(planner.windows).toEqual(original.windows);
     expect(db.prepare("SELECT count(*) n FROM pantry_history").get()!.n).toBe(
-      53,
+      66,
     );
     expect(db.prepare("SELECT version FROM pantry_migrations").all()).toEqual([
       { version: 1 },
@@ -295,7 +295,7 @@ describe("persistent pantry database", () => {
       ).status,
     ).toBe(200);
     expect(getPantryRecord(first, db)!.version).toBe(4);
-    expect(listPantryResources(db)).toHaveLength(53);
+    expect(listPantryResources(db)).toHaveLength(66);
     expect(
       db
         .prepare(
