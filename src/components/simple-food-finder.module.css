@@ -430,3 +430,17 @@
 .comparisonCard dd {
   margin: 0.25rem 0 0.75rem;
 }
+
+.comparisonDetails {
+  margin-block: 1rem;
+}
+.comparisonDetails > summary {
+  cursor: pointer;
+  padding: 1rem;
+  min-height: 44px;
+  font-weight: 700;
+}
+.comparisonDetails > summary:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}

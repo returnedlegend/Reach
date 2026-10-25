@@ -7,14 +7,18 @@ test("three mathematical options remain usable when AI fails, and expanded sites
     route.fulfill({ status: 503, json: { error: "Fixture AI outage" } }),
   );
   await page.goto("/");
-  await expect(
-    page.getByRole("heading", { name: "Your top 3 options" }),
-  ).toBeVisible();
+  expect(
+    await page
+      .getByRole("region", { name: "Places to try", exact: true })
+      .getByRole("article")
+      .count(),
+  ).toBeGreaterThanOrEqual(3);
   const query = page.getByLabel("What do you need?", { exact: true });
   await query.fill("food in Bryan");
   await page
     .getByRole("button", { name: "Find best resources", exact: true })
     .click();
+  await page.getByText("Compare your top 3 options", { exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Your top 3 options" }),
   ).toBeVisible();
@@ -29,6 +33,7 @@ test("three mathematical options remain usable when AI fails, and expanded sites
   await expect(
     page.getByRole("heading", { name: "Smithville Food Pantry", exact: true }),
   ).toBeVisible();
+  await page.getByText("Compare your top 1 option", { exact: true }).click();
   await expect(
     page.getByText(/Fewer than three matching listings/),
   ).toBeVisible();
@@ -151,8 +156,13 @@ test("approved hotspot and extra-food cards remain visible outside the top three
     );
     await page.goto("/");
     await expect(
-      page.getByRole("heading", { name: hotspot.title, exact: true }),
+      page.getByText("Community food hotspot · confirm details").first(),
     ).toBeVisible();
+    await expect(
+      page.getByText("Household food share · moderator approved").first(),
+    ).toBeVisible();
+    // Other already approved offers may rank ahead of this fixture. All remain discoverable.
+    await page.getByRole("button", { name: /Show .* more places/ }).click();
     await expect(
       page.getByRole("heading", { name: offer.title, exact: true }),
     ).toBeVisible();

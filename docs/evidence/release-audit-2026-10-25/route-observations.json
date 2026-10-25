@@ -1,0 +1,235 @@
+[
+  {
+    "path": "/",
+    "url": "https://127.0.0.1:3443/",
+    "status": 200,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "Let’s find you food.",
+      "Find food near me",
+      "Places to try"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/share",
+    "url": "https://127.0.0.1:3443/share",
+    "status": 200,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "Share food with your neighbors"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/food-hotspots",
+    "url": "https://127.0.0.1:3443/food-hotspots",
+    "status": 200,
+    "title": "Food hotspots | Reach",
+    "headings": [
+      "Food sharing",
+      "Community food"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/food-hotspots?type=offer",
+    "url": "https://127.0.0.1:3443/food-hotspots?type=offer",
+    "status": 200,
+    "title": "Food hotspots | Reach",
+    "headings": [
+      "Food sharing",
+      "Community food"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/admin",
+    "url": "https://127.0.0.1:3443/admin/sign-in",
+    "status": 200,
+    "title": "Administrator sign in · Reach",
+    "headings": [
+      "Administrator sign in"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/admin/sign-in",
+    "url": "https://127.0.0.1:3443/admin/sign-in",
+    "status": 200,
+    "title": "Administrator sign in · Reach",
+    "headings": [
+      "Administrator sign in"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/admin/change-password",
+    "url": "https://127.0.0.1:3443/admin/sign-in",
+    "status": 200,
+    "title": "Administrator sign in · Reach",
+    "headings": [
+      "Administrator sign in"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/account",
+    "url": "https://127.0.0.1:3443/share",
+    "status": 200,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "Share food with your neighbors"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/pantries/bridge-ministries",
+    "url": "https://127.0.0.1:3443/pantries/bridge-ministries",
+    "status": 200,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "The Bridge Ministries Bryan",
+      "Hours & visiting",
+      "Food availability",
+      "Typical busy times",
+      "Transportation & directions",
+      "More for your visit",
+      "Contact & information sources"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/pantry-planner",
+    "url": "https://127.0.0.1:3443/pantry-planner",
+    "status": 200,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "Good food.A way there. And back.",
+      "Let’s plan your visit",
+      "A plan you can feel clearer about"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/privacy",
+    "url": "https://127.0.0.1:3443/privacy",
+    "status": 200,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "Privacy and location",
+      "Your location and saved trips",
+      "AI assistance",
+      "Sharing food and moderation",
+      "Administrator access",
+      "Directory corrections and crowd observations"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/terms",
+    "url": "https://127.0.0.1:3443/terms",
+    "status": 200,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "Using Reach"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/manage",
+    "url": "https://127.0.0.1:3443/manage",
+    "status": 200,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "Pantry management"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/volunteer",
+    "url": "https://127.0.0.1:3443/volunteer",
+    "status": 200,
+    "title": "Volunteer pickups · Reach",
+    "headings": [
+      "Volunteer pickups"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/outreach",
+    "url": "https://127.0.0.1:3443/outreach",
+    "status": 200,
+    "title": "Availability inquiries · Reach",
+    "headings": [
+      "Availability inquiries"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/unsubscribe",
+    "url": "https://127.0.0.1:3443/unsubscribe",
+    "status": 200,
+    "title": "Email preferences · Reach",
+    "headings": [
+      "Unsubscribe from optional emails"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/outreach/unsubscribe",
+    "url": "https://127.0.0.1:3443/outreach/unsubscribe",
+    "status": 200,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "Stop Reach availability inquiries"
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  },
+  {
+    "path": "/no-such-page",
+    "url": "https://127.0.0.1:3443/no-such-page",
+    "status": 404,
+    "title": "Reach · A little more within reach",
+    "headings": [
+      "Let’s get you back on track."
+    ],
+    "overflow": false,
+    "errors": [],
+    "violations": []
+  }
+]

@@ -238,6 +238,14 @@ test("account-free sharing stays private until an authenticated moderator approv
     expect((await page.request.get("/api/sharing/admin")).status()).toBe(401);
   } finally {
     await moderatorContext.close();
+    db.prepare(
+      "DELETE FROM records WHERE id IN (SELECT record_id FROM sharing_submissions WHERE contact_email=?)",
+    ).run(privateEmail);
+    db.prepare("DELETE FROM sharing_submissions WHERE contact_email=?").run(
+      privateEmail,
+    );
+    db.prepare("DELETE FROM sessions WHERE user_id=?").run(moderatorId);
+    db.prepare("DELETE FROM users WHERE id=?").run(moderatorId);
     closeSharingDatabases();
     closeCommunityDatabases();
   }
@@ -404,6 +412,14 @@ test("manual public coordinates submit a hotspot and the review link focuses its
     });
   } finally {
     await moderatorContext.close();
+    db.prepare(
+      "DELETE FROM records WHERE id IN (SELECT record_id FROM sharing_submissions WHERE contact_email=?)",
+    ).run(contactEmail);
+    db.prepare("DELETE FROM sharing_submissions WHERE contact_email=?").run(
+      contactEmail,
+    );
+    db.prepare("DELETE FROM sessions WHERE user_id=?").run(moderatorId);
+    db.prepare("DELETE FROM users WHERE id=?").run(moderatorId);
     closeSharingDatabases();
     closeCommunityDatabases();
   }

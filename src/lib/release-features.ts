@@ -71,19 +71,12 @@ export function publicFeatures(): PublicFeatures {
     process.env.REACH_AI_DATA_POLICY_ACCEPTED === "true" &&
     (aiProvider === "ollama" || Boolean(aiKey?.trim())) &&
     !/placeholder|your[_-].*(?:key|here)/i.test(aiKey || "");
-  const emailProvider = process.env.REACH_EMAIL_PROVIDER;
-  const configuredMail =
-    emailProvider === "preview"
-      ? process.env.NODE_ENV !== "production"
-      : emailProvider === "smtp"
-        ? Boolean(process.env.SMTP_HOST && process.env.SMTP_FROM_EMAIL)
-        : false;
   return {
     accounts: false,
-    google: featureEnabled("google"),
-    email: featureEnabled("email") && configuredMail,
+    google: false,
+    email: false,
     community: featureEnabled("community"),
-    volunteering: featureEnabled("volunteering"),
+    volunteering: false,
     ai: featureEnabled("ai") && configuredAI,
   };
 }

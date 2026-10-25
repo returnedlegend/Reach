@@ -35,3 +35,7 @@ Official references checked for this migration:
 - https://console.groq.com/docs/your-data
 
 Live generation remains unverified until a real configured key succeeds. Tests use synthetic responses and do not establish provider availability.
+
+### Updating an unchanged laptop configuration
+
+After pulling the new code, run `npm run ai:setup`. This explicitly selects Groq and enables the AI release flag in your local `.env.local`; it preserves existing API keys, models, policy consent and unrelated settings. If the file is new, it adds placeholders and leaves policy acceptance false. It does not install or create a Groq account, obtain a key, change deployment settings, or send a request. Open `.env.local` locally to add the key, review the policy and restart Reach. `git pull` alone never transfers private environment values from the development workspace to your computer.

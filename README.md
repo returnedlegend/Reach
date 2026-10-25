@@ -140,3 +140,7 @@ Approved household food offers also appear in search and AI recommendations, wit
 ## Share food and review submissions
 
 Open `/share` to **Host a Food Pickup** or **Share Extra Food** without registering. The homepage links directly to both. Open `/admin` to review pending submissions and photos as a moderator. Public account creation is closed; existing sign-in remains. [Food-sharing setup](docs/FOOD-SHARING.md) explains moderator access, the support-inbox alerts, SMTP configuration, limits and privacy.
+
+## Current release audit
+
+See [the feature, UX and release-readiness audit](docs/RELEASE-AUDIT-2026-10-25.md) for tested flows, fixed defects, legacy services and remaining external blockers. Pulling code does not update your private environment. To switch an older local Ollama setup to Groq while preserving keys, run `npm run ai:setup`, then follow [Groq setup](docs/GROQ.md).

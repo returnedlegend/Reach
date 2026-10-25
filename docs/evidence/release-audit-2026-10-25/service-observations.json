@@ -1,0 +1,22 @@
+[
+  {
+    "url": "/api/geocode",
+    "http": 503,
+    "status": "unavailable",
+    "message": "Address search could not connect; try again later. Choose a landmark or use your location."
+  },
+  {
+    "url": "/api/journey",
+    "mode": "walking",
+    "http": 503,
+    "status": "unavailable",
+    "message": "Demonstration routing is not enabled for this release. Open external directions or use an operator-configured routing service."
+  },
+  {
+    "url": "/api/journey",
+    "mode": "transit",
+    "http": 503,
+    "status": "unavailable",
+    "message": "Live transit routing is unavailable. Use the published local timetable and confirm service before travel."
+  }
+]

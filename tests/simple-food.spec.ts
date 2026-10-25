@@ -236,7 +236,7 @@ test("corrected origin changes route requests and links; failed routes never rem
     new URL((await link.getAttribute("href"))!).searchParams.get("travelmode"),
   ).toBe("transit");
   await expect(
-    page.getByText(/no live bus predictions are connected/),
+    page.getByText(/Public-transit itineraries are outside this discovery feature/),
   ).toBeVisible();
 });
 test("retrieved route metrics are labeled, saving updates the Saved tab, and layout is accessible", async ({

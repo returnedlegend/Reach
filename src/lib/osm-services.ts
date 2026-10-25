@@ -624,7 +624,7 @@ function milesBetween(
 async function computeJourney(input: JourneyRequest): Promise<JourneyResult> {
   if (input.mode === "transit")
     return unavailable(
-      "Live transit routing is unavailable. Use the published local timetable and confirm service before travel.",
+      "Public-transit routing is unavailable here. Open Google Maps to check available transit directions and confirm service before travel.",
       "no-route",
     );
   const mode = process.env.OSM_ROUTER_MODE ?? "disabled";

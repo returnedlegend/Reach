@@ -1,4 +1,4 @@
-import { featureEnabled } from "@/lib/release-features";
+import { publicFeatures } from "@/lib/release-features";
 import { ReleaseUnavailable } from "@/components/release-unavailable";
 import { OutreachPanel } from "@/components/outreach-panel";
 export const metadata = {
@@ -7,7 +7,7 @@ export const metadata = {
   referrer: "no-referrer",
 };
 export default function Page() {
-  if (!featureEnabled("email"))
+  if (!publicFeatures().email)
     return <ReleaseUnavailable title="Availability inquiries" />;
   return (
     <main className="account-page">

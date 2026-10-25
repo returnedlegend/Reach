@@ -99,7 +99,7 @@ test("errors stop loading and retry preserves the request", async ({
   ).toBeVisible();
   await expect(page.getByLabel("Preparing recommendations")).toHaveCount(0);
   await page.getByRole("button", { name: "Try AI again", exact: true }).click();
-  await expect(page.getByText(/AI helped understand/)).toBeVisible();
+  await expect(page.getByText(/No AI summary was returned/)).toBeVisible();
   expect(requests).toBe(2);
   await expect(
     page.getByLabel("What do you need?", { exact: true }),

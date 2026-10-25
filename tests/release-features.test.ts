@@ -117,3 +117,14 @@ it("allows explicitly enabled local AI in core without enabling account or commu
   vi.stubEnv("REACH_AI_PROVIDER", "disabled");
   expect(publicFeatures().ai).toBe(false);
 });
+
+it("never advertises retired account services even with stale extended feature flags", () => {
+  vi.stubEnv("NODE_ENV", "development");
+  vi.stubEnv("REACH_RELEASE_PROFILE", "extended");
+  vi.stubEnv("REACH_ACCOUNT_ENABLED", "true");
+  vi.stubEnv("REACH_COMMUNITY_ENABLED", "true");
+  vi.stubEnv("REACH_EMAIL_PROVIDER", "preview");
+  vi.stubEnv("GOOGLE_CLIENT_ID", "synthetic");
+  vi.stubEnv("GOOGLE_CLIENT_SECRET", "synthetic");
+  expect(publicFeatures()).toMatchObject({accounts:false,google:false,email:false,volunteering:false,community:true});
+});

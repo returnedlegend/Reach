@@ -506,12 +506,18 @@ export function SimpleFoodFinder(props: Props) {
                 }
               }}
             />{" "}
-            Use AI to help understand my request and compare pantries. Sends
-            this text to our AI provider; don’t include private details. Your
-            selected coordinates are not sent to AI. Approximate distances and
-            comparison scores are sent.
+            Use AI to help understand my request and compare pantries.
           </label>
         }
+        <details>
+          <summary>What is shared with AI?</summary>
+          <p>
+            Your request, public listing facts, approximate distances and
+            comparison scores go to the configured AI provider. Your selected
+            coordinates are not sent. Don’t include private details.{" "}
+            <Link href="/privacy">Privacy information</Link>.
+          </p>
+        </details>
       </section>
 
       <section className={styles.start} aria-label="Optional starting point">
@@ -630,105 +636,120 @@ export function SimpleFoodFinder(props: Props) {
               </small>
             </section>
           )}
-        {recommended.length > 0 && (
-          <section aria-labelledby="ai-comparison-title">
-            <h3 id="ai-comparison-title">
-              Your top {recommended.length}{" "}
+        {request && recommended.length > 0 && (
+          <details className={styles.comparisonDetails} key={request}>
+            <summary>
+              Compare your top {recommended.length}{" "}
               {recommended.length === 1 ? "option" : "options"}
-            </h3>
-            {recommended.length < 3 && (
-              <p>
-                Fewer than three matching listings are available for this
-                request. Try a nearby city or a broader search.
-              </p>
-            )}
-            <p>
-              Compare reported details before choosing. Food availability is not
-              guaranteed.
-            </p>
-            <div className={styles.comparisonGrid}>
-              {recommended.map(
-                ({ resource, summary, straightLineMiles }, index) => (
-                  <div
-                    className={styles.comparisonCard}
-                    key={resource.id}
-                    role="group"
-                    aria-label={`Compare ${resource.name}`}
-                  >
-                    <h4>
-                      {index + 1}. {resource.name}
-                    </h4>
-                    <dl>
-                      <dt>Distance and pickup score</dt>
-                      <dd>
-                        {(() => {
-                          const comparison = activeRanking.find(
-                            (item) => item.id === resource.id,
-                          )?.comparison;
-                          if (!comparison || comparison.score === null)
-                            return "Unknown — add your location to compare distance.";
-                          return (
-                            <>
-                              <strong>
-                                {comparison.score} points ·{" "}
-                                {comparison.status === "fits"
-                                  ? "Fits checked constraints"
-                                  : "Confirm details before traveling"}
-                              </strong>
-                              <p>{comparison.explanation}</p>
-                              <dl>
-                                {Object.entries(comparison.parameters).map(
-                                  ([key, value]) => (
-                                    <div key={key}>
-                                      <dt>{key.replace(/([A-Z])/g, " $1")}</dt>
-                                      <dd>{value ?? "Unknown"}</dd>
-                                    </div>
-                                  ),
-                                )}
-                              </dl>
-                            </>
-                          );
-                        })()}
-                      </dd>
-                      <dt>Food</dt>
-                      <dd>{resource.shortOffering || summary.offering}</dd>
-                      <dt>Pickup times</dt>
-                      <dd>{resource.hours || "Hours not verified."}</dd>
-                      <dt>Requirements</dt>
-                      <dd>
-                        {resource.eligibility || "Requirements not verified."}
-                      </dd>
-                      <dt>Distance</dt>
-                      <dd>
-                        {straightLineMiles === undefined
-                          ? "Unknown — select a starting point; some pickup locations are approximate."
-                          : `${straightLineMiles.toFixed(1)} straight-line miles, not routed travel distance.`}
-                      </dd>
-                      <dt>Access</dt>
-                      <dd>
-                        {resource.accessibility ||
-                          "Accessibility not verified."}
-                      </dd>
-                    </dl>
-                    <button
-                      type="button"
-                      className="btn"
-                      onClick={() => props.onDirections(resource)}
-                    >
-                      Directions to option {index + 1}
-                    </button>
-                  </div>
-                ),
+            </summary>
+            <section aria-labelledby="ai-comparison-title">
+              <h3 id="ai-comparison-title">
+                Your top {recommended.length}{" "}
+                {recommended.length === 1 ? "option" : "options"}
+              </h3>
+              {recommended.length < 3 && (
+                <p>
+                  Fewer than three matching listings are available for this
+                  request. Try a nearby city or a broader search.
+                </p>
               )}
-            </div>
-          </section>
+              <p>
+                Compare reported details before choosing. Food availability is
+                not guaranteed.
+              </p>
+              <div className={styles.comparisonGrid}>
+                {recommended.map(
+                  ({ resource, summary, straightLineMiles }, index) => (
+                    <div
+                      className={styles.comparisonCard}
+                      key={resource.id}
+                      role="group"
+                      aria-label={`Compare ${resource.name}`}
+                    >
+                      <h4>
+                        {index + 1}. {resource.name}
+                      </h4>
+                      <dl>
+                        <dt>Distance and pickup score</dt>
+                        <dd>
+                          {(() => {
+                            const comparison = activeRanking.find(
+                              (item) => item.id === resource.id,
+                            )?.comparison;
+                            if (!comparison || comparison.score === null)
+                              return "Unknown — add your location to compare distance.";
+                            return (
+                              <>
+                                <strong>
+                                  {comparison.score} points ·{" "}
+                                  {comparison.status === "fits"
+                                    ? "Fits checked constraints"
+                                    : "Confirm details before traveling"}
+                                </strong>
+                                <details>
+                                  <summary>
+                                    How this score is calculated
+                                  </summary>
+                                  <p>{comparison.explanation}</p>
+                                  <dl>
+                                    {Object.entries(comparison.parameters).map(
+                                      ([key, value]) => (
+                                        <div key={key}>
+                                          <dt>
+                                            {key.replace(/([A-Z])/g, " $1")}
+                                          </dt>
+                                          <dd>{value ?? "Unknown"}</dd>
+                                        </div>
+                                      ),
+                                    )}
+                                  </dl>
+                                </details>
+                              </>
+                            );
+                          })()}
+                        </dd>
+                        <dt>Food</dt>
+                        <dd>{resource.shortOffering || summary.offering}</dd>
+                        <dt>Pickup times</dt>
+                        <dd>{resource.hours || "Hours not verified."}</dd>
+                        <dt>Requirements</dt>
+                        <dd>
+                          {resource.eligibility || "Requirements not verified."}
+                        </dd>
+                        <dt>Distance</dt>
+                        <dd>
+                          {straightLineMiles === undefined
+                            ? "Unknown — select a starting point; some pickup locations are approximate."
+                            : `${straightLineMiles.toFixed(1)} straight-line miles, not routed travel distance.`}
+                        </dd>
+                        <dt>Access</dt>
+                        <dd>
+                          {resource.accessibility ||
+                            "Accessibility not verified."}
+                        </dd>
+                      </dl>
+                      {!found.blockedMode && (
+                        <button
+                          type="button"
+                          className="btn"
+                          onClick={() => props.onDirections(resource)}
+                        >
+                          Directions to option {index + 1}
+                        </button>
+                      )}
+                    </div>
+                  ),
+                )}
+              </div>
+            </section>
+          </details>
         )}
         <div aria-live="polite" className={styles.feedback}>
           {thinking && (
             <div>
               <p>
-                Checking your request with AI. You can use these results now. On
-                slower computers, comparison can take up to two minutes.
+                Checking your request with AI. You can use these results or open
+                the map while you wait.
               </p>
               <button
                 type="button"
