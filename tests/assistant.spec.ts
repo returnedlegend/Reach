@@ -3,6 +3,9 @@ import { expect, test } from "@playwright/test";
 async function openAssistant(page: import("@playwright/test").Page) {
   await page.goto("/");
   await page
+    .getByRole("button", { name: "Step-by-step trip controls", exact: true })
+    .click();
+  await page
     .getByRole("button", { name: "Reach AI assistant", exact: true })
     .click();
   return page.getByRole("dialog", { name: "Reach AI assistant" });
@@ -63,7 +66,7 @@ test.describe("assistant AI availability notice", () => {
       element.scrollTop = 0;
     });
     await page.screenshot({
-      path: info.outputPath(`free-ai-${info.project.name}-notice.png`),
+      path: info.outputPath(`ai-${info.project.name}-notice.png`),
       fullPage: true,
     });
     await send.click();
@@ -113,7 +116,7 @@ test.describe("assistant AI availability notice", () => {
           state: "configured",
           code: null,
           message: "Synthetic configured fixture only.",
-          model: "openrouter/free",
+          model: "deepseek-flash",
         }),
       }),
     );
@@ -122,7 +125,7 @@ test.describe("assistant AI availability notice", () => {
     const dialog = await openAssistant(page);
     const status = dialog.locator(".reach-assistant__ai-status");
     await expect(status).toContainText("AI interpretation is configured");
-    await expect(status).not.toContainText(/openrouter|free|synthetic/i);
+    await expect(status).not.toContainText(/deepseek|free|synthetic/i);
     await dialog
       .getByLabel("What do you need help finding?")
       .fill("Synthetic AI request");

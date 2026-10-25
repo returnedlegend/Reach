@@ -37,6 +37,9 @@ async function example() {
 async function search(page: import("@playwright/test").Page) {
   await page.goto("/");
   await page
+    .getByRole("button", { name: "Step-by-step trip controls", exact: true })
+    .click();
+  await page
     .getByRole("button", { name: "Find food I can reach", exact: true })
     .click();
   const planner = page.locator(".access-planner");

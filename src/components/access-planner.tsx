@@ -568,8 +568,10 @@ export function AccessPlanner({
     const link = document.createElement("a");
     link.href = url;
     link.download = "reach-food-itinerary.txt";
+    document.body.appendChild(link);
     link.click();
-    URL.revokeObjectURL(url);
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   return (

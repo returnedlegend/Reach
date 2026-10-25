@@ -62,28 +62,26 @@ SMTP `accepted` means the relay accepted the message, not inbox delivery. Stable
 
 Resend's SMTP guide does not specify a stable opaque provider response-ID grammar. This adapter stores the RFC ID separately and does not invent an `email_id`; SMTP deliveries therefore stay accepted/uncertain unless another reliable event establishes more. The existing signed delivery webhook at `/api/email/webhook` tracks Resend HTTP-API deliveries by their actual opaque IDs; it does not falsely mark an unmatched SMTP send delivered. Receiving/reply association still works independently of that delivery-event limitation.
 
-### OpenRouter
+### DeepSeek AI
 
-The root `.env.local` now includes:
+Reach's active AI provider is DeepSeek. It uses paid API models and sends eligible user-submitted text to the provider. Review model pricing, provider terms and data handling before enabling inference. Full configuration, model behavior, privacy and retry details are in [DeepSeek AI setup](DEEPSEEK.md).
+
+Configure the server-only variables in the project-root `.env.local` or secure production settings:
 
 ```dotenv
-REACH_AI_PROVIDER=openrouter
-OPENROUTER_API_KEY=
-OPENROUTER_MODEL=openrouter/free
-OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+REACH_AI_PROVIDER=deepseek
+DEEPSEEK_API_KEY=
+DEEPSEEK_MODEL=deepseek-flash
+DEEPSEEK_REASONING_MODEL=deepseek-v4-pro
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+DEEPSEEK_TIMEOUT_MS=12000
 REACH_AI_DATA_POLICY_ACCEPTED=false
-REACH_AI_FREE_ONLY=true
-REACH_AI_ALLOW_PAID=false
 ```
 
-The current default is the free router, which chooses a compatible free model. Every free-profile request checks zero catalog prices and required capabilities, applies zero-price routing limits, and validates the actual returned model. Role settings still take precedence over the general model. See [the current free setup](FREE-OPENROUTER.md) for cost, privacy, caching and verification limits. No paid model or Gemini fallback is selected by the free profile.
-
-To enable it, paste your API key privately into `OPENROUTER_API_KEY`, set `REACH_AI_PROVIDER=openrouter`, review provider terms and then set `REACH_AI_DATA_POLICY_ACCEPTED=true`. Restart Reach. Keep free-only enabled unless you deliberately authorize paid use. The base URL must remain the canonical HTTPS endpoint to prevent credentials being redirected to an arbitrary server. Provider `require_parameters`, zero price ceilings, privacy routing controls, strict local schemas, bounded retries/timeouts and shared rate limits remain enforced.
-
-Outside the free profile, the retained explicitly paid configuration can opt into Gemini fallback. Supply `GEMINI_API_KEY` and `GEMINI_MODEL`, and explicitly set `REACH_AI_GEMINI_FALLBACK=true`, `REACH_AI_FREE_ONLY=false`, `REACH_AI_ALLOW_PAID=true` and accepted policy. This can incur charges; it is disabled by default. Gemini is used only after eligible transient failures or explicit Gemini-only configuration. It cannot mask invalid output, a pricing/capability failure, authentication failure or a long server-directed retry delay. Direct navigation and outreach calls share this boundary. See [AI-CONFIGURATION.md](AI-CONFIGURATION.md).
+Set the API key privately, review the provider's applicable data policy, then set `REACH_AI_DATA_POLICY_ACCEPTED=true` to acknowledge that choice. AI is not enabled by key presence alone. DeepSeek has no automatic cross-provider fallback. Request budgets do not cap dollar charges; configure spending controls in the provider account.
 
 ## Verification and remaining setup
 
 See [independent verification](SMTP-AI-VERIFICATION.md) for observed browser/API results and [file manifest](SMTP-AI-FILES.md) for changed files. Automated SMTP tests use Nodemailer transport fakes and actual worker/delivery/database boundaries; browser model/route fixtures are labeled synthetic. No real email, authenticated AI completion or inbound provider callback was exercised for this task. The public model catalog was retrieved successfully.
 
-Remaining operator actions: verified sending domain and sender, private API/SMTP credentials, outbound SMTP TCP permission, canonical app origin and worker process, receiving subdomain/keys/webhook for inquiries, source-backed enrolled pantry contacts, and an explicitly authorized test recipient before a live delivery test. Keep provider spending/quota limits and monitor uncertain deliveries. For higher traffic, move process-local AI limits to a shared store and review provider capacity and transit/data coverage; no new deployment is required for local preview use.
+Remaining operator actions: verified sending domain and sender, private API/SMTP credentials, outbound SMTP TCP permission, canonical app origin and worker process, receiving subdomain/keys/webhook for inquiries, source-backed enrolled pantry contacts, and an explicitly authorized test recipient before a live delivery test. Configure DeepSeek spending controls separately from Reach's process-local request budgets. For higher traffic, move process-local AI limits to a shared store and review provider capacity and transit/data coverage; no new deployment is required for local preview use.

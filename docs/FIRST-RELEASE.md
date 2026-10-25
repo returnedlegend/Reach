@@ -1,5 +1,7 @@
 # Reach first public release candidate
 
+The [food-first follow-up](FOOD-FIRST-RELEASE.md) and [current verification](FOOD-FIRST-VERIFICATION.md) supersede this report's home-screen walkthrough and test totals. Its deployment/data evidence below remains scoped to its original run.
+
 Assessed October 24, 2026. This is an implemented, locally tested release candidate, not a public deployment. The previous [CEO assessment](REACH-CEO-READINESS-REPORT.md) is historical; current evidence is linked below. The repository was on `main` with that assessment's changes uncommitted. They were preserved. The 30-second video at `/workspace/artifacts/reach-demo/Reach-30-second-demo.mp4` was inspected (30 seconds, H.264, 1920×1080); its older light UI is reference footage, not evidence of this release.
 
 ## Release boundary

@@ -43,20 +43,7 @@ Preview writes private email captures and sends nothing. Never publish captures:
 
 AI interprets preferences into a strict allowlist, drafts a constrained inquiry, and extracts facts from untrusted reply text. It never calculates transit times or edits sources. Proposed preferences require **Apply**. Explanations of results are deterministic and grounded in their structured itinerary; no LLM explanation can introduce an unsupported fact.
 
-All providers are disabled until explicitly selected, configured, and accepted by the operator. No account quota or model quality could be evaluated without an authorized account, so the safe default is the deterministic fallback rather than a claimed best model. Official documentation and public catalog checks are in [ACCESS-INTEGRATIONS.md](ACCESS-INTEGRATIONS.md).
-
-```dotenv
-REACH_AI_PROVIDER=openrouter
-REACH_AI_MODEL=an-actually-listed-model:free
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-REACH_AI_FREE_ONLY=true
-REACH_AI_ALLOW_PAID=false
-REACH_AI_DATA_POLICY_ACCEPTED=true
-```
-
-The model name above is an explanatory placeholder, not a usable identifier. Select a current model yourself after reviewing privacy and account quotas. OpenRouter free-only requires a `:free` identifier and zero prices in all catalog pricing fields. Provider routing denies data collection and fallback and requires parameter support; that combination may have no available free endpoint. There is no paid or cross-provider fallback. Gemini/Groq adapters require their respective server keys and explicit paid opt-in (`FREE_ONLY=false` **and** `ALLOW_PAID=true`): their account-specific billing cannot be proved free by a public catalog. Do not enable paid usage unless intended.
-
-Requests have cancellation, an eight-second timeout, at most one bounded 429 retry that respects Retry-After (long waits fall back locally), strict output validation and a three-failure/60-second circuit breaker. Defaults are 128 logical AI tasks/day and 20/minute per process, with 32/day and 5/minute per feature. A task can include a public catalog check and one bounded retry; these are not a hard cap on network requests. Counters reset on process restart. Configure `REACH_AI_PREFERENCES_DAILY_LIMIT`, `REACH_AI_DRAFT_DAILY_LIMIT`, `REACH_AI_REPLY_DAILY_LIMIT` and corresponding `_MINUTE_LIMIT` values; zero disables a feature. These local safeguards do not establish provider quotas or distributed deployment limits. Invalid configuration fails closed. Text containing detected precise locations stays local, but heuristic filtering is not a guarantee: do not submit personal or sensitive text. No precise origins, account identifiers or private household names are needed for AI interpretation.
+AI remains unavailable until DeepSeek is configured with a server-side key and the operator accepts the applicable data policy. Current model names, setup, paid pricing, privacy boundaries and request limits are documented in [DeepSeek AI setup](DEEPSEEK.md). Reach validates AI output locally and keeps deterministic planning available when inference is disabled or unavailable. It does not automatically switch to another provider. Do not submit personal or sensitive text.
 
 Ranking weights can be supplied as strict JSON in `REACH_ACCESS_WEIGHTS`; accepted keys and defaults are `travelMinute:1`, `walkingMinute:2`, `dollar:4`, `transfer:8`, `uncertainty:12`, `closingSlackMinute:0.1`, each 0–100. Smaller scores rank earlier **within** the fit/confirmation/failure class. Unknown fares receive an uncertainty penalty, never a zero-fare assumption. Scores are implementation details, not probabilities.
 

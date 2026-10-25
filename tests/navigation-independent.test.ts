@@ -1,5 +1,4 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import { z } from "zod";
 import { ACCESS_WEIGHTS, evaluateAccess } from "../src/lib/access-engine";
 import { buildNavigationGuidance } from "../src/lib/navigation-guidance-agent";
 import { navigationWeights } from "../src/lib/navigation-ranking-agent";
@@ -13,24 +12,11 @@ import {
   syntheticJourney,
 } from "./fixtures/access-scenarios";
 
-const outputSchema = z.object({ ok: z.boolean() }).strict();
-
-const freeModel = {
-  id: "fixture/primary:free",
-  pricing: { prompt: "0", completion: "0", request: "0" },
-  supported_parameters: ["tools", "structured_outputs"],
-};
-
 function configureGuidance() {
-  vi.stubEnv("REACH_AI_PROVIDER", "openrouter");
-  vi.stubEnv("OPENROUTER_PRIMARY_MODEL", "fixture/primary:free");
-  vi.stubEnv("OPENROUTER_API_KEY", "fixture-only-key");
+  vi.stubEnv("REACH_AI_PROVIDER", "deepseek");
+  vi.stubEnv("DEEPSEEK_REASONING_MODEL", "deepseek-v4-pro");
+  vi.stubEnv("DEEPSEEK_API_KEY", "fixture-only-key");
   vi.stubEnv("REACH_AI_DATA_POLICY_ACCEPTED", "true");
-  vi.stubEnv("REACH_AI_FREE_ONLY", "true");
-}
-
-function catalog(models = [freeModel]) {
-  return new Response(JSON.stringify({ data: models }), { status: 200 });
 }
 
 function completion(value: unknown, status = 200, headers: HeadersInit = {}) {
@@ -120,7 +106,9 @@ describe("independent navigation safety checks", () => {
 
     expect(result.options).toHaveLength(1);
     expect(result.options[0].status).toBe("no");
-    expect(result.options[0].reasons.join(" ")).toMatch(/finish the visit before/i);
+    expect(result.options[0].reasons.join(" ")).toMatch(
+      /finish the visit before/i,
+    );
   });
 
   it("does not represent an unknown driving cost as zero or reject the driver's route for pedestrian-only rules", async () => {
@@ -148,8 +136,12 @@ describe("independent navigation safety checks", () => {
     expect(result.options[0].status).toBe("confirm");
     expect(result.options[0].outbound?.mode).toBe("driving");
     expect(result.options[0].labels).not.toContain("No travel fare");
-    expect(result.options[0].warnings.join(" ")).toMatch(/fuel, parking.*unknown/i);
-    expect(result.options[0].reasons.join(" ")).not.toMatch(/pedestrian pickup/i);
+    expect(result.options[0].warnings.join(" ")).toMatch(
+      /fuel, parking.*unknown/i,
+    );
+    expect(result.options[0].reasons.join(" ")).not.toMatch(
+      /pedestrian pickup/i,
+    );
   });
 
   it("keeps a routed confirmation ahead of an un-routed option under extreme score weights", async () => {
@@ -207,19 +199,19 @@ describe("independent navigation safety checks", () => {
 
   it("keeps guidance tied to the deterministically selected public option and excludes coordinates, profile, and household details from the model prompt", async () => {
     configureGuidance();
-    vi.stubEnv("OPENROUTER_FALLBACK_MODEL", "");
     const publicOption = option("synthetic-public", "pantry", "fits");
     const householdOption = option("synthetic-household", "household", "fits");
     householdOption.resource.address = "PRIVATE_HOUSEHOLD_COORDINATE_POINT";
     const noOption = option("synthetic-infeasible", "pantry", "no");
     const plan = response([noOption, publicOption, householdOption]);
     const bodies: Array<Record<string, unknown>> = [];
-    const fetcher = vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
-      if (String(url).endsWith("/models")) return catalog();
-      const body = JSON.parse(String(init?.body)) as Record<string, unknown>;
-      bodies.push(body);
-      return completion({ emphasisIds: ["option-1-route", "option-1-food"] });
-    });
+    const fetcher = vi.fn(
+      async (_url: RequestInfo | URL, init?: RequestInit) => {
+        const body = JSON.parse(String(init?.body)) as Record<string, unknown>;
+        bodies.push(body);
+        return completion({ emphasisIds: ["option-1-route", "option-1-food"] });
+      },
+    );
     const origin = { lat: 79.123456, lng: -119.123456 };
     const privateReturn = { lat: 78.987654, lng: -118.987654 };
     const guidance = await buildNavigationGuidance(
@@ -239,9 +231,13 @@ describe("independent navigation safety checks", () => {
       status: "ready",
       alternativeIds: ["synthetic-household"],
     });
-    expect(guidance.modules.find((module) => module.name === "resources")?.status).toBe("limited");
+    expect(
+      guidance.modules.find((module) => module.name === "resources")?.status,
+    ).toBe("limited");
     expect(guidance.paragraphs.join(" ")).toContain("Routed walking");
-    expect(guidance.paragraphs.join(" ")).toContain("Synthetic synthetic-infeasible was excluded");
+    expect(guidance.paragraphs.join(" ")).toContain(
+      "Synthetic synthetic-infeasible was excluded",
+    );
     expect(guidance.selectedId).not.toBe("synthetic-infeasible");
     expect(guidance.alternativeIds).not.toContain("synthetic-infeasible");
     expect(bodies).toHaveLength(1);
@@ -261,13 +257,10 @@ describe("independent navigation safety checks", () => {
 
   it("rejects model-emphasized IDs outside the eligible public evidence and preserves the computed explanation", async () => {
     configureGuidance();
-    vi.stubEnv("OPENROUTER_FALLBACK_MODEL", "");
     const publicOption = option("synthetic-public", "pantry", "fits");
     const householdOption = option("synthetic-private", "household", "fits");
-    const fetcher = vi.fn(async (url: RequestInfo | URL) =>
-      String(url).endsWith("/models")
-        ? catalog()
-        : completion({ emphasisIds: ["option-1-route"] }),
+    const fetcher = vi.fn(async (_url: RequestInfo | URL) =>
+      completion({ emphasisIds: ["option-1-route"] }),
     );
     const guidance = await buildNavigationGuidance(
       response([publicOption, householdOption]),
@@ -280,72 +273,5 @@ describe("independent navigation safety checks", () => {
     expect(guidance.assistance).toBe("deterministic");
     expect(guidance.paragraphs.join(" ")).toContain("Routed walking");
     expect(guidance.paragraphs.join(" ")).not.toContain("synthetic-private");
-  });
-
-  it("charges each fallback completion attempt against the feature budget", async () => {
-    vi.resetModules();
-    const client = await import("../src/lib/openrouter-client");
-    configureGuidance();
-    vi.stubEnv("OPENROUTER_FALLBACK_MODEL", "fixture/fallback:free");
-    vi.stubEnv("REACH_AI_GUIDANCE_DAILY_LIMIT", "1");
-    const models = [freeModel, { ...freeModel, id: "fixture/fallback:free" }];
-    let completions = 0;
-    const fetcher = vi.fn(async (url: RequestInfo | URL) => {
-      if (String(url).endsWith("/models")) return catalog(models);
-      completions += 1;
-      return completion(null, 503);
-    });
-    const run = () =>
-      client.openRouterJson({
-        role: "primary",
-        feature: "guidance",
-        prompt: "synthetic fixture",
-        jsonSchema: {
-          type: "object",
-          properties: { ok: { type: "boolean" } },
-          required: ["ok"],
-          additionalProperties: false,
-        },
-        schema: outputSchema,
-        fetch: fetcher as typeof fetch,
-      });
-    const first = await run();
-    const second = await run();
-
-    expect(first.status).toBe("unavailable");
-    expect(second.status).toBe("unavailable");
-    expect(completions).toBe(1);
-    expect(fetcher).toHaveBeenCalledTimes(2); // one catalog request and one completion attempt
-  });
-
-  it("honors a long Retry-After on a transient 503 instead of immediately calling fallback", async () => {
-    vi.resetModules();
-    const client = await import("../src/lib/openrouter-client");
-    configureGuidance();
-    vi.stubEnv("OPENROUTER_FALLBACK_MODEL", "fixture/fallback:free");
-    const models = [freeModel, { ...freeModel, id: "fixture/fallback:free" }];
-    let completions = 0;
-    const fetcher = vi.fn(async (url: RequestInfo | URL) => {
-      if (String(url).endsWith("/models")) return catalog(models);
-      completions += 1;
-      return completion(null, 503, { "retry-after": "5" });
-    });
-    const result = await client.openRouterJson({
-      role: "primary",
-      feature: "guidance",
-      prompt: "synthetic fixture",
-      jsonSchema: {
-        type: "object",
-        properties: { ok: { type: "boolean" } },
-        required: ["ok"],
-        additionalProperties: false,
-      },
-      schema: outputSchema,
-      fetch: fetcher as typeof fetch,
-    });
-
-    expect(result).toMatchObject({ status: "unavailable", calls: 1 });
-    expect(completions).toBe(1);
-    expect(fetcher).toHaveBeenCalledTimes(2);
   });
 });

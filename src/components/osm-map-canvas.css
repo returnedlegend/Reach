@@ -1,2 +1,17 @@
 /* Keep provider styles lazy-loaded and below Reach's accessible controls. */
 @import "maplibre-gl/dist/maplibre-gl.css" layer(vendor);
+
+/* Keep legal credits readable over light cartography in either Reach theme. */
+.maplibregl-map .maplibregl-ctrl-attrib {
+  background: #fff;
+  color: #18312e;
+  font-size: 12px;
+}
+.maplibregl-map .maplibregl-ctrl-attrib a {
+  color: #145b51;
+  text-decoration: underline;
+}
+.maplibregl-map .maplibregl-ctrl-attrib a:focus-visible {
+  outline: 3px solid #145b51;
+  outline-offset: 2px;
+}

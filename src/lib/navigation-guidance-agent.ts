@@ -5,7 +5,7 @@ import type {
   NavigationGuidance,
   NavigationEvidence,
 } from "./navigation-types";
-import { openRouterJson } from "./openrouter-client";
+import { deepseekJson } from "./deepseek-client";
 import { formatTime } from "./time";
 
 /** These are evidence identifiers, never model-authored itinerary facts. */
@@ -161,9 +161,13 @@ export async function buildNavigationGuidance(
   const eligible = selectedEvidence.filter(
     (e) => publicIds.has(e.resourceId || "") && !e.id.endsWith("-status"),
   );
+  // Defaults such as walking/fare limits do not make an ordinary request complex.
+  const complexGuidance = Boolean(
+    input.returnTo || (selected?.outbound?.transfers ?? 0) > 0,
+  );
   if (options.explain && eligible.length && !options.signal?.aborted) {
-    const response = await openRouterJson({
-      role: "primary",
+    const response = await deepseekJson({
+      role: complexGuidance ? "primary" : "fast",
       feature: "guidance",
       signal: options.signal,
       fetch: options.fetch,

@@ -47,13 +47,20 @@ export function featureEnabled(feature: keyof PublicFeatures): boolean {
 /** Availability/configuration, not proof of successful live provider service. */
 export function publicFeatures(): PublicFeatures {
   if (coreRelease()) return { ...CORE_FEATURES };
+  const aiProvider =
+    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "deepseek";
+  const aiKey =
+    aiProvider === "deepseek"
+      ? process.env.DEEPSEEK_API_KEY
+      : aiProvider === "gemini"
+        ? process.env.GEMINI_API_KEY
+        : aiProvider === "groq"
+          ? process.env.GROQ_API_KEY
+          : undefined;
   const configuredAI =
     process.env.REACH_AI_DATA_POLICY_ACCEPTED === "true" &&
-    Boolean(
-      process.env.OPENROUTER_API_KEY ||
-        process.env.GEMINI_API_KEY ||
-        process.env.GROQ_API_KEY,
-    );
+    Boolean(aiKey?.trim()) &&
+    !/placeholder|your[_-].*(?:key|here)/i.test(aiKey || "");
   const emailProvider = process.env.REACH_EMAIL_PROVIDER;
   const configuredMail =
     emailProvider === "preview"

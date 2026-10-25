@@ -1,10 +1,10 @@
 # Postal to Resend verification gate
 
-This checklist records local verification of the Postal-to-Resend migration. It does not claim that Resend accepted or delivered a live message. Account and notification flows must use isolated SQLite data and mocked provider responses or the existing private local preview mode.
+This checklist preserves historical local verification evidence from the Postal-to-Resend migration; it is not a current inventory of every supported transport. It does not claim that Resend accepted or delivered a live message. Account and notification flows must use isolated SQLite data and mocked provider responses or the existing private local preview mode. The current code also supports the explicit `REACH_EMAIL_PROVIDER=smtp` setting through the Resend SMTP adapter in `src/lib/smtp-delivery.ts`.
 
 ## Security and behavior checks
 
-- [x] Delivery mode is `resend`, `preview`, or `disabled`; production preview remains disabled, and no Postal, SMTP, or Nodemailer transport remains.
+- [x] Historical migration check: Postal delivery was removed, and production preview remained disabled. The migration checklist's claim that SMTP/Nodemailer had been removed is stale; the current code supports an explicitly selected Resend SMTP adapter.
 - [x] The pinned Resend SDK is `6.34.1`. Sending uses the SDK's `emails.send` contract, one recipient, the configured sender, and only the message fields needed by Reach.
 - [x] The Resend API key stays server-side. Outside the explicit private local preview, provider errors, request bodies, account tokens, notification contents/recipients, and webhook payloads are not logged or stored; delivery ledgers and event history retain approved metadata only.
 - [x] The SDK request boundary fixes HTTPS Resend API access, disallows redirects, bounds requests and responses, times out, and does not let development SDK error logging expose provider responses.

@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-10-25T00:22:43.248Z",
+  "scope": "Derived maintained source records, not new organization contact or a field verification",
+  "total": 24,
+  "confirmedSites": 21,
+  "unresolved": [
+    {
+      "id": "bedias-food-pantry",
+      "name": "Bedias Food Pantry"
+    },
+    {
+      "id": "grimes-mobile-pantry",
+      "name": "Grimes Mobile Pantry"
+    },
+    {
+      "id": "madison-mobile-pantry",
+      "name": "Madison Mobile Pantry"
+    }
+  ],
+  "withStructuredWindows": 21,
+  "unknownPedestrianPickup": 18,
+  "sourceDates": ["2026-10-16", "2026-10-21", "2026-10-22", "2026-10-24"]
+}

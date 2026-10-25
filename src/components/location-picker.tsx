@@ -49,12 +49,14 @@ export function LocationPicker({
   onChange,
   resources = [],
   compact = false,
+  simple = false,
   className = "",
 }: {
   value: SelectedLocation | null;
   onChange: (value: SelectedLocation) => void;
   resources?: Resource[];
   compact?: boolean;
+  simple?: boolean;
   className?: string;
 }) {
   const [latitude, setLatitude] = useState(
@@ -470,6 +472,39 @@ export function LocationPicker({
     }
   }
 
+  const addressForm = (
+    <form onSubmit={searchAddress}>
+      <label>
+        Address
+        <input
+          className="input w-full"
+          value={address}
+          onChange={(event) => {
+            stopFollowing();
+            invalidateRequest();
+            setBusy(false);
+            setCandidates([]);
+            setMessage("");
+            setAddress(event.target.value);
+            setShowLocalSuggestions(true);
+          }}
+          placeholder={
+            compact ? "Address or pantry" : "Address or local pantry name"
+          }
+          autoComplete="off"
+        />
+      </label>
+      <button
+        className="btn btn-outline"
+        type="submit"
+        disabled={busy}
+        aria-label="Search address"
+      >
+        {compact ? "Search" : "Search address"}
+      </button>
+    </form>
+  );
+
   return (
     <section
       aria-label="Choose a starting location"
@@ -509,36 +544,14 @@ export function LocationPicker({
             ` (estimated accuracy ±${Math.round(value.accuracyMeters)} m)`}
         </p>
       )}
-      <form onSubmit={searchAddress}>
-        <label>
-          Address
-          <input
-            className="input w-full"
-            value={address}
-            onChange={(event) => {
-              stopFollowing();
-              invalidateRequest();
-              setBusy(false);
-              setCandidates([]);
-              setMessage("");
-              setAddress(event.target.value);
-              setShowLocalSuggestions(true);
-            }}
-            placeholder={
-              compact ? "Address or pantry" : "Address or local pantry name"
-            }
-            autoComplete="off"
-          />
-        </label>
-        <button
-          className="btn btn-outline"
-          type="submit"
-          disabled={busy}
-          aria-label="Search address"
-        >
-          {compact ? "Search" : "Search address"}
-        </button>
-      </form>
+      {simple ? (
+        <details className="location-address-disclosure">
+          <summary>Enter an address instead</summary>
+          {addressForm}
+        </details>
+      ) : (
+        addressForm
+      )}
       {localSuggestions.length > 0 && (
         <fieldset className="location-suggestions">
           <legend>Local places</legend>

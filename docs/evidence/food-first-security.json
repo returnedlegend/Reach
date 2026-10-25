@@ -1,0 +1,9 @@
+{
+  "checkedAt": "2026-10-25T00:53:23.548Z",
+  "changedTextFiles": 53,
+  "clientAssets": 35,
+  "credentialPatternMatches": 0,
+  "localEnvironmentIgnored": true,
+  "localEnvironmentMode": "600",
+  "scope": "Pattern scan of branch changed text and production client JS; not a full secret-history audit or security certification"
+}

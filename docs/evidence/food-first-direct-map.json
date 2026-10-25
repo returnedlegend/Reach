@@ -1,0 +1,13 @@
+{
+  "checkedAt": "2026-10-25T00:25:26.494Z",
+  "scope": "One normal map viewport on local production core, browser proxy inherited, external TLS validation enabled, no routing/geocoding/GPS or Google service request",
+  "responses": [],
+  "failed": [
+    {
+      "path": "/styles/liberty",
+      "error": "net::ERR_CERT_AUTHORITY_INVALID"
+    }
+  ],
+  "canvasCount": 1,
+  "mapText": "Origin: Choose a starting location. Destination: Not selected. 24 pantry sites shown. No route line is provided. Show TX-10 boundaryZoom to coverageChoose on mapSelect a pantry pin to choose your destination. You can also use the pantry cards.The interactive map is unavailable. Your browser may not "
+}

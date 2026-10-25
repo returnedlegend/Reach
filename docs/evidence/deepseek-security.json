@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-10-25T01:57:19.165Z",
+  "changedFiles": 45,
+  "clientAssets": 35,
+  "credentialValueMatches": 0,
+  "envIgnored": true,
+  "envModes": [
+    {
+      "file": ".env",
+      "mode": "600"
+    },
+    {
+      "file": ".env.local",
+      "mode": "600"
+    }
+  ]
+}

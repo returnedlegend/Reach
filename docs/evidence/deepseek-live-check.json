@@ -1,0 +1,48 @@
+{
+  "startedAt": "2026-10-25T01:50:47.932Z",
+  "finishedAt": "2026-10-25T01:50:52.039Z",
+  "originalConfiguration": {
+    "state": "configured",
+    "code": null
+  },
+  "testScope": "Synthetic public requests only; no coordinates, personal information, email sends or deployment. Isolated extended profile.",
+  "observations": [
+    {
+      "host": "api.deepseek.com",
+      "path": "/chat/completions",
+      "status": 402
+    },
+    {
+      "host": "api.deepseek.com",
+      "path": "/chat/completions",
+      "status": 402
+    },
+    {
+      "host": "api.deepseek.com",
+      "path": "/chat/completions",
+      "status": 402
+    }
+  ],
+  "needs": {
+    "status": "unavailable"
+  },
+  "draft": {
+    "assistance": "template",
+    "subject": "Question about current availability",
+    "bodyPreserved": true
+  },
+  "reasoning": {
+    "status": "unavailable",
+    "reason": "DeepSeek account balance is insufficient. Manual planning remains available.",
+    "calls": 1
+  },
+  "usage": {
+    "day": "2026-10-25",
+    "attempts": 3,
+    "successes": 0,
+    "failures": 3,
+    "promptTokens": 0,
+    "completionTokens": 0,
+    "totalTokens": 0
+  }
+}

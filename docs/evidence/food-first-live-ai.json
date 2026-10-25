@@ -1,0 +1,32 @@
+{
+  "checkedAt": "2026-10-24T23:49:23.862Z",
+  "kind": "single synthetic public request through new server handler and existing free-only OpenRouter adapter",
+  "httpStatus": 200,
+  "assistance": "directory",
+  "interpretedMode": "transit",
+  "pantryFactsGenerated": false,
+  "preciseCoordinatesSent": false,
+  "emailSent": false,
+  "scope": "Local server handler; not a production deployment or guarantee of later model capacity",
+  "diagnostic": {
+    "scope": "Separate direct interpreter diagnostic with the same synthetic public need, not a successful inference",
+    "requests": [
+      {
+        "host": "openrouter.ai",
+        "path": "/api/v1/models",
+        "httpStatus": 200
+      },
+      {
+        "host": "openrouter.ai",
+        "path": "/api/v1/chat/completions",
+        "httpStatus": 429
+      },
+      {
+        "host": "openrouter.ai",
+        "path": "/api/v1/chat/completions",
+        "httpStatus": 404
+      }
+    ],
+    "successfulInference": false
+  }
+}

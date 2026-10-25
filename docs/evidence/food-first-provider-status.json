@@ -1,0 +1,36 @@
+{
+  "checkedAt": "2026-10-25T00:20:46.656Z",
+  "emailSent": false,
+  "dnsModified": false,
+  "domain": "reachemail.com",
+  "resend": {
+    "status": "failed",
+    "recordStatuses": [
+      {
+        "record": "DKIM",
+        "type": "TXT",
+        "status": "failed"
+      },
+      {
+        "record": "SPF",
+        "type": "MX",
+        "status": "failed"
+      },
+      {
+        "record": "SPF",
+        "type": "TXT",
+        "status": "failed"
+      },
+      {
+        "record": "SPF",
+        "type": "CNAME",
+        "status": "failed"
+      }
+    ]
+  },
+  "dns": {
+    "httpStatus": 200,
+    "rcode": 0,
+    "nameservers": ["ns3.afternic.com.", "ns4.afternic.com."]
+  }
+}

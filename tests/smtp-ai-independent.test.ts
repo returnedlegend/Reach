@@ -189,11 +189,10 @@ describe("independent conversational assistant boundaries", () => {
   });
 
   it("never sends coordinate-bearing prose to model inference", async () => {
-    vi.stubEnv("REACH_AI_PROVIDER", "openrouter");
-    vi.stubEnv("OPENROUTER_FAST_MODEL", "fixture/fast:free");
-    vi.stubEnv("OPENROUTER_API_KEY", "fixture-only-key");
+    vi.stubEnv("REACH_AI_PROVIDER", "deepseek");
+    vi.stubEnv("DEEPSEEK_MODEL", "deepseek-flash");
+    vi.stubEnv("DEEPSEEK_API_KEY", "fixture-only-key");
     vi.stubEnv("REACH_AI_DATA_POLICY_ACCEPTED", "true");
-    vi.stubEnv("REACH_AI_FREE_ONLY", "true");
     const modelFetch = vi.fn();
     const interpret = (text: string, options?: { signal?: AbortSignal }) =>
       interpretNavigationNeeds(text, {

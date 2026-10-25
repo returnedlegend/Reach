@@ -1,6 +1,6 @@
 # Reach AI Navigation
 
-Implemented 2026-10-23 in the existing Next.js application. No new application, database replacement, mapping dependency or package was introduced. OpenRouter uses its OpenAI-compatible server-side REST contract. The map remains MapLibre/OpenStreetMap; email remains Resend with private local preview.
+The navigation features below were implemented in the existing Next.js application. The active AI provider setup is now [DeepSeek](DEEPSEEK.md); provider instructions in the original 2026-10-23 implementation report are historical. The map remains MapLibre/OpenStreetMap; email remains Resend with private local preview.
 
 ## What runs
 
@@ -20,36 +20,13 @@ Five independently testable modules share typed contracts rather than calling fi
 
 The planner's straight-line calculation is used only to shortlist a bounded number of confirmed sites for actual routing. It is never a route distance, ETA or proof of reachability. Missing external routes leave distances unavailable. The existing budget checks up to five selected nearby sites; it does not promise a globally optimal regional search. A selected destination can be checked separately.
 
-## Configuration
+## AI provider configuration
 
-Use Node 24, `npm ci`, then `npm run dev`. Next loads `.env.local` automatically. The existing ignored **`/workspace/Reach/.env.local`** has missing OpenRouter variables appended with placeholders, preserving other values. On another machine, use the project-root `.env.local`. Never paste a real key into chat or use a `NEXT_PUBLIC_` key name.
+Use Node 24, `npm ci`, then `npm run dev`. Next loads `.env.local` automatically. On a new installation, copy `.env.example` to `.env.local`; preserve existing settings. Configure the current provider using [DeepSeek AI setup](DEEPSEEK.md). Keep the API key server-only and review the provider data policy before enabling inference.
 
-```ini
-REACH_AI_PROVIDER=openrouter
-OPENROUTER_API_KEY=your_openrouter_api_key_here
-OPENROUTER_FAST_MODEL=
-OPENROUTER_PRIMARY_MODEL=
-OPENROUTER_FALLBACK_MODEL=
-REACH_AI_FREE_ONLY=true
-REACH_AI_ALLOW_PAID=false
-REACH_AI_DATA_POLICY_ACCEPTED=false
-```
+Preference interpretation may send the optional text submitted by a user. Navigation guidance uses generated public route timings, totals and availability uncertainty, and excludes origin coordinates, raw routing instructions, contact/profile information, household pickup data and private reply text. The separate email reply extraction workflow can send bounded reply text to DeepSeek when configured; see [feature-specific disclosure](DEEPSEEK.md#privacy-and-user-data). Do not submit identifying or sensitive information. No prompts or provider error bodies are logged.
 
-Fill exact model IDs after reviewing the current public [catalog](https://openrouter.ai/api/v1/models), [capability documentation](https://openrouter.ai/docs/guides/features/structured-outputs) and provider privacy terms. Both configured roles must support `tools` and `structured_outputs`. The client checks public catalog metadata, cached for at most 60 seconds; every completion still validates its output and free-profile cost constraints. This pipeline uses schema-constrained completions; it does not permit the model to execute tools, contact people or make arbitrary network requests. A catalog capability is model-level evidence; `provider.require_parameters` filters actual endpoints for requested parameters. There is no claim that a live endpoint has been tested here.
-
-`FAST` handles needs/preferences and existing outreach assistance; `PRIMARY` handles guidance. An optional `FALLBACK` model must pass the same checks before any completion occurs. Blank fallback means at most one retry on the same model. Existing `REACH_AI_MODEL` is a legacy fallback; `REACH_AI_FAST_MODEL`/`REACH_AI_PRIMARY_MODEL` aliases are accepted but canonical `OPENROUTER_*` names take priority.
-
-Keep `REACH_AI_DATA_POLICY_ACCEPTED=false` until you have reviewed and accepted the selected provider's terms. Change it to `true` only as the operator's explicit acknowledgement. With the provider disabled, placeholder credentials, unaccepted policy, invalid catalog or failed inference, manual controls and computed guidance still work. The AI-guidance checkbox is off by default and requires a separate user choice.
-
-## Privacy and cost controls
-
-Preference interpretation sends only the optional text submitted with the button; address/coordinate/contact patterns are rejected before inference, but this is not a perfect personal-data detector. The UI asks users to exclude identifying information. Guidance sends only generated public route timings, routed totals and availability uncertainty. It excludes origin coordinates, raw routing instructions, addresses, contact/profile information, household pickup data and private reply text. No prompts or provider error bodies are logged.
-
-Free-only is the default: every selected or fallback model must be `openrouter/free` or end in `:free` and have explicit, nonblank zero catalog prices for prompt, completion and all reported pricing fields. Requests set `data_collection:"deny"`, `require_parameters:true`, `allow_fallbacks:false` and zero `max_price` ceilings for prompt/completion/request/image. No automatic model list or silent paid fallback exists. These controls cannot establish the account's quota, downstream retention or a billing guarantee. `data_collection:"deny"` is not a zero-retention promise. Paid use requires both `REACH_AI_FREE_ONLY=false` and `REACH_AI_ALLOW_PAID=true`.
-
-The shared client bounds catalog bodies to 8 MiB and completion bodies to 64 KiB, with an 8-second overall deadline and cancellation. At most two completions occur. Transient network/5xx errors can use the explicit fallback; authentication or invalid JSON/schema returns to local guidance. A short Retry-After may be honored within the bounded wait; a delay over 500 ms stops the operation rather than bypassing the provider's delay. Every completion attempt, including a retry, consumes a quota unit. Catalog preflight also reserves the first unit, so failed preflights conservatively consume capacity. Three failures within a minute open a short circuit.
-
-Process-local ceilings are 128 reserved attempts/day and 20/minute shared across OpenRouter features, plus 32/day and 5/minute per feature by default. Features are `PREFERENCES`, `NEEDS`, `GUIDANCE`, `DRAFT`, `REPLY`; `REACH_AI_<FEATURE>_<DAILY|MINUTE>_LIMIT` can lower/configure these within the ceilings, and zero disables a feature. Invalid settings fail closed. These counters reset on process restart and do not coordinate multiple processes. Before multi-instance deployment, use a shared persistent limiter and provider account spending caps. Free-model availability and provider limits change; no compute or infrastructure cost saving is guaranteed.
+Reach uses process-local ceilings of 128 attempts/day and 20/minute overall, with 32/day and 5/minute per feature by default. The counters reset on restart and do not coordinate multiple application instances; they do not cap provider charges. DeepSeek has no automatic cross-provider fallback. See [cost and operational limits](DEEPSEEK.md#cost-capacity-and-retries).
 
 Optional ranking overrides in `REACH_ACCESS_WEIGHTS` are strict JSON fields with finite values from 0 to 100: `travelMinute`, `walkingMinute`, `dollar`, `transfer`, `uncertainty`, `closingSlackMinute`, `waitingMinute`, `timeToServiceMinute`. Defaults are 1, 2, 4, 8, 12, 0.1, 0, 0 respectively. Declared urgency adds 2 (soon), 0.5 (today), or 0 (flexible) to `timeToServiceMinute`; near-transit preference adds 2 to walking-minute weight in transit mode. These are ranking points, not probabilities. No weight can erase a hard failure.
 
@@ -59,7 +36,7 @@ There are 24 maintained food sites, 21 confirmed distribution sites and three un
 
 Only scheduled BTD Route 00 Orange is integrated. The existing GTFS/PDF disagreement remains a caution, no live predictions exist, and expired service data produces unavailable service. CapMetro is documented as a legitimate future data source; no feed/route/fare integration or TX-10 route overlap is claimed. Restricted school buses and demand-response service remain distinct. See [official provider research](NAVIGATION-PROVIDERS.md), [BTD audit](ACCESS-INTEGRATIONS.md), and [GTFS provenance](GTFS.md).
 
-See [independent navigation verification](NAVIGATION-VERIFICATION.md) for observed browser/backend checks and remaining blockers. Automated model responses and routes in tests are synthetic fixtures, not evidence of live inference. The public OpenRouter catalog returned HTTP 200 during this task (468 models, five free entries advertising both required capabilities); **no authenticated OpenRouter completion ran**. Existing mapping/routing functionality is preserved. No public deployment was performed.
+See [independent navigation verification](NAVIGATION-VERIFICATION.md) for dated browser/backend checks and remaining blockers. Automated model responses and routes in tests are synthetic fixtures, not evidence of live inference. Its OpenRouter catalog observations are historical and do not establish current DeepSeek service or account status. Existing mapping/routing functionality is preserved. No public deployment is claimed here.
 
 ## Run the checks
 

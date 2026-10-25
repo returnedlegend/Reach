@@ -25,7 +25,7 @@ Reviewed October 24, 2026 (America/Chicago), starting from commit `8ed9703`. Thi
 - [Development and maintenance](DEVELOPMENT.md) now includes a route/method/access map, exact application configuration precedence, origin-error troubleshooting, isolated fixture guidance and the distinction between a newly started Community-enabled test server and reuse of an existing server.
 - [Architecture](ARCHITECTURE.md) links HTTP entry points to their handler-level trust boundaries. Exporting a method is not a promise that every catch-all subpath accepts it.
 - [Community](COMMUNITY.md) documents the structured disabled error contract while keeping explicit opt-in and moderation requirements.
-- [Free OpenRouter setup](FREE-OPENROUTER.md) and the root README distinguish the original missing-key run from the later live credential checks. Current setup instructions no longer contradict the dated verification report.
+- [DeepSeek AI setup](DEEPSEEK.md) documents the current provider. The linked OpenRouter verification remains a dated result from an earlier configuration.
 - [The documentation index](README.md) links the expanded reference and this report. Historical test counts remain dated evidence rather than being silently relabeled as new verification.
 
 ## Scope and independent review

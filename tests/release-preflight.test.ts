@@ -127,7 +127,7 @@ describe("release preflight", () => {
           REACH_COMMUNITY_ENABLED: "true",
           REACH_ACCOUNT_ENABLED: "true",
           REACH_EMAIL_PROVIDER: "resend",
-          REACH_AI_PROVIDER: "openrouter",
+          REACH_AI_PROVIDER: "deepseek",
           REACH_RELEASE_ACCOUNTS: "true",
           REACH_RELEASE_AI: "true",
         }),
