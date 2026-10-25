@@ -257,25 +257,20 @@ export function AccountPanel() {
   async function authenticate(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
-    const identifier = value(form, "identifier");
-    const password = value(form, "password");
-    const isUsername = mode === "login" && !identifier.includes("@");
+    const data = {
+      email: value(form, "email"),
+      password: value(form, "password"),
+      ...(mode === "signup"
+        ? { name: value(form, "name"), adultConfirmed: true }
+        : {}),
+    };
     const success = await act(
       () =>
-        mode === "signup"
-          ? request("/api/community/auth/signup", "POST", {
-              username: identifier,
-              password,
-              adultConfirmed: true,
-            })
-          : mode === "forgot"
-            ? request("forgot-password", "POST", { email: identifier })
-            : isUsername
-              ? request("/api/community/auth/login", "POST", {
-                  username: identifier,
-                  password,
-                })
-              : request("login", "POST", { email: identifier, password }),
+        request(
+          mode === "forgot" ? "forgot-password" : mode,
+          "POST",
+          mode === "forgot" ? { email: data.email } : data,
+        ),
       mode === "forgot"
         ? "Request received. If recovery is available for this address, check your email."
         : mode === "signup"
@@ -419,9 +414,9 @@ export function AccountPanel() {
           )}
           {status && !status.emailConfigured && (
             <p className="account-warning">
-              Email delivery is not configured. Email verification and password
-              recovery are unavailable right now. Community username accounts
-              can still be created and used.
+              Email delivery is not configured. New email accounts, email
+              verification and password recovery are unavailable right now.
+              Existing accounts can still sign in.
             </p>
           )}
           {!user ? (
@@ -458,7 +453,7 @@ export function AccountPanel() {
                     }`}
                     aria-pressed={mode === key}
                     disabled={
-                      busy || (key === "forgot" && !status?.emailConfigured)
+                      busy || (key !== "login" && !status?.emailConfigured)
                     }
                     onClick={() => {
                       setMode(key);
@@ -479,30 +474,22 @@ export function AccountPanel() {
               <form key={mode} onSubmit={authenticate}>
                 <fieldset
                   disabled={
-                    busy || (mode === "forgot" && !status?.emailConfigured)
+                    busy || (mode !== "login" && !status?.emailConfigured)
                   }
                 >
                   {mode === "signup" && (
                     <Field
-                      name="identifier"
-                      label="Username"
-                      autoComplete="username"
-                      minLength={3}
-                      help="Use 3 to 32 letters, numbers, or underscores."
+                      name="name"
+                      label="Display name"
+                      autoComplete="nickname"
                     />
                   )}
-                  {mode !== "signup" && (
-                    <Field
-                      name="identifier"
-                      label={
-                        mode === "login"
-                          ? "Email address or username"
-                          : "Email address"
-                      }
-                      type={mode === "login" ? "text" : "email"}
-                      autoComplete={mode === "login" ? "username" : "email"}
-                    />
-                  )}
+                  <Field
+                    name="email"
+                    label="Email address"
+                    type="email"
+                    autoComplete="email"
+                  />
                   {mode !== "forgot" && (
                     <Field
                       name="password"
@@ -545,12 +532,11 @@ export function AccountPanel() {
                   </button>
                 </fieldset>
               </form>
-              {mode === "signup" && (
-                <p className="account-help">
-                  Your username account also works in Community. You can add an
-                  email later for verification and recovery.
-                </p>
-              )}
+              <p className="account-help">
+                Have a community username account? Use the existing sign-in form
+                in <a href="/">Community</a>. Your community identity is
+                preserved.
+              </p>
             </Card>
           ) : (
             <div className="account-grid">
@@ -566,16 +552,14 @@ export function AccountPanel() {
                   }}
                 />
                 <p className="account-identity">
-                  {user.email || user.name}
-                  {user.email && (
-                    <span
-                      className={`account-badge${user.emailVerified ? " verified" : ""}`}
-                    >
-                      {user.emailVerified
-                        ? "Email verified"
-                        : "Email not verified"}
-                    </span>
-                  )}
+                  {user.email || "Community account"}
+                  <span
+                    className={`account-badge${user.emailVerified ? " verified" : ""}`}
+                  >
+                    {user.emailVerified
+                      ? "Email verified"
+                      : "Email not verified"}
+                  </span>
                 </p>
                 {!user.emailVerified && user.email && (
                   <>
@@ -664,7 +648,6 @@ export function AccountPanel() {
                         {},
                       );
                       setUser(null);
-                      setMode("login");
                       setLinkAction(null);
                       return result;
                     }, "You are signed out.")
@@ -943,7 +926,6 @@ export function AccountPanel() {
                         },
                       );
                       setUser(null);
-                      setMode("login");
                       setLinkAction(null);
                       form.reset();
                       return result;

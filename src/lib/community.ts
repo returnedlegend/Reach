@@ -506,20 +506,7 @@ export function createCommunityHandler(databasePath?: string) {
     request: Request,
     path?: string[],
   ): Promise<Response> {
-    const requestPath =
-      path ||
-      new URL(request.url).pathname
-        .replace(/^\/api\/community\/?/, "")
-        .split("/")
-        .filter(Boolean);
-    const accountAuthentication =
-      requestPath.length === 2 &&
-      requestPath[0] === "auth" &&
-      ["signup", "login", "logout"].includes(requestPath[1]);
-    if (
-      !featureEnabled("community") &&
-      !(accountAuthentication && featureEnabled("accounts"))
-    )
+    if (!featureEnabled("community"))
       return response(
         {
           code: "community_disabled",
@@ -879,6 +866,11 @@ export function createCommunityHandler(databasePath?: string) {
           (parts.length === 1 && request.method === "POST") ||
           (parts.length === 2 && request.method === "PATCH")
         ) {
+          if (
+            kind === "hotspot" &&
+            !["organizer", "moderator"].includes(u.role)
+          )
+            fail(403, "An approved organizer account is required.");
           const data =
             kind === "hotspot"
               ? await body(request, hotspotSchema)
@@ -930,15 +922,8 @@ export function createCommunityHandler(databasePath?: string) {
             if (old.owner_id !== u.id || old.kind !== kind)
               fail(403, "Only the owner can change this record.");
             if (action === "submit") {
-              const publishable =
-                kind === "hotspot"
-                  ? ["draft", "rejected", "pending"]
-                  : ["draft", "rejected"];
-              if (!publishable.includes(String(old.status)))
-                fail(
-                  409,
-                  "This post cannot be published in its current state.",
-                );
+              if (!["draft", "rejected"].includes(String(old.status)))
+                fail(409, "Only a draft can be submitted.");
               validateWindow(JSON.parse(String(old.data)));
             } else if (["cancelled", "ended"].includes(String(old.status)))
               fail(409, "This record has already ended.");
@@ -946,9 +931,7 @@ export function createCommunityHandler(databasePath?: string) {
               "UPDATE records SET status=?,updated_at=? WHERE id=?",
             ).run(
               action === "submit"
-                ? kind === "hotspot"
-                  ? "approved"
-                  : "pending"
+                ? "pending"
                 : action === "cancel"
                   ? "cancelled"
                   : "ended",

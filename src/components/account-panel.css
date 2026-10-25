@@ -204,8 +204,7 @@
     font-size: 14px;
     color: color-mix(in oklab, var(--color-base-content) 66%, transparent);
   }
-  .account-help a,
-  .account-check a {
+  .account-help a {
     text-decoration: underline;
     text-underline-offset: 0.18em;
   }

@@ -611,7 +611,39 @@ test.describe("real local community backend", () => {
           })
         ).status(),
       ).toBe(200);
-      // Hotspots publish immediately; no moderator approval transition is required.
+      expect(
+        (
+          await moderator.post(
+            `/api/community/moderation/hotspots/${hotspotId}/reject`,
+            { data: { reason: "QA correction required" } },
+          )
+        ).status(),
+      ).toBe(200);
+      expect(
+        (
+          await donor.patch(`/api/community/hotspots/${hotspotId}`, {
+            data: {
+              ...hotspotDraft,
+              description: "Corrected synthetic QA fixture.",
+            },
+          })
+        ).status(),
+      ).toBe(200);
+      expect(
+        (
+          await donor.post(`/api/community/hotspots/${hotspotId}/submit`, {
+            data: {},
+          })
+        ).status(),
+      ).toBe(200);
+      expect(
+        (
+          await moderator.post(
+            `/api/community/moderation/hotspots/${hotspotId}/approve`,
+            { data: {} },
+          )
+        ).status(),
+      ).toBe(200);
       expect(
         JSON.stringify(
           await (await first.get("/api/community/discovery")).json(),

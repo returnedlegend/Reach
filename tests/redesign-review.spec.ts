@@ -137,7 +137,7 @@ test("account forms fit small screens and keep native labels and validation", as
     route.fulfill({ json: { user: null } }),
   );
   const writes: string[] = [];
-  await page.route("**/api/community/auth/signup", (route) => {
+  await page.route("**/api/account/signup", (route) => {
     writes.push(route.request().method());
     return route.fulfill({
       status: 500,
@@ -148,13 +148,13 @@ test("account forms fit small screens and keep native labels and validation", as
   await page
     .getByRole("button", { name: "Create account", exact: true })
     .click();
-  const username = page.getByLabel("Username", { exact: true });
+  const email = page.getByLabel("Email address", { exact: true });
   const password = page.getByLabel("Password", { exact: true });
-  await expect(username).toHaveAttribute("autocomplete", "username");
-  await expect(username).toHaveAttribute("minlength", "3");
+  await expect(page.getByLabel("Display name", { exact: true })).toBeVisible();
+  await expect(email).toHaveAttribute("autocomplete", "email");
   await expect(password).toHaveAttribute("autocomplete", "new-password");
   await expect(password).toHaveAttribute("minlength", "12");
-  await generousTarget(username);
+  await generousTarget(email);
   await generousTarget(password);
   await page
     .getByRole("button", { name: "Create account", exact: true })
