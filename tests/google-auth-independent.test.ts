@@ -164,6 +164,7 @@ beforeEach(() => {
   database = join(directory, "community.sqlite");
   now = new Date("2026-10-23T12:00:00.000Z");
   configureGoogle();
+  vi.stubEnv("REACH_ADMIN_EMAIL", "person@gmail.com");
 });
 
 afterEach(() => {
@@ -174,6 +175,61 @@ afterEach(() => {
 });
 
 describe("independent Google OIDC account boundary", () => {
+  it("rejects ordinary new identities and verified third-party emails for bootstrap", async () => {
+    vi.stubEnv("REACH_ADMIN_EMAIL", "person@example.com");
+    const fetch = vi.fn(async () =>
+      Response.json({ id_token: "synthetic.signed.jwt" }),
+    );
+    const verifier = makeVerifier((nonce) =>
+      claims(nonce, { email: "person@example.com" }),
+    );
+    const handle = createGoogleAuthHandler(database, {
+      fetch,
+      verifyIdToken: verifier.verifyIdToken,
+      now: () => now,
+    });
+    const started = await start(handle);
+    verifier.setNonce(started.url.searchParams.get("nonce")!);
+    const rejected = await callback(
+      handle,
+      started.url.searchParams.get("state")!,
+      started.cookie,
+    );
+    expect(rejected.headers.get("location")).toBe(
+      `${origin}/account#google=failed`,
+    );
+    expect(
+      openCommunityDatabase(database)
+        .prepare("SELECT count(*) count FROM users")
+        .get(),
+    ).toEqual({ count: 0 });
+
+    vi.stubEnv("REACH_ADMIN_EMAIL", "another-person@gmail.com");
+    const ordinary = makeVerifier((nonce) =>
+      claims(nonce, { email: "person@gmail.com" }),
+    );
+    const ordinaryHandle = createGoogleAuthHandler(database, {
+      fetch,
+      verifyIdToken: ordinary.verifyIdToken,
+      now: () => now,
+    });
+    const ordinaryFlow = await start(ordinaryHandle);
+    ordinary.setNonce(ordinaryFlow.url.searchParams.get("nonce")!);
+    const ordinaryRejected = await callback(
+      ordinaryHandle,
+      ordinaryFlow.url.searchParams.get("state")!,
+      ordinaryFlow.cookie,
+    );
+    expect(ordinaryRejected.headers.get("location")).toBe(
+      `${origin}/account#google=failed`,
+    );
+    expect(
+      openCommunityDatabase(database)
+        .prepare("SELECT count(*) count FROM users")
+        .get(),
+    ).toEqual({ count: 0 });
+  });
+
   it("returns a safe disabled status when web OAuth credentials are absent", async () => {
     vi.stubEnv("GOOGLE_CLIENT_ID", "");
     vi.stubEnv("GOOGLE_CLIENT_SECRET", "");
@@ -293,6 +349,9 @@ describe("independent Google OIDC account boundary", () => {
       email: "person@gmail.com",
       emailVerified: true,
       role: "user",
+    });
+    expect(db.prepare("SELECT role FROM users").get()).toEqual({
+      role: "moderator",
     });
     expect(
       db.prepare("SELECT issuer,subject,user_id FROM google_identities").all(),
@@ -424,6 +483,7 @@ describe("independent Google OIDC account boundary", () => {
     vi.stubEnv("GOOGLE_CLIENT_ID", clientId);
     vi.stubEnv("GOOGLE_CLIENT_SECRET", clientSecret);
     signInEmail = "new-person@gmail.com";
+    vi.stubEnv("REACH_ADMIN_EMAIL", signInEmail);
     const first = await start(handle);
     verifier.setNonce(first.url.searchParams.get("nonce")!);
     const firstResponse = await callback(
@@ -692,6 +752,7 @@ describe("independent Google OIDC account boundary", () => {
   });
 
   it("requires a Reach password to disconnect Google and preserves the linked account through recovery", async () => {
+    vi.stubEnv("REACH_ADMIN_EMAIL", "google-only@gmail.com");
     const verifier = makeVerifier((nonce) =>
       claims(nonce, { email: "google-only@gmail.com" }),
     );

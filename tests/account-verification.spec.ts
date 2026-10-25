@@ -11,13 +11,18 @@ test("account controls expose configuration honestly and remain accessible on na
   await expect(page.getByLabel("Email address", { exact: true })).toBeVisible();
   await expect(page.getByLabel("Password", { exact: true })).toBeVisible();
   const status = await (await page.request.get("/api/account/status")).json();
+  await expect(
+    page.getByRole("button", { name: "Create account", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page
+      .locator("main.account-page")
+      .getByRole("link", { name: "Share food", exact: true }),
+  ).toHaveAttribute("href", "/share");
   if (!status.emailConfigured) {
     await expect(
       page.getByText(/Email delivery is not configured/),
     ).toBeVisible();
-    await expect(
-      page.getByRole("button", { name: "Create account", exact: true }),
-    ).toBeDisabled();
     await expect(
       page.getByRole("button", { name: "Forgot password", exact: true }),
     ).toBeDisabled();

@@ -57,6 +57,9 @@ export function SiteNavigation({
               </Link>
             ))}
           </nav>
+          <Link className="btn btn-primary" href="/share">
+            Share food
+          </Link>
           <ThemeToggle />
           <MoreMenu>
             <Link href="/pantry-planner">
@@ -75,6 +78,14 @@ export function SiteNavigation({
                 Manage a pantry
               </Link>
             )}
+            <Link href="/share">
+              <HeartHandshake size={18} />
+              Host a Food Pickup / Share Extra Food
+            </Link>
+            <Link href="/admin">
+              Admin submissions
+              <ArrowUpRight size={15} />
+            </Link>
             <Link href="/privacy">
               Privacy & location
               <ArrowUpRight size={15} />

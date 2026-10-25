@@ -72,6 +72,7 @@ beforeEach(() => {
   vi.stubEnv("REACH_EMAIL_PREVIEW_DIR", previewDirectory);
   db = openCommunityDatabase(database);
   handle = createAccountHandler(database, {
+    allowRegistration: true,
     sendMail: async (mail) => {
       await deliverMail(db, mail);
     },

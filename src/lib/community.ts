@@ -62,7 +62,7 @@ const windowFields = {
   startsAt: instant,
   endsAt: instant,
 };
-const hotspotSchema = z
+export const hotspotSchema = z
   .object({
     ...windowFields,
     organizerName: text(100),
@@ -77,7 +77,7 @@ const hotspotSchema = z
     pickupInstructions: text(500),
   })
   .strict();
-const offerSchema = z
+export const offerSchema = z
   .object({
     ...windowFields,
     pickupAreaId: z.enum(["bryan", "college-station"]),
@@ -328,8 +328,32 @@ function serialize(
     delete data.privatePickupInstructions;
     delete data.sharePickupInstructions;
   }
+  let publicContact: CommunityRecord["publicContact"];
+  if (
+    db &&
+    row.status === "approved" &&
+    db
+      .prepare(
+        "SELECT name FROM sqlite_master WHERE type='table' AND name='sharing_submissions'",
+      )
+      .get()
+  ) {
+    const sharing = db
+      .prepare(
+        "SELECT public_contact FROM sharing_submissions WHERE record_id=? AND status='approved'",
+      )
+      .get(String(row.id));
+    if (sharing) {
+      try {
+        publicContact = JSON.parse(String(sharing.public_contact));
+      } catch {
+        /* No contact is safer than invalid metadata. */
+      }
+    }
+  }
   return {
     ...data,
+    ...(publicContact ? { publicContact } : {}),
     ...(db && get(db, "SELECT 1 FROM photos WHERE record_id=?", String(row.id))
       ? { photoUrl: `/api/community/media/${row.id}` }
       : {}),
@@ -379,7 +403,7 @@ function validateWindow(data: Record<string, unknown>) {
       );
   }
 }
-function requestOrigin(request: Request) {
+export function communityRequestOrigin(request: Request) {
   const configured =
     process.env.REACH_APP_ORIGIN || process.env.REACH_COMMUNITY_ORIGIN;
   if (configured) {
@@ -411,7 +435,7 @@ async function body<T>(
   schema: z.ZodType<T>,
   maxBytes = MAX_BODY,
 ): Promise<T> {
-  if (request.headers.get("origin") !== requestOrigin(request))
+  if (request.headers.get("origin") !== communityRequestOrigin(request))
     fail(403, "A same-origin request is required.");
   if (
     request.headers.get("content-type")?.split(";")[0].trim().toLowerCase() !==
@@ -458,7 +482,7 @@ function response(data: unknown, status = 200, cookie?: string) {
   return Response.json(data, { status, headers });
 }
 function cookie(request: Request, token: string, maxAge = SESSION_SECONDS) {
-  return `${COOKIE}=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${maxAge}${requestOrigin(request).startsWith("https:") ? "; Secure" : ""}`;
+  return `${COOKIE}=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${maxAge}${communityRequestOrigin(request).startsWith("https:") ? "; Secure" : ""}`;
 }
 function session(db: DatabaseSync, userId: string, request: Request) {
   const token = randomBytes(32).toString("hex");
@@ -543,7 +567,10 @@ export function setSoleModerator(email: string, path?: string) {
 }
 
 /** The optional database path makes real HTTP handlers testable against isolated databases. */
-export function createCommunityHandler(databasePath?: string) {
+export function createCommunityHandler(
+  databasePath?: string,
+  options: { allowRegistration?: boolean } = {},
+) {
   return async function handle(
     request: Request,
     path?: string[],
@@ -778,6 +805,11 @@ export function createCommunityHandler(databasePath?: string) {
         );
         rate(db, `auth:${data.username}`, 10, 900);
         if (id === "signup") {
+          if (!options.allowRegistration)
+            fail(
+              403,
+              "Public account creation is closed. Submit food at /share without an account.",
+            );
           const salt = randomBytes(16).toString("hex"),
             uid = randomUUID(),
             passwordHash = await hashAccountPassword(data.password);
@@ -1009,6 +1041,22 @@ export function createCommunityHandler(databasePath?: string) {
           const rid = randomUUID();
           transaction(db, () => {
             const offer = record(db, id);
+            if (
+              db
+                .prepare(
+                  "SELECT name FROM sqlite_master WHERE type='table' AND name='sharing_submissions'",
+                )
+                .get() &&
+              db
+                .prepare(
+                  "SELECT id FROM sharing_submissions WHERE record_id=? AND status='approved'",
+                )
+                .get(id)
+            )
+              fail(
+                409,
+                "Contact this donor using the public contact on the listing to arrange pickup.",
+              );
             if (
               offer.kind !== "offer" ||
               !active(offer) ||

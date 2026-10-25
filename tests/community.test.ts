@@ -116,7 +116,7 @@ async function request(id: string, client: Client) {
 beforeEach(() => {
   directory = mkdtempSync(join(tmpdir(), "reach-community-"));
   database = join(directory, "community.sqlite");
-  handle = createCommunityHandler(database);
+  handle = createCommunityHandler(database, { allowRegistration: true });
   process.env.REACH_COMMUNITY_ENABLED = "true";
 });
 afterEach(() => {

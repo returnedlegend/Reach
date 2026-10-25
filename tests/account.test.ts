@@ -69,6 +69,7 @@ beforeEach(() => {
   instant = new Date();
   process.env.REACH_APP_ORIGIN = "http://localhost";
   handle = createAccountHandler(database, {
+    allowRegistration: true,
     sendMail: async (mail) => {
       mails.push(mail);
     },
@@ -81,6 +82,25 @@ afterEach(() => {
   rmSync(directory, { recursive: true, force: true });
 });
 describe("account lifecycle", () => {
+  it("disables public registration by default while retaining existing sign-in routes", async () => {
+    handle = createAccountHandler(database, {
+      sendMail: async (mail) => {
+        mails.push(mail);
+      },
+      now: () => instant,
+    });
+    const response = await signup();
+    expect(response.status).toBe(403);
+    expect(await response.json()).toMatchObject({
+      error: "Account creation is currently unavailable.",
+    });
+    expect(
+      openCommunityDatabase(database)
+        .prepare("SELECT count(*) AS n FROM users")
+        .get()!.n,
+    ).toBe(0);
+  });
+
   it("normalizes email, protects stored credentials and shares private root sessions", async () => {
     const signupResponse = await signup(" ALICE@EXAMPLE.COM ");
     expect(signupResponse.status).toBe(202);
@@ -304,6 +324,7 @@ describe("account lifecycle", () => {
     ).toBe(503);
     process.env.REACH_APP_ORIGIN = "http://localhost";
     handle = createAccountHandler(database, {
+      allowRegistration: true,
       sendMail: async () => {
         throw Error("mail transport offline");
       },
@@ -583,6 +604,7 @@ describe("legacy account email attachment", () => {
       ).status,
     ).toBe(400);
     handle = createAccountHandler(database, {
+      allowRegistration: true,
       sendMail: async () => {
         throw Error("mail transport offline");
       },

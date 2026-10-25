@@ -226,7 +226,7 @@ export function GoogleSignIn({
                   <a href="/privacy">privacy policy</a>.{" "}
                   {signedIn
                     ? "I want to link Google to this Reach account."
-                    : "I want to continue to Google to sign in or create a Reach account."}
+                    : "I want to continue to Google to sign in to Reach."}
                 </span>
               </label>
             </>

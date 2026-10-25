@@ -145,7 +145,12 @@ function deleteAccount(db: DatabaseSync, userId: string) {
 /** The mail injection exists only as a constructor dependency for isolated tests. */
 export function createAccountHandler(
   databasePath?: string,
-  options: { sendMail?: AccountMailSender; now?: () => Date } = {},
+  options: {
+    sendMail?: AccountMailSender;
+    now?: () => Date;
+    /** Enables public registration only in isolated test handlers. */
+    allowRegistration?: boolean;
+  } = {},
 ) {
   const clock = options.now || (() => new Date());
   const mailer = options.sendMail || sendAccountMail;
@@ -297,6 +302,8 @@ export function createAccountHandler(
         ["signup", "login", "forgot-password"].includes(route) &&
         request.method === "POST"
       ) {
+        if (route === "signup" && !options.allowRegistration)
+          fail(403, "Account creation is currently unavailable.");
         const schema =
           route === "signup"
             ? z

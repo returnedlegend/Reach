@@ -827,7 +827,18 @@ export function GuidedReach({
       <div
         className={`reach-actions ${compact ? "reach-actions-compact" : ""}`}
       >
-        {resource.communityOffer ? (
+        {resource.communityContact ? (
+          <a
+            className="btn btn-primary reach-action"
+            href={
+              resource.communityContact.kind === "email"
+                ? `mailto:${resource.communityContact.value}`
+                : `tel:${resource.communityContact.value}`
+            }
+          >
+            Contact to arrange pickup
+          </a>
+        ) : resource.communityOffer ? (
           <a
             className="btn btn-primary reach-action"
             href={`/food-hotspots?type=offer#community-item-${encodeURIComponent(resource.communityOffer.recordId)}`}
@@ -1318,6 +1329,9 @@ export function GuidedReach({
           Central Texas
         </span>
         <span className="reach-account-note">No account needed to explore</span>
+        <Link className="btn btn-primary" href="/share">
+          Share food
+        </Link>
         {features.volunteering && (
           <Link href="/volunteer">Volunteer pickups</Link>
         )}
@@ -1330,6 +1344,8 @@ export function GuidedReach({
           {features.accounts && <Link href="/account">Account</Link>}
           <Link href="/pantry-planner">Detailed trip planner</Link>
           {features.accounts && <Link href="/manage">Manage a pantry</Link>}
+          <Link href="/share">Host a Food Pickup / Share Extra Food</Link>
+          <Link href="/admin">Admin submissions</Link>
           <Link href="/privacy">Privacy & location</Link>
         </MoreMenu>
       </header>
@@ -1464,6 +1480,10 @@ export function GuidedReach({
                 </div>
               </div>
               <div className={styles.heroLinks}>
+                <Link className="btn btn-primary" href="/share">
+                  Host a Food Pickup / Share Extra Food
+                  <ArrowRight size={17} aria-hidden="true" />
+                </Link>
                 {features.community && (
                   <button
                     aria-label="Browse food hotspots"

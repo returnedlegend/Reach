@@ -742,3 +742,16 @@ a.btn-error {
 .reach-app .reach-empty > svg {
   margin-inline: auto;
 }
+
+/* Keep the new sharing action reachable without widening small viewports. */
+.reach-app .reach-header > a[href="/share"] {
+  color: var(--color-primary-content);
+}
+@media (max-width: 699px) {
+  .reach-app .reach-header {
+    flex-wrap: wrap;
+  }
+  .reach-app .reach-header > a[href="/account"] {
+    display: none;
+  }
+}

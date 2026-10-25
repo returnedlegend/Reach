@@ -208,6 +208,22 @@ function RecordDetails({ record }: { record: CommunityRecord }) {
           </>
         ) : (
           <>
+            {record.publicContact?.value && (
+              <div>
+                <dt>Contact the giver</dt>
+                <dd>
+                  <a
+                    href={
+                      record.publicContact.kind === "email"
+                        ? `mailto:${record.publicContact.value}`
+                        : `tel:${record.publicContact.value}`
+                    }
+                  >
+                    {record.publicContact.value}
+                  </a>
+                </dd>
+              </div>
+            )}
             <div>
               <dt>Food category</dt>
               <dd>
@@ -320,7 +336,6 @@ export function CommunityPanel({
   const [search, setSearch] = useState("");
   const [editing, setEditing] = useState<CommunityRecord | null>(null);
   const [pickup, setPickup] = useState<Record<string, string>>({});
-  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
   const callback = useRef(onDiscoveryChange);
   useEffect(() => {
     if (!hotspotRequest) return;
@@ -791,14 +806,21 @@ export function CommunityPanel({
                               </button>
                             </form>
                           )
-                        ) : (
-                          <button
-                            type="button"
-                            onClick={() => navigate("account")}
+                        ) : record.publicContact?.value ? (
+                          <a
                             className="btn btn-primary"
+                            href={
+                              record.publicContact.kind === "email"
+                                ? `mailto:${record.publicContact.value}`
+                                : `tel:${record.publicContact.value}`
+                            }
                           >
-                            Sign in to request food
-                          </button>
+                            Contact giver about this food
+                          </a>
+                        ) : (
+                          <p className="community-small">
+                            Contact details are not available for this offer.
+                          </p>
                         ))}
                       {user && record.ownerId !== user.id && (
                         <details className="community-safety">
@@ -869,15 +891,18 @@ export function CommunityPanel({
                     {view === "offer" ? "Share Food" : "Create Food Hotspot"}
                   </h3>
                   <p>
-                    Sign in or create an adult account to publish a community
-                    post.
+                    You can send food offers and pickup events for review
+                    without an account.
                   </p>
+                  <a className="btn btn-primary" href="/share">
+                    Host a Food Pickup / Share Extra Food
+                  </a>
                   <button
                     type="button"
                     onClick={() => navigate("account")}
-                    className="btn btn-primary"
+                    className="btn btn-outline"
                   >
-                    Sign in or create account
+                    Sign in
                   </button>
                 </div>
               ) : view === "hotspot" && user.role === "resident" ? (
@@ -996,18 +1021,15 @@ export function CommunityPanel({
                 </>
               ) : (
                 <>
-                  <h3>
-                    {authMode === "signup"
-                      ? "Create your community account"
-                      : "Sign in to community"}
-                  </h3>
+                  <h3>Sign in to community</h3>
                   <p>No account is needed to browse approved public posts.</p>
+                  <p>New posts can be sent for review without an account.</p>
                   <p>
-                    <a href="/account">Sign in or register with email</a>. The
-                    form below is for community username accounts.
+                    <a className="btn btn-outline" href="/share">
+                      Host a Food Pickup / Share Extra Food
+                    </a>
                   </p>
                   <form
-                    key={authMode}
                     onSubmit={(event) => {
                       event.preventDefault();
                       const data = new FormData(event.currentTarget);
@@ -1016,27 +1038,19 @@ export function CommunityPanel({
                           .trim()
                           .toLowerCase(),
                         password: String(data.get("password")),
-                        ...(authMode === "signup"
-                          ? { adultConfirmed: true }
-                          : {}),
                       };
-                      void run(
-                        async () => {
-                          const result = await api<{ user: CommunityUser }>(
-                            `auth/${authMode}`,
-                            payload,
+                      void run(async () => {
+                        const result = await api<{ user: CommunityUser }>(
+                          "auth/login",
+                          payload,
+                        );
+                        if (!result.user?.id)
+                          throw new Error(
+                            "The sign-in response was incomplete. Please refresh.",
                           );
-                          if (!result.user?.id)
-                            throw new Error(
-                              "The sign-in response was incomplete. Please refresh.",
-                            );
-                          setUser(result.user);
-                          setView(afterSignIn);
-                        },
-                        authMode === "signup"
-                          ? "Account created. You are signed in."
-                          : "You are signed in.",
-                      );
+                        setUser(result.user);
+                        setView(afterSignIn);
+                      }, "You are signed in.");
                     }}
                   >
                     <fieldset disabled={busy}>
@@ -1060,44 +1074,18 @@ export function CommunityPanel({
                         <input
                           name="password"
                           type="password"
-                          autoComplete={
-                            authMode === "signup"
-                              ? "new-password"
-                              : "current-password"
-                          }
+                          autoComplete="current-password"
                           required
                           minLength={12}
                           maxLength={128}
                           className="input input-bordered"
                         />
                       </Field>
-                      {authMode === "signup" && (
-                        <label className="community-check">
-                          <input
-                            type="checkbox"
-                            required
-                            className="checkbox checkbox-primary"
-                          />
-                          <span>I confirm that I am 18 or older.</span>
-                        </label>
-                      )}
                       <button type="submit" className="btn btn-primary">
-                        {authMode === "signup" ? "Create account" : "Sign in"}
+                        Sign in
                       </button>
                     </fieldset>
                   </form>
-                  <button
-                    className="btn btn-outline community-text-button"
-                    type="button"
-                    disabled={busy}
-                    onClick={() =>
-                      setAuthMode(authMode === "signup" ? "login" : "signup")
-                    }
-                  >
-                    {authMode === "signup"
-                      ? "Already have an account? Sign in"
-                      : "New here? Create account"}
-                  </button>
                 </>
               )}
             </div>

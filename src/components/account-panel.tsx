@@ -139,7 +139,7 @@ export function AccountPanel() {
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
-  const [mode, setMode] = useState<"login" | "signup" | "forgot">("login");
+  const [mode, setMode] = useState<"login" | "forgot">("login");
   const [linkAction, setLinkAction] = useState<LinkAction | null>(null);
   const [preferredLocation, setPreferredLocation] =
     useState<SelectedLocation | null>(null);
@@ -260,9 +260,6 @@ export function AccountPanel() {
     const data = {
       email: value(form, "email"),
       password: value(form, "password"),
-      ...(mode === "signup"
-        ? { name: value(form, "name"), adultConfirmed: true }
-        : {}),
     };
     const success = await act(
       () =>
@@ -273,9 +270,7 @@ export function AccountPanel() {
         ),
       mode === "forgot"
         ? "Request received. If recovery is available for this address, check your email."
-        : mode === "signup"
-          ? "Your account was created."
-          : "You are signed in.",
+        : "You are signed in.",
       mode !== "forgot",
     );
     if (success) form.reset();
@@ -414,21 +409,19 @@ export function AccountPanel() {
           )}
           {status && !status.emailConfigured && (
             <p className="account-warning">
-              Email delivery is not configured. New email accounts, email
-              verification and password recovery are unavailable right now.
-              Existing accounts can still sign in.
+              Email delivery is not configured. Email verification and password
+              recovery are unavailable right now. Existing accounts can still
+              sign in.
             </p>
           )}
           {!user ? (
             <Card
-              title={
-                mode === "login"
-                  ? "Welcome back"
-                  : mode === "signup"
-                    ? "Create an account"
-                    : "Recover your account"
-              }
+              title={mode === "login" ? "Welcome back" : "Recover your account"}
             >
+              <p>
+                Sign in as an existing member or administrator. To share food,{" "}
+                <a href="/share">submit without an account</a>.
+              </p>
               <GoogleSignIn
                 signedIn={false}
                 onDisconnected={() => void load()}
@@ -440,7 +433,6 @@ export function AccountPanel() {
                 {(
                   [
                     ["login", "Sign in"],
-                    ["signup", "Create account"],
                     ["forgot", "Forgot password"],
                   ] as const
                 ).map(([key, label]) => (
@@ -453,7 +445,7 @@ export function AccountPanel() {
                     }`}
                     aria-pressed={mode === key}
                     disabled={
-                      busy || (key !== "login" && !status?.emailConfigured)
+                      busy || (key === "forgot" && !status?.emailConfigured)
                     }
                     onClick={() => {
                       setMode(key);
@@ -465,25 +457,12 @@ export function AccountPanel() {
                   </button>
                 ))}
               </div>
-              {mode === "signup" && (
-                <p>
-                  Your account is private. Public community posts use your
-                  display name.
-                </p>
-              )}
               <form key={mode} onSubmit={authenticate}>
                 <fieldset
                   disabled={
-                    busy || (mode !== "login" && !status?.emailConfigured)
+                    busy || (mode === "forgot" && !status?.emailConfigured)
                   }
                 >
-                  {mode === "signup" && (
-                    <Field
-                      name="name"
-                      label="Display name"
-                      autoComplete="nickname"
-                    />
-                  )}
                   <Field
                     name="email"
                     label="Email address"
@@ -495,47 +474,21 @@ export function AccountPanel() {
                       name="password"
                       label="Password"
                       type="password"
-                      autoComplete={
-                        mode === "signup" ? "new-password" : "current-password"
-                      }
-                      minLength={mode === "signup" ? 12 : undefined}
-                      help={
-                        mode === "signup"
-                          ? "Use at least 12 characters."
-                          : undefined
-                      }
+                      autoComplete="current-password"
                     />
-                  )}
-                  {mode === "signup" && (
-                    <label className="account-check">
-                      <input
-                        type="checkbox"
-                        required
-                        name="adultConfirmed"
-                        className="checkbox checkbox-primary"
-                      />{" "}
-                      <span>
-                        I confirm I am at least 18 years old and agree to the{" "}
-                        <a href="/terms">terms</a> and{" "}
-                        <a href="/privacy">privacy policy</a>.
-                      </span>
-                    </label>
                   )}
                   <button className="btn btn-primary">
                     {busy
                       ? "Please wait…"
                       : mode === "login"
                         ? "Sign in"
-                        : mode === "signup"
-                          ? "Create account"
-                          : "Request recovery email"}
+                        : "Request recovery email"}
                   </button>
                 </fieldset>
               </form>
               <p className="account-help">
-                Have a community username account? Use the existing sign-in form
-                in <a href="/">Community</a>. Your community identity is
-                preserved.
+                Account creation is currently closed. You can still share food
+                with the community at <a href="/share">Share food</a>.
               </p>
             </Card>
           ) : (

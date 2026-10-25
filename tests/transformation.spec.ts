@@ -1,6 +1,40 @@
 import { expect, test, type Page, type Locator } from "@playwright/test";
 import AxeBuilder from "@axe-core/playwright";
 import sharp from "sharp";
+import { randomUUID } from "node:crypto";
+import { resolve, sep } from "node:path";
+import { tmpdir } from "node:os";
+import {
+  openCommunityDatabase,
+  closeCommunityDatabases,
+} from "../src/lib/community";
+import { hashAccountPasswordSync } from "../src/lib/auth-password";
+
+function isolatedCommunityDb() {
+  const configuredPath = process.env.REACH_COMMUNITY_DB || "";
+  const dbPath = resolve(configuredPath);
+  expect(configuredPath).toBeTruthy();
+  expect(dbPath.startsWith(`${resolve(tmpdir())}${sep}`)).toBe(true);
+  return openCommunityDatabase(dbPath);
+}
+
+function seedCommunityAccount(
+  db: ReturnType<typeof openCommunityDatabase>,
+  username: string,
+  role: "resident" | "moderator",
+  password: string,
+) {
+  const id = randomUUID();
+  db.prepare(
+    "INSERT INTO users(id,username,password_hash,salt,role,adult_confirmed,created_at) VALUES(?,?,?,'',?,1,?)",
+  ).run(
+    id,
+    username,
+    hashAccountPasswordSync(password),
+    role,
+    new Date().toISOString(),
+  );
+}
 
 // Real MapLibre rendering, controlled background style. No external provider
 // uptime, street cartography, geocoding or route accuracy is claimed here.
@@ -29,10 +63,17 @@ async function openMapResourceChooser(
   expectedNames: string[],
   touch: (control: Locator) => Promise<void>,
 ) {
-  const renderer = page.getByRole("region", { name: "Interactive journey map", exact: true });
-  const chooser = page.getByRole("dialog", { name: "Choose a map resource", exact: true });
+  const renderer = page.getByRole("region", {
+    name: "Interactive journey map",
+    exact: true,
+  });
+  const chooser = page.getByRole("dialog", {
+    name: "Choose a map resource",
+    exact: true,
+  });
   const insideMap = async (control: Locator) =>
-    (await control.isVisible()) && control.evaluate((element) => {
+    (await control.isVisible()) &&
+    control.evaluate((element) => {
       const rect = element.getBoundingClientRect();
       const viewport = element
         .closest(".maplibregl-map")!
@@ -47,15 +88,24 @@ async function openMapResourceChooser(
   for (let attempt = 0; attempt < 9; attempt++) {
     // At district scale only a cluster representative is a pointer target.
     // Inspect real visible chooser contents instead of clicking a hidden member.
-    const candidates = [marker, ...await renderer.locator('button[data-clustered="true"]:visible').all()];
+    const candidates = [
+      marker,
+      ...(await renderer
+        .locator('button[data-clustered="true"]:visible')
+        .all()),
+    ];
     for (const candidate of candidates) {
       if (!(await insideMap(candidate))) continue;
-      if (Number(await candidate.getAttribute("data-overlap-count")) < 2) continue;
+      if (Number(await candidate.getAttribute("data-overlap-count")) < 2)
+        continue;
       await candidate.scrollIntoViewIfNeeded();
       await touch(candidate);
       if (await chooser.isVisible()) {
-        const containsExpected = await Promise.all(expectedNames.map((name) =>
-          chooser.getByRole("button", { name, exact: true }).isVisible()));
+        const containsExpected = await Promise.all(
+          expectedNames.map((name) =>
+            chooser.getByRole("button", { name, exact: true }).isVisible(),
+          ),
+        );
         if (containsExpected.every(Boolean)) return candidate;
         await page.keyboard.press("Escape");
       }
@@ -64,13 +114,13 @@ async function openMapResourceChooser(
     await page.getByRole("button", { name: "Zoom out", exact: true }).click();
     await page.waitForTimeout(350); // Settle the real map animation before the next zoom.
   }
-  throw new Error(`No visible map chooser contained ${expectedNames.join(", ")}`);
+  throw new Error(
+    `No visible map chooser contained ${expectedNames.join(", ")}`,
+  );
 }
 
 async function locationStep(page: Page) {
   await page.goto("/");
-  await page.getByRole("button", { name: /^Food\b/ }).click();
-  await page.getByRole("button", { name: "Continue", exact: true }).click();
   return page.getByRole("region", { name: "Choose a starting location" });
 }
 
@@ -212,7 +262,7 @@ test("shared navigation preserves precise selected origin and offers an accessib
 test.describe("real local community backend", () => {
   test.skip(
     process.env.REACH_TEST_COMMUNITY !== "true",
-    "Requires explicitly enabled isolated community server and moderator test credentials.",
+    "Requires explicitly enabled community server and an isolated /tmp database.",
   );
 
   test("real sessions, moderation, private pickup and concurrent reservations enforce ownership", async ({
@@ -220,6 +270,8 @@ test.describe("real local community backend", () => {
     baseURL,
     page,
   }, testInfo) => {
+    test.setTimeout(120_000);
+    const db = isolatedCommunityDb();
     const origin = new URL(baseURL!).origin;
     const contexts = await Promise.all(
       Array.from({ length: 4 }, () =>
@@ -231,39 +283,47 @@ test.describe("real local community backend", () => {
     );
     const [donor, first, second, moderator] = contexts;
     const suffix = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`;
-    const credentials = {
-      password: "Independent QA password 2026",
-      adultConfirmed: true,
+    const credentials = { password: "Independent QA password 2026" };
+    const usernames = {
+      donor: `donor_${suffix}`,
+      first: `first_${suffix}`,
+      second: `second_${suffix}`,
+      moderator: `mod_${suffix}`,
     };
+    for (const username of [usernames.donor, usernames.first, usernames.second])
+      seedCommunityAccount(db, username, "resident", credentials.password);
+    seedCommunityAccount(
+      db,
+      usernames.moderator,
+      "moderator",
+      credentials.password,
+    );
     try {
-      const donorSignup = await donor.post("/api/community/auth/signup", {
-        data: { username: `donor_${suffix}`, ...credentials },
+      const closedSignup = await donor.post("/api/community/auth/signup", {
+        data: {
+          username: `closed_${suffix}`,
+          ...credentials,
+          adultConfirmed: true,
+        },
       });
-      expect(donorSignup.status()).toBe(201);
-      expect(donorSignup.headers()["set-cookie"]).toContain("HttpOnly");
-      expect(donorSignup.headers()["set-cookie"]).toContain("SameSite=Strict");
-      expect(donorSignup.headers()["cache-control"]).toBe("no-store");
-      for (const [client, prefix] of [
-        [first, "first"],
-        [second, "second"],
-      ] as const)
-        expect(
-          (
-            await client.post("/api/community/auth/signup", {
-              data: { username: `${prefix}_${suffix}`, ...credentials },
-            })
-          ).status(),
-        ).toBe(201);
-      expect(
-        (
-          await moderator.post("/api/community/auth/login", {
-            data: {
-              username: process.env.REACH_TEST_MODERATOR_USERNAME,
-              password: process.env.REACH_TEST_MODERATOR_PASSWORD,
-            },
-          })
-        ).status(),
-      ).toBe(200);
+      expect(closedSignup.status()).toBe(403);
+      expect((await closedSignup.json()).error).toContain(
+        "Public account creation is closed",
+      );
+      for (const [client, username] of [
+        [donor, usernames.donor],
+        [first, usernames.first],
+        [second, usernames.second],
+        [moderator, usernames.moderator],
+      ] as const) {
+        const login = await client.post("/api/community/auth/login", {
+          data: { username, password: credentials.password },
+        });
+        expect(login.status()).toBe(200);
+        expect(login.headers()["set-cookie"]).toContain("HttpOnly");
+        expect(login.headers()["set-cookie"]).toContain("SameSite=Strict");
+        expect(login.headers()["cache-control"]).toBe("no-store");
+      }
       expect((await first.get("/api/community/moderation")).status()).toBe(403);
       const own = await donor.get("/api/community/me");
       expect((await own.json()).user.role).toBe("resident");
@@ -410,13 +470,20 @@ test.describe("real local community backend", () => {
         `QA overlapping area ${suffix} — community food offer`,
         busName,
       ];
-      const pointerTrigger = await openMapResourceChooser(page, topOffer, expectedNames, touch);
+      const pointerTrigger = await openMapResourceChooser(
+        page,
+        topOffer,
+        expectedNames,
+        touch,
+      );
       await expect
         .poll(async () =>
           Number(await pointerTrigger.getAttribute("data-overlap-count")),
         )
         .toBeGreaterThanOrEqual(2);
-      await expect(pointerTrigger.locator("[data-overlap-badge]")).toBeVisible();
+      await expect(
+        pointerTrigger.locator("[data-overlap-badge]"),
+      ).toBeVisible();
       const chooser = page.getByRole("dialog", {
         name: "Choose a map resource",
         exact: true,
@@ -835,6 +902,7 @@ test.describe("real local community backend", () => {
       ).toBeNull();
     } finally {
       await Promise.all(contexts.map((c) => c.dispose()));
+      closeCommunityDatabases();
     }
   });
 });
@@ -851,7 +919,6 @@ async function communityAccount(
   page: Page,
   username: string,
   password: string,
-  signup: boolean,
 ) {
   await communityView(page);
   await page
@@ -859,19 +926,9 @@ async function communityAccount(
     .getByRole("button", { name: "Sign in", exact: true })
     .click();
   const form = page.getByTestId("community-account");
-  if (signup)
-    await form
-      .getByRole("button", { name: "New here? Create account", exact: true })
-      .click();
   await form.locator('input[name="username"]').fill(username);
   await form.locator('input[name="password"]').fill(password);
-  if (signup) await form.getByRole("checkbox").check();
-  await form
-    .getByRole("button", {
-      name: signup ? "Create account" : "Sign in",
-      exact: true,
-    })
-    .click();
+  await form.getByRole("button", { name: "Sign in", exact: true }).click();
   await expect(page.getByTestId("community-dashboard")).toBeVisible();
 }
 
@@ -901,8 +958,17 @@ test("real browser accounts create and moderate an offer, accept a request and c
   const title = `QA browser fixture ${suffix}`,
     secret = `QA private public-place meeting ${suffix}`;
   const password = "Browser QA passphrase 2026";
+  const database = isolatedCommunityDb();
+  const usernames = {
+    donor: `ui_giver_${suffix}`,
+    receiver: `ui_receiver_${suffix}`,
+    moderator: `ui_mod_${suffix}`,
+  };
+  seedCommunityAccount(database, usernames.donor, "resident", password);
+  seedCommunityAccount(database, usernames.receiver, "resident", password);
+  seedCommunityAccount(database, usernames.moderator, "moderator", password);
   try {
-    await communityAccount(page, `ui_giver_${suffix}`, password, true);
+    await communityAccount(page, usernames.donor, password);
     await page
       .getByRole("navigation", { name: "Community views", exact: true })
       .getByRole("button", { name: "Share Food", exact: true })
@@ -1014,12 +1080,7 @@ test("real browser accounts create and moderate an offer, accept a request and c
       .getByRole("button", { name: "Submit for review", exact: true })
       .click();
     await expect(ownPost).toContainText("pending");
-    await communityAccount(
-      moderator,
-      process.env.REACH_TEST_MODERATOR_USERNAME!,
-      process.env.REACH_TEST_MODERATOR_PASSWORD!,
-      false,
-    );
+    await communityAccount(moderator, usernames.moderator, password);
     await moderator
       .getByRole("navigation", { name: "Community views", exact: true })
       .getByRole("button", { name: "Moderation", exact: true })
@@ -1033,10 +1094,10 @@ test("real browser accounts create and moderate an offer, accept a request and c
     await expect(review).not.toContainText(secret);
     await review.getByRole("button", { name: "Approve", exact: true }).click();
     await expect(review).toHaveCount(0);
-    await communityAccount(receiver, `ui_receiver_${suffix}`, password, true);
+    await communityAccount(receiver, usernames.receiver, password);
     await receiver
       .getByRole("navigation", { name: "Community views", exact: true })
-      .getByRole("button", { name: "Find best resources", exact: true })
+      .getByRole("button", { name: "Find food", exact: true })
       .click();
     await receiver
       .getByLabel("Search community posts", { exact: true })
@@ -1141,6 +1202,7 @@ test("real browser accounts create and moderate an offer, accept a request and c
   } finally {
     await receiverContext.close();
     await moderatorContext.close();
+    closeCommunityDatabases();
   }
 });
 

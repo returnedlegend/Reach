@@ -392,3 +392,8 @@
     color: color-mix(in oklab, var(--color-base-content) 66%, transparent);
   }
 }
+
+.account-check a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

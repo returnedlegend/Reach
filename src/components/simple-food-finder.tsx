@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -359,6 +360,12 @@ export function SimpleFoodFinder(props: Props) {
         <p>
           Tell us what would help. We’ll find places to try and help you get
           there.
+        </p>
+        <p>
+          Have food to share or want to host a pickup?{" "}
+          <Link className="btn btn-outline" href="/share">
+            Host a Food Pickup / Share Extra Food
+          </Link>
         </p>
         <form onSubmit={submit} className={styles.ask}>
           <label htmlFor="food-request">What do you need?</label>
@@ -834,7 +841,18 @@ export function SimpleFoodFinder(props: Props) {
                     </p>
                   )}
                 <div className={styles.cardActions}>
-                  {resource.communityOffer ? (
+                  {resource.communityContact ? (
+                    <a
+                      className="btn btn-primary"
+                      href={
+                        resource.communityContact.kind === "email"
+                          ? `mailto:${resource.communityContact.value}`
+                          : `tel:${resource.communityContact.value}`
+                      }
+                    >
+                      Contact to arrange pickup
+                    </a>
+                  ) : resource.communityOffer ? (
                     <a
                       className="btn btn-primary"
                       href={`/food-hotspots?type=offer#community-item-${encodeURIComponent(resource.communityOffer.recordId)}`}

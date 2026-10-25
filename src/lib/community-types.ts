@@ -74,6 +74,7 @@ export type CommunityRecord = {
   updatedAt: string;
   moderationReason?: string;
   photoUrl?: string;
+  publicContact?: { kind: "email" | "phone"; value: string };
 } & Partial<HotspotDraft & Omit<OfferDraft, "foodCategory">> & {
     title: string;
     description: string;

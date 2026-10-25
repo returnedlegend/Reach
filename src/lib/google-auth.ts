@@ -410,9 +410,29 @@ export function createGoogleAuthHandler(
                 .get(claims.email)
             )
               return { status: "conflict" };
+            const bootstrapEmail = (process.env.REACH_ADMIN_EMAIL || "")
+              .trim()
+              .toLowerCase();
+            // Google may authenticate existing identities, but new identities
+            // are closed unless the operator names the verified bootstrap user.
+            if (
+              !bootstrapEmail ||
+              !claims.email_verified ||
+              !claims.authoritativeEmail ||
+              claims.email !== bootstrapEmail
+            )
+              return { status: "failed" };
+            // Never add a second moderator implicitly. Operators can promote
+            // an existing verified account through the explicit admin CLI.
+            if (
+              db
+                .prepare("SELECT 1 FROM users WHERE role='moderator' LIMIT 1")
+                .get()
+            )
+              return { status: "failed" };
             userId = randomUUID();
             db.prepare(
-              "INSERT INTO users(id,username,password_hash,salt,role,adult_confirmed,created_at,email,email_verified_at,name) VALUES(?,?,?,'','resident',1,?,?,?,?)",
+              "INSERT INTO users(id,username,password_hash,salt,role,adult_confirmed,created_at,email,email_verified_at,name) VALUES(?,?,?,'','moderator',1,?,?,?,?)",
             ).run(
               userId,
               `account_${userId.replaceAll("-", "")}`,

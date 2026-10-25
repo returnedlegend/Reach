@@ -3,9 +3,10 @@ import { randomUUID } from "node:crypto";
 import { existsSync, readdirSync, readFileSync, rmSync } from "node:fs";
 import { join } from "node:path";
 import { DatabaseSync } from "node:sqlite";
+import { hashAccountPasswordSync } from "../src/lib/auth-password";
 
 // Explicit local preview only. This suite must never contact an email transport.
-test("real preview signup, verification and password recovery preserve account security", async ({
+test("existing account verification and password recovery preserve account security", async ({
   page,
 }) => {
   const database = process.env.REACH_EMAIL_TEST_DB;
@@ -26,6 +27,18 @@ test("real preview signup, verification and password recovery preserve account s
   const password = `original-${randomUUID()}`;
   const replacement = `replacement-${randomUUID()}`;
   const base = String(test.info().project.use.baseURL);
+  await page.request.get("/api/account/me");
+  const userId = randomUUID();
+  db.prepare(
+    "INSERT INTO users(id,username,password_hash,salt,role,adult_confirmed,created_at,email,email_verified_at,name) VALUES(?,?,?,'','resident',1,?,?,NULL,?)",
+  ).run(
+    userId,
+    `preview_${userId.replaceAll("-", "")}`,
+    hashAccountPasswordSync(password),
+    new Date().toISOString(),
+    email,
+    "Local preview fixture",
+  );
   const captures = () =>
     existsSync(preview!)
       ? readdirSync(preview!)
@@ -65,20 +78,28 @@ test("real preview signup, verification and password recovery preserve account s
   }
   try {
     await page.goto("/account");
+    await expect(
+      page.getByRole("button", { name: "Create account", exact: true }),
+    ).toHaveCount(0);
+    await expect(
+      page
+        .locator("main.account-page")
+        .getByRole("link", { name: "Share food", exact: true }),
+    ).toHaveAttribute("href", "/share");
+    const rejectedSignup = await page.request.post("/api/account/signup", {
+      headers: { origin: base },
+      data: {
+        email,
+        name: "Local preview fixture",
+        password,
+        adultConfirmed: true,
+      },
+    });
+    expect(rejectedSignup.status()).toBe(403);
+    expect(captures()).toEqual([]);
+    await signIn(password);
     await page
-      .getByRole("button", { name: "Create account", exact: true })
-      .click();
-    await page
-      .getByLabel("Display name", { exact: true })
-      .fill("Local preview fixture");
-    await page.getByLabel("Email address", { exact: true }).fill(email);
-    await page.getByLabel("Password", { exact: true }).fill(password);
-    await page
-      .getByRole("checkbox", { name: /I confirm I am at least 18/ })
-      .check();
-    await page
-      .getByRole("button", { name: "Create account", exact: true })
-      .last()
+      .getByRole("button", { name: "Request verification email" })
       .click();
     await expect(
       page.getByText(/a development email preview was saved locally/),
@@ -117,7 +138,6 @@ test("real preview signup, verification and password recovery preserve account s
         })
       ).status(),
     ).toBe(400);
-    await signIn(password);
     const session = (await page.context().cookies()).find(
       (cookie) => cookie.name === "reach_community_session",
     )!;
@@ -166,9 +186,6 @@ test("real preview signup, verification and password recovery preserve account s
       ).status(),
     ).toBe(401);
     await signIn(replacement);
-    const userId = String(
-      db.prepare("SELECT id FROM users WHERE email=?").get(email)!.id,
-    );
     expect(
       db
         .prepare(

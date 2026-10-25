@@ -5,6 +5,7 @@ import { pantryVerification } from "./pantry-verification";
 import { tx10ResourceMetadata } from "./tx10-pantries";
 import timetable from "./btd-timetable.json";
 export type Resource = {
+  communityContact?: { kind: "email" | "phone"; value: string };
   /** Approved household offer. Public records never contain a pickup address. */
   communityOffer?: { recordId: string; startsAt: string; endsAt: string };
   /** Approved community distribution; not an independently verified pantry. */

@@ -1,5 +1,6 @@
+import { accountHash } from "../src/lib/account-store";
 import { test, expect } from "@playwright/test";
-import { randomUUID } from "node:crypto";
+import { randomUUID, randomBytes } from "node:crypto";
 import { openPantryDatabase } from "../src/lib/pantry-store";
 
 test("AI can suggest an approved household offer without exposing or routing to its private pickup", async ({
@@ -139,25 +140,49 @@ test("AI can suggest an approved household offer without exposing or routing to 
         () => document.documentElement.scrollWidth <= window.innerWidth,
       ),
     ).toBe(true);
-    const signedIn = await page.request.post("/api/community/auth/signup", {
-      headers: { origin: new URL(page.url()).origin },
-      data: {
-        username: `viewer_${id.replaceAll("-", "").slice(0, 20)}`,
-        password: "long-browser-fixture-password",
-        adultConfirmed: true,
-      },
-    });
-    expect(signedIn.status()).toBe(201);
-    viewer = (await signedIn.json()).user.id;
+    // Existing-user fixture: public signup is intentionally closed.
+    viewer = randomUUID();
+    const token = randomBytes(32).toString("hex");
+    db.prepare(
+      "INSERT INTO users(id,username,password_hash,salt,role,adult_confirmed,created_at) VALUES(?,?,?,?,'resident',1,?)",
+    ).run(
+      viewer,
+      `viewer_${viewer.replaceAll("-", "").slice(0, 20)}`,
+      "not-a-login-hash",
+      "fixture",
+      now.toISOString(),
+    );
+    db.prepare("INSERT INTO sessions VALUES(?,?,?)").run(
+      accountHash(token),
+      viewer,
+      new Date(Date.now() + 3600000).toISOString(),
+    );
+    await page
+      .context()
+      .addCookies([
+        {
+          name: "reach_community_session",
+          value: token,
+          url: new URL(page.url()).origin,
+          httpOnly: true,
+          sameSite: "Strict",
+        },
+      ]);
     await page.reload();
     const listing = page.locator(`#community-item-${id}`);
     await listing.getByText("Report or block", { exact: true }).click();
     await listing.getByRole("button", { name: /Block/ }).click();
     await expect(listing).toHaveCount(0);
     await page.getByRole("button", { name: "Explore", exact: true }).click();
-    await page.getByRole("checkbox", {name:/Use AI to help understand/}).uncheck();
-    await page.getByLabel("What do you need?", {exact:true}).fill(data.title);
-    await page.getByRole("button", {name:"Find best resources",exact:true}).click();
+    await page
+      .getByRole("checkbox", { name: /Use AI to help understand/ })
+      .uncheck();
+    await page
+      .getByLabel("What do you need?", { exact: true })
+      .fill(data.title);
+    await page
+      .getByRole("button", { name: "Find best resources", exact: true })
+      .click();
     await expect(
       page.getByRole("article", { name: data.title, exact: true }),
     ).toHaveCount(0);

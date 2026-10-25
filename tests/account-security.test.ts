@@ -103,6 +103,7 @@ beforeEach(() => {
   vi.stubEnv("REACH_APP_ORIGIN", origin);
   vi.stubEnv("REACH_ACCOUNT_ENABLED", "true");
   handle = createAccountHandler(database, {
+    allowRegistration: true,
     now: () => at,
     sendMail: async (mail) => {
       mails.push(mail);
@@ -321,6 +322,7 @@ describe("independent account security boundary", () => {
   it("matches known and unknown recovery responses even when email transport fails", async () => {
     await register();
     handle = createAccountHandler(database, {
+      allowRegistration: true,
       now: () => at,
       sendMail: async () => {
         throw new Error("test mail transport outage");

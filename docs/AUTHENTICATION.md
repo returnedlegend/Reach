@@ -33,6 +33,9 @@ Set these server-only values in environment settings:
   Preview is disabled in production and is never selected automatically.
 - `REACH_ACCOUNT_ENABLED=false` explicitly disables accounts. Email accounts
   otherwise operate independently of the development community feature flag.
+- `REACH_ADMIN_EMAIL` optionally allowlists one verified Google identity for
+  first-time bootstrap moderator creation. Leave unset to disable all new Google
+  account creation; existing linked identities can still sign in.
 
 Mail defaults to disabled. SMTP and explicit private preview are supported. Invalid
 or missing origin/mail configuration produces an honest 503 for email operations.
@@ -57,7 +60,10 @@ checks do not prove real provider connectivity, DNS alignment or actual inbox de
 
 ## Lifecycle and security boundaries
 
-Signup accepts only email, name, password and adult confirmation. Passwords use
+Public email account creation is disabled. Existing email/password and community
+username sign-in continue to work, and account recovery remains available where
+email delivery is configured. Tests that need registration must opt into the
+test-only `allowRegistration` constructor option. Passwords use
 Argon2id v19 with random library-generated 16-byte salts, 19 MiB memory, two passes,
 one lane and a 32-byte output. Existing scrypt passwords are read only for
 compatibility and upgraded after valid login. Unknown-account login does Argon2

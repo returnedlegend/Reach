@@ -555,18 +555,18 @@ test("daisy selected controls stay visibly distinct after changing each view", a
       };
       await page.goto("/account");
       const account = page.locator(".account-tabs");
-      const create = account.getByRole("button", {
-        name: "Create account",
+      const accountSignIn = account.getByRole("button", {
+        name: "Sign in",
         exact: true,
       });
-      await expect(create).toBeEnabled();
-      await create.click();
-      await expect(create).toHaveAttribute("aria-pressed", "true");
-      await check(
-        "Account mode",
-        create,
-        account.getByRole("button", { name: "Sign in", exact: true }),
-      );
+      const forgot = account.getByRole("button", {
+        name: "Forgot password",
+        exact: true,
+      });
+      await expect(accountSignIn).toHaveAttribute("aria-pressed", "true");
+      await check("Account sign-in mode", accountSignIn, forgot);
+      await forgot.click();
+      await expect(forgot).toHaveAttribute("aria-pressed", "true");
 
       await page.goto("/food-hotspots");
       const community = page.getByRole("navigation", {
@@ -582,7 +582,7 @@ test("daisy selected controls stay visibly distinct after changing each view", a
       await check(
         "Community view",
         signIn,
-        community.getByRole("button", { name: "Find best resources", exact: true }),
+        community.getByRole("button", { name: "Find food", exact: true }),
       );
 
       await page.goto("/pantry-planner");
@@ -646,6 +646,12 @@ test("daisy selected controls stay visibly distinct after changing each view", a
       );
 
       await page.goto("/");
+      await page
+        .getByRole("button", {
+          name: "Step-by-step trip controls",
+          exact: true,
+        })
+        .click();
       await page.getByRole("button", { name: "Continue", exact: true }).click();
       const picker = page.getByRole("region", {
         name: "Choose a starting location",

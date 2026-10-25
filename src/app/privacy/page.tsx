@@ -168,11 +168,22 @@ export default function Privacy() {
       </p>
       <h2>Community food sharing</h2>
       <p>
-        Community submissions require an adult account. Reach stores your
-        username, salted password hash, session record, submissions, pickup
-        requests, reports and moderation history. Food offers show only a broad
-        public area. Never put a home address, phone number or private location
-        in a public description or photo.
+        Food submissions do not require an account. We store your private name
+        and email, consent confirmations, food details and optional photo for
+        moderator review and abuse prevention. Only the public contact you
+        explicitly choose is published after approval. Household offers show a
+        broad area, never a home pickup address. Do not include private
+        locations, faces or other people's information in descriptions or
+        photos.
+      </p>
+      <p>
+        New submission alerts go to reachpantrysupport@gmail.com and contain a
+        link to the protected review page, not your private contact details or
+        photo. Moderators can review your information there. Contact that
+        address to correct or remove a submission. Submission and moderation
+        records are retained until removed by an administrator; automated
+        deletion is not currently provided. Older account-based sharing retains
+        its existing request and consent controls.
       </p>
       <p>
         Private pickup instructions are shared with an accepted recipient only

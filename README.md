@@ -134,3 +134,7 @@ Latest interface loading and email cleanup: [implementation, checks and remainin
 Approved community food hotspots can now appear in the main pantry search and AI comparison, clearly labeled as community-reported. See [hotspot search eligibility and limitations](docs/HOTSPOT-SEARCH.md).
 
 Approved household food offers also appear in search and AI recommendations, with private pickup locations withheld and a request-first flow. See [household sharing and moderation](docs/HOUSEHOLD-SEARCH.md).
+
+## Share food and review submissions
+
+Open `/share` to **Host a Food Pickup** or **Share Extra Food** without registering. The homepage links directly to both. Open `/admin` to review pending submissions and photos as a moderator. Public account creation is closed; existing sign-in remains. [Food-sharing setup](docs/FOOD-SHARING.md) explains moderator access, the support-inbox alerts, SMTP configuration, limits and privacy.

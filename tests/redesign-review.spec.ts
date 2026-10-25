@@ -119,7 +119,7 @@ test("all public routes remain usable on a 320px phone", async ({
   }
 });
 
-test("account forms fit small screens and keep native labels and validation", async ({
+test("closed registration keeps sign-in, sharing link, and recovery usable on small screens", async ({
   page,
 }) => {
   // Synthetic availability fixture, isolated to this test. No real account,
@@ -136,31 +136,28 @@ test("account forms fit small screens and keep native labels and validation", as
   await page.route("**/api/account/me", (route) =>
     route.fulfill({ json: { user: null } }),
   );
-  const writes: string[] = [];
-  await page.route("**/api/account/signup", (route) => {
-    writes.push(route.request().method());
-    return route.fulfill({
-      status: 500,
-      json: { error: "Review fixture: no account created." },
-    });
-  });
   await page.goto("/account");
-  await page
-    .getByRole("button", { name: "Create account", exact: true })
-    .click();
+  await expect(
+    page.getByRole("button", { name: "Create account", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page
+      .locator("main.account-page")
+      .getByRole("link", { name: "Share food", exact: true }),
+  ).toHaveAttribute("href", "/share");
   const email = page.getByLabel("Email address", { exact: true });
   const password = page.getByLabel("Password", { exact: true });
-  await expect(page.getByLabel("Display name", { exact: true })).toBeVisible();
   await expect(email).toHaveAttribute("autocomplete", "email");
-  await expect(password).toHaveAttribute("autocomplete", "new-password");
-  await expect(password).toHaveAttribute("minlength", "12");
+  await expect(password).toHaveAttribute("autocomplete", "current-password");
+  await expect(email).toHaveAttribute("required", "");
+  await expect(password).toHaveAttribute("required", "");
   await generousTarget(email);
   await generousTarget(password);
   await page
-    .getByRole("button", { name: "Create account", exact: true })
-    .last()
+    .locator("form")
+    .getByRole("button", { name: "Sign in", exact: true })
     .click();
-  expect(writes).toEqual([]);
+  await expect(email).toHaveJSProperty("validity.valid", false);
   await noHorizontalOverflow(page);
   await page
     .getByRole("button", { name: "Forgot password", exact: true })

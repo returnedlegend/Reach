@@ -143,7 +143,7 @@ describe("donation runs on existing moderated food offers", () => {
         .status,
     ).toBe(409);
     expect((await call(`${id}/approve`, "POST", {}, donor)).status).toBe(403);
-    const community = createCommunityHandler(path);
+    const community = createCommunityHandler(path, { allowRegistration: true });
     expect(
       (await community(new Request("http://localhost/api/community/discovery")))
         .status,
