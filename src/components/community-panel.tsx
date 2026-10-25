@@ -522,6 +522,10 @@ export function CommunityPanel({
     }
   }
   function navigate(next: View) {
+    if ((next === "offer" || next === "hotspot") && !user) {
+      router.push(`/share?kind=${next}`);
+      return;
+    }
     if (next === "account")
       setAfterSignIn(
         view === "hotspot" || view === "offer" ? view : "dashboard",
