@@ -1,5 +1,6 @@
 # AI Navigation file manifest
 
+Historical implementation manifest. The October 25, 2026 DeepSeek migration replaced the listed OpenRouter adapter and related tests; see [current migration](DEEPSEEK-MIGRATION.md).
 Compared with the pre-task Reach source archive. No source files or dependencies were removed. No dependencies were added. `package.json` changes only the browser test loader command. `.env.local` was preserved and extended with missing OpenRouter placeholders locally; it is ignored, mode 0600 and excluded from the download. Build outputs, accounts, databases, preview captures, traces and dependencies are excluded.
 
 ## Created

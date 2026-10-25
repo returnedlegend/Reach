@@ -1,10 +1,12 @@
 import { featureEnabled } from "./release-features";
-/** Central server-side settings. Import only the type into browser code. */
+
+/** Server-only configuration. Browser code may import the status type only. */
 if (typeof window !== "undefined")
   throw new Error("AI configuration is server-only.");
 
-export const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
-export const DEFAULT_OPENROUTER_MODEL = "openrouter/free";
+export const DEEPSEEK_BASE_URL = "https://api.deepseek.com";
+export const DEFAULT_DEEPSEEK_MODEL = "deepseek-flash";
+export const DEFAULT_DEEPSEEK_REASONING_MODEL = "deepseek-v4-pro";
 export type AIServiceStatus = {
   state: "configured" | "disabled" | "unavailable";
   code:
@@ -17,92 +19,87 @@ export type AIServiceStatus = {
   message: string;
   model: string;
 };
-const first = (...values: Array<string | undefined>) =>
-  values.find((value) => value?.trim())?.trim();
-export function getOpenRouterModels(role: "fast" | "primary") {
-  const suffix = role.toUpperCase();
-  const selected =
-    first(
-      process.env[`OPENROUTER_${suffix}_MODEL`],
-      process.env.OPENROUTER_MODEL,
-      process.env[`REACH_AI_${suffix}_MODEL`],
-      process.env.REACH_AI_MODEL,
-    ) || DEFAULT_OPENROUTER_MODEL;
-  const fallback = first(process.env.OPENROUTER_FALLBACK_MODEL) || "";
-  return { selected, fallback: fallback !== selected ? fallback : "" };
+
+export function getDeepSeekModels(role: "fast" | "primary") {
+  return {
+    selected:
+      role === "primary"
+        ? process.env.DEEPSEEK_REASONING_MODEL?.trim() ||
+          DEFAULT_DEEPSEEK_REASONING_MODEL
+        : process.env.DEEPSEEK_MODEL?.trim() || DEFAULT_DEEPSEEK_MODEL,
+  };
 }
-export function isFreeOpenRouterModel(id: string) {
+export function deepSeekKeyConfigured() {
+  const key = process.env.DEEPSEEK_API_KEY?.trim() || "";
   return (
-    id === DEFAULT_OPENROUTER_MODEL ||
-    /^[A-Za-z0-9_.-]+\/[A-Za-z0-9_.:+-]+:free$/.test(id)
+    Boolean(key) &&
+    !/placeholder|your[_-].*(?:key|here)|^your_key_here$/i.test(key)
   );
 }
-export function isFreeOpenRouterProfile(role: "fast" | "primary") {
-  // A free model/router never unlocks paid fallbacks, even with stale legacy flags.
-  return (
-    isFreeOpenRouterModel(getOpenRouterModels(role).selected) ||
-    process.env.REACH_AI_FREE_ONLY !== "false"
-  );
+/** Restrict credentials to the official service. /v1 is an officially supported alias. */
+export function getDeepSeekBaseUrl(): string | null {
+  const base = (
+    process.env.DEEPSEEK_BASE_URL?.trim() || DEEPSEEK_BASE_URL
+  ).replace(/\/$/, "");
+  return base === DEEPSEEK_BASE_URL || base === `${DEEPSEEK_BASE_URL}/v1`
+    ? base
+    : null;
 }
-export function openRouterKeyConfigured() {
-  const key = process.env.OPENROUTER_API_KEY || "";
-  return !!key.trim() && !/placeholder|your_openrouter_api/i.test(key);
+export function getDeepSeekTimeoutMs(): number | null {
+  const raw = process.env.DEEPSEEK_TIMEOUT_MS;
+  if (raw === undefined || raw === "") return 12_000;
+  if (!/^\d+$/.test(raw)) return null;
+  const timeout = Number(raw);
+  return timeout >= 1_000 && timeout <= 20_000 ? timeout : null;
 }
-/** Configuration only; this endpoint never promises live availability or billing. */
+/** Called before delivery and by /api/ai/status; configuration is not a live health check. */
 export function getAIServiceStatus(): AIServiceStatus {
-  const model = getOpenRouterModels("fast").selected;
+  const model = getDeepSeekModels("fast").selected;
   const result = (
     state: AIServiceStatus["state"],
     code: AIServiceStatus["code"],
     message: string,
   ): AIServiceStatus => ({ state, code, message, model });
-  const provider = process.env.REACH_AI_PROVIDER?.toLowerCase();
+  const provider = process.env.REACH_AI_PROVIDER?.trim().toLowerCase();
   if (!featureEnabled("ai") || provider === "disabled")
     return result(
       "disabled",
       "disabled",
       "AI is turned off. Pantry search, map directions and manual trip controls remain available.",
     );
-  if (provider && provider !== "openrouter")
+  if (provider && provider !== "deepseek")
     return result(
       "unavailable",
       "configuration",
-      "Free OpenRouter assistance is not selected. Use the manual trip controls.",
+      "DeepSeek assistance is not selected. Use the manual trip controls.",
     );
-  if (!openRouterKeyConfigured())
+  if (!deepSeekKeyConfigured())
     return result(
       "unavailable",
       "credentials",
-      "Free AI is not connected yet. The site owner needs to configure its server API key; manual planning still works.",
+      "AI is not connected yet. The site owner needs to configure DEEPSEEK_API_KEY on the server; manual planning still works.",
     );
   if (process.env.REACH_AI_DATA_POLICY_ACCEPTED !== "true")
     return result(
       "unavailable",
       "privacy",
-      "AI is off until the site owner reviews the provider data policy. Manual planning still works.",
+      "AI is off until the site owner reviews the DeepSeek data policy. Manual planning still works.",
     );
   if (
-    (process.env.OPENROUTER_BASE_URL?.trim() || OPENROUTER_BASE_URL) !==
-    OPENROUTER_BASE_URL
+    !getDeepSeekBaseUrl() ||
+    !getDeepSeekTimeoutMs() ||
+    ![model, getDeepSeekModels("primary").selected].every((id) =>
+      /^deepseek-[a-zA-Z0-9._-]{1,80}$/.test(id),
+    )
   )
     return result(
       "unavailable",
       "configuration",
-      "The AI service configuration is invalid. Use manual planning while the site owner checks it.",
-    );
-  const models = [
-    getOpenRouterModels("fast"),
-    getOpenRouterModels("primary"),
-  ].flatMap(({ selected, fallback }) => [selected, fallback].filter(Boolean));
-  if (!models.every(isFreeOpenRouterModel))
-    return result(
-      "unavailable",
-      "cost-policy",
-      "Free AI requires a free router or free model for every configured role and fallback. Manual planning still works.",
+      "Check the official DeepSeek URL, model IDs and timeout on the server. Manual planning still works.",
     );
   return result(
     "configured",
     null,
-    "Free OpenRouter assistance is configured. Free-model capacity and compatible providers may be unavailable; computed planning remains available.",
+    "DeepSeek assistance is configured. Provider availability and account balance still apply; computed planning remains available.",
   );
 }

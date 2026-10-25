@@ -22,7 +22,7 @@ AI is optional interpretation, not a condition for displaying pantries. With the
 
 A synthetic public request through the new handler fell back to directory matching. A diagnostic attempt retrieved the OpenRouter catalog (HTTP 200), but completion requests returned HTTP 429 and 404. **No new successful live inference is claimed.** The fallback accurately says an attempted request may have reached the AI provider. [Sanitized evidence](evidence/food-first-live-ai.json) distinguishes this from fixture tests. “AI does 90%” is an aspiration, not a measured capability or a promise of free capacity.
 
-Production still defaults to anonymous `core`. Optional AI needs the reviewed `extended` profile, `REACH_RELEASE_AI=true`, provider configuration and policy acknowledgement. Accounts, email and community are not silently enabled. No keys were added to client code or changed in private files. See [AI setup](FREE-OPENROUTER.md), [release gates](FIRST-RELEASE.md), and [OpenStreetMap setup](OPENSTREETMAP.md).
+Production still defaults to anonymous `core`. Optional AI needs the reviewed `extended` profile, `REACH_RELEASE_AI=true`, provider configuration and policy acknowledgement. Accounts, email and community are not silently enabled. No keys were added to client code or changed in private files. See [AI setup](DEEPSEEK.md), [release gates](FIRST-RELEASE.md), and [OpenStreetMap setup](OPENSTREETMAP.md).
 
 ## Feature inventory
 

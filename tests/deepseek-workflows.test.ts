@@ -5,23 +5,11 @@ import { join } from "node:path";
 
 let directory: string;
 const appOrigin = "https://reach.example.org";
-const actualModel = "fixture/grounded:free";
-const catalogEntry = (id: string) => ({
-  id,
-  pricing: { prompt: "0", completion: "0", request: "0" },
-  supported_parameters: ["tools", "structured_outputs"],
-});
 function provider(output: unknown) {
   return vi.fn(async (url: RequestInfo | URL, init?: RequestInit) => {
-    expect(String(url).startsWith("https://openrouter.ai/api/v1/")).toBe(true);
-    if (String(url).endsWith("/models"))
-      return Response.json({
-        data: [catalogEntry("openrouter/free"), catalogEntry(actualModel)],
-      });
-    expect(JSON.parse(String(init?.body)).model).toBe("openrouter/free");
+    expect(String(url)).toBe("https://api.deepseek.com/chat/completions");
+    expect(JSON.parse(String(init?.body)).model).toBe("deepseek-flash");
     return Response.json({
-      model: actualModel,
-      usage: { cost: 0 },
       choices: [{ message: { content: JSON.stringify(output) } }],
     });
   });
@@ -33,20 +21,14 @@ beforeEach(() => {
   directory = mkdtempSync(join(tmpdir(), "reach-free-workflow-"));
   for (const [key, value] of Object.entries({
     REACH_APP_ORIGIN: appOrigin,
-    REACH_AI_PROVIDER: "openrouter",
+    REACH_AI_PROVIDER: "deepseek",
     REACH_AI_DATA_POLICY_ACCEPTED: "true",
-    REACH_AI_FREE_ONLY: "true",
-    REACH_AI_ALLOW_PAID: "false",
-    REACH_AI_GEMINI_FALLBACK: "false",
-    OPENROUTER_API_KEY: "synthetic-test-key",
-    OPENROUTER_MODEL: "",
-    OPENROUTER_FAST_MODEL: "",
-    OPENROUTER_PRIMARY_MODEL: "",
-    OPENROUTER_FALLBACK_MODEL: "",
+    DEEPSEEK_API_KEY: "synthetic-test-key",
+    DEEPSEEK_MODEL: "deepseek-flash",
+    DEEPSEEK_REASONING_MODEL: "deepseek-v4-pro",
     REACH_AI_MODEL: "",
     REACH_AI_FAST_MODEL: "",
     REACH_AI_PRIMARY_MODEL: "",
-    OPENROUTER_BASE_URL: "https://openrouter.ai/api/v1",
     OSM_ROUTER_MODE: "disabled",
     REACH_EMAIL_PROVIDER: "disabled",
   }))
@@ -61,7 +43,7 @@ afterEach(async () => {
   rmSync(directory, { recursive: true, force: true });
 });
 
-describe("free router connected to existing workflows", () => {
+describe("DeepSeek connected to existing workflows", () => {
   it("interprets transit preferences while real directory records and unavailable route facts remain under planner control", async () => {
     const fetcher = provider({
       patch: {
@@ -148,7 +130,7 @@ describe("free router connected to existing workflows", () => {
     }
   });
 
-  it("generates an editable inquiry draft through the same free router without sending email", async () => {
+  it("generates an editable inquiry draft through DeepSeek without sending email", async () => {
     const question = "Can you share current availability?";
     const body = `Hello Pantry,\n\nReach is sending an AI-assisted inquiry on a user's behalf. The user is checking current availability and pickup details. Could you please help with this question: ${question}\n\nThank you.`;
     const fetcher = provider({
@@ -169,13 +151,13 @@ describe("free router connected to existing workflows", () => {
     ).toHaveLength(1);
     expect(
       fetcher.mock.calls.every(([url]) =>
-        String(url).startsWith("https://openrouter.ai/"),
+        String(url).startsWith("https://api.deepseek.com/"),
       ),
     ).toBe(true);
   });
 
   it("keeps editable template drafts available without an AI key and makes no provider request", async () => {
-    vi.stubEnv("OPENROUTER_API_KEY", "");
+    vi.stubEnv("DEEPSEEK_API_KEY", "");
     const fetcher = vi.fn();
     const { generateOutreachDraft } = await import("../src/lib/access-ai");
     const draft = await generateOutreachDraft(

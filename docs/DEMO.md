@@ -13,20 +13,20 @@ Use the actual running build to demonstrate the real pantry directory first. Res
 
 ## Three minute real directory walkthrough
 
-| Time | Show | Explain |
-| --- | --- | --- |
-| 0:00–0:25 | Home and its starting-point panel | Reach helps people compare food assistance and practical ways to get there; exploration does not require an account |
-| 0:25–0:55 | Opt-in location or a clearly labeled public demo origin, then **Find food near me** | Location is a choice; manual controls work when permission is denied |
-| 0:55–1:25 | Real pantry options and details | Compare recorded hours, requirements, sources and unknowns; straight-line distance is not a routed walking distance |
-| 1:25–1:55 | Map, pantry selection and TX-10 boundary | The boundary is the supplied 119th Congress Census dataset; markers do not establish safe entrances or live inventory |
-| 1:55–2:30 | **Find food I can reach** or directions | Deterministic timing, walking, transit and eligibility checks distinguish a known failure from missing information; only show retrieved itineraries when the provider actually returns them |
-| 2:30–3:00 | Optional saved place or assistant, then close | Saving is not booking; AI interprets or explains existing evidence rather than inventing routes or food availability |
+| Time      | Show                                                                                | Explain                                                                                                                                                                                     |
+| --------- | ----------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 0:00–0:25 | Home and its starting-point panel                                                   | Reach helps people compare food assistance and practical ways to get there; exploration does not require an account                                                                         |
+| 0:25–0:55 | Opt-in location or a clearly labeled public demo origin, then **Find food near me** | Location is a choice; manual controls work when permission is denied                                                                                                                        |
+| 0:55–1:25 | Real pantry options and details                                                     | Compare recorded hours, requirements, sources and unknowns; straight-line distance is not a routed walking distance                                                                         |
+| 1:25–1:55 | Map, pantry selection and TX-10 boundary                                            | The boundary is the supplied 119th Congress Census dataset; markers do not establish safe entrances or live inventory                                                                       |
+| 1:55–2:30 | **Find food I can reach** or directions                                             | Deterministic timing, walking, transit and eligibility checks distinguish a known failure from missing information; only show retrieved itineraries when the provider actually returns them |
+| 2:30–3:00 | Optional saved place or assistant, then close                                       | Saving is not booking; AI interprets or explains existing evidence rather than inventing routes or food availability                                                                        |
 
 For a short presentation, choose one optional feature rather than rushing through every screen. Use the wording actually displayed. If route retrieval fails, explain the limitation and show the existing external directions handoff instead of narrating a fictional successful route.
 
 ## Optional assistant and email segment
 
-The default AI profile and free-provider safeguards are described in [free OpenRouter setup](FREE-OPENROUTER.md). Use only a verified live response from that rehearsal or the honest unavailable state. A dated successful provider request does not ensure future capacity, quota, billing or privacy behavior. The dated supplied-credential observation in [verification](FREE-OPENROUTER-VERIFICATION.md#follow-up-supplied-credentials-october-24-2026-utc) is scoped to that request, not every assistant flow.
+The current AI provider and paid usage controls are described in [DeepSeek AI setup](DEEPSEEK.md). Use only a verified live response from that rehearsal or the honest unavailable state. A dated successful provider request does not ensure future capacity, quota, billing or privacy behavior. The dated supplied-credential observation in [verification](FREE-OPENROUTER-VERIFICATION.md#follow-up-supplied-credentials-october-24-2026-utc) is scoped to that request, not every assistant flow.
 
 For an inquiry, explain each step: select an enrolled contact, generate a draft, review and edit the exact content, provide explicit approval, then inspect the real status. Editing the subject, body or follow-up choice clears prior approval. **Preview only** means no email was sent; provider submission is not inbox delivery or a pantry reply. Do not send an unsolicited real message during judging.
 

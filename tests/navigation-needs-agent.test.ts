@@ -4,7 +4,7 @@ let agent: typeof import("../src/lib/navigation-needs-agent");
 
 beforeEach(async () => {
   // This suite opts into each provider explicitly; inherited cloud keys must
-  // not activate OpenRouter in the deterministic-only fixture below.
+  // not activate DeepSeek in the deterministic-only fixture below.
   vi.stubEnv("REACH_AI_PROVIDER", "disabled");
   vi.resetModules();
   agent = await import("../src/lib/navigation-needs-agent");
@@ -15,10 +15,10 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-function useOpenRouter() {
-  vi.stubEnv("REACH_AI_PROVIDER", "openrouter");
-  vi.stubEnv("REACH_AI_FAST_MODEL", "test/needs:free");
-  vi.stubEnv("OPENROUTER_API_KEY", "secret-test-key");
+function useDeepSeek() {
+  vi.stubEnv("REACH_AI_PROVIDER", "deepseek");
+  vi.stubEnv("DEEPSEEK_MODEL", "deepseek-flash");
+  vi.stubEnv("DEEPSEEK_API_KEY", "secret-test-key");
   vi.stubEnv("REACH_AI_FREE_ONLY", "true");
   vi.stubEnv("REACH_AI_DATA_POLICY_ACCEPTED", "true");
 }
@@ -27,18 +27,6 @@ function jsonResponse(value: unknown, status = 200) {
   return new Response(JSON.stringify(value), {
     status,
     headers: { "content-type": "application/json" },
-  });
-}
-
-function freeCatalog() {
-  return jsonResponse({
-    data: [
-      {
-        id: "test/needs:free",
-        pricing: { prompt: "0", completion: "0" },
-        supported_parameters: ["tools", "structured_outputs"],
-      },
-    ],
   });
 }
 
@@ -78,24 +66,22 @@ function completion(value: unknown) {
 }
 
 describe("navigation needs interpreter", () => {
-  it("uses one strict OpenRouter structured response and removes nullable leaves", async () => {
-    useOpenRouter();
+  it("uses one strict DeepSeek structured response and removes nullable leaves", async () => {
+    useDeepSeek();
     const fetcher = vi.fn(
       async (input: RequestInfo | URL, init?: RequestInit) =>
-        String(input).endsWith("/models")
-          ? freeCatalog()
-          : completion(
-              modelOutput(
-                { mode: "driving", maxWalkingMinutes: 15 },
-                {
-                  service: "groceries",
-                  urgency: "today",
-                  householdSize: 3,
-                  hasIdentification: "yes",
-                  preferTransitNearby: true,
-                },
-              ),
-            ),
+        completion(
+          modelOutput(
+            { mode: "driving", maxWalkingMinutes: 15 },
+            {
+              service: "groceries",
+              urgency: "today",
+              householdSize: 3,
+              hasIdentification: "yes",
+              preferTransitNearby: true,
+            },
+          ),
+        ),
     );
 
     const result = await agent.interpretNavigationNeeds(
@@ -114,10 +100,18 @@ describe("navigation needs interpreter", () => {
         preferTransitNearby: true,
       },
     });
-    expect(fetcher).toHaveBeenCalledTimes(2);
-    const request = JSON.parse(String(fetcher.mock.calls[1][1]?.body));
-    const schema = request.response_format.json_schema.schema;
-    expect(schema.additionalProperties).toBe(false);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(String(fetcher.mock.calls[0][0])).toBe(
+      "https://api.deepseek.com/chat/completions",
+    );
+    const request = JSON.parse(String(fetcher.mock.calls[0][1]?.body));
+    expect(request.response_format).toEqual({ type: "json_object" });
+    expect(request.model).toBe("deepseek-flash");
+    const schemaPrompt = request.messages[0].content;
+    expect(schemaPrompt).toContain("additionalProperties");
+    const schema = JSON.parse(
+      schemaPrompt.split("JSON schema: ")[1].split(". Example of")[0],
+    );
     expect(schema.required).toEqual(["patch", "needs"]);
     expect(schema.properties.patch.required).toContain("mode");
     expect(schema.properties.patch.properties).not.toHaveProperty("origin");
@@ -132,7 +126,7 @@ describe("navigation needs interpreter", () => {
   });
 
   it("does not send descriptions with location, email, or phone details", async () => {
-    useOpenRouter();
+    useDeepSeek();
     const fetcher = vi.fn();
     for (const text of [
       "I need food at 123 Main Street.",
@@ -149,7 +143,7 @@ describe("navigation needs interpreter", () => {
   });
 
   it("refuses text longer than 1,200 characters without contacting a provider", async () => {
-    useOpenRouter();
+    useDeepSeek();
     const fetcher = vi.fn();
     const result = await agent.interpretNavigationNeeds("x".repeat(1201), {
       fetch: fetcher as typeof fetch,
@@ -159,11 +153,9 @@ describe("navigation needs interpreter", () => {
   });
 
   it("returns unavailable when a valid response contains no explicit suggestions", async () => {
-    useOpenRouter();
+    useDeepSeek();
     const fetcher = vi.fn(async (input: RequestInfo | URL) =>
-      String(input).endsWith("/models")
-        ? freeCatalog()
-        : completion(modelOutput()),
+      completion(modelOutput()),
     );
     const result = await agent.interpretNavigationNeeds(
       "Help me find something.",
@@ -175,15 +167,13 @@ describe("navigation needs interpreter", () => {
   });
 
   it("rejects provider output that tries to add origin or eligibility claims", async () => {
-    useOpenRouter();
+    useDeepSeek();
     const fetcher = vi.fn(async (input: RequestInfo | URL) =>
-      String(input).endsWith("/models")
-        ? freeCatalog()
-        : completion({
-            ...modelOutput(),
-            origin: { lat: 41.88, lng: -87.62 },
-            eligibilityConfirmed: true,
-          }),
+      completion({
+        ...modelOutput(),
+        origin: { lat: 41.88, lng: -87.62 },
+        eligibilityConfirmed: true,
+      }),
     );
     const result = await agent.interpretNavigationNeeds("I need food today.", {
       fetch: fetcher as typeof fetch,
@@ -192,11 +182,9 @@ describe("navigation needs interpreter", () => {
   });
 
   it("does not turn negated services into needs and prefers soon when both soon and today are stated", async () => {
-    useOpenRouter();
+    useDeepSeek();
     const routerFetch = vi.fn(async (input: RequestInfo | URL) =>
-      String(input).endsWith("/models")
-        ? freeCatalog()
-        : completion(modelOutput({}, { service: "shelter" })),
+      completion(modelOutput({}, { service: "shelter" })),
     );
     const negated = await agent.interpretNavigationNeeds(
       "I do not need a shelter.",
@@ -220,19 +208,16 @@ describe("navigation needs interpreter", () => {
       status: "available",
       needs: { service: "groceries", urgency: "soon" },
     });
-    expect(routerFetch).toHaveBeenCalledTimes(4);
+    expect(routerFetch).toHaveBeenCalledTimes(3);
     expect(
-      routerFetch.mock.calls.filter(([url]) => String(url).endsWith("/models")),
-    ).toHaveLength(1);
-    expect(
-      routerFetch.mock.calls.filter(([url]) =>
-        String(url).endsWith("/chat/completions"),
+      routerFetch.mock.calls.every(
+        ([url]) => String(url) === "https://api.deepseek.com/chat/completions",
       ),
-    ).toHaveLength(3);
+    ).toBe(true);
   });
 
   it("does not infer a nearby-transit preference from a negated request", async () => {
-    vi.stubEnv("OPENROUTER_API_KEY", "unrelated-present-fixture-key");
+    vi.stubEnv("DEEPSEEK_API_KEY", "unrelated-present-fixture-key");
     const fetcher = vi.fn();
     const result = await agent.interpretNavigationNeeds(
       "I do not need a place near public transit.",

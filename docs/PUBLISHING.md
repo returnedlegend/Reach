@@ -261,8 +261,8 @@ the operator has completed the relevant review and a production check:
 - **AI:** leave `REACH_AI_PROVIDER=disabled`. Review provider terms, data
   handling, user disclosure and applicable consent before deliberately
   selecting a provider and setting `REACH_AI_DATA_POLICY_ACCEPTED=true`. Keep
-  `REACH_AI_FREE_ONLY=true` and `REACH_AI_ALLOW_PAID=false` unless an operator
-  separately authorizes paid use.
+  `REACH_AI_DATA_POLICY_ACCEPTED=false` until an operator reviews and accepts
+  the selected DeepSeek provider policy, and configure account spending limits.
 - **Geocoding and routing:** leave `OSM_GEOCODER_URL` empty and
   `OSM_ROUTER_MODE=disabled` until an operator selects a compliant host and
   verifies its terms, rate limits, attribution, privacy behavior, capacity and

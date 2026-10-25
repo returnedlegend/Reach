@@ -36,7 +36,7 @@ Choose one local origin and use it consistently. `localhost` and `127.0.0.1` are
 | Address search             | Local directory matches and manual coordinates remain usable                         | [OpenStreetMap](OPENSTREETMAP.md)                    |
 | Walking and driving routes | Missing routes remain unavailable; external directions handoffs are separate         | [Navigation providers](NAVIGATION-PROVIDERS.md)      |
 | Scheduled transit          | Uses only the supplied timetable's coverage and validity, not live vehicles          | [GTFS](GTFS.md)                                      |
-| AI interpretation          | Manual preferences and deterministic facts remain available                          | [Free OpenRouter](FREE-OPENROUTER.md)                |
+| AI interpretation          | Manual preferences and deterministic facts remain available                          | [DeepSeek AI setup](DEEPSEEK.md)                     |
 | Email                      | Disabled or explicitly private preview; preview is not delivery                      | [Resend](RESEND.md), [SMTP and AI](SMTP-AI-SETUP.md) |
 | Google identity            | Reach's supported password workflow remains separate                                 | [Google sign-in](GOOGLE-SIGN-IN.md)                  |
 
@@ -111,7 +111,7 @@ Some application settings have their own code-level selection rules:
 - Account origin uses `REACH_APP_ORIGIN` when nonempty, then `REACH_COMMUNITY_ORIGIN`. A malformed first value does not fall through to the second. Production requires HTTPS; local development may infer only a loopback origin.
 - Community is enabled only when `REACH_COMMUNITY_ENABLED` is exactly `true`; the `dev:community` command sets that value for its child process.
 - Email uses `REACH_EMAIL_PROVIDER` when set. `preview` is available only outside production, `smtp` requires valid SMTP configuration, and `resend` (also the default when unset) requires a valid Resend key and sender. An invalid or unknown selection disables delivery. Preview writes private local files and never sends mail. See [Resend](RESEND.md) and [SMTP and AI setup](SMTP-AI-SETUP.md).
-- OpenRouter model selection checks the task-specific `OPENROUTER_<FAST|PRIMARY>_MODEL`, then `OPENROUTER_MODEL`, then `REACH_AI_<FAST|PRIMARY>_MODEL`, then `REACH_AI_MODEL`, then `openrouter/free`. Provider, key, free-only and data-policy checks still apply; a status response indicates configuration only. See [AI configuration](AI-CONFIGURATION.md) and [Free OpenRouter setup](FREE-OPENROUTER.md).
+- AI uses the configured DeepSeek models and server-only key. Status responses indicate configuration only, not a successful inference or account capacity. See [DeepSeek AI setup](DEEPSEEK.md) and [AI configuration](AI-CONFIGURATION.md).
 
 ### API and access boundaries
 

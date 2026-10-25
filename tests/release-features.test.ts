@@ -16,7 +16,7 @@ describe("public core release boundary", () => {
     vi.stubEnv("REACH_ACCOUNT_ENABLED", "true");
     vi.stubEnv("REACH_COMMUNITY_ENABLED", "true");
     vi.stubEnv("REACH_EMAIL_PROVIDER", "resend");
-    vi.stubEnv("REACH_AI_PROVIDER", "openrouter");
+    vi.stubEnv("REACH_AI_PROVIDER", "deepseek");
     expect(coreRelease()).toBe(true);
     expect(publicFeatures()).toEqual(CORE_FEATURES);
     expect(emailDeliveryMode()).toBe("disabled");
@@ -41,6 +41,22 @@ describe("public core release boundary", () => {
     vi.stubEnv("REACH_RELEASE_ACCOUNTS", "true");
     expect(publicFeatures().accounts).toBe(true);
     expect(publicFeatures().email).toBe(false);
+    expect(publicFeatures().ai).toBe(false);
+  });
+  it("publishes AI only when DeepSeek credentials and the privacy gate are configured", () => {
+    vi.stubEnv("REACH_RELEASE_PROFILE", "extended");
+    vi.stubEnv("REACH_RELEASE_AI", "true");
+    vi.stubEnv("REACH_AI_PROVIDER", "deepseek");
+    vi.stubEnv("REACH_AI_DATA_POLICY_ACCEPTED", "true");
+    vi.stubEnv("DEEPSEEK_API_KEY", "synthetic-deepseek-key");
+    expect(publicFeatures().ai).toBe(true);
+
+    vi.stubEnv("DEEPSEEK_API_KEY", "");
+    vi.stubEnv("GEMINI_API_KEY", "synthetic-gemini-key");
+    expect(publicFeatures().ai).toBe(false);
+
+    vi.stubEnv("DEEPSEEK_API_KEY", "synthetic-deepseek-key");
+    vi.stubEnv("REACH_AI_DATA_POLICY_ACCEPTED", "false");
     expect(publicFeatures().ai).toBe(false);
   });
   it("rejects direct optional API calls before opening storage or invoking providers", async () => {

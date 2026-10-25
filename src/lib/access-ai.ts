@@ -2,14 +2,18 @@ import { featureEnabled } from "./release-features";
 import { z } from "zod";
 import type { AccessInput } from "./access-types";
 import type { OutreachFacts } from "./outreach-types";
-import { openRouterJson, reserveSharedAIUsage } from "./openrouter-client";
-import { getOpenRouterModels, openRouterKeyConfigured } from "./ai-config";
+import { deepseekJson, reserveSharedAIUsage } from "./deepseek-client";
+import {
+  deepSeekKeyConfigured,
+  getAIServiceStatus,
+  getDeepSeekModels,
+} from "./ai-config";
 
 /** This module may only run on the server. Provider credentials must never reach a client bundle. */
 if (typeof window !== "undefined") throw new Error("Access AI is server-only.");
 
 type Options = { fetch?: typeof fetch; signal?: AbortSignal };
-type Provider = "openrouter" | "groq" | "gemini";
+type Provider = "deepseek" | "groq" | "gemini";
 type AIUsageFeature = "preferences" | "draft" | "reply";
 type FeatureUsage = {
   day: string;
@@ -18,7 +22,6 @@ type FeatureUsage = {
   minuteCalls: number;
 };
 const MAX_RESPONSE_BYTES = 64 * 1024;
-const MAX_CATALOG_BYTES = 8 * 1024 * 1024;
 const REQUEST_TIMEOUT_MS = 8_000;
 const DAILY_LIMIT = 128;
 const MINUTE_LIMIT = 20;
@@ -89,24 +92,22 @@ function configured(): {
   provider: Provider;
   model: string;
   key: string;
-  freeOnly: boolean;
 } | null {
   const configuredProvider = process.env.REACH_AI_PROVIDER?.toLowerCase();
-  // OpenRouter is an opt-in by complete server configuration when PROVIDER is absent.
-  // An explicit provider value, including "disabled", always takes precedence.
-  const inferredOpenRouter = !configuredProvider && openRouterKeyConfigured();
-  const provider = (inferredOpenRouter ? "openrouter" : configuredProvider) as
+  // DeepSeek is inferred only from its own server key. Explicit provider values win.
+  const inferredDeepSeek = !configuredProvider && deepSeekKeyConfigured();
+  const provider = (inferredDeepSeek ? "deepseek" : configuredProvider) as
     | Provider
     | undefined;
   const model =
-    provider === "openrouter"
-      ? getOpenRouterModels("fast").selected
+    provider === "deepseek"
+      ? getDeepSeekModels("fast").selected
       : provider === "gemini"
         ? (process.env.GEMINI_MODEL || process.env.REACH_AI_MODEL || "").trim()
         : process.env.REACH_AI_MODEL?.trim();
   const key =
-    provider === "openrouter"
-      ? process.env.OPENROUTER_API_KEY
+    provider === "deepseek"
+      ? process.env.DEEPSEEK_API_KEY
       : provider === "groq"
         ? process.env.GROQ_API_KEY
         : provider === "gemini"
@@ -116,12 +117,18 @@ function configured(): {
     !provider ||
     !model ||
     !key ||
-    /placeholder|your_(?:openrouter|groq|gemini|api)/i.test(key)
+    /placeholder|your_(?:deepseek|groq|gemini|api)/i.test(key)
   )
     return null;
-  const freeOnly = process.env.REACH_AI_FREE_ONLY !== "false";
-  if (!freeOnly && process.env.REACH_AI_ALLOW_PAID !== "true") return null;
-  return { provider, model, key, freeOnly };
+  if (provider === "deepseek" && getAIServiceStatus().state !== "configured")
+    return null;
+  if (
+    (provider === "groq" || provider === "gemini") &&
+    process.env.REACH_AI_FREE_ONLY === "false" &&
+    process.env.REACH_AI_ALLOW_PAID !== "true"
+  )
+    return null;
+  return { provider, model, key };
 }
 function dataPolicyAccepted(): boolean {
   return process.env.REACH_AI_DATA_POLICY_ACCEPTED === "true";
@@ -201,44 +208,31 @@ function containsLocation(text: string): boolean {
 }
 
 function apiUrl(provider: Provider) {
-  if (provider === "openrouter")
-    return "https://openrouter.ai/api/v1/chat/completions";
+  if (provider === "deepseek")
+    return "https://api.deepseek.com/chat/completions";
   if (provider === "groq")
     return "https://api.groq.com/openai/v1/chat/completions";
   return `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent((process.env.GEMINI_MODEL || process.env.REACH_AI_MODEL || "").trim())}:generateContent`;
 }
 function noAIMessage(): string {
-  const provider = process.env.REACH_AI_PROVIDER?.toLowerCase();
+  const configuredProvider = process.env.REACH_AI_PROVIDER?.toLowerCase();
+  const provider =
+    configuredProvider || (deepSeekKeyConfigured() ? "deepseek" : undefined);
   const model =
-    provider === "openrouter"
-      ? getOpenRouterModels("fast").selected
+    provider === "deepseek"
+      ? getDeepSeekModels("fast").selected
       : process.env.REACH_AI_MODEL?.trim();
-  if ((process.env.REACH_AI_PROVIDER || model) && !dataPolicyAccepted())
+  if ((provider || model) && !dataPolicyAccepted())
     return "AI preference help is not enabled. Use the travel controls to continue.";
-  const configuredProvider = provider;
-  if (!configuredProvider || !model)
+  if (!provider || !model)
     return "AI assistance is unavailable until a provider and model are configured.";
-  if (configuredProvider === "groq" || configuredProvider === "gemini") {
+  if (provider === "groq" || provider === "gemini") {
     if (process.env.REACH_AI_FREE_ONLY !== "false")
       return "AI assistance is unavailable in free-only mode because this provider cannot verify account billing.";
+    if (process.env.REACH_AI_ALLOW_PAID !== "true")
+      return "AI assistance is unavailable because paid models require explicit opt-in.";
   }
-  if (
-    process.env.REACH_AI_FREE_ONLY === "false" &&
-    process.env.REACH_AI_ALLOW_PAID !== "true"
-  )
-    return "AI assistance is unavailable because paid models require explicit opt-in.";
   return "AI assistance is unavailable because the configured provider credentials are missing or invalid.";
-}
-
-function geminiFallbackEnabled(): boolean {
-  return (
-    process.env.REACH_AI_GEMINI_FALLBACK === "true" &&
-    process.env.REACH_AI_DATA_POLICY_ACCEPTED === "true" &&
-    process.env.REACH_AI_FREE_ONLY === "false" &&
-    process.env.REACH_AI_ALLOW_PAID === "true" &&
-    Boolean(process.env.GEMINI_API_KEY && process.env.GEMINI_MODEL?.trim()) &&
-    !/placeholder|your_(?:gemini|api)/i.test(process.env.GEMINI_API_KEY || "")
-  );
 }
 
 async function readLimited(
@@ -269,39 +263,6 @@ async function readLimited(
     offset += chunk.byteLength;
   }
   return JSON.parse(new TextDecoder().decode(bytes));
-}
-
-async function verifyOpenRouterFree(
-  cfg: NonNullable<ReturnType<typeof configured>>,
-  fetcher: typeof fetch,
-  signal: AbortSignal,
-) {
-  if (!cfg.freeOnly || cfg.provider !== "openrouter") return true;
-  const response = await fetcher("https://openrouter.ai/api/v1/models", {
-    method: "GET",
-    headers: { Accept: "application/json" },
-    redirect: "error",
-    cache: "no-store",
-    signal,
-  });
-  const data = (await readLimited(response, MAX_CATALOG_BYTES)) as {
-    data?: Array<{ id?: unknown; pricing?: Record<string, unknown> }>;
-  };
-  if (!response.ok || !Array.isArray(data?.data)) return false;
-  const model = data.data.find((entry) => entry?.id === cfg.model);
-  const prices = model?.pricing ? Object.values(model.pricing) : [];
-  const isZeroPrice = (price: unknown) =>
-    (typeof price === "number" && Number.isFinite(price) && price === 0) ||
-    (typeof price === "string" && /^0+(?:\.0+)?$/.test(price));
-  return Boolean(
-    model &&
-      cfg.model.endsWith(":free") &&
-      model.pricing &&
-      prices.length >= 2 &&
-      model.pricing.prompt !== undefined &&
-      model.pricing.completion !== undefined &&
-      prices.every(isZeroPrice),
-  );
 }
 
 function providerRequest(
@@ -388,17 +349,9 @@ async function complete<T>(
 ): Promise<T | null> {
   if (!featureEnabled("ai")) return null;
   const cfg = configured();
-  const fallbackAllowed = geminiFallbackEnabled();
-  const implicitOpenRouter =
-    !process.env.REACH_AI_PROVIDER && openRouterKeyConfigured();
-  const useOpenRouter = cfg?.provider === "openrouter" || implicitOpenRouter;
-  const providerSetting = process.env.REACH_AI_PROVIDER?.toLowerCase();
-  if (
-    useOpenRouter ||
-    (fallbackAllowed && (!providerSetting || providerSetting === "openrouter"))
-  ) {
+  if (cfg?.provider === "deepseek") {
     if (!dataPolicyAccepted()) return null;
-    const result = await openRouterJson({
+    const result = await deepseekJson({
       role: "fast",
       feature,
       prompt,
@@ -412,10 +365,10 @@ async function complete<T>(
   if (!dataPolicyAccepted()) return null;
   if (
     !cfg ||
-    (cfg.freeOnly && (cfg.provider === "groq" || cfg.provider === "gemini"))
+    (process.env.REACH_AI_FREE_ONLY !== "false" &&
+      (cfg.provider === "groq" || cfg.provider === "gemini"))
   )
     return null;
-  if (cfg.freeOnly && cfg.provider !== "openrouter") return null;
   if (
     cfg.provider === "gemini"
       ? !reserveSharedAIUsage(feature)
@@ -429,13 +382,6 @@ async function complete<T>(
   else opts?.signal?.addEventListener("abort", abort, { once: true });
   const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
-    if (
-      cfg.freeOnly &&
-      !(await verifyOpenRouterFree(cfg, fetcher, controller.signal))
-    ) {
-      recordFailure();
-      return null;
-    }
     const request = providerRequest(cfg, prompt, jsonSchema, controller.signal);
     for (let attempt = 0; attempt < 2; attempt += 1) {
       const response = await fetcher(request.url, {
@@ -447,18 +393,7 @@ async function complete<T>(
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${cfg.key}`,
               },
-        body: JSON.stringify(
-          cfg.provider === "openrouter"
-            ? {
-                ...request.body,
-                provider: {
-                  data_collection: "deny",
-                  allow_fallbacks: false,
-                  require_parameters: true,
-                },
-              }
-            : request.body,
-        ),
+        body: JSON.stringify(request.body),
         redirect: "error",
         cache: "no-store",
         signal: controller.signal,
@@ -613,12 +548,11 @@ export async function interpretPreferences(
 ): Promise<PreferenceResult> {
   const message = noAIMessage();
   const cfg = configured();
-  if (!cfg && !geminiFallbackEnabled())
-    return { status: "unavailable", message };
+  if (!cfg) return { status: "unavailable", message };
   if (!dataPolicyAccepted()) return { status: "unavailable", message };
   if (
     cfg &&
-    cfg.freeOnly &&
+    process.env.REACH_AI_FREE_ONLY !== "false" &&
     (cfg.provider === "groq" || cfg.provider === "gemini")
   )
     return {
@@ -813,9 +747,10 @@ export async function extractOutreachFacts(
     return local;
   const cfg = configured();
   if (
-    (!cfg && !geminiFallbackEnabled()) ||
+    !cfg ||
     !dataPolicyAccepted() ||
-    (cfg && cfg.freeOnly && cfg.provider !== "openrouter") ||
+    (process.env.REACH_AI_FREE_ONLY !== "false" &&
+      cfg.provider !== "deepseek") ||
     containsLocation(input.text)
   )
     return local;
@@ -869,9 +804,9 @@ export async function generateOutreachDraft(
   };
   const cfg = configured();
   if (
-    (!cfg && !geminiFallbackEnabled()) ||
+    !cfg ||
     !dataPolicyAccepted() ||
-    (cfg && cfg.freeOnly && cfg.provider !== "openrouter")
+    (process.env.REACH_AI_FREE_ONLY !== "false" && cfg.provider !== "deepseek")
   )
     return fallback;
   const result = await complete(

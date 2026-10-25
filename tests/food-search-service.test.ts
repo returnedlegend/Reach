@@ -5,7 +5,7 @@ const status = (): AIServiceStatus => ({
   state: "configured",
   code: null,
   message: "Test fixture",
-  model: "fixture/free",
+  model: "deepseek-flash",
 });
 const request = (body: unknown, origin = "http://localhost:3000") =>
   new Request("http://localhost:3000/api/food-search", {
