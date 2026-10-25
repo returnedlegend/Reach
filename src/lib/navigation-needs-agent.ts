@@ -132,7 +132,7 @@ const jsonSchema = {
   required: ["patch", "needs"],
 };
 
-function containsSensitiveDetails(text: string) {
+export function containsSensitiveDetails(text: string) {
   return (
     /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i.test(text) ||
     /(?:\+?1[\s.-]?)?(?:\(\d{3}\)|\d{3})[\s.-]?\d{3}[\s.-]?\d{4}\b/.test(

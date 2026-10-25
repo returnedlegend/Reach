@@ -1,11 +1,12 @@
 import { z } from "zod";
+import { rankFoodWithAI } from "./food-ai-ranking";
 import {
   accessFailure,
   privateResponse,
   readPrivateJson,
   requireSameOrigin,
 } from "./access-http";
-import { interpretNavigationNeeds } from "./navigation-needs-agent";
+import type { interpretNavigationNeeds } from "./navigation-needs-agent";
 import { getAIServiceStatus } from "./ai-config";
 import { localFoodIntent, rejectedFoodModes } from "./simple-food";
 import { AccountError } from "./account-store";
@@ -91,13 +92,15 @@ export function createFoodSearchHandler(
       let aiMessage =
         "AI could not finish this request. You can still use the pantry results.";
       try {
-        const result = await (deps.interpret ?? interpretNavigationNeeds)(
-          body.message,
-          { signal: request.signal },
-        );
+        const result = await (deps.interpret ?? rankFoodWithAI)(body.message, {
+          signal: request.signal,
+        });
         if (result.status === "available" && result.assistance === "ai") {
           return privateResponse({
             assistance: "ai",
+            ...("ranking" in result
+              ? { ranking: result.ranking, rankedAt: result.rankedAt }
+              : {}),
             intent: {
               ...local,
               ...(local.service === "food" && result.needs?.service

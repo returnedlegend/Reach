@@ -229,3 +229,117 @@ describe("direct DeepSeek client", () => {
     },
   );
 });
+
+it("uses Ollama native JSON schema constraints for pantry comparisons", async () => {
+  vi.stubEnv("REACH_AI_PROVIDER", "ollama");
+  const fetcher = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+    expect(JSON.parse(String(init?.body)).response_format).toEqual({
+      type: "json_schema",
+      json_schema: { name: "reach_response", strict: true, schema: jsonSchema },
+    });
+    return completion();
+  });
+  expect(await run(fetcher, { nativeSchema: true })).toMatchObject({
+    status: "available",
+  });
+});
+
+it("lets a slow local pantry comparison finish after the former 40-second deadline", async () => {
+  vi.stubEnv("REACH_AI_PROVIDER", "ollama");
+  vi.useFakeTimers();
+  const fetcher = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+    expect(JSON.parse(String(init?.body)).max_tokens).toBe(256);
+    await new Promise<void>((resolve, reject) => {
+      setTimeout(resolve, 50_000);
+      init?.signal?.addEventListener("abort", () =>
+        reject(new Error("aborted")),
+      );
+    });
+    return completion();
+  });
+  const pending = run(fetcher, { feature: "ranking" });
+  await vi.advanceTimersByTimeAsync(50_000);
+  expect(await pending).toMatchObject({ status: "available" });
+});
+it("ends a stalled local comparison at two minutes with actionable guidance", async () => {
+  vi.stubEnv("REACH_AI_PROVIDER", "ollama");
+  vi.useFakeTimers();
+  const fetcher = vi.fn(
+    async (_url: RequestInfo | URL, init?: RequestInit) =>
+      new Promise<Response>((_resolve, reject) => {
+        init?.signal?.addEventListener("abort", () =>
+          reject(new Error("aborted")),
+        );
+      }),
+  );
+  const pending = run(fetcher, { feature: "ranking" });
+  await vi.advanceTimersByTimeAsync(120_000);
+  expect(await pending).toMatchObject({
+    status: "unavailable",
+    reason: expect.stringContaining("Keep Ollama running"),
+  });
+  expect(fetcher).toHaveBeenCalledOnce();
+});
+it("keeps cloud comparison timeouts short", async () => {
+  vi.useFakeTimers();
+  const fetcher = vi.fn(
+    async (_url: RequestInfo | URL, init?: RequestInit) =>
+      new Promise<Response>((_resolve, reject) => {
+        init?.signal?.addEventListener("abort", () =>
+          reject(new Error("aborted")),
+        );
+      }),
+  );
+  const pending = run(fetcher, { feature: "ranking" });
+  await vi.advanceTimersByTimeAsync(12_000);
+  expect(await pending).toMatchObject({
+    status: "unavailable",
+    reason: "DeepSeek request timed out.",
+  });
+});
+it("distinguishes user cancellation from model timeout", async () => {
+  vi.stubEnv("REACH_AI_PROVIDER", "ollama");
+  const controller = new AbortController();
+  const fetcher = vi.fn(
+    async (_url: RequestInfo | URL, init?: RequestInit) =>
+      new Promise<Response>((_resolve, reject) => {
+        init?.signal?.addEventListener("abort", () =>
+          reject(new Error("aborted")),
+        );
+        controller.abort();
+      }),
+  );
+  expect(
+    await run(fetcher, { feature: "ranking", signal: controller.signal }),
+  ).toMatchObject({
+    status: "unavailable",
+    reason: "Local Llama 3.2 request was cancelled.",
+  });
+});
+it("keeps the browser deadline beyond local inference", async () => {
+  const { FOOD_SEARCH_TIMEOUT_MS, LOCAL_RANKING_TIMEOUT_MS } = await import(
+    "../src/lib/ai-timing"
+  );
+  expect(FOOD_SEARCH_TIMEOUT_MS).toBeGreaterThan(LOCAL_RANKING_TIMEOUT_MS);
+});
+
+it("reports a deadline while reading a stalled response body", async () => {
+  vi.stubEnv("REACH_AI_PROVIDER", "ollama");
+  vi.useFakeTimers();
+  const fetcher = vi.fn(
+    async () =>
+      new Response(
+        new ReadableStream({
+          start(controller) {
+            controller.enqueue(new TextEncoder().encode('{"choices":'));
+          },
+        }),
+      ),
+  );
+  const pending = run(fetcher, { feature: "ranking" });
+  await vi.advanceTimersByTimeAsync(120_000);
+  expect(await pending).toMatchObject({
+    status: "unavailable",
+    reason: expect.stringContaining("Keep Ollama running"),
+  });
+});

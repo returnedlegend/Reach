@@ -1,4 +1,5 @@
 import type { z } from "zod";
+import { LOCAL_RANKING_TIMEOUT_MS } from "./ai-timing";
 import {
   getAIServiceStatus,
   usesLlama,
@@ -16,7 +17,8 @@ export type DeepSeekFeature =
   | "draft"
   | "reply"
   | "guidance"
-  | "needs";
+  | "needs"
+  | "ranking";
 export type DeepSeekUsage = {
   promptTokens: number;
   completionTokens: number;
@@ -40,6 +42,7 @@ export type DeepSeekJsonInput<T> = {
   signal?: AbortSignal;
   fetch?: typeof fetch;
   maxAttempts?: 1 | 2;
+  nativeSchema?: boolean;
 };
 const RESPONSE_LIMIT = 128 * 1024;
 const GLOBAL_DAILY_LIMIT = 128;
@@ -277,7 +280,17 @@ export async function deepseekJson<T>(
   const controller = new AbortController();
   const abort = () => controller.abort();
   input.signal?.addEventListener("abort", abort, { once: true });
-  const timer = setTimeout(abort, getDeepSeekTimeoutMs()!);
+  const localRanking = usesLlama() && input.feature === "ranking";
+  const timeoutMs = localRanking
+    ? LOCAL_RANKING_TIMEOUT_MS
+    : getDeepSeekTimeoutMs()!;
+  const cancellationReason = () =>
+    input.signal?.aborted
+      ? "DeepSeek request was cancelled."
+      : localRanking
+        ? "Local Llama took longer than two minutes to compare these pantries. Keep Ollama running, close heavy applications, then try again. Directory results are still available."
+        : "DeepSeek request timed out.";
+  const timer = setTimeout(abort, timeoutMs);
   let calls = 0;
   let didFail = false;
   const fail = (reason: string) => {
@@ -288,8 +301,7 @@ export async function deepseekJson<T>(
     const attempts = input.maxAttempts === 1 ? 1 : 2;
     const fetcher = input.fetch ?? fetch;
     for (let attempt = 0; attempt < attempts; attempt++) {
-      if (controller.signal.aborted)
-        return fail("DeepSeek request was cancelled or timed out.");
+      if (controller.signal.aborted) return fail(cancellationReason());
       if (!takeQuota(input.feature, Date.now()))
         return calls > 0
           ? fail("DeepSeek usage limit is reached.")
@@ -319,7 +331,17 @@ export async function deepseekJson<T>(
                 },
                 { role: "user", content: input.prompt },
               ],
-              response_format: { type: "json_object" },
+              response_format:
+                usesLlama() && input.nativeSchema
+                  ? {
+                      type: "json_schema",
+                      json_schema: {
+                        name: "reach_response",
+                        strict: true,
+                        schema: input.jsonSchema,
+                      },
+                    }
+                  : { type: "json_object" },
               ...(usesLlama()
                 ? { temperature: 0 }
                 : {
@@ -330,7 +352,12 @@ export async function deepseekJson<T>(
                       ? { reasoning_effort: "low" }
                       : { temperature: 0 }),
                   }),
-              max_tokens: input.role === "primary" ? 4096 : 1600,
+              max_tokens:
+                input.feature === "ranking"
+                  ? 256
+                  : input.role === "primary"
+                    ? 4096
+                    : 1600,
               stream: false,
             }),
             redirect: "error",
@@ -339,8 +366,7 @@ export async function deepseekJson<T>(
           },
         );
       } catch {
-        if (controller.signal.aborted)
-          return fail("DeepSeek request was cancelled or timed out.");
+        if (controller.signal.aborted) return fail(cancellationReason());
         // An ambiguous network failure may already have been billed; do not automatically duplicate it.
         return fail(
           "DeepSeek network request failed. Manual planning remains available.",
@@ -388,8 +414,7 @@ export async function deepseekJson<T>(
       const parsed = input.schema.safeParse(output);
       if (!parsed.success)
         return fail("DeepSeek returned an invalid structured response.");
-      if (controller.signal.aborted)
-        return fail("DeepSeek request was cancelled or timed out.");
+      if (controller.signal.aborted) return fail(cancellationReason());
       metrics.successes += 1;
       return {
         status: "available",
@@ -403,7 +428,7 @@ export async function deepseekJson<T>(
   } catch {
     return fail(
       controller.signal.aborted
-        ? "DeepSeek request was cancelled or timed out."
+        ? cancellationReason()
         : "DeepSeek returned an invalid response.",
     );
   } finally {

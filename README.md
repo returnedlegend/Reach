@@ -127,4 +127,4 @@ npm run test:e2e
 
 See [OSM migration verification](docs/OSM-VERIFICATION.md), [independent verification](docs/VERIFICATION.md), [v3 verification](docs/VERIFICATION-V3.md), [GTFS import](docs/GTFS.md), [map and data audit](docs/OSM-DATA-AUDIT.md), and [source review](docs/DATA-SOURCES.md). Earlier architecture, demo, and evidence documents also describe the retained pantry planner.
 
-Primary AI: [Run Llama 3.2 with Ollama](docs/LLAMA.md). The website uses Llama for food-search interpretation by default.
+Primary AI: [Run Llama 3.2 with Ollama](docs/LLAMA.md). The main food search uses Llama to compare and order matching pantry options by default. See [how pantry comparisons work](docs/AI-PANTRY-RANKING.md). Travel feasibility stays separate and computed; suggestions do not guarantee food availability.
