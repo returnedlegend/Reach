@@ -94,28 +94,28 @@ function configured(): {
   key: string;
 } | null {
   const configuredProvider =
-    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama";
+    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "groq";
   // DeepSeek is inferred only from its own server key. Explicit provider values win.
   const inferredDeepSeek = !configuredProvider && deepSeekKeyConfigured();
   const provider = (inferredDeepSeek ? "deepseek" : configuredProvider) as
     | Provider
     | undefined;
   const model =
-    provider === "deepseek" || provider === "ollama"
+    provider === "deepseek" || provider === "ollama" || provider === "groq"
       ? getDeepSeekModels("fast").selected
       : provider === "gemini"
         ? (process.env.GEMINI_MODEL || process.env.REACH_AI_MODEL || "").trim()
         : process.env.REACH_AI_MODEL?.trim();
   const key =
-    provider === "deepseek" || provider === "ollama"
+    provider === "deepseek" || provider === "ollama" || provider === "groq"
       ? provider === "ollama"
         ? "local-no-key"
-        : process.env.DEEPSEEK_API_KEY
-      : provider === "groq"
-        ? process.env.GROQ_API_KEY
-        : provider === "gemini"
-          ? process.env.GEMINI_API_KEY
-          : undefined;
+        : provider === "groq"
+          ? process.env.GROQ_API_KEY
+          : process.env.DEEPSEEK_API_KEY
+      : provider === "gemini"
+        ? process.env.GEMINI_API_KEY
+        : undefined;
   if (
     !provider ||
     !model ||
@@ -124,12 +124,12 @@ function configured(): {
   )
     return null;
   if (
-    (provider === "deepseek" || provider === "ollama") &&
+    (provider === "deepseek" || provider === "ollama" || provider === "groq") &&
     getAIServiceStatus().state !== "configured"
   )
     return null;
   if (
-    (provider === "groq" || provider === "gemini") &&
+    provider === "gemini" &&
     process.env.REACH_AI_FREE_ONLY === "false" &&
     process.env.REACH_AI_ALLOW_PAID !== "true"
   )
@@ -222,18 +222,18 @@ function apiUrl(provider: Provider) {
 }
 function noAIMessage(): string {
   const configuredProvider =
-    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama";
+    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "groq";
   const provider =
     configuredProvider || (deepSeekKeyConfigured() ? "deepseek" : undefined);
   const model =
-    provider === "deepseek" || provider === "ollama"
+    provider === "deepseek" || provider === "ollama" || provider === "groq"
       ? getDeepSeekModels("fast").selected
       : process.env.REACH_AI_MODEL?.trim();
   if ((provider || model) && !dataPolicyAccepted())
     return "AI preference help is not enabled. Use the travel controls to continue.";
   if (!provider || !model)
     return "AI assistance is unavailable until a provider and model are configured.";
-  if (provider === "groq" || provider === "gemini") {
+  if (provider === "gemini") {
     if (process.env.REACH_AI_FREE_ONLY !== "false")
       return "AI assistance is unavailable in free-only mode because this provider cannot verify account billing.";
     if (process.env.REACH_AI_ALLOW_PAID !== "true")
@@ -356,7 +356,11 @@ async function complete<T>(
 ): Promise<T | null> {
   if (!featureEnabled("ai")) return null;
   const cfg = configured();
-  if (cfg?.provider === "deepseek" || cfg?.provider === "ollama") {
+  if (
+    cfg?.provider === "deepseek" ||
+    cfg?.provider === "ollama" ||
+    cfg?.provider === "groq"
+  ) {
     if (!dataPolicyAccepted()) return null;
     const result = await deepseekJson({
       role: "fast",
@@ -372,8 +376,7 @@ async function complete<T>(
   if (!dataPolicyAccepted()) return null;
   if (
     !cfg ||
-    (process.env.REACH_AI_FREE_ONLY !== "false" &&
-      (cfg.provider === "groq" || cfg.provider === "gemini"))
+    (process.env.REACH_AI_FREE_ONLY !== "false" && cfg.provider === "gemini")
   )
     return null;
   if (
@@ -560,7 +563,7 @@ export async function interpretPreferences(
   if (
     cfg &&
     process.env.REACH_AI_FREE_ONLY !== "false" &&
-    (cfg.provider === "groq" || cfg.provider === "gemini")
+    cfg.provider === "gemini"
   )
     return {
       status: "unavailable",
@@ -758,7 +761,8 @@ export async function extractOutreachFacts(
     !dataPolicyAccepted() ||
     (process.env.REACH_AI_FREE_ONLY !== "false" &&
       cfg.provider !== "deepseek" &&
-      cfg.provider !== "ollama") ||
+      cfg.provider !== "ollama" &&
+      cfg.provider !== "groq") ||
     containsLocation(input.text)
   )
     return local;
@@ -816,7 +820,8 @@ export async function generateOutreachDraft(
     !dataPolicyAccepted() ||
     (process.env.REACH_AI_FREE_ONLY !== "false" &&
       cfg.provider !== "deepseek" &&
-      cfg.provider !== "ollama")
+      cfg.provider !== "ollama" &&
+      cfg.provider !== "groq")
   )
     return fallback;
   const result = await complete(

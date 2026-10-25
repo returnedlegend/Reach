@@ -3,6 +3,8 @@ import { LOCAL_RANKING_TIMEOUT_MS } from "./ai-timing";
 import {
   getAIServiceStatus,
   usesLlama,
+  usesGroq,
+  GROQ_BASE_URL,
   getOllamaBaseUrl,
   getDeepSeekBaseUrl,
   getDeepSeekModels,
@@ -266,7 +268,9 @@ export async function deepseekJson<T>(
     status: "unavailable",
     reason: usesLlama()
       ? reason.replaceAll("DeepSeek", "Local Llama 3.2")
-      : reason,
+      : usesGroq()
+        ? reason.replaceAll("DeepSeek", "Groq")
+        : reason,
     calls,
   });
   const status = getAIServiceStatus();
@@ -311,14 +315,14 @@ export async function deepseekJson<T>(
       let response: Response;
       try {
         response = await fetcher(
-          `${usesLlama() ? getOllamaBaseUrl()! : getDeepSeekBaseUrl()!}/chat/completions`,
+          `${usesGroq() ? GROQ_BASE_URL : usesLlama() ? getOllamaBaseUrl()! : getDeepSeekBaseUrl()!}/chat/completions`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
               ...(!usesLlama()
                 ? {
-                    Authorization: `Bearer ${process.env.DEEPSEEK_API_KEY!.trim()}`,
+                    Authorization: `Bearer ${(usesGroq() ? process.env.GROQ_API_KEY! : process.env.DEEPSEEK_API_KEY!).trim()}`,
                   }
                 : {}),
             },
@@ -342,19 +346,28 @@ export async function deepseekJson<T>(
                       },
                     }
                   : { type: "json_object" },
-              ...(usesLlama()
-                ? { temperature: 0 }
-                : {
-                    thinking: {
-                      type: input.role === "primary" ? "enabled" : "disabled",
-                    },
-                    ...(input.role === "primary"
+              ...(usesGroq()
+                ? {
+                    temperature: 0,
+                    ...(model.startsWith("openai/gpt-oss-")
                       ? { reasoning_effort: "low" }
-                      : { temperature: 0 }),
-                  }),
+                      : {}),
+                  }
+                : usesLlama()
+                  ? { temperature: 0 }
+                  : {
+                      thinking: {
+                        type: input.role === "primary" ? "enabled" : "disabled",
+                      },
+                      ...(input.role === "primary"
+                        ? { reasoning_effort: "low" }
+                        : { temperature: 0 }),
+                    }),
               max_tokens:
                 input.feature === "ranking"
-                  ? 640
+                  ? usesGroq()
+                    ? 2048
+                    : 640
                   : input.role === "primary"
                     ? 4096
                     : 1600,
@@ -404,9 +417,9 @@ export async function deepseekJson<T>(
       }
       const choice = envelope?.choices?.[0];
       const content = choice?.message?.content;
-      if (localRanking && choice?.finish_reason === "length")
+      if ((localRanking || usesGroq()) && choice?.finish_reason === "length")
         return fail(
-          "Local Llama reached the response limit before finishing its summary. Update Reach and try again. Pantry matches remain available.",
+          "AI reached the response limit before finishing its summary. Try again. Pantry matches remain available.",
         );
       if (
         (choice?.finish_reason !== undefined &&

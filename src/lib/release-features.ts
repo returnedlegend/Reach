@@ -12,14 +12,15 @@ export function coreRelease(): boolean {
 export function featureEnabled(feature: keyof PublicFeatures): boolean {
   // Account-free moderated sharing is a core public feature; legacy flags no longer hide it.
   if (feature === "community") return true;
-  // Local AI can be explicitly enabled in the anonymous core without enabling accounts.
+  // Selected AI can be explicitly enabled in the anonymous core without enabling accounts.
   const profile = process.env.REACH_RELEASE_PROFILE;
   if (
     feature === "ai" &&
     (!profile || ["core", "extended"].includes(profile)) &&
     process.env.REACH_RELEASE_AI === "true" &&
-    (process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama") ===
-      "ollama"
+    ["ollama", "groq"].includes(
+      process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "groq",
+    )
   )
     return true;
   if (coreRelease()) return false;
@@ -57,7 +58,7 @@ export function featureEnabled(feature: keyof PublicFeatures): boolean {
 /** Availability/configuration, not proof of successful live provider service. */
 export function publicFeatures(): PublicFeatures {
   const aiProvider =
-    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama";
+    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "groq";
   const aiKey =
     aiProvider === "deepseek"
       ? process.env.DEEPSEEK_API_KEY

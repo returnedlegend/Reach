@@ -230,7 +230,7 @@ describe("navigation needs interpreter", () => {
       expect(result.needs?.preferTransitNearby).toBe(false);
   });
 
-  it("preserves the existing Groq preference path and supplements only clear typed needs", async () => {
+  it("uses the shared Groq client for structured preferences and needs", async () => {
     vi.stubEnv("REACH_AI_PROVIDER", "groq");
     vi.stubEnv("REACH_AI_MODEL", "test-model");
     vi.stubEnv("GROQ_API_KEY", "secret-test-key");
@@ -239,7 +239,18 @@ describe("navigation needs interpreter", () => {
     vi.stubEnv("REACH_AI_DATA_POLICY_ACCEPTED", "true");
     const fetcher = vi.fn(
       async (_input: RequestInfo | URL, _init?: RequestInit) =>
-        completion({ mode: "driving" }),
+        completion(
+          modelOutput(
+            { mode: "driving" },
+            {
+              service: "groceries",
+              urgency: "today",
+              householdSize: 4,
+              hasIdentification: "no",
+              preferTransitNearby: true,
+            },
+          ),
+        ),
     );
 
     const result = await agent.interpretNavigationNeeds(

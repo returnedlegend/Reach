@@ -189,11 +189,11 @@ describe("server-side access AI safeguards", () => {
     expect(body.messages[0].content).toContain("JSON");
   });
 
-  it("refuses providers without account billing verification in free-only mode", async () => {
+  it("retains Gemini free-only billing safeguard", async () => {
     vi.stubEnv("REACH_AI_DATA_POLICY_ACCEPTED", "true");
-    vi.stubEnv("REACH_AI_PROVIDER", "groq");
+    vi.stubEnv("REACH_AI_PROVIDER", "gemini");
     vi.stubEnv("REACH_AI_MODEL", "llama");
-    vi.stubEnv("GROQ_API_KEY", "secret-test-key");
+    vi.stubEnv("GEMINI_API_KEY", "secret-test-key");
     const fetcher = vi.fn();
     const result = await accessAI.interpretPreferences("transit", {
       fetch: fetcher as typeof fetch,

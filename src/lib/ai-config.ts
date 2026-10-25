@@ -20,10 +20,20 @@ export type AIServiceStatus = {
   model: string;
 };
 
+export const GROQ_BASE_URL = "https://api.groq.com/openai/v1";
+export const DEFAULT_GROQ_MODEL = "openai/gpt-oss-20b";
+export function usesGroq() {
+  return (
+    (process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "groq") === "groq"
+  );
+}
+export function groqKeyConfigured() {
+  const key = process.env.GROQ_API_KEY?.trim() || "";
+  return Boolean(key) && !/placeholder|your[_-].*(?:key|here)/i.test(key);
+}
 export function usesLlama() {
   return (
-    (process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama") ===
-    "ollama"
+    (process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "groq") === "ollama"
   );
 }
 /** Ollama is local-only: never forward cloud credentials to this endpoint. */
@@ -46,6 +56,8 @@ export function getOllamaBaseUrl(): string | null {
   }
 }
 export function getDeepSeekModels(role: "fast" | "primary") {
+  if (usesGroq())
+    return { selected: process.env.GROQ_MODEL?.trim() || DEFAULT_GROQ_MODEL };
   if (usesLlama())
     return { selected: process.env.OLLAMA_MODEL?.trim() || "llama3.2:3b" };
   return {
@@ -73,10 +85,13 @@ export function getDeepSeekBaseUrl(): string | null {
     : null;
 }
 export function getDeepSeekTimeoutMs(): number | null {
-  const raw = usesLlama()
-    ? process.env.OLLAMA_TIMEOUT_MS
-    : process.env.DEEPSEEK_TIMEOUT_MS;
-  if (raw === undefined || raw === "") return usesLlama() ? 40_000 : 12_000;
+  const raw = usesGroq()
+    ? process.env.GROQ_TIMEOUT_MS
+    : usesLlama()
+      ? process.env.OLLAMA_TIMEOUT_MS
+      : process.env.DEEPSEEK_TIMEOUT_MS;
+  if (raw === undefined || raw === "")
+    return usesGroq() ? 20_000 : usesLlama() ? 40_000 : 12_000;
   if (!/^\d+$/.test(raw)) return null;
   const timeout = Number(raw);
   return timeout >= 1_000 && timeout <= (usesLlama() ? 60_000 : 20_000)
@@ -98,6 +113,34 @@ export function getAIServiceStatus(): AIServiceStatus {
       "disabled",
       "AI is turned off. Pantry search, map directions and manual trip controls remain available.",
     );
+  if (usesGroq()) {
+    if (!groqKeyConfigured())
+      return result(
+        "unavailable",
+        "credentials",
+        "AI needs a GROQ_API_KEY on the Reach server. Pantry matches remain available.",
+      );
+    if (process.env.REACH_AI_DATA_POLICY_ACCEPTED !== "true")
+      return result(
+        "unavailable",
+        "privacy",
+        "Review Groq's data policy and enable AI processing on the server before using hosted assistance.",
+      );
+    if (
+      !getDeepSeekTimeoutMs() ||
+      !/^[a-zA-Z0-9][a-zA-Z0-9/._-]{1,100}$/.test(model)
+    )
+      return result(
+        "unavailable",
+        "configuration",
+        "Check GROQ_MODEL and GROQ_TIMEOUT_MS on the server.",
+      );
+    return result(
+      "configured",
+      null,
+      "Groq is configured. Provider availability and account quotas still apply; pantry matches remain available.",
+    );
+  }
   if (usesLlama()) {
     if (process.env.REACH_AI_DATA_POLICY_ACCEPTED !== "true")
       return result(

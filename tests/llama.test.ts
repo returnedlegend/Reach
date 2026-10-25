@@ -65,16 +65,17 @@ it("reports unavailable when local Ollama is stopped", async () => {
   });
   expect(result).toMatchObject({
     status: "unavailable",
-    reason: expect.stringContaining("Local Llama"),
+    reason: expect.stringContaining("Ollama"),
   });
 });
 
-it("defaults to Llama even if an old DeepSeek key is present", () => {
+it("defaults to Groq even if an old DeepSeek key is present", () => {
   vi.stubEnv("REACH_AI_PROVIDER", "");
   vi.stubEnv("DEEPSEEK_API_KEY", "synthetic-old-key");
+  vi.stubEnv("GROQ_API_KEY", "synthetic-groq-key");
   expect(getAIServiceStatus()).toMatchObject({
     state: "configured",
-    model: "llama3.2:3b",
+    model: "openai/gpt-oss-20b",
   });
 });
 it("accepts only the named private Compose service in addition to loopback", () => {

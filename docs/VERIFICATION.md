@@ -114,3 +114,11 @@ Final main-agent integration checks (October 16, 2026): data validation, TypeScr
   or advertised by the discovery flow.
 - Exact origins stay on the Reach server. Approximate distances and scores are
   location-derived information sent to the model when the user enables AI.
+
+## Groq migration — 2026-10-25
+
+Default provider changed from local Ollama to hosted Groq (`openai/gpt-oss-20b`). Shared server-only requests now cover pantry ranking, navigation needs, preferences and existing draft/reply workflows. The anonymous core release explicitly supports Groq. No automatic provider fallback; deterministic discovery stays available.
+
+Checks: 736 unit tests across 86 files passed; TypeScript and production build passed. Four Chromium checks passed across mobile and desktop: fixture-generated summary display/clearing and missing-key fallback with three pantry cards. The actual running `/api/ai/status` returned `unavailable`, code `credentials`, and the Groq model name. `npm run ai:check` independently reported the missing key. Live Groq generation was not tested because no real Groq credential is configured here. Browser provider responses were fixtures, not proof of live inference.
+
+The private local environment was switched to Groq, preserving unrelated values and adding placeholders only when absent. `.env.local` remains ignored and is not part of the commit. See GROQ.md for setup, account billing limits and synthetic generation diagnostics.

@@ -1,3 +1,5 @@
+> Groq is now the default provider. See [current setup](GROQ.md). This page documents the retained explicit Ollama option and historical checks.
+
 # Reach's primary AI: Llama 3.2
 
 Reach defaults to `llama3.2:3b` served by Ollama. Food searches use AI automatically, with a visible disclosure and a user control to turn interpretation off. The existing pantry database, feasibility engine, walking/transfer limits, distribution windows and return checks determine the recommendation. Llama interprets requests and highlights computed evidence; it cannot invent pantry facts or establish food stock. The highest-ranked checked pantry is not a claim of a globally optimal or guaranteed pickup.
