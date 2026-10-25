@@ -101,3 +101,15 @@ describe("public core release boundary", () => {
     });
   });
 });
+
+it("allows explicitly enabled local AI in core without enabling account or community features", () => {
+  vi.stubEnv("NODE_ENV", "production");
+  vi.stubEnv("REACH_RELEASE_PROFILE", "core");
+  vi.stubEnv("REACH_RELEASE_AI", "true");
+  vi.stubEnv("REACH_AI_PROVIDER", "ollama");
+  vi.stubEnv("REACH_AI_DATA_POLICY_ACCEPTED", "true");
+  expect(publicFeatures()).toEqual({ ...CORE_FEATURES, ai: true });
+  expect(getAIServiceStatus().state).toBe("configured");
+  vi.stubEnv("REACH_AI_PROVIDER", "disabled");
+  expect(publicFeatures().ai).toBe(false);
+});

@@ -40,11 +40,21 @@ export function createFoodSearchHandler(
           "Please wait a moment. You can still browse food options below.",
         );
       const local = localFoodIntent(body.message);
-      if (
-        !body.useAI ||
-        (deps.status ?? getAIServiceStatus)().state !== "configured"
-      )
-        return privateResponse({ assistance: "directory", intent: local });
+      if (!body.useAI)
+        return privateResponse({
+          assistance: "directory",
+          intent: local,
+          aiMessage: "AI is turned off for this search.",
+        });
+      const service = (deps.status ?? getAIServiceStatus)();
+      if (service.state !== "configured")
+        return privateResponse({
+          assistance: "directory",
+          intent: local,
+          aiMessage: service.message,
+        });
+      let aiMessage =
+        "AI could not finish this request. You can still use the pantry results.";
       try {
         const result = await (deps.interpret ?? interpretNavigationNeeds)(
           body.message,
@@ -67,10 +77,15 @@ export function createFoodSearchHandler(
             },
           });
         }
+        if (result.status === "unavailable") aiMessage = result.message;
       } catch {
         /* Directory matching remains usable after any provider failure. */
       }
-      return privateResponse({ assistance: "directory", intent: local });
+      return privateResponse({
+        assistance: "directory",
+        intent: local,
+        aiMessage,
+      });
     } catch (error) {
       return accessFailure(error);
     }

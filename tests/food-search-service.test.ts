@@ -100,3 +100,36 @@ describe("optional AI food-request interpretation", () => {
     expect((await handler(request({ message: "food" }))).status).toBe(429);
   });
 });
+it("explains disabled configuration without attempting inference", async () => {
+  const interpret = vi.fn();
+  const response = await createFoodSearchHandler({
+    interpret,
+    status: () => ({
+      ...status(),
+      state: "disabled",
+      code: "disabled",
+      message: "AI is disabled on this server.",
+    }),
+  })(request({ message: "food", useAI: true }));
+  expect(await response.json()).toMatchObject({
+    assistance: "directory",
+    aiMessage: "AI is disabled on this server.",
+  });
+  expect(interpret).not.toHaveBeenCalled();
+});
+it("preserves the actionable provider failure while keeping pantry matching", async () => {
+  const response = await createFoodSearchHandler({
+    status,
+    interpret: vi
+      .fn()
+      .mockResolvedValue({
+        status: "unavailable",
+        message:
+          "Local Llama 3.2 network request failed. Manual planning remains available.",
+      }),
+  })(request({ message: "food", useAI: true }));
+  expect(await response.json()).toMatchObject({
+    assistance: "directory",
+    aiMessage: expect.stringContaining("network request failed"),
+  });
+});

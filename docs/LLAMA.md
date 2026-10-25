@@ -31,3 +31,11 @@ Official references: https://docs.ollama.com/api/openai-compatibility and https:
 ## Verification on October 25, 2026
 
 All 651 unit tests, TypeScript, data validation and the production build passed. Four mobile/desktop browser cases verify default AI submission and outage recovery with controlled responses. A separate actual mobile-browser submission through `/api/food-search` successfully called locally installed Ollama0.40.11 with `llama3.2:3b`, returned HTTP200 with `assistance: ai`, interpreted groceries/transit, and kept three maintained pantry cards visible. The cold request took about16seconds on this environment's CPU; this is one observation, not a latency guarantee. No cloud model or paid API was used for that check. Docker Compose was parsed and inspected but was not launched. This proves local website inference, not deployment, actual food stock or live route availability.
+
+## Fix for “AI was not used”
+
+The food-search page previously skipped its API request when a server-rendered feature flag was false. An older core profile could therefore hide a configured local model even with `REACH_RELEASE_AI=true`. The client now asks the server when AI is enabled for the search, and the server returns a safe explanation for disabled configuration or provider errors. Explicit local AI enablement works in the core profile without enabling accounts, community or email. An explicitly disabled provider and the data-policy gate are still enforced.
+
+The generic phrase “near me” is normalized to “nearby” before interpretation; it no longer trips the sensitive-location filter. Actual coordinates and addresses remain protected and the selected starting point is still used only by the planner.
+
+On October25, a real mobile-browser “Find food near me” request reached local Llama3.2 under the core profile with explicit AI enablement, returned `assistance: ai` and showed three maintained records. The updated655 unit tests,14 controlled browser cases, TypeScript, data validation and build passed. See [live evidence](evidence/llama-ai-fix-verification.json). The installed/deployed copy still needs this code and a running Ollama model service. No hosted deployment was performed by this fix.

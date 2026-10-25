@@ -61,7 +61,7 @@ test("failed AI keeps food results and discloses attempted interpretation", asyn
     .fill("I need food in Bryan");
   await page.getByRole("button", { name: "Find food", exact: true }).click();
   await expect(
-    page.getByText(/your text may have reached the AI provider/),
+    page.getByText(/The AI service could not be reached/),
   ).toBeVisible();
   await expect(
     page
