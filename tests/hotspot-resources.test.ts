@@ -82,7 +82,7 @@ describe("community hotspot resource adapter", () => {
       "community-hotspot:future",
     ]);
     expect(resources[0]).toMatchObject({
-      name: "Community-reported hotspot: Saturday produce table",
+      name: "Saturday produce table",
       coordinates: { lat: 30.6744, lng: -96.3698 },
       communityHotspot: {
         recordId: "active",

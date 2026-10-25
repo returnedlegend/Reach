@@ -89,12 +89,12 @@ function parseRow(row: HotspotRow, now: Date): HotspotResource | null {
 
     return {
       id: `community-hotspot:${row.id}`,
-      name: `Community-reported hotspot: ${data.title}`,
+      name: data.title,
       address: data.address,
       coordinates: { lat: data.lat, lng: data.lng },
-      hours: `One-time event: ${eventTime.format(startsAt)} to ${eventTime.format(endsAt)} (America/Chicago). ${unverified}`,
-      eligibility: `${data.eligibility} ${unverified}`,
-      offering: `Organizer-reported food: ${data.foodCategory}${data.quantityText ? `; quantity: ${data.quantityText}` : ""}. ${unverified}`,
+      hours: `One-time event: ${eventTime.format(startsAt)} to ${eventTime.format(endsAt)} (Central time).`,
+      eligibility: `Organizer reports: ${data.eligibility}`,
+      offering: `Organizer-reported food: ${data.foodCategory}${data.quantityText ? `; quantity: ${data.quantityText}` : ""}.`,
       verificationStatus: "needs-confirmation",
       detailsNeedConfirmation: true,
       pedestrianPickup: "unknown",

@@ -291,6 +291,60 @@ describe("moderation, privacy and food constraints", () => {
         400,
       );
   });
+  it("requires moderator approval before either household offers or hotspots are public", async () => {
+    const owner = await signup("organizer"),
+      mod = await moderator();
+    const db = openCommunityDatabase(database);
+    db.prepare("UPDATE users SET role='organizer' WHERE id=?").run(owner.id);
+    const hotspot = await call(
+      "hotspots",
+      "POST",
+      {
+        title: "Fixture hotspot",
+        description: "Fixture only",
+        organizerName: "Fixture organizer",
+        address: "Fixture venue, Bryan",
+        lat: 30.67,
+        lng: -96.37,
+        startsAt: new Date(Date.now() - 60000).toISOString(),
+        endsAt: new Date(Date.now() + 3600000).toISOString(),
+        foodCategory: "Groceries",
+        eligibility: "Confirm",
+        accessibility: "Unknown",
+        contact: "Fixture",
+        pickupInstructions: "Confirm before going",
+      },
+      owner,
+    );
+    expect(hotspot.status).toBe(201);
+    const hotspotId = (await hotspot.json()).record.id;
+    const offerId = await offer(owner);
+    for (const [kind, id] of [
+      ["hotspots", hotspotId],
+      ["offers", offerId],
+    ]) {
+      expect(
+        (await call(`${kind}/${id}/submit`, "POST", {}, owner)).status,
+      ).toBe(200);
+      expect(
+        db.prepare("SELECT status FROM records WHERE id=?").get(id)?.status,
+      ).toBe("pending");
+      expect(
+        JSON.stringify(await (await call("discovery")).json()),
+      ).not.toContain(id);
+      expect(
+        (await call(`moderation/${kind}/${id}/approve`, "POST", {}, owner))
+          .status,
+      ).toBe(403);
+      expect(
+        (await call(`moderation/${kind}/${id}/approve`, "POST", {}, mod))
+          .status,
+      ).toBe(200);
+      expect(JSON.stringify(await (await call("discovery")).json())).toContain(
+        id,
+      );
+    }
+  });
   it("gates organizers and prevents self-approval", async () => {
     const alice = await signup("alice"),
       mod = await moderator();

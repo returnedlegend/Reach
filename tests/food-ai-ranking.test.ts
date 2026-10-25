@@ -234,3 +234,55 @@ describe("approved community hotspots in AI comparison", () => {
     expect(generate).not.toHaveBeenCalled();
   });
 });
+
+describe("household offer AI comparisons", () => {
+  it("lets the model choose an approved offer while retaining hotspot and pantry candidates", async () => {
+    const offer = site("community-offer:fixture", {
+      coordinates: null,
+      verificationStatus: "needs-confirmation",
+      pedestrianPickup: "unknown",
+      city: "Bryan",
+      communityOffer: {
+        recordId: "fixture",
+        startsAt: "2026-10-25T13:00:00Z",
+        endsAt: "2026-10-25T15:00:00Z",
+      },
+      offering: "Sealed groceries. Allergens: wheat. Storage: keep dry.",
+    });
+    const hotspot = site("community-hotspot:fixture", {
+      verificationStatus: "needs-confirmation",
+      communityHotspot: {
+        recordId: "hotspot",
+        startsAt: "2026-10-25T13:00:00Z",
+        endsAt: "2026-10-25T15:00:00Z",
+      },
+    });
+    const generate = vi
+      .fn()
+      .mockResolvedValue(response([offer.id, hotspot.id]));
+    const result = await rankFoodWithAI("food in Bryan", {
+      resources: [
+        ...Array.from({ length: 8 }, (_, i) => site(String(i))),
+        hotspot,
+        offer,
+      ],
+      now,
+      generate,
+    });
+    expect(result.status).toBe("available");
+    if (result.status !== "available") throw new Error("Expected comparison");
+    expect(result.ranking[0].id).toBe(offer.id);
+    const prompt = generate.mock.calls[0][0].prompt;
+    expect(prompt).toContain(hotspot.id);
+    expect(prompt).toContain("Exact pickup location is private");
+    expect(prompt).toContain("Allergens: wheat");
+    expect(prompt).not.toContain("coordinates");
+    const expired = await rankFoodWithAI("food in Bryan", {
+      resources: [offer],
+      now: new Date("2026-10-25T15:00:00Z"),
+      generate,
+    });
+    expect(expired.status).toBe("unavailable");
+    expect(generate).toHaveBeenCalledTimes(1);
+  });
+});

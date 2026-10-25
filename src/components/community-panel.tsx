@@ -1,5 +1,7 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import {
   useEffect,
   useMemo,
@@ -26,6 +28,7 @@ import "./community-panel.css";
 
 type Props = {
   hotspotRequest?: number;
+  initialOffers?: boolean;
   origin?: { lat: number; lng: number } | null;
   onDiscoveryChange?: (markers: CommunityMapMarker[]) => void;
   selectedMarkerId?: string;
@@ -290,10 +293,12 @@ function HotspotDirections({
 
 export function CommunityPanel({
   hotspotRequest = 0,
+  initialOffers = false,
   origin,
   onDiscoveryChange,
   selectedMarkerId,
 }: Props) {
+  const router = useRouter();
   const [view, setView] = useState<View>("discover");
   const [afterSignIn, setAfterSignIn] = useState<View>("dashboard");
   const [clock, setClock] = useState(() => Date.now());
@@ -310,7 +315,7 @@ export function CommunityPanel({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const [filter, setFilter] = useState("all");
+  const [filter, setFilter] = useState(initialOffers ? "offer" : "all");
   const [availability, setAvailability] = useState("all");
   const [search, setSearch] = useState("");
   const [editing, setEditing] = useState<CommunityRecord | null>(null);
@@ -492,6 +497,9 @@ export function CommunityPanel({
       await action();
       setNotice(success);
       await refresh();
+      // Refresh server-owned search resources after approvals, reservations,
+      // blocks and sign-in changes without resetting the current community view.
+      router.refresh();
     } catch (failure) {
       setError(explain(failure));
     } finally {
@@ -653,8 +661,10 @@ export function CommunityPanel({
                 </button>
               </div>
               <p className="community-small">
-                Times are shown in America/Chicago. Food offers show a named
-                approximate area; map pins are not pickup addresses.
+                Times are shown in America/Chicago. Offer pins show an
+                approximate area, not a pickup address. Community-shared food.
+                Safety and availability are not verified. Check allergens and
+                packaging; arrange pickup before traveling.
               </p>
               <div className="community-filters">
                 <Field label="Search community posts">
@@ -1513,7 +1523,7 @@ function PostForm({
       </h3>
       <p>
         {kind === "offer"
-          ? "Offer a small quantity of sealed, nonexpired, shelf-stable food for pickup at a public place. Homemade, opened, damaged or refrigerated food is not accepted."
+          ? "Share up to 20 sealed, unexpired, shelf-stable pantry items for public-place pickup. Homemade, opened, damaged or refrigerated food is not accepted."
           : "Create a public food distribution at a public venue. Check that the address, public venue coordinates and pickup requirements are correct."}
       </p>
       <p className="community-small">
@@ -1521,6 +1531,12 @@ function PostForm({
         activity. Times display in America/Chicago; date and time inputs below
         use your device’s timezone.
       </p>
+      {kind === "offer" && (
+        <p className="community-small">
+          Community-shared food. Safety and availability are not verified. Check
+          allergens and packaging; arrange pickup before traveling.
+        </p>
+      )}
       {formError && (
         <p role="alert" className="community-error">
           {formError}

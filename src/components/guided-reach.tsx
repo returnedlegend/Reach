@@ -136,11 +136,13 @@ const friendlyLocation = (location: SelectedLocation | null) =>
 
 export function GuidedReach({
   initialHotspots = false,
+  initialCommunityOffers = false,
   foodResources = [],
   directoryError = "",
   features = CORE_FEATURES,
 }: {
   initialHotspots?: boolean;
+  initialCommunityOffers?: boolean;
   foodResources?: Resource[];
   directoryError?: string;
   features?: PublicFeatures;
@@ -153,7 +155,9 @@ export function GuidedReach({
   }, [detailId]);
   const [clock, setClock] = useState<Date | null>(null);
   const [tab, setTab] = useState<Tab>(
-    initialHotspots && features.community ? "community" : "explore",
+    (initialHotspots || initialCommunityOffers) && features.community
+      ? "community"
+      : "explore",
   );
   const [hotspotRequest, setHotspotRequest] = useState(
     initialHotspots && features.community ? 1 : 0,
@@ -584,6 +588,12 @@ export function GuidedReach({
     resource: Resource,
     origin?: SelectedLocation | null,
   ) {
+    if (resource.communityOffer) {
+      window.location.assign(
+        `/food-hotspots?type=offer#community-item-${encodeURIComponent(resource.communityOffer.recordId)}`,
+      );
+      return;
+    }
     clearRoute();
     if (origin !== undefined) {
       setLocation(origin);
@@ -777,7 +787,12 @@ export function GuidedReach({
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   async function shareResource(resource: Resource) {
-    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resource.coordinates ? `${resource.coordinates.lat},${resource.coordinates.lng}` : resource.address)}`;
+    const url = resource.communityOffer
+      ? new URL(
+          `/food-hotspots?type=offer#community-item-${encodeURIComponent(resource.communityOffer.recordId)}`,
+          window.location.origin,
+        ).href
+      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(resource.coordinates ? `${resource.coordinates.lat},${resource.coordinates.lng}` : resource.address)}`;
     try {
       if (navigator.share)
         await navigator.share({
@@ -812,14 +827,23 @@ export function GuidedReach({
       <div
         className={`reach-actions ${compact ? "reach-actions-compact" : ""}`}
       >
-        <button
-          className="btn btn-primary reach-action reach-action-primary"
-          aria-label={`Get directions to ${resource.name}`}
-          onClick={() => startDirections(resource)}
-        >
-          <Navigation size={17} />
-          Get directions
-        </button>
+        {resource.communityOffer ? (
+          <a
+            className="btn btn-primary reach-action"
+            href={`/food-hotspots?type=offer#community-item-${encodeURIComponent(resource.communityOffer.recordId)}`}
+          >
+            Request food
+          </a>
+        ) : (
+          <button
+            className="btn btn-primary reach-action reach-action-primary"
+            aria-label={`Get directions to ${resource.name}`}
+            onClick={() => startDirections(resource)}
+          >
+            <Navigation size={17} />
+            Get directions
+          </button>
+        )}
         {resource.phone && (
           <a
             className="btn btn-outline reach-action"
@@ -1661,23 +1685,25 @@ export function GuidedReach({
                         detailed: true,
                       })}
                       {map}
-                      <div className="reach-directions">
-                        <h3>A way to get there</h3>
-                        <p>
-                          Get directions here in Reach using your selected
-                          starting point.
-                        </p>
-                        <button
-                          className="btn btn-primary reach-primary"
-                          onClick={() => startDirections(selected)}
-                        >
-                          <Navigation size={17} /> Get directions
-                        </button>
-                        <p className="reach-help">
-                          Walking and driving use routed paths. Transit requires
-                          verified timetables.
-                        </p>
-                      </div>
+                      {!selected.communityOffer && (
+                        <div className="reach-directions">
+                          <h3>A way to get there</h3>
+                          <p>
+                            Get directions here in Reach using your selected
+                            starting point.
+                          </p>
+                          <button
+                            className="btn btn-primary reach-primary"
+                            onClick={() => startDirections(selected)}
+                          >
+                            <Navigation size={17} /> Get directions
+                          </button>
+                          <p className="reach-help">
+                            Walking and driving use routed paths. Transit
+                            requires verified timetables.
+                          </p>
+                        </div>
+                      )}
                       <section className="reach-save-trip">
                         <h3>Keep this trip handy</h3>
                         <p>
@@ -2178,6 +2204,7 @@ export function GuidedReach({
             {communityLoaded && (
               <CommunityPanel
                 hotspotRequest={hotspotRequest}
+                initialOffers={initialCommunityOffers}
                 origin={location?.coordinates ?? null}
                 onDiscoveryChange={setCommunityMarkers}
                 selectedMarkerId={communitySelection}

@@ -92,9 +92,12 @@ export function createFoodSearchHandler(
       let aiMessage =
         "AI could not finish this request. You can still use the pantry results.";
       try {
-        const result = await (deps.interpret ?? rankFoodWithAI)(body.message, {
-          signal: request.signal,
-        });
+        const result = deps.interpret
+          ? await deps.interpret(body.message, { signal: request.signal })
+          : await rankFoodWithAI(body.message, {
+              signal: request.signal,
+              cookieHeader: request.headers.get("cookie"),
+            });
         if (result.status === "available" && result.assistance === "ai") {
           return privateResponse({
             assistance: "ai",

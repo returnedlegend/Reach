@@ -96,9 +96,13 @@ export function nextPublishedWindow(
   resource: Resource,
   now: Date,
 ): PublishedWindow | null {
-  if (resource.communityHotspot) {
-    const start = new Date(resource.communityHotspot.startsAt);
-    const end = new Date(resource.communityHotspot.endsAt);
+  if (resource.communityHotspot ?? resource.communityOffer) {
+    const start = new Date(
+      (resource.communityHotspot ?? resource.communityOffer)!.startsAt,
+    );
+    const end = new Date(
+      (resource.communityHotspot ?? resource.communityOffer)!.endsAt,
+    );
     if (!Number.isFinite(start.getTime()) || start <= now || end <= now)
       return null;
     return {

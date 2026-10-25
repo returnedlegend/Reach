@@ -43,7 +43,7 @@ test("AI reorders pantry cards and exposes supporting facts without claiming ava
   await expect(
     cards.first().getByText("Published requirements need confirmation."),
   ).toBeVisible();
-  await expect(page.getByText(/AI compared the listed pantries/)).toBeVisible();
+  await expect(page.getByText(/AI compared these food options/)).toBeVisible();
   await page
     .getByRole("checkbox", { name: /Use AI to help understand/ })
     .uncheck();

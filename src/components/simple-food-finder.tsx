@@ -517,7 +517,7 @@ export function SimpleFoodFinder(props: Props) {
         </div>
         <p className={styles.context}>
           {activeRanking.length
-            ? "AI comparison uses your request and published pantry facts. Travel feasibility is checked separately."
+            ? "Travel has not been checked yet."
             : location
               ? "Sorted using your starting point and published schedules. Distance alone does not establish a usable trip."
               : found.area
@@ -552,7 +552,7 @@ export function SimpleFoodFinder(props: Props) {
             <p>
               {assistance === "ai"
                 ? activeRanking.length
-                  ? "AI compared the listed pantries for your request. This is a suggestion, not confirmed food availability or eligibility."
+                  ? "AI compared these food options. Confirm availability and requirements."
                   : "AI helped understand your request. All pantry details come from the directory."
                 : aiAttempted
                   ? aiMessage ||
@@ -717,6 +717,8 @@ export function SimpleFoodFinder(props: Props) {
         {thinking && <RecommendationSkeletons />}
         <div className={styles.cards}>
           {visible.map(({ resource, summary, straightLineMiles }) => {
+            const communityWindow =
+              resource.communityHotspot ?? resource.communityOffer;
             const metric = currentRoutes[resource.id];
             const next = now ? nextPublishedWindow(resource, now) : null;
             const checked = resource.sources
@@ -732,11 +734,13 @@ export function SimpleFoodFinder(props: Props) {
                 <div className={styles.cardTop}>
                   <span>
                     <Check size={15} aria-hidden="true" />
-                    {resource.communityHotspot
-                      ? "Community food hotspot · confirm details"
-                      : resource.verificationStatus === "confirmed-site"
-                        ? "Pickup site checked"
-                        : "Location needs confirmation"}
+                    {resource.communityOffer
+                      ? "Household food share · moderator approved"
+                      : resource.communityHotspot
+                        ? "Community food hotspot · confirm details"
+                        : resource.verificationStatus === "confirmed-site"
+                          ? "Pickup site checked"
+                          : "Location needs confirmation"}
                   </span>
                   <button
                     className="btn btn-ghost"
@@ -757,7 +761,6 @@ export function SimpleFoodFinder(props: Props) {
                     </strong>
                     <details>
                       <summary>Why this suggestion?</summary>
-                      <p>Published facts behind this option:</p>
                       <ul>
                         {activeRanking
                           .find((item) => item.id === resource.id)
@@ -766,25 +769,22 @@ export function SimpleFoodFinder(props: Props) {
                           ))}
                       </ul>
                     </details>
-                    <p>
-                      Confirm pickup, requirements and food availability before
-                      leaving.
-                    </p>
                   </div>
                 )}
                 <p className={styles.address}>
                   <MapPin size={16} aria-hidden="true" />
                   {resource.address}
                 </p>
-                <p>{summary.offering}</p>
+                <p>{resource.shortOffering ?? summary.offering}</p>
                 <p className={styles.when}>
                   <strong>
-                    {resource.communityHotspot &&
+                    {communityWindow &&
                     now &&
-                    Date.parse(resource.communityHotspot.startsAt) <=
-                      now.getTime() &&
-                    Date.parse(resource.communityHotspot.endsAt) > now.getTime()
-                      ? "The organizer reports a pickup window in progress. Confirm food availability before going."
+                    Date.parse(communityWindow.startsAt) <= now.getTime() &&
+                    Date.parse(communityWindow.endsAt) > now.getTime()
+                      ? resource.communityOffer
+                        ? "Pickup window in progress. Request food to arrange pickup."
+                        : "The organizer reports a pickup window in progress. Confirm before going."
                       : summary.availabilityLabel ===
                           "Published distribution window"
                         ? "A published distribution window is in progress. Call to confirm."
@@ -825,28 +825,38 @@ export function SimpleFoodFinder(props: Props) {
                     ))}
                   </p>
                 )}
-                {resource.pedestrianPickup !== "allowed" && (
-                  <p className={styles.caution}>
-                    {resource.pedestrianPickup === "not-allowed"
-                      ? "This site does not allow pickup on foot."
-                      : "Walking or taking a bus? Call first to check pickup on foot."}
-                  </p>
-                )}
+                {!resource.communityOffer &&
+                  resource.pedestrianPickup !== "allowed" && (
+                    <p className={styles.caution}>
+                      {resource.pedestrianPickup === "not-allowed"
+                        ? "This site does not allow pickup on foot."
+                        : "Walking or taking a bus? Call first to check pickup on foot."}
+                    </p>
+                  )}
                 <div className={styles.cardActions}>
-                  {!found.blockedMode && (
+                  {resource.communityOffer ? (
                     <a
                       className="btn btn-primary"
-                      href={foodDirectionsUrl(
-                        resource,
-                        location?.coordinates,
-                        mode,
-                      )}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                      href={`/food-hotspots?type=offer#community-item-${encodeURIComponent(resource.communityOffer.recordId)}`}
                     >
-                      Google Maps directions{" "}
-                      <ArrowUpRight size={17} aria-hidden="true" />
+                      Request food
                     </a>
+                  ) : (
+                    !found.blockedMode && (
+                      <a
+                        className="btn btn-primary"
+                        href={foodDirectionsUrl(
+                          resource,
+                          location?.coordinates,
+                          mode,
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Google Maps directions{" "}
+                        <ArrowUpRight size={17} aria-hidden="true" />
+                      </a>
+                    )
                   )}
                   {resource.phone && (
                     <a
@@ -860,18 +870,19 @@ export function SimpleFoodFinder(props: Props) {
                   )}
                 </div>
                 <p className={styles.caption}>
-                  {location
-                    ? "Google Maps calculates a route when you open it."
-                    : "Choose your starting point in Google Maps."}{" "}
-                  Food availability is not guaranteed.
+                  {resource.communityOffer
+                    ? "Community-shared food. Safety and availability aren’t verified. Check allergens and packaging; arrange pickup before traveling."
+                    : "Google Maps calculates directions. Confirm food availability before going."}
                 </p>
                 <details className={styles.visit}>
                   <summary>Pickup times & what to bring</summary>
                   <p>
                     <strong>Published schedule:</strong> {summary.hours}
                   </p>
+                  {resource.communityOffer && <p>{summary.offering}</p>}
                   <p>{summary.requirements}</p>
                   <p>{summary.accessibilityLabel}</p>
+                  {communityWindow && <p>{resource.notes}</p>}
                   <p>
                     Sources checked: {checked ?? "date unknown"}. This is not
                     live availability.
@@ -889,37 +900,39 @@ export function SimpleFoodFinder(props: Props) {
                       </a>
                     ))}
                 </details>
-                <div className={styles.more}>
-                  <button
-                    className={styles.textButton}
-                    onClick={() => props.onViewMap(resource)}
-                  >
-                    View on map
-                  </button>
-                  {resource.communityHotspot ? (
-                    <a
-                      className={styles.textButton}
-                      href={`/food-hotspots#community-item-${encodeURIComponent(resource.communityHotspot.recordId)}`}
-                    >
-                      Community listing details
-                    </a>
-                  ) : (
+                {!resource.communityOffer && (
+                  <div className={styles.more}>
                     <button
                       className={styles.textButton}
-                      onClick={() => props.onDetails(resource.id)}
+                      onClick={() => props.onViewMap(resource)}
                     >
-                      More pantry details
+                      View on map
                     </button>
-                  )}
-                  {!found.blockedMode && (
-                    <button
-                      className={styles.textButton}
-                      onClick={() => props.onDirections(resource)}
-                    >
-                      Directions in Reach
-                    </button>
-                  )}
-                </div>
+                    {resource.communityHotspot ? (
+                      <a
+                        className={styles.textButton}
+                        href={`/food-hotspots#community-item-${encodeURIComponent(resource.communityHotspot.recordId)}`}
+                      >
+                        Community listing details
+                      </a>
+                    ) : (
+                      <button
+                        className={styles.textButton}
+                        onClick={() => props.onDetails(resource.id)}
+                      >
+                        More pantry details
+                      </button>
+                    )}
+                    {!found.blockedMode && (
+                      <button
+                        className={styles.textButton}
+                        onClick={() => props.onDirections(resource)}
+                      >
+                        Directions in Reach
+                      </button>
+                    )}
+                  </div>
+                )}
               </article>
             );
           })}

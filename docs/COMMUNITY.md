@@ -89,3 +89,5 @@ Run this on the same server/database used by Reach. If the application uses a cu
 The command refuses missing or unverified accounts without changing roles. It atomically promotes the target, demotes other community moderators to residents, revokes their sessions and records an audit entry. It preserves accounts and posts; pantry administrator/manager roles are separate. Ordinary registration never grants moderator access. Sign in through the verified email identity (including configured Google sign-in) first. As with other privileged local tools, a server operator can change this assignment later.
 
 Hotspots remain available with organizer approval and moderator publication review. A moderator cannot approve their own submission; with a single moderator, other approved organizers submit posts for that moderator to review.
+
+Approved, unreserved household offers and approved hotspots now join main food search and AI comparison. [Privacy rules, moderation and UI details](HOUSEHOLD-SEARCH.md). Both still require moderator approval.

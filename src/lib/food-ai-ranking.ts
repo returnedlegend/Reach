@@ -29,6 +29,7 @@ export async function rankFoodWithAI(
   text: string,
   options: {
     signal?: AbortSignal;
+    cookieHeader?: string | null;
     resources?: Resource[];
     now?: Date;
     generate?: typeof deepseekJson;
@@ -42,7 +43,8 @@ export async function rankFoodWithAI(
         "Remove private location details, phone numbers and email addresses before asking AI to compare pantries.",
     };
   const now = options.now ?? new Date();
-  const resources = options.resources ?? publicDirectory().resources;
+  const resources =
+    options.resources ?? publicDirectory(options.cookieHeader).resources;
   const found = discoverFood(resources, text, { now });
   const dayNames = [
     "sunday",
@@ -61,7 +63,10 @@ export async function rankFoodWithAI(
         )
       : [];
   const fitsKnownDay = (resource: Resource) => {
-    if (resource.communityHotspot && requestedDays.length) {
+    if (
+      (resource.communityHotspot ?? resource.communityOffer) &&
+      requestedDays.length
+    ) {
       const weekday = (instant: number) =>
         new Intl.DateTimeFormat("en-US", {
           timeZone: "America/Chicago",
@@ -70,8 +75,12 @@ export async function rankFoodWithAI(
           .format(new Date(instant))
           .toLowerCase();
       return [
-        Date.parse(resource.communityHotspot.startsAt),
-        Date.parse(resource.communityHotspot.endsAt) - 1,
+        Date.parse(
+          (resource.communityHotspot ?? resource.communityOffer)!.startsAt,
+        ),
+        Date.parse(
+          (resource.communityHotspot ?? resource.communityOffer)!.endsAt,
+        ) - 1,
       ].some((time) => requestedDays.includes(dayNames.indexOf(weekday(time))));
     }
     const windows = resource.windows ?? [];
@@ -96,7 +105,7 @@ export async function rankFoodWithAI(
   const eligible = found.matches.filter(
     ({ resource }) =>
       (resource.verificationStatus === "confirmed-site" ||
-        !!resource.communityHotspot) &&
+        !!(resource.communityHotspot ?? resource.communityOffer)) &&
       fitsKnownDay(resource) &&
       !(
         found.mode !== "driving" && resource.pedestrianPickup === "not-allowed"
@@ -104,12 +113,28 @@ export async function rankFoodWithAI(
   );
   // Reserve space for up to two community options so directory trust ordering
   // cannot hide every hotspot before the model sees the candidates.
-  const community = eligible
-    .filter(({ resource }) => resource.communityHotspot)
-    .slice(0, 2);
+  const communityCandidates = eligible.filter(
+    ({ resource }) => resource.communityHotspot || resource.communityOffer,
+  );
+  const firstHotspot = communityCandidates.find(
+    ({ resource }) => resource.communityHotspot,
+  );
+  const firstOffer = communityCandidates.find(
+    ({ resource }) => resource.communityOffer,
+  );
+  const community = [firstHotspot, firstOffer].filter(
+    (item): item is (typeof eligible)[number] => !!item,
+  );
+  for (const item of communityCandidates) {
+    if (community.length >= 2) break;
+    if (!community.includes(item)) community.push(item);
+  }
   const matches = [
     ...eligible
-      .filter(({ resource }) => !resource.communityHotspot)
+      .filter(
+        ({ resource }) =>
+          !(resource.communityHotspot ?? resource.communityOffer),
+      )
       .slice(0, 6 - community.length),
     ...community,
   ];
@@ -129,9 +154,11 @@ export async function rankFoodWithAI(
         schedule: `${summary.availabilityLabel}. ${resource.hours}. ${next ? `Next published window: ${next.label} (Central time).` : "Next pickup window not verified."}`,
         requirements: resource.eligibility || "Requirements not verified.",
         access: `${resource.accessibility || "Accessibility not verified."} Pickup on foot: ${resource.pedestrianPickup ?? "unknown"}.`,
-        verification: resource.communityHotspot
-          ? "Community food hotspot approved for publication. Organizer-reported location and pickup window; not independently verified. Confirm before traveling."
-          : `Pickup site confirmed. ${resource.detailsNeedConfirmation ? "Other details need confirmation." : ""} Sources checked: ${[...new Set(resource.sources.map((s) => s.checkedOn ?? "unknown"))].join(", ")}`,
+        verification: resource.communityOffer
+          ? "Moderator-approved household food offer. Donor-reported details; safety and availability are not independently verified. Exact pickup location is private; request acceptance and arrange pickup before traveling."
+          : resource.communityHotspot
+            ? "Community food hotspot approved for publication. Organizer-reported location and pickup window; not independently verified. Confirm before traveling."
+            : `Pickup site confirmed. ${resource.detailsNeedConfirmation ? "Other details need confirmation." : ""} Sources checked: ${[...new Set(resource.sources.map((s) => s.checkedOn ?? "unknown"))].join(", ")}`,
       },
     };
   });

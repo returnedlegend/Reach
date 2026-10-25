@@ -132,3 +132,5 @@ Primary AI: [Run Llama 3.2 with Ollama](docs/LLAMA.md). The main food search use
 Latest interface loading and email cleanup: [implementation, checks and remaining release limits](docs/UI-POLISH.md), with [independent review](docs/QUALITY-REVIEW.md).
 
 Approved community food hotspots can now appear in the main pantry search and AI comparison, clearly labeled as community-reported. See [hotspot search eligibility and limitations](docs/HOTSPOT-SEARCH.md).
+
+Approved household food offers also appear in search and AI recommendations, with private pickup locations withheld and a request-first flow. See [household sharing and moderation](docs/HOUSEHOLD-SEARCH.md).

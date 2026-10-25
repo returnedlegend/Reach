@@ -29,7 +29,9 @@ export async function POST(request: Request) {
   try {
     // Bound bytes while streaming, before JSON parsing or database access.
     const { demo, input } = await readPrivateJson(request, requestSchema, 8192);
-    const directory = demo ? null : publicDirectory();
+    const directory = demo
+      ? null
+      : publicDirectory(request.headers.get("cookie"));
     if (!demo && (directory?.error || !directory?.pantries.length))
       return privateResponse(
         {
