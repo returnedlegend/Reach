@@ -20,7 +20,34 @@ export type AIServiceStatus = {
   model: string;
 };
 
+export function usesLlama() {
+  return (
+    (process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama") ===
+    "ollama"
+  );
+}
+/** Ollama is local-only: never forward cloud credentials to this endpoint. */
+export function getOllamaBaseUrl(): string | null {
+  const raw =
+    process.env.OLLAMA_BASE_URL?.trim() || "http://127.0.0.1:11434/v1";
+  try {
+    const url = new URL(raw);
+    return url.protocol === "http:" &&
+      ["localhost", "127.0.0.1", "[::1]", "ollama"].includes(url.hostname) &&
+      !url.username &&
+      !url.password &&
+      !url.search &&
+      !url.hash &&
+      url.pathname.replace(/\/$/, "") === "/v1"
+      ? raw.replace(/\/$/, "")
+      : null;
+  } catch {
+    return null;
+  }
+}
 export function getDeepSeekModels(role: "fast" | "primary") {
+  if (usesLlama())
+    return { selected: process.env.OLLAMA_MODEL?.trim() || "llama3.2:3b" };
   return {
     selected:
       role === "primary"
@@ -46,11 +73,15 @@ export function getDeepSeekBaseUrl(): string | null {
     : null;
 }
 export function getDeepSeekTimeoutMs(): number | null {
-  const raw = process.env.DEEPSEEK_TIMEOUT_MS;
-  if (raw === undefined || raw === "") return 12_000;
+  const raw = usesLlama()
+    ? process.env.OLLAMA_TIMEOUT_MS
+    : process.env.DEEPSEEK_TIMEOUT_MS;
+  if (raw === undefined || raw === "") return usesLlama() ? 40_000 : 12_000;
   if (!/^\d+$/.test(raw)) return null;
   const timeout = Number(raw);
-  return timeout >= 1_000 && timeout <= 20_000 ? timeout : null;
+  return timeout >= 1_000 && timeout <= (usesLlama() ? 60_000 : 20_000)
+    ? timeout
+    : null;
 }
 /** Called before delivery and by /api/ai/status; configuration is not a live health check. */
 export function getAIServiceStatus(): AIServiceStatus {
@@ -67,6 +98,29 @@ export function getAIServiceStatus(): AIServiceStatus {
       "disabled",
       "AI is turned off. Pantry search, map directions and manual trip controls remain available.",
     );
+  if (usesLlama()) {
+    if (process.env.REACH_AI_DATA_POLICY_ACCEPTED !== "true")
+      return result(
+        "unavailable",
+        "privacy",
+        "Review local AI processing settings before enabling assistance.",
+      );
+    if (
+      !getOllamaBaseUrl() ||
+      !getDeepSeekTimeoutMs() ||
+      !/^llama3\.2(?::(?:1b|3b))?$/.test(model)
+    )
+      return result(
+        "unavailable",
+        "configuration",
+        "Check the local Ollama URL, Llama 3.2 model and timeout. Manual planning remains available.",
+      );
+    return result(
+      "configured",
+      null,
+      "Local Llama 3.2 is configured. Ollama must be running with the model installed; manual planning remains available.",
+    );
+  }
   if (provider && provider !== "deepseek")
     return result(
       "unavailable",

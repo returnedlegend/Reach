@@ -59,7 +59,7 @@ export function SimpleFoodFinder(props: Props) {
   const [intent, setIntent] = useState<FoodIntent>();
   const [now, setNow] = useState<Date>();
   const [showAll, setShowAll] = useState(false);
-  const [useAI, setUseAI] = useState(false);
+  const [useAI, setUseAI] = useState(true);
   const [assistance, setAssistance] = useState<"directory" | "ai">("directory");
   const [thinking, setThinking] = useState(false);
   const [aiAttempted, setAiAttempted] = useState(false);
@@ -256,7 +256,7 @@ export function SimpleFoodFinder(props: Props) {
         headers: { "Content-Type": "application/json" },
         signal: AbortSignal.any([
           controller.signal,
-          AbortSignal.timeout(10000),
+          AbortSignal.timeout(45000),
         ]),
         body: JSON.stringify({ message: text, useAI: true }),
       });

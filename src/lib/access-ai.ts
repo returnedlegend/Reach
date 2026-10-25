@@ -13,7 +13,7 @@ import {
 if (typeof window !== "undefined") throw new Error("Access AI is server-only.");
 
 type Options = { fetch?: typeof fetch; signal?: AbortSignal };
-type Provider = "deepseek" | "groq" | "gemini";
+type Provider = "deepseek" | "ollama" | "groq" | "gemini";
 type AIUsageFeature = "preferences" | "draft" | "reply";
 type FeatureUsage = {
   day: string;
@@ -93,21 +93,24 @@ function configured(): {
   model: string;
   key: string;
 } | null {
-  const configuredProvider = process.env.REACH_AI_PROVIDER?.toLowerCase();
+  const configuredProvider =
+    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama";
   // DeepSeek is inferred only from its own server key. Explicit provider values win.
   const inferredDeepSeek = !configuredProvider && deepSeekKeyConfigured();
   const provider = (inferredDeepSeek ? "deepseek" : configuredProvider) as
     | Provider
     | undefined;
   const model =
-    provider === "deepseek"
+    provider === "deepseek" || provider === "ollama"
       ? getDeepSeekModels("fast").selected
       : provider === "gemini"
         ? (process.env.GEMINI_MODEL || process.env.REACH_AI_MODEL || "").trim()
         : process.env.REACH_AI_MODEL?.trim();
   const key =
-    provider === "deepseek"
-      ? process.env.DEEPSEEK_API_KEY
+    provider === "deepseek" || provider === "ollama"
+      ? provider === "ollama"
+        ? "local-no-key"
+        : process.env.DEEPSEEK_API_KEY
       : provider === "groq"
         ? process.env.GROQ_API_KEY
         : provider === "gemini"
@@ -120,7 +123,10 @@ function configured(): {
     /placeholder|your_(?:deepseek|groq|gemini|api)/i.test(key)
   )
     return null;
-  if (provider === "deepseek" && getAIServiceStatus().state !== "configured")
+  if (
+    (provider === "deepseek" || provider === "ollama") &&
+    getAIServiceStatus().state !== "configured"
+  )
     return null;
   if (
     (provider === "groq" || provider === "gemini") &&
@@ -208,18 +214,19 @@ function containsLocation(text: string): boolean {
 }
 
 function apiUrl(provider: Provider) {
-  if (provider === "deepseek")
+  if (provider === "deepseek" || provider === "ollama")
     return "https://api.deepseek.com/chat/completions";
   if (provider === "groq")
     return "https://api.groq.com/openai/v1/chat/completions";
   return `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent((process.env.GEMINI_MODEL || process.env.REACH_AI_MODEL || "").trim())}:generateContent`;
 }
 function noAIMessage(): string {
-  const configuredProvider = process.env.REACH_AI_PROVIDER?.toLowerCase();
+  const configuredProvider =
+    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama";
   const provider =
     configuredProvider || (deepSeekKeyConfigured() ? "deepseek" : undefined);
   const model =
-    provider === "deepseek"
+    provider === "deepseek" || provider === "ollama"
       ? getDeepSeekModels("fast").selected
       : process.env.REACH_AI_MODEL?.trim();
   if ((provider || model) && !dataPolicyAccepted())
@@ -349,7 +356,7 @@ async function complete<T>(
 ): Promise<T | null> {
   if (!featureEnabled("ai")) return null;
   const cfg = configured();
-  if (cfg?.provider === "deepseek") {
+  if (cfg?.provider === "deepseek" || cfg?.provider === "ollama") {
     if (!dataPolicyAccepted()) return null;
     const result = await deepseekJson({
       role: "fast",
@@ -750,7 +757,8 @@ export async function extractOutreachFacts(
     !cfg ||
     !dataPolicyAccepted() ||
     (process.env.REACH_AI_FREE_ONLY !== "false" &&
-      cfg.provider !== "deepseek") ||
+      cfg.provider !== "deepseek" &&
+      cfg.provider !== "ollama") ||
     containsLocation(input.text)
   )
     return local;
@@ -806,7 +814,9 @@ export async function generateOutreachDraft(
   if (
     !cfg ||
     !dataPolicyAccepted() ||
-    (process.env.REACH_AI_FREE_ONLY !== "false" && cfg.provider !== "deepseek")
+    (process.env.REACH_AI_FREE_ONLY !== "false" &&
+      cfg.provider !== "deepseek" &&
+      cfg.provider !== "ollama")
   )
     return fallback;
   const result = await complete(

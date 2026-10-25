@@ -290,9 +290,11 @@ export async function interpretNavigationNeeds(
 
   const directlyStatedNeeds = explicitNeeds(text);
   const deniedServices = explicitlyNegatedServices(text);
-  const selectedProvider = process.env.REACH_AI_PROVIDER?.toLowerCase();
+  const selectedProvider =
+    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama";
   const useDeepSeek =
     selectedProvider === "deepseek" ||
+    selectedProvider === "ollama" ||
     (!selectedProvider && Boolean(process.env.DEEPSEEK_API_KEY?.trim()));
   if (!useDeepSeek) {
     const legacy = await interpretPreferences(text, opts);
