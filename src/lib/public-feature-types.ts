@@ -11,7 +11,7 @@ export const CORE_FEATURES: PublicFeatures = {
   accounts: false,
   google: false,
   email: false,
-  community: false,
+  community: true,
   volunteering: false,
   ai: false,
 };

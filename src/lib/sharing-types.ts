@@ -13,6 +13,8 @@ export type SharingSubmissionInput = {
   policyAccepted: true;
   data: Record<string, unknown>;
   photo?: string;
+  testId?: string;
+  testIdConsent?: true;
 };
 export type SharingReview = {
   id: string;
@@ -23,6 +25,7 @@ export type SharingReview = {
   publicContact: PublicSharingContact;
   data: Record<string, unknown>;
   photoUrl?: string;
+  hasTestId?: boolean;
   submittedAt: string;
   reviewedAt: string | null;
   reason: string | null;

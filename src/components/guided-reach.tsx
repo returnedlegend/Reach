@@ -1335,13 +1335,11 @@ export function GuidedReach({
         {features.volunteering && (
           <Link href="/volunteer">Volunteer pickups</Link>
         )}
-        {features.accounts && <Link href="/account">Account</Link>}
         <ThemeToggle />
         <MoreMenu>
           {features.volunteering && (
             <Link href="/volunteer">Volunteer pickups</Link>
           )}
-          {features.accounts && <Link href="/account">Account</Link>}
           <Link href="/pantry-planner">Detailed trip planner</Link>
           {features.accounts && <Link href="/manage">Manage a pantry</Link>}
           <Link href="/share">Host a Food Pickup / Share Extra Food</Link>

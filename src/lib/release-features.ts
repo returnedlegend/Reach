@@ -10,6 +10,8 @@ export function coreRelease(): boolean {
   return process.env.NODE_ENV === "production";
 }
 export function featureEnabled(feature: keyof PublicFeatures): boolean {
+  // Account-free moderated sharing is a core public feature; legacy flags no longer hide it.
+  if (feature === "community") return true;
   // Local AI can be explicitly enabled in the anonymous core without enabling accounts.
   const profile = process.env.REACH_RELEASE_PROFILE;
   if (
@@ -44,8 +46,6 @@ export function featureEnabled(feature: keyof PublicFeatures): boolean {
           process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET,
         )
       );
-    case "community":
-      return community;
     case "volunteering":
       return community && accounts;
     case "email":
@@ -78,7 +78,7 @@ export function publicFeatures(): PublicFeatures {
         ? Boolean(process.env.SMTP_HOST && process.env.SMTP_FROM_EMAIL)
         : false;
   return {
-    accounts: featureEnabled("accounts"),
+    accounts: false,
     google: featureEnabled("google"),
     email: featureEnabled("email") && configuredMail,
     community: featureEnabled("community"),

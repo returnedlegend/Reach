@@ -1,3 +1,13 @@
+## 2026-10-25: Public accounts removed; sharing always available
+
+`/account` now redirects to `/share`, public account navigation is removed, and protected moderator sign-in moves to `/admin/sign-in`. Community sharing ignores the legacy disable flags, including under the core profile. Historical account data and protected authentication are retained; no records were destructively erased.
+
+Added an optional private developer-test ID image with separate consent, sanitization, moderator-only access, 24-hour access expiry and removal on review/cleanup. Real government IDs must not be uploaded. No ID is required and no identity verification is claimed.
+
+Validation: 699 unit tests across 81 files; TypeScript, production data validation and build passed. Two Chromium route checks (mobile and desktop) passed with the actual server configured with `REACH_COMMUNITY_ENABLED=false` and `REACH_RELEASE_PROFILE=core`. They confirm `/account` redirects to the accessible sharing form and public account navigation is absent. An independent Luna reviewer inspected the ID storage/access/publishing boundaries; focused tests exercise consent, authorization, expiry and removal after approval. No live email or external identity verification was performed. Earlier browser totals below are historical, not rerun counts for this change.
+
+---
+
 ## 2026-10-25: Account-free sharing and admin approval
 
 Implemented `/share` (three-step Host a Food Pickup / Share Extra Food), `/admin`, moderator-only photo review, consented public contact, atomic approval into existing search/AI data, daily caps, idempotent submissions and a durable support-inbox alert queue. Public registration is closed; existing sign-in and recovery remain. A configured, authoritative Google identity can bootstrap the first moderator. See [FOOD-SHARING.md](FOOD-SHARING.md) for setup and limitations.

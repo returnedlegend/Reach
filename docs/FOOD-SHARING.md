@@ -1,3 +1,13 @@
+## Current public access (2026-10-25)
+
+Public account navigation is removed. `/account` redirects to `/share`; protected moderator sign-in is at `/admin/sign-in`. No signup or Google login is required to submit food. Historical user records are retained for integrity, not deleted.
+
+Food sharing is now a core feature. `REACH_COMMUNITY_ENABLED=false`, `REACH_RELEASE_COMMUNITY=false` and the core profile no longer hide the form or its submission API. Old local environment files do not need changing to access sharing. Existing administrator authentication and email configuration remain necessary for review/delivery.
+
+The optional **test ID** upload is for developer testing only: use a synthetic or fully redacted sample, never a real government ID. It is not identity verification and is never required, published, copied to food photos, or emailed. Separate consent is required. Only authenticated moderators can access it; access expires after 24 hours, and review clears the live blob immediately. Cleanup runs on sharing access and in the alert worker, even when email is unavailable. Database backups/WAL may retain historical bytes until their normal rotation; this is not a guarantee of forensic erasure. The ordinary food photo remains separate.
+
+The older setup notes below describe admin/email setup; their community feature-switch instructions are superseded by this section.
+
 # Food pickup submissions and moderator review
 
 ## Where to go

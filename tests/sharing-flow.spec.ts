@@ -36,7 +36,6 @@ test("account-free sharing stays private until an authenticated moderator approv
   expect(databasePath).toBeTruthy();
   expect(dbPath.startsWith(`${resolve(tmpdir())}${sep}`)).toBe(true);
   expect(resolve(communityPath)).toBe(dbPath);
-  expect(process.env.REACH_COMMUNITY_ENABLED).toBe("true");
   expect(process.env.REACH_RELEASE_PROFILE).toBe("extended");
 
   const db = openCommunityDatabase(dbPath);

@@ -128,5 +128,5 @@ it("filters blocked owners from page resources and AI candidates without hiding 
     publicDirectory().resources.some(
       (r) => r.communityOffer || r.communityHotspot,
     ),
-  ).toBe(false);
+  ).toBe(true);
 });

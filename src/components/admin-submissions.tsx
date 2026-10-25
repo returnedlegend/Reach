@@ -136,7 +136,7 @@ export function AdminSubmissions() {
           {authError && (
             <>
               {" "}
-              <Link href="/account">Sign in to your account</Link>.
+              <Link href="/admin/sign-in">Sign in</Link>.
             </>
           )}
         </p>
@@ -171,6 +171,19 @@ export function AdminSubmissions() {
                   src={item.photoUrl}
                   alt={`Submitted photo for ${String(item.data.title || "food")}`}
                 />
+              )}
+              {item.hasTestId && item.status === "pending" && (
+                <p className="sharing-notice">
+                  Optional developer test image · private · expires within 24
+                  hours or on review.{" "}
+                  <a
+                    href={`/api/sharing/admin/${encodeURIComponent(item.id)}/test-id`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    View test image
+                  </a>
+                </p>
               )}
               <dl className="sharing-details">
                 <div>

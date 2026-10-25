@@ -62,7 +62,7 @@ function browserToken(request: Request) {
 }
 function redirect(origin: string, result: string, cookies: string[] = []) {
   const headers = new Headers({
-    Location: `${origin}/account#google=${result}`,
+    Location: `${origin}/admin/sign-in#google=${result}`,
     "Cache-Control": "no-store",
     "Referrer-Policy": "no-referrer",
     "X-Content-Type-Options": "nosniff",

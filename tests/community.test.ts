@@ -126,12 +126,12 @@ afterEach(() => {
 });
 
 describe("development community authentication and request boundaries", () => {
-  it("is off by default, with no database initialization", async () => {
+  it("is available by default without a legacy community flag", async () => {
     delete process.env.REACH_COMMUNITY_ENABLED;
     const result = await call("discovery");
-    expect(result.status).toBe(503);
-    expect(await result.json()).toMatchObject({ code: "community_disabled" });
-    expect(existsSync(database)).toBe(false);
+    expect(result.status).toBe(200);
+    expect(await result.json()).toMatchObject({ hotspots: [], offers: [] });
+    expect(existsSync(database)).toBe(true);
   });
   it("requires adult affirmation, strong passwords and strict schemas without role escalation", async () => {
     for (const data of [

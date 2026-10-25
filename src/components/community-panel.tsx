@@ -522,7 +522,7 @@ export function CommunityPanel({
     }
   }
   function navigate(next: View) {
-    if ((next === "offer" || next === "hotspot") && !user) {
+    if (next === "offer" || next === "hotspot") {
       router.push(`/share?kind=${next}`);
       return;
     }
@@ -533,7 +533,7 @@ export function CommunityPanel({
     setView(next);
     setError("");
     setNotice("");
-    if (next === "offer" || next === "hotspot") setEditing(null);
+    if (next === "dashboard") setEditing(null);
   }
   function changeRecord(
     record: CommunityRecord,
@@ -572,7 +572,6 @@ export function CommunityPanel({
     ...(user?.role === "moderator"
       ? [{ id: "moderation" as const, label: "Moderation" }]
       : []),
-    { id: "account", label: user ? "My account" : "Sign in" },
   ];
   return (
     <section
@@ -901,13 +900,6 @@ export function CommunityPanel({
                   <a className="btn btn-primary" href="/share">
                     Host a Food Pickup / Share Extra Food
                   </a>
-                  <button
-                    type="button"
-                    onClick={() => navigate("account")}
-                    className="btn btn-outline"
-                  >
-                    Sign in
-                  </button>
                 </div>
               ) : view === "hotspot" && user.role === "resident" ? (
                 <div className="community-empty">

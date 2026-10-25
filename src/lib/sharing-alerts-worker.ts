@@ -21,11 +21,24 @@ type AlertJob = {
 };
 type Send = typeof deliverMail;
 
+export function purgeExpiredTestIds(db: DatabaseSync) {
+  const columns = db
+    .prepare("PRAGMA table_info(sharing_submissions)")
+    .all() as { name: string }[];
+  if (!columns.some((column) => column.name === "test_id_expires_at")) return 0;
+  return db
+    .prepare(
+      "UPDATE sharing_submissions SET test_id=NULL,test_id_mime=NULL WHERE test_id IS NOT NULL AND (test_id_expires_at IS NULL OR datetime(test_id_expires_at)<=datetime('now'))",
+    )
+    .run().changes;
+}
+
 export async function dispatchSharingAlerts(
   db: DatabaseSync,
   options: { now?: () => Date; limit?: number; send?: Send } = {},
 ) {
   initializeSharingAlerts(db);
+  purgeExpiredTestIds(db);
   const clock = options.now || (() => new Date());
   const counts = {
     processed: 0,

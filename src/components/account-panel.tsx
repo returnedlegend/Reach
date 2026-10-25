@@ -130,7 +130,11 @@ function Card({
 const value = (form: HTMLFormElement, key: string) =>
   String(new FormData(form).get(key) || "");
 
-export function AccountPanel() {
+export function AccountPanel({
+  administrator = false,
+}: {
+  administrator?: boolean;
+}) {
   const [preferences, setPreferences] = useState<Preferences>({});
   const [status, setStatus] = useState<Status | null>(null);
   const [user, setUser] = useState<Actor | null>(null);
@@ -416,11 +420,20 @@ export function AccountPanel() {
           )}
           {!user ? (
             <Card
-              title={mode === "login" ? "Welcome back" : "Recover your account"}
+              title={
+                mode === "login"
+                  ? administrator
+                    ? "Administrator sign in"
+                    : "Welcome back"
+                  : "Recover your account"
+              }
             >
               <p>
-                Sign in as an existing member or administrator. To share food,{" "}
-                <a href="/share">submit without an account</a>.
+                {administrator
+                  ? "Sign in with your existing administrator account to review food submissions."
+                  : "Sign in as an existing member or administrator. New food submissions are available at "}
+                {!administrator && <a href="/share">Share food</a>}
+                {!administrator && "."}
               </p>
               <GoogleSignIn
                 signedIn={false}

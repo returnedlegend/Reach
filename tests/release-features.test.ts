@@ -4,7 +4,6 @@ import { CORE_FEATURES } from "../src/lib/public-feature-types";
 import { emailDeliveryMode } from "../src/lib/mail-delivery";
 import { getAIServiceStatus } from "../src/lib/ai-config";
 import { createAccountHandler } from "../src/lib/account";
-import { createCommunityHandler } from "../src/lib/community";
 import { createVolunteerHandler } from "../src/lib/volunteer";
 import { createOutreachHandler } from "../src/lib/outreach";
 import { createAssistantHandler } from "../src/lib/reach-assistant";
@@ -22,14 +21,22 @@ describe("public core release boundary", () => {
     expect(emailDeliveryMode()).toBe("disabled");
     expect(getAIServiceStatus().state).toBe("disabled");
   });
+  it("keeps public sharing enabled when a stale environment flag says false", () => {
+    vi.stubEnv("NODE_ENV", "production");
+    vi.stubEnv("REACH_RELEASE_PROFILE", "core");
+    vi.stubEnv("REACH_COMMUNITY_ENABLED", "false");
+    expect(publicFeatures().community).toBe(true);
+    expect(publicFeatures().accounts).toBe(false);
+  });
   it("fails closed for an invalid profile, while explicit extended retains configured features", () => {
     vi.stubEnv("REACH_RELEASE_PROFILE", "typo");
     expect(publicFeatures()).toEqual(CORE_FEATURES);
+    expect(publicFeatures().community).toBe(true);
     vi.stubEnv("REACH_RELEASE_PROFILE", "extended");
     vi.stubEnv("REACH_ACCOUNT_ENABLED", "true");
     vi.stubEnv("REACH_COMMUNITY_ENABLED", "true");
     expect(coreRelease()).toBe(false);
-    expect(publicFeatures().accounts).toBe(true);
+    expect(publicFeatures().accounts).toBe(false);
     expect(publicFeatures().community).toBe(true);
   });
   it("requires a separate production release attestation for each optional feature", () => {
@@ -38,8 +45,9 @@ describe("public core release boundary", () => {
     vi.stubEnv("REACH_ACCOUNT_ENABLED", "true");
     vi.stubEnv("REACH_RELEASE_ACCOUNTS", "false");
     expect(publicFeatures().accounts).toBe(false);
+    expect(publicFeatures().community).toBe(true);
     vi.stubEnv("REACH_RELEASE_ACCOUNTS", "true");
-    expect(publicFeatures().accounts).toBe(true);
+    expect(publicFeatures().accounts).toBe(false);
     expect(publicFeatures().email).toBe(false);
     expect(publicFeatures().ai).toBe(false);
   });
@@ -73,10 +81,6 @@ describe("public core release boundary", () => {
     const impossiblePath = "/no-access/release-test.sqlite";
     expect(
       (await createAccountHandler(impossiblePath)(request(), ["login"])).status,
-    ).toBe(503);
-    expect(
-      (await createCommunityHandler(impossiblePath)(request(), ["list"]))
-        .status,
     ).toBe(503);
     expect(
       (await createVolunteerHandler(impossiblePath)(request(), [])).status,

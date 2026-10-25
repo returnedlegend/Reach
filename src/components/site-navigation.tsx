@@ -12,7 +12,6 @@ import {
   Menu,
   Route,
   Soup,
-  UserRound,
   Users,
 } from "lucide-react";
 
@@ -31,9 +30,6 @@ export function SiteNavigation({
       : []),
     ...(features.volunteering
       ? [{ href: "/volunteer", label: "Volunteer", Icon: Users }]
-      : []),
-    ...(features.accounts
-      ? [{ href: "/account", label: "Account", Icon: UserRound }]
       : []),
   ];
   return (

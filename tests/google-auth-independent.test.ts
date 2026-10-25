@@ -196,7 +196,7 @@ describe("independent Google OIDC account boundary", () => {
       started.cookie,
     );
     expect(rejected.headers.get("location")).toBe(
-      `${origin}/account#google=failed`,
+      `${origin}/admin/sign-in#google=failed`,
     );
     expect(
       openCommunityDatabase(database)
@@ -221,7 +221,7 @@ describe("independent Google OIDC account boundary", () => {
       ordinaryFlow.cookie,
     );
     expect(ordinaryRejected.headers.get("location")).toBe(
-      `${origin}/account#google=failed`,
+      `${origin}/admin/sign-in#google=failed`,
     );
     expect(
       openCommunityDatabase(database)
@@ -310,7 +310,7 @@ describe("independent Google OIDC account boundary", () => {
     );
     expect(response.status).toBe(303);
     expect(response.headers.get("location")).toBe(
-      `${origin}/account#google=success`,
+      `${origin}/admin/sign-in#google=success`,
     );
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(verifier.verifyIdToken).toHaveBeenCalledWith(
@@ -378,7 +378,7 @@ describe("independent Google OIDC account boundary", () => {
       started.cookie,
     );
     expect(replay.headers.get("location")).toBe(
-      `${origin}/account#google=expired`,
+      `${origin}/admin/sign-in#google=expired`,
     );
     expect(fetch).toHaveBeenCalledTimes(1);
   });
@@ -416,7 +416,7 @@ describe("independent Google OIDC account boundary", () => {
       `reach_google_oauth=${randomBytes(32).toString("hex")}`,
     );
     expect(forged.headers.get("location")).toBe(
-      `${origin}/account#google=expired`,
+      `${origin}/admin/sign-in#google=expired`,
     );
     expect(fetch).not.toHaveBeenCalled();
 
@@ -427,7 +427,7 @@ describe("independent Google OIDC account boundary", () => {
       started.cookie,
     );
     expect(rejected.headers.get("location")).toBe(
-      `${origin}/account#google=failed`,
+      `${origin}/admin/sign-in#google=failed`,
     );
     expect(fetch).toHaveBeenCalledTimes(1);
     expect(
@@ -466,7 +466,7 @@ describe("independent Google OIDC account boundary", () => {
       collision.cookie,
     );
     expect(collisionResponse.headers.get("location")).toBe(
-      `${origin}/account#google=conflict`,
+      `${origin}/admin/sign-in#google=conflict`,
     );
     expect(
       collisionResponse.headers
@@ -492,7 +492,7 @@ describe("independent Google OIDC account boundary", () => {
       first.cookie,
     );
     expect(firstResponse.headers.get("location")).toBe(
-      `${origin}/account#google=success`,
+      `${origin}/admin/sign-in#google=success`,
     );
     const firstUserId = String(
       db.prepare("SELECT user_id FROM google_identities").get()!.user_id,
@@ -506,7 +506,7 @@ describe("independent Google OIDC account boundary", () => {
       second.cookie,
     );
     expect(secondResponse.headers.get("location")).toBe(
-      `${origin}/account#google=success`,
+      `${origin}/admin/sign-in#google=success`,
     );
     expect(db.prepare("SELECT user_id FROM google_identities").get()).toEqual({
       user_id: firstUserId,
@@ -543,7 +543,7 @@ describe("independent Google OIDC account boundary", () => {
       linked.cookie,
     );
     expect(linkedResponse.headers.get("location")).toBe(
-      `${origin}/account#google=linked`,
+      `${origin}/admin/sign-in#google=linked`,
     );
     const rows = db
       .prepare("SELECT user_id,subject FROM google_identities")
@@ -592,7 +592,7 @@ describe("independent Google OIDC account boundary", () => {
       attempted.cookie,
     );
     expect(conflict.headers.get("location")).toBe(
-      `${origin}/account#google=conflict`,
+      `${origin}/admin/sign-in#google=conflict`,
     );
     expect(
       db
@@ -630,7 +630,7 @@ describe("independent Google OIDC account boundary", () => {
       nonceFlow.cookie,
     );
     expect(nonceFailure.headers.get("location")).toBe(
-      `${origin}/account#google=failed`,
+      `${origin}/admin/sign-in#google=failed`,
     );
 
     const expiredFlow = await start(handle);
@@ -641,7 +641,7 @@ describe("independent Google OIDC account boundary", () => {
       expiredFlow.cookie,
     );
     expect(expiryFailure.headers.get("location")).toBe(
-      `${origin}/account#google=expired`,
+      `${origin}/admin/sign-in#google=expired`,
     );
     expect(fetch).toHaveBeenCalledTimes(1);
     const db = openCommunityDatabase(database);
@@ -677,7 +677,7 @@ describe("independent Google OIDC account boundary", () => {
     );
     expect(cancelled.status).toBe(303);
     expect(cancelled.headers.get("location")).toBe(
-      `${origin}/account#google=cancelled`,
+      `${origin}/admin/sign-in#google=cancelled`,
     );
     expect(fetch).not.toHaveBeenCalled();
     expect(
@@ -694,7 +694,7 @@ describe("independent Google OIDC account boundary", () => {
     );
     expect(failed.status).toBe(303);
     expect(failed.headers.get("location")).toBe(
-      `${origin}/account#google=failed`,
+      `${origin}/admin/sign-in#google=failed`,
     );
     expect(failed.headers.get("location")).not.toContain("network detail");
     expect(
@@ -734,7 +734,7 @@ describe("independent Google OIDC account boundary", () => {
       linking.cookie,
     );
     expect(response.headers.get("location")).toBe(
-      `${origin}/account#google=expired`,
+      `${origin}/admin/sign-in#google=expired`,
     );
     expect(
       db.prepare("SELECT count(*) count FROM google_identities").get(),

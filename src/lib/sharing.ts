@@ -37,6 +37,8 @@ const inputSchema = z
     policyAccepted: z.literal(true),
     data: z.record(z.string(), z.unknown()),
     photo: z.string().max(2_800_000).optional(),
+    testId: z.string().max(2_800_000).optional(),
+    testIdConsent: z.literal(true).optional(),
   })
   .strict();
 const reviewSchema = z
@@ -67,6 +69,25 @@ function dbFor() {
     db.exec(
       "ALTER TABLE sharing_submissions ADD COLUMN consented_at TEXT NOT NULL DEFAULT ''",
     );
+  if (!columns.has("test_id"))
+    db.exec("ALTER TABLE sharing_submissions ADD COLUMN test_id BLOB");
+  if (!columns.has("test_id_mime"))
+    db.exec("ALTER TABLE sharing_submissions ADD COLUMN test_id_mime TEXT");
+  if (!columns.has("test_id_expires_at"))
+    db.exec(
+      "ALTER TABLE sharing_submissions ADD COLUMN test_id_expires_at TEXT",
+    );
+  if (!columns.has("test_id_consent_version"))
+    db.exec(
+      "ALTER TABLE sharing_submissions ADD COLUMN test_id_consent_version TEXT",
+    );
+  if (!columns.has("test_id_consented_at"))
+    db.exec(
+      "ALTER TABLE sharing_submissions ADD COLUMN test_id_consented_at TEXT",
+    );
+  db.exec(
+    "UPDATE sharing_submissions SET test_id=NULL,test_id_mime=NULL WHERE test_id_expires_at IS NOT NULL AND datetime(test_id_expires_at)<=datetime('now')",
+  );
   return db;
 }
 function hash(v: string) {
@@ -189,7 +210,7 @@ async function readJson(req: Request) {
     const part = await reader.read();
     if (part.done) break;
     length += part.value.byteLength;
-    if (length > 3_000_000) {
+    if (length > 6_000_000) {
       await reader.cancel();
       throw Object.assign(new Error("Submission is too large."), {
         status: 413,
@@ -229,6 +250,7 @@ function serialize(row: Row) {
     publicContact: JSON.parse(String(row.public_contact)),
     data: JSON.parse(String(row.data)),
     ...(row.photo ? { photoUrl: `/api/sharing/admin/${row.id}/photo` } : {}),
+    hasTestId: Boolean(row.test_id),
     submittedAt: row.submitted_at,
     reviewedAt: row.reviewed_at,
     reason: row.reason,
@@ -246,6 +268,10 @@ export async function postSharingSubmission(req: Request) {
       });
     const body = parsed.data,
       data = validatedData(body.kind, body.data);
+    if (body.testId && body.testIdConsent !== true)
+      return json(400, { error: "Separate test ID consent is required." });
+    if (!body.testId && body.testIdConsent)
+      return json(400, { error: "Test ID consent requires a selected image." });
     if (
       body.publicContact.kind === "email" &&
       !z.string().email().safeParse(body.publicContact.value).success
@@ -258,6 +284,8 @@ export async function postSharingSubmission(req: Request) {
     )
       return json(400, { error: "Enter a valid public phone number." });
     let photo: Awaited<ReturnType<typeof sanitizeCommunityPhoto>> | null = null;
+    let testId: Awaited<ReturnType<typeof sanitizeCommunityPhoto>> | null =
+      null;
     if (body.photo) {
       try {
         photo = await sanitizeCommunityPhoto(body.photo);
@@ -268,6 +296,15 @@ export async function postSharingSubmission(req: Request) {
         });
       }
     }
+    if (body.testId) {
+      try {
+        testId = await sanitizeCommunityPhoto(body.testId);
+      } catch {
+        return json(400, {
+          error: "Choose a readable JPEG, PNG or WebP under 2 MB.",
+        });
+      }
+    }
     const canonical = JSON.stringify({
       kind: body.kind,
       contactName: body.contactName,
@@ -275,6 +312,9 @@ export async function postSharingSubmission(req: Request) {
       publicContact: body.publicContact,
       data,
       photo: photo ? hash(Buffer.from(photo.bytes).toString("base64")) : null,
+      testId: testId
+        ? hash(Buffer.from(testId.bytes).toString("base64"))
+        : null,
     });
     const fingerprint = hash(canonical),
       db = dbFor();
@@ -322,7 +362,7 @@ export async function postSharingSubmission(req: Request) {
       const id = randomUUID(),
         at = new Date().toISOString();
       db.prepare(
-        "INSERT INTO sharing_submissions(id,request_key,fingerprint,kind,contact_name,contact_email,public_contact,data,status,photo,photo_mime,submitted_at,consent_version,consented_at) VALUES(?,?,?,?,?,?,?,?,'pending',?,?,?,?,?)",
+        "INSERT INTO sharing_submissions(id,request_key,fingerprint,kind,contact_name,contact_email,public_contact,data,status,photo,photo_mime,submitted_at,consent_version,consented_at,test_id,test_id_mime,test_id_expires_at,test_id_consent_version,test_id_consented_at) VALUES(?,?,?,?,?,?,?,?,'pending',?,?,?,?,?,?,?,?,?,?)",
       ).run(
         id,
         body.requestKey,
@@ -337,6 +377,11 @@ export async function postSharingSubmission(req: Request) {
         at,
         CONSENT_VERSION,
         at,
+        testId ? Buffer.from(testId.bytes) : null,
+        testId?.mime || null,
+        testId ? new Date(Date.now() + 86400000).toISOString() : null,
+        testId ? "optional-test-id-v1" : null,
+        testId ? at : null,
       );
       queueSharingAlert(db, id, "submission");
       db.exec("COMMIT");
@@ -361,7 +406,8 @@ export function getSharingAdmin(req: Request) {
     initializeSharingAlerts(db);
     const rows = all(
         db,
-        "SELECT id,kind,status,contact_name,contact_email,public_contact,data,CASE WHEN photo IS NULL THEN NULL ELSE 1 END AS photo,submitted_at,reviewed_at,reason,record_id FROM sharing_submissions ORDER BY (status='pending') DESC,submitted_at DESC LIMIT 200",
+        "SELECT id,kind,status,contact_name,contact_email,public_contact,data,CASE WHEN photo IS NULL THEN NULL ELSE 1 END AS photo,CASE WHEN test_id IS NULL OR test_id_expires_at<=? THEN NULL ELSE 1 END AS test_id,submitted_at,reviewed_at,reason,record_id FROM sharing_submissions ORDER BY (status='pending') DESC,submitted_at DESC LIMIT 200",
+        new Date().toISOString(),
       ),
       pending = Number(
         get(
@@ -394,6 +440,38 @@ export function getSharingPhoto(req: Request, id: string) {
     return new Response(Buffer.from(row.photo as Uint8Array), {
       headers: {
         "content-type": String(row.photo_mime),
+        "cache-control": "private, no-store",
+        "x-content-type-options": "nosniff",
+      },
+    });
+  } catch (e) {
+    const x = e as Error & { status?: number };
+    return json(x.status || 500, {
+      error: x.status
+        ? x.message
+        : "The review service is temporarily unavailable.",
+    });
+  }
+}
+export function getSharingTestId(req: Request, id: string) {
+  try {
+    moderator(req);
+    const row = get(
+      dbFor(),
+      "SELECT test_id,test_id_mime,test_id_expires_at,status FROM sharing_submissions WHERE id=?",
+      id,
+    );
+    if (
+      !row?.test_id ||
+      row.status !== "pending" ||
+      !row.test_id_expires_at ||
+      !Number.isFinite(Date.parse(String(row.test_id_expires_at))) ||
+      Date.parse(String(row.test_id_expires_at)) <= Date.now()
+    )
+      return json(404, { error: "Test ID is unavailable or expired." });
+    return new Response(Buffer.from(row.test_id as Uint8Array), {
+      headers: {
+        "content-type": String(row.test_id_mime),
         "cache-control": "private, no-store",
         "x-content-type-options": "nosniff",
       },
@@ -483,7 +561,7 @@ export async function postSharingReview(req: Request, id: string) {
           ).run(recordId, row.photo, row.photo_mime);
       }
       db.prepare(
-        "UPDATE sharing_submissions SET status=?,reviewed_at=?,reviewer_id=?,reason=?,record_id=? WHERE id=?",
+        "UPDATE sharing_submissions SET status=?,reviewed_at=?,reviewer_id=?,reason=?,record_id=?,test_id=NULL,test_id_mime=NULL WHERE id=?",
       ).run(
         review.action === "approve" ? "approved" : "rejected",
         at,

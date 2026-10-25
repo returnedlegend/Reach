@@ -5,9 +5,9 @@ export default function Privacy() {
       <a href="/">Back to Reach</a>
       {coreRelease() && (
         <p>
-          The current public release offers anonymous discovery and saved
-          directions. Accounts, Google sign-in, AI, email outreach, community
-          sharing and volunteering are disabled. Sections about those services
+          The current public release offers anonymous discovery, moderated food
+          sharing and saved directions. Accounts, Google sign-in, AI, email
+          outreach and volunteering are disabled. Sections about those services
           below describe optional functionality, not services active in this
           release.
         </p>
@@ -184,6 +184,14 @@ export default function Privacy() {
         records are retained until removed by an administrator; automated
         deletion is not currently provided. Older account-based sharing retains
         its existing request and consent controls.
+      </p>
+      <p>
+        An optional image field is available for developer testing only. Never
+        upload a real government ID: use a synthetic or fully redacted sample.
+        The image does not verify identity. It is kept private for up to 24
+        hours and removed from the active submission when a moderator approves
+        or rejects it. A separate consent is required only when an image is
+        selected.
       </p>
       <p>
         Private pickup instructions are shared with an accepted recipient only

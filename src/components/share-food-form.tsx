@@ -18,6 +18,8 @@ export function ShareFoodForm() {
   const formRef = useRef<HTMLFormElement>(null);
   const [kind, setKind] = useState<SharingKind>("hotspot");
   const [photo, setPhoto] = useState<string>();
+  const [testId, setTestId] = useState<string>();
+  const [testIdConsent, setTestIdConsent] = useState(false);
   const [error, setError] = useState("");
   const [locationError, setLocationError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -64,6 +66,37 @@ export function ShareFoodForm() {
     }
   }
 
+  async function readTestId(event: ChangeEvent<HTMLInputElement>) {
+    const file = event.target.files?.[0];
+    setTestIdConsent(false);
+    if (!file) return setTestId(undefined);
+    if (
+      !["image/jpeg", "image/png", "image/webp"].includes(file.type) ||
+      file.size > 2 * 1024 * 1024
+    ) {
+      setTestId(undefined);
+      setError("Choose a JPEG, PNG or WebP image up to 2 MB.");
+      event.target.value = "";
+      return;
+    }
+    try {
+      setTestId(
+        await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result));
+          reader.onerror = () =>
+            reject(new Error("Could not read this image."));
+          reader.readAsDataURL(file);
+        }),
+      );
+      setError("");
+    } catch {
+      setTestId(undefined);
+      event.target.value = "";
+      setError("Could not read this image. Choose another file.");
+    }
+  }
+
   function advance() {
     const fields = formRef.current?.querySelectorAll<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -101,6 +134,13 @@ export function ShareFoodForm() {
         setError("Please complete the required fields before sending.");
         return;
       }
+    }
+    if (testId && !testIdConsent) {
+      setStep(1);
+      setError(
+        "Please consent separately before including the optional test image.",
+      );
+      return;
     }
     const form = new FormData(event.currentTarget);
     const v = (key: string) => String(form.get(key) ?? "").trim();
@@ -183,6 +223,7 @@ export function ShareFoodForm() {
         publicContact: { kind: publicKind, value: v("publicContact") },
         data,
         ...(photo ? { photo } : {}),
+        ...(testId ? { testId, testIdConsent: true as const } : {}),
       };
       const fingerprint = JSON.stringify(payload);
       if (!requestRef.current || requestRef.current.fingerprint !== fingerprint)
@@ -199,6 +240,7 @@ export function ShareFoodForm() {
         policyAccepted: true,
         data,
         ...(photo ? { photo } : {}),
+        ...(testId ? { testId, testIdConsent: true } : {}),
       };
       const response = await fetch("/api/sharing/submissions", {
         method: "POST",
@@ -473,6 +515,33 @@ export function ShareFoodForm() {
               Up to 2 MB. Avoid photos that show private information.
             </small>
           </label>
+          <label>
+            Optional test ID — developer testing only
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={readTestId}
+            />
+            <small>
+              Use a synthetic or fully redacted sample; do not upload a real
+              government ID. This does not verify identity. JPEG, PNG or WebP up
+              to 2 MB. Private review access expires after 24 hours. The active
+              copy is removed on review or the next cleanup.
+            </small>
+          </label>
+          {testId && (
+            <label className="sharing-check">
+              <input
+                type="checkbox"
+                checked={testIdConsent}
+                onChange={(event) => setTestIdConsent(event.target.checked)}
+                required
+              />{" "}
+              I consent to storing this test image privately for developer
+              testing. Review access ends after 24 hours; the active copy is
+              removed on review or the next cleanup.
+            </label>
+          )}
         </fieldset>
         <fieldset data-step="2" hidden={step !== 2} className="sharing-attest">
           <legend>Confirm before sending</legend>

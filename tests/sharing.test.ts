@@ -12,9 +12,11 @@ import {
   closeSharingDatabases,
   getSharingAdmin,
   getSharingPhoto,
+  getSharingTestId,
   postSharingReview,
   postSharingSubmission,
 } from "../src/lib/sharing";
+import sharp from "sharp";
 let dir: string, path: string, moderator: string, regular: string;
 function session(role: "moderator" | "resident") {
   const db = openCommunityDatabase(path),
@@ -100,6 +102,89 @@ afterEach(() => {
   rmSync(dir, { recursive: true, force: true });
 });
 describe("account-free sharing moderation", () => {
+  it("requires separate consent and privately expires or deletes developer test images", async () => {
+    const png = `data:image/png;base64,${(
+      await sharp({
+        create: { width: 2, height: 2, channels: 3, background: "white" },
+      })
+        .png()
+        .toBuffer()
+    ).toString("base64")}`;
+    const send = (value: unknown) =>
+      postSharingSubmission(
+        new Request("https://reach.example/api/sharing/submissions", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            origin: "https://reach.example",
+          },
+          body: JSON.stringify(value),
+        }),
+      );
+    expect((await send(submission(randomUUID(), { testId: png }))).status).toBe(
+      400,
+    );
+    const created = await send(
+      submission(randomUUID(), { testId: png, testIdConsent: true }),
+    );
+    expect(created.status).toBe(201);
+    const id = (await created.json()).submission.id as string;
+    expect((await getSharingTestId(req(), id)).status).toBe(401);
+    expect((await getSharingTestId(req(regular), id)).status).toBe(403);
+    const privateImage = await getSharingTestId(req(moderator), id);
+    expect(privateImage.status).toBe(200);
+    expect(privateImage.headers.get("cache-control")).toBe("private, no-store");
+    const db = openCommunityDatabase(path);
+    const metadata = db
+      .prepare(
+        "SELECT test_id,test_id_expires_at,test_id_consent_version,test_id_consented_at FROM sharing_submissions WHERE id=?",
+      )
+      .get(id) as {
+      test_id: Uint8Array;
+      test_id_expires_at: string;
+      test_id_consent_version: string;
+      test_id_consented_at: string;
+    };
+    expect(metadata.test_id_consent_version).toBe("optional-test-id-v1");
+    expect(metadata.test_id_consented_at).toMatch(/^\d{4}-/);
+    expect(Date.parse(metadata.test_id_expires_at)).toBeGreaterThan(Date.now());
+    db.prepare(
+      "UPDATE sharing_submissions SET test_id_expires_at=? WHERE id=?",
+    ).run(new Date(Date.now() - 1000).toISOString(), id);
+    expect((await getSharingTestId(req(moderator), id)).status).toBe(404);
+    expect(
+      (
+        db
+          .prepare("SELECT test_id FROM sharing_submissions WHERE id=?")
+          .get(id) as { test_id: Uint8Array | null }
+      ).test_id,
+    ).toBeNull();
+    db.prepare(
+      "UPDATE sharing_submissions SET test_id_expires_at=? WHERE id=?",
+    ).run(new Date(Date.now() + 60000).toISOString(), id);
+    await postSharingReview(
+      new Request("https://reach.example/api/sharing/admin", {
+        method: "POST",
+        headers: {
+          cookie: moderator,
+          "content-type": "application/json",
+          origin: "https://reach.example",
+        },
+        body: JSON.stringify({ action: "approve" }),
+      }),
+      id,
+    );
+    expect(
+      (
+        db
+          .prepare("SELECT test_id FROM sharing_submissions WHERE id=?")
+          .get(id) as { test_id: Uint8Array | null }
+      ).test_id,
+    ).toBeNull();
+    expect(
+      Number(db.prepare("SELECT count(*) AS n FROM photos").get()?.n),
+    ).toBe(0);
+  });
   it("requires the explicit consents and applies per-contact daily limits", async () => {
     const missing = await postSharingSubmission(
       new Request("https://reach.example/api/sharing/submissions", {
@@ -229,7 +314,7 @@ describe("account-free sharing moderation", () => {
   });
 });
 
-it("rejects cross-origin, oversized, mismatched duplicate, and disabled submissions", async () => {
+it("rejects cross-origin, oversized, and mismatched duplicate submissions while ignoring the legacy disabled flag", async () => {
   const value = submission();
   const send = (payload: unknown, origin = "https://reach.example") =>
     postSharingSubmission(
@@ -240,7 +325,7 @@ it("rejects cross-origin, oversized, mismatched duplicate, and disabled submissi
       }),
     );
   expect((await send(value, "https://evil.example")).status).toBe(403);
-  expect((await send({ ...value, photo: "x".repeat(3_000_001) })).status).toBe(
+  expect((await send({ ...value, photo: "x".repeat(6_000_001) })).status).toBe(
     413,
   );
   expect((await send(value)).status).toBe(201);
@@ -251,7 +336,7 @@ it("rejects cross-origin, oversized, mismatched duplicate, and disabled submissi
       .get()?.n,
   ).toBe(1);
   vi.stubEnv("REACH_COMMUNITY_ENABLED", "false");
-  expect((await send(submission())).status).toBe(404);
+  expect((await send(submission())).status).toBe(201);
 });
 
 it("publishes a hotspot once, exposes only consented contact, and supports rejection", async () => {
