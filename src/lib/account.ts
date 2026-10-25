@@ -482,7 +482,7 @@ export function createAccountHandler(
             );
           else {
             db.prepare(
-              "UPDATE users SET password_hash=?,salt='',password_version=password_version+1 WHERE id=?",
+              "UPDATE users SET password_hash=?,salt='',password_version=password_version+1,must_change_password=0 WHERE id=?",
             ).run(hashed!, String(row.user_id));
             revoke(db, String(row.user_id));
           }
@@ -748,7 +748,7 @@ export function createAccountHandler(
           if (route === "delete") deleteAccount(db, actor.id);
           else {
             db.prepare(
-              "UPDATE users SET password_hash=?,salt='',password_version=password_version+1 WHERE id=?",
+              "UPDATE users SET password_hash=?,salt='',password_version=password_version+1,must_change_password=0 WHERE id=?",
             ).run(hashed!, actor.id);
             revoke(db, actor.id);
             queueNotification(

@@ -102,6 +102,16 @@ afterEach(() => {
   rmSync(dir, { recursive: true, force: true });
 });
 describe("account-free sharing moderation", () => {
+  it("blocks temporary-password moderators from private submissions", async () => {
+    const db = openCommunityDatabase(path);
+    db.prepare(
+      "UPDATE users SET must_change_password=1 WHERE role='moderator'",
+    ).run();
+    const response = await getSharingAdmin(req(moderator));
+    expect(response.status).toBe(403);
+    expect((await response.json()).error).toContain("/admin/change-password");
+  });
+
   it("accepts and approves seven-day pickups but rejects longer windows", async () => {
     const data = offer();
     data.endsAt = new Date(

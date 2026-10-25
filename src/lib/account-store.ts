@@ -7,6 +7,7 @@ export type AccountActor = {
   id: string;
   email: string | null;
   emailVerified: boolean;
+  mustChangePassword?: boolean;
   name: string;
   role: "user" | "administrator";
 };
@@ -50,6 +51,7 @@ export function initializeAccountSchema(db: DatabaseSync): void {
       "TEXT NOT NULL DEFAULT 'user' CHECK(pantry_role IN ('user','administrator'))",
     preferences: "TEXT NOT NULL DEFAULT '{}'",
     password_version: "INTEGER NOT NULL DEFAULT 0",
+    must_change_password: "INTEGER NOT NULL DEFAULT 0",
   }))
     if (!columns.has(name))
       db.exec(`ALTER TABLE users ADD COLUMN ${name} ${definition}`);
@@ -91,6 +93,7 @@ export function getAccountActor(
         id: String(row.id),
         email: row.email === null ? null : String(row.email),
         emailVerified: !!row.email_verified_at,
+        ...(row.must_change_password ? { mustChangePassword: true } : {}),
         name: String(row.name || row.username),
         role: row.pantry_role as AccountActor["role"],
       };

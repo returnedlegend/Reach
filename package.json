@@ -22,7 +22,8 @@
     "outreach:admin": "tsx scripts/outreach-admin.ts",
     "access:evaluate": "tsx scripts/evaluate-access.ts",
     "data:review": "tsx scripts/review-directory.ts",
-    "sharing:alerts": "tsx scripts/sharing-alerts-worker.ts"
+    "sharing:alerts": "tsx scripts/sharing-alerts-worker.ts",
+    "admin:setup": "tsx scripts/setup-admin.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",

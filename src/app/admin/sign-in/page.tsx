@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { AccountPanel } from "@/components/account-panel";
+import { AdminCredentials } from "@/components/admin-credentials";
 
 export const metadata: Metadata = {
   title: "Administrator sign in · Reach",
@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AdminSignInPage() {
-  return <AccountPanel administrator />;
+  return <AdminCredentials />;
 }

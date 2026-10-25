@@ -107,3 +107,20 @@ SMTP as described in SMTP.md, set REACH_APP_ORIGIN to the address used for Reach
 and run npm run sharing:alerts -- --watch for queued retries. An accepted SMTP
 message is not proof of inbox delivery. A localhost admin link works only on the
 computer running Reach.
+
+### Email/password administrator setup
+The administrator login at `/admin/sign-in` uses email and password only.
+Run `npm run admin:setup -- YOUR_EMAIL` once on the machine that stores Reach's
+SQLite database. Enter a temporary password at the local prompt (the prompt is
+visible, so use a private terminal). Automated setup can supply
+`REACH_ADMIN_INITIAL_PASSWORD` securely through the process environment.
+The command loads local environment settings, stores only an Argon2id hash,
+creates a moderator/administrator, and refuses to overwrite an existing user.
+It does not verify mailbox ownership or remove other administrators.
+Never commit the database or temporary password. Git pulls do not copy users.
+Administrator authentication must be enabled in the server release configuration.
+
+The first login redirects to `/admin/change-password`. Until changed, sharing
+review APIs reject access to submissions and private uploads. New passwords need
+at least 12 characters, and changing a password invalidates existing sessions.
+The admin page also links to the password-change page for later changes.

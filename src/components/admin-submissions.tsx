@@ -111,6 +111,7 @@ export function AdminSubmissions() {
         </Link>
         <span className="sharing-kicker">Reviewer workspace</span>
         <h1>Food submissions</h1>
+        <Link href="/admin/change-password">Change password</Link>
         <p>Review each submission before it becomes a public listing.</p>
       </header>
       {notification && (

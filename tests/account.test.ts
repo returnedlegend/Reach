@@ -657,3 +657,45 @@ it("accepts only direct local hosts when Next rewrites the development request U
       .status,
   ).toBe(403);
 });
+
+it("clears mandatory password rotation and revokes the temporary session", async () => {
+  const user = legacy("temporaryadmin");
+  const db = openCommunityDatabase(database);
+  db.prepare(
+    "UPDATE users SET email='admin@example.test',must_change_password=1 WHERE id=?",
+  ).run(user.id);
+  const response = await call("login", "POST", {
+    email: "admin@example.test",
+    password,
+  });
+  expect((await response.json()).user.mustChangePassword).toBe(true);
+  const cookie = response.headers.getSetCookie()[0].split(";")[0];
+  const changed = await call(
+    "change-password",
+    "POST",
+    { currentPassword: password, newPassword: "a-new-long-password-456" },
+    cookie,
+  );
+  expect(changed.status).toBe(200);
+  expect(
+    db.prepare("SELECT must_change_password FROM users WHERE id=?").get(user.id)
+      ?.must_change_password,
+  ).toBe(0);
+  expect(
+    db
+      .prepare("SELECT COUNT(*) AS n FROM sessions WHERE user_id=?")
+      .get(user.id)?.n,
+  ).toBe(0);
+  expect(
+    (await call("login", "POST", { email: "admin@example.test", password }))
+      .status,
+  ).toBe(401);
+  expect(
+    (
+      await call("login", "POST", {
+        email: "admin@example.test",
+        password: "a-new-long-password-456",
+      })
+    ).status,
+  ).toBe(200);
+});

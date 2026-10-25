@@ -234,6 +234,13 @@ function moderator(req: Request) {
   const actor = getAccountActor(db, req);
   if (!actor)
     throw Object.assign(new Error("Sign in to continue."), { status: 401 });
+  if (actor.mustChangePassword)
+    throw Object.assign(
+      new Error(
+        "Change your temporary password at /admin/change-password before reviewing submissions.",
+      ),
+      { status: 403 },
+    );
   const user = get(db, "SELECT role FROM users WHERE id=?", actor.id);
   if (user?.role !== "moderator")
     throw Object.assign(new Error("Moderator access required."), {
