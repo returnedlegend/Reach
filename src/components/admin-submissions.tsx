@@ -112,6 +112,23 @@ export function AdminSubmissions() {
         <span className="sharing-kicker">Reviewer workspace</span>
         <h1>Food submissions</h1>
         <Link href="/admin/change-password">Change password</Link>
+        <p>You are signed in with a saved administrator session.</p>
+        <button
+          className="btn"
+          onClick={async () => {
+            const response = await fetch("/api/account/logout", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: "{}",
+            });
+            if (response.ok) {
+              setItems([]);
+              window.location.assign("/admin/sign-in");
+            } else setError("Could not sign out. Please try again.");
+          }}
+        >
+          Sign out
+        </button>
         <p>Review each submission before it becomes a public listing.</p>
       </header>
       {notification && (
@@ -166,12 +183,24 @@ export function AdminSubmissions() {
               </div>
               <h2>{String(item.data.title || "Untitled submission")}</h2>
               <p>{String(item.data.description || "")}</p>
+              {!item.photoUrl && (
+                <p>No food photo was attached to this submission.</p>
+              )}
               {item.photoUrl && (
                 <img
                   className="sharing-photo"
                   src={item.photoUrl}
+                  onError={(event) => {
+                    event.currentTarget.alt =
+                      "Photo could not load. Open the original below or sign in again.";
+                  }}
                   alt={`Submitted photo for ${String(item.data.title || "food")}`}
                 />
+              )}
+              {item.photoUrl && (
+                <a href={item.photoUrl} target="_blank" rel="noreferrer">
+                  Open submitted food photo
+                </a>
               )}
               {item.hasTestId && item.status === "pending" && (
                 <p className="sharing-notice">

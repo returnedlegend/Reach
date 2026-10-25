@@ -515,7 +515,21 @@ export function ShareFoodForm() {
           </div>
           <label>
             Optional photo
-            <input type="file" accept="image/*" onChange={readPhoto} />
+            <input
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              onChange={readPhoto}
+            />
+            {photo && (
+              <>
+                <img
+                  src={photo}
+                  className="sharing-photo"
+                  alt="Food photo selected for review"
+                />
+                <p role="status">Food photo attached.</p>
+              </>
+            )}
             <small>
               Up to 2 MB. Avoid photos that show private information.
             </small>

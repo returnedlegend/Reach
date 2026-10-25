@@ -286,3 +286,19 @@ describe("household offer AI comparisons", () => {
     expect(generate).toHaveBeenCalledTimes(1);
   });
 });
+
+it("uses selected origin for approximate proximity without exposing coordinates to the model", async () => {
+  const generate = vi.fn().mockResolvedValue(response(["near"]));
+  await rankFoodWithAI("food in Bryan", {
+    resources: [
+      site("near", { coordinates: { lat: 30.67123, lng: -96.37123 } }),
+    ],
+    origin: { lat: 30.67123, lng: -96.37123 },
+    now,
+    generate,
+  });
+  const prompt = generate.mock.calls[0][0].prompt;
+  expect(prompt).toContain("0.0 straight-line miles");
+  expect(prompt).not.toContain("30.67123");
+  expect(prompt).not.toContain("-96.37123");
+});

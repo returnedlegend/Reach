@@ -130,3 +130,19 @@ Ongoing pickups are accepted even if their start passed while completing the
 form. Validation distinguishes ended pickups, reversed dates, invalid dates,
 starts too far ahead, and windows longer than seven days. All remain subject to
 moderator approval and use-by checks.
+
+### Search proximity, reviewer sessions, and food photos
+Approved, unexpired records are read from the same community SQLite database as
+submissions. Pending/rejected records are never AI candidates. AI search refreshes
+the page's directory snapshot and uses the selected origin server-side to
+prioritize nearby community candidates. Only rounded straight-line miles are
+provided to the model, never raw origin coordinates; this is not routed distance.
+Household offers have approximate areas, so their distance remains unknown.
+Proximity does not override pickup eligibility or guarantee AI selection.
+
+The admin page redirects visitors without a valid session to sign-in. Existing
+administrator sessions remain signed in until expiration or explicit Sign out.
+The API independently enforces moderator access for records and photos.
+Food photos have a preview before submission, a private original-image link in
+review, and an explicit no-photo message when no attachment was saved. Optional
+test-ID images are separate and expire; they are not food photos.

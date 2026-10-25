@@ -28,6 +28,7 @@ export type FoodRanking = { id: string; reasons: string[] }[];
 export async function rankFoodWithAI(
   text: string,
   options: {
+    origin?: { lat: number; lng: number };
     signal?: AbortSignal;
     cookieHeader?: string | null;
     resources?: Resource[];
@@ -45,7 +46,7 @@ export async function rankFoodWithAI(
   const now = options.now ?? new Date();
   const resources =
     options.resources ?? publicDirectory(options.cookieHeader).resources;
-  const found = discoverFood(resources, text, { now });
+  const found = discoverFood(resources, text, { now, origin: options.origin });
   const dayNames = [
     "sunday",
     "monday",
@@ -113,9 +114,14 @@ export async function rankFoodWithAI(
   );
   // Reserve space for up to two community options so directory trust ordering
   // cannot hide every hotspot before the model sees the candidates.
-  const communityCandidates = eligible.filter(
-    ({ resource }) => resource.communityHotspot || resource.communityOffer,
-  );
+  const communityCandidates = eligible
+    .filter(
+      ({ resource }) => resource.communityHotspot || resource.communityOffer,
+    )
+    .sort(
+      (a, b) =>
+        (a.straightLineMiles ?? Infinity) - (b.straightLineMiles ?? Infinity),
+    );
   const firstHotspot = communityCandidates.find(
     ({ resource }) => resource.communityHotspot,
   );
@@ -144,11 +150,15 @@ export async function rankFoodWithAI(
       message:
         "No eligible matching pickup sites are available for AI comparison. Directory alternatives remain below.",
     };
-  const candidates = matches.map(({ resource, summary }) => {
+  const candidates = matches.map(({ resource, summary, straightLineMiles }) => {
     const next = nextPublishedWindow(resource, now);
     return {
       id: resource.id,
       name: resource.name,
+      proximity:
+        straightLineMiles === undefined
+          ? "Unknown; no precise pickup location"
+          : `Approximately ${straightLineMiles.toFixed(1)} straight-line miles; not a walking route or travel time`,
       facts: {
         offering: summary.offering,
         schedule: `${summary.availabilityLabel}. ${resource.hours}. ${next ? `Next published window: ${next.label} (Central time).` : "Next pickup window not verified."}`,

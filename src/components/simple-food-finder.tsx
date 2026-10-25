@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import {
   ArrowUpRight,
   ArrowRight,
@@ -61,6 +62,7 @@ type Props = {
 };
 
 export function SimpleFoodFinder(props: Props) {
+  const router = useRouter();
   const { resources, location, mode } = props;
   const [draft, setDraft] = useState(props.initialRequest);
   const [request, setRequest] = useState(props.initialRequest);
@@ -288,6 +290,7 @@ export function SimpleFoodFinder(props: Props) {
     setThinking(true);
     setAiAttempted(true);
     try {
+      router.refresh(); // Include newly approved listings in the server-provided directory.
       const response = await fetch("/api/food-search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -295,7 +298,11 @@ export function SimpleFoodFinder(props: Props) {
           controller.signal,
           AbortSignal.timeout(FOOD_SEARCH_TIMEOUT_MS),
         ]),
-        body: JSON.stringify({ message: text, useAI: true }),
+        body: JSON.stringify({
+          message: text,
+          useAI: true,
+          origin: location?.coordinates,
+        }),
       });
       const data = await response.json();
       if (version !== generation.current) return;

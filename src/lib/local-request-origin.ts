@@ -2,6 +2,7 @@
 export function localDevelopmentOrigin(request: Request): string | null {
   if (process.env.NODE_ENV !== "development") return null;
   const url = new URL(request.url);
+  if (!["localhost", "127.0.0.1", "[::1]"].includes(url.hostname)) return null;
   const host = request.headers.get("host") || url.host;
   if (!/^(?:localhost|127\.0\.0\.1|\[::1\])(?::[0-9]{1,5})?$/.test(host))
     return null;

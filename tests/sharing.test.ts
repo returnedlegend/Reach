@@ -349,6 +349,16 @@ describe("account-free sharing moderation", () => {
     expect(row.consented_at).toMatch(/^\d{4}-/);
   });
   it("keeps review and photos private, and publishes only after a real moderator approves", async () => {
+    const photo =
+      "data:image/png;base64," +
+      (
+        await sharp({
+          create: { width: 2, height: 2, channels: 3, background: "white" },
+        })
+          .png()
+          .toBuffer()
+      ).toString("base64");
+
     const created = await postSharingSubmission(
       new Request("https://reach.example/api/sharing/submissions", {
         method: "POST",
@@ -356,13 +366,17 @@ describe("account-free sharing moderation", () => {
           "content-type": "application/json",
           origin: "https://reach.example",
         },
-        body: JSON.stringify(submission()),
+        body: JSON.stringify(submission(randomUUID(), { photo })),
       }),
     );
     const id = (await created.json()).submission.id as string;
     expect((await getSharingAdmin(req())).status).toBe(401);
     expect((await getSharingAdmin(req(regular))).status).toBe(403);
     expect((await getSharingPhoto(req(regular), id)).status).toBe(403);
+    const image = await getSharingPhoto(req(moderator), id);
+    expect(image.status).toBe(200);
+    expect(image.headers.get("content-type")).toBe("image/jpeg");
+    expect((await image.arrayBuffer()).byteLength).toBeGreaterThan(0);
     const denied = await postSharingReview(
       new Request("https://reach.example/api/sharing/admin", {
         method: "POST",

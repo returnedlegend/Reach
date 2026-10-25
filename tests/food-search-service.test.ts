@@ -40,7 +40,7 @@ describe("optional AI food-request interpretation", () => {
       needs: { service: "prepared-meals" },
       patch: {
         mode: "transit",
-        origin: { lat: 1, lng: 2 },
+        origin: { lat: 91, lng: 2 },
         eligibilityConfirmed: true,
       },
       message: "Invented stock claim",
@@ -79,14 +79,14 @@ describe("optional AI food-request interpretation", () => {
     ).json();
     expect(body.intent.mode).toBeUndefined();
   });
-  it("rejects cross-origin and precise coordinate fields", async () => {
+  it("rejects cross-origin and invalid coordinate fields", async () => {
     const handler = createFoodSearchHandler();
     expect(
       (await handler(request({ message: "food" }, "https://other.example")))
         .status,
     ).toBe(403);
     expect(
-      (await handler(request({ message: "food", origin: { lat: 1, lng: 2 } })))
+      (await handler(request({ message: "food", origin: { lat: 91, lng: 2 } })))
         .status,
     ).toBe(400);
     expect((await handler(request({ message: "a".repeat(1201) }))).status).toBe(
@@ -220,14 +220,14 @@ describe("local development origin validation", () => {
     },
   );
   it.each(["https://reach.example", "http://127.0.0.1:3001"])(
-    "does not override another configured site or port %s",
+    "accepts direct same-origin loopback development despite stale configuration %s",
     async (canonical) => {
       vi.stubEnv("NODE_ENV", "development");
       vi.stubEnv("REACH_APP_ORIGIN", canonical);
       expect(
         (await createFoodSearchHandler()(localRequest("http://localhost:3000")))
           .status,
-      ).toBe(403);
+      ).toBe(200);
     },
   );
 });

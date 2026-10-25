@@ -50,6 +50,13 @@ const schema = z
   .object({
     message: z.string().trim().min(1).max(1200),
     useAI: z.boolean().default(false),
+    origin: z
+      .object({
+        lat: z.number().min(-90).max(90),
+        lng: z.number().min(-180).max(180),
+      })
+      .strict()
+      .optional(),
   })
   .strict();
 /** Bounded interpretation only. No coordinates, new pantry records, or prose
@@ -95,6 +102,7 @@ export function createFoodSearchHandler(
         const result = deps.interpret
           ? await deps.interpret(body.message, { signal: request.signal })
           : await rankFoodWithAI(body.message, {
+              origin: body.origin,
               signal: request.signal,
               cookieHeader: request.headers.get("cookie"),
             });
