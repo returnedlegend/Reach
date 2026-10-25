@@ -63,6 +63,7 @@ export function SimpleFoodFinder(props: Props) {
   const [assistance, setAssistance] = useState<"directory" | "ai">("directory");
   const [thinking, setThinking] = useState(false);
   const [aiAttempted, setAiAttempted] = useState(false);
+  const [aiMessage, setAiMessage] = useState("");
   const generation = useRef(0);
   const aiController = useRef<AbortController | null>(null);
   const [checkedTrip, setCheckedTrip] = useState<
@@ -239,13 +240,14 @@ export function SimpleFoodFinder(props: Props) {
     setAssistance("directory");
     setThinking(false);
     setAiAttempted(false);
+    setAiMessage("");
     const local = discoverFood(resources, text).intent;
     if (local.mode) props.onModeChange(local.mode);
     requestAnimationFrame(() => {
       resultsHeading.current?.focus({ preventScroll: true });
       resultsHeading.current?.scrollIntoView({ block: "start" });
     });
-    if (!useAI || !props.aiAvailable || !text.trim()) return;
+    if (!useAI || !text.trim()) return;
     const controller = new AbortController();
     aiController.current = controller;
     setThinking(true);
@@ -261,7 +263,19 @@ export function SimpleFoodFinder(props: Props) {
         body: JSON.stringify({ message: text, useAI: true }),
       });
       const data = await response.json();
-      if (version !== generation.current || !response.ok) return;
+      if (version !== generation.current) return;
+      if (!response.ok) {
+        setAiMessage(
+          typeof data.error === "string" && data.error.trim()
+            ? `${data.error.slice(0, 300)} Your pantry results are still available.`
+            : response.status === 429
+              ? "AI is busy. Please wait a moment and try again."
+              : "Reach could not process the AI request. Your pantry results are still available.",
+        );
+        return;
+      }
+      if (typeof data.aiMessage === "string")
+        setAiMessage(data.aiMessage.slice(0, 500));
       if (data.assistance === "ai" && data.intent) {
         setIntent(data.intent);
         setAssistance("ai");
@@ -322,7 +336,7 @@ export function SimpleFoodFinder(props: Props) {
             </button>
           ))}
         </div>
-        {props.aiAvailable && (
+        {
           <label className={styles.aiChoice}>
             <input
               type="checkbox"
@@ -340,7 +354,7 @@ export function SimpleFoodFinder(props: Props) {
             provider; don’t include private details. Your selected coordinates
             are not sent to AI.
           </label>
-        )}
+        }
       </section>
 
       <section className={styles.start} aria-label="Optional starting point">
@@ -429,8 +443,9 @@ export function SimpleFoodFinder(props: Props) {
               {assistance === "ai"
                 ? "AI helped understand your request. All pantry details come from the directory."
                 : aiAttempted
-                  ? "AI could not finish interpreting your request. Showing directory matches instead; your text may have reached the AI provider."
-                  : "Matched from the directory. AI was not used."}{" "}
+                  ? aiMessage ||
+                    "AI could not finish interpreting your request. Showing directory matches instead; your text may have reached the AI provider."
+                  : "Showing directory matches. Turn on AI above to interpret your request."}{" "}
               <button
                 className={styles.textButton}
                 onClick={() => void search("")}

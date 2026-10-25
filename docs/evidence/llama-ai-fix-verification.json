@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-10-25T03:51:30.901Z",
+  "model": "llama3.2:3b",
+  "provider": "Local Ollama",
+  "releaseProfile": "core with explicit AI enablement",
+  "endpoint": "/api/food-search",
+  "httpStatus": 200,
+  "response": {
+    "assistance": "ai",
+    "intent": {
+      "service": "food"
+    }
+  },
+  "pantryCards": 3,
+  "liveInference": true,
+  "testScope": "Actual mobile browser and website API with local Llama; synthetic public food request; no email sent or public deployment. No live routing guarantee.",
+  "automated": {
+    "unitTests": 655,
+    "files": 74,
+    "browserFixtureCases": 14,
+    "typecheck": "passed",
+    "dataValidation": "passed",
+    "productionBuild": "passed"
+  },
+  "compose": "Parsed and private-network assertions passed; Docker stack not executed."
+}

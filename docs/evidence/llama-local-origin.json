@@ -1,0 +1,14 @@
+{
+  "checkedAt": "2026-10-25T04:23:50.433Z",
+  "url": "http://localhost:3105",
+  "configuredOrigin": "http://127.0.0.1:3105",
+  "mode": "npm run dev",
+  "httpStatus": 200,
+  "response": {
+    "assistance": "ai",
+    "intent": {
+      "service": "food"
+    }
+  },
+  "liveInference": true
+}

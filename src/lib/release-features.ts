@@ -10,6 +10,16 @@ export function coreRelease(): boolean {
   return process.env.NODE_ENV === "production";
 }
 export function featureEnabled(feature: keyof PublicFeatures): boolean {
+  // Local AI can be explicitly enabled in the anonymous core without enabling accounts.
+  const profile = process.env.REACH_RELEASE_PROFILE;
+  if (
+    feature === "ai" &&
+    (!profile || ["core", "extended"].includes(profile)) &&
+    process.env.REACH_RELEASE_AI === "true" &&
+    (process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama") ===
+      "ollama"
+  )
+    return true;
   if (coreRelease()) return false;
   if (
     process.env.NODE_ENV === "production" &&
@@ -46,7 +56,6 @@ export function featureEnabled(feature: keyof PublicFeatures): boolean {
 }
 /** Availability/configuration, not proof of successful live provider service. */
 export function publicFeatures(): PublicFeatures {
-  if (coreRelease()) return { ...CORE_FEATURES };
   const aiProvider =
     process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama";
   const aiKey =

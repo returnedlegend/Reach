@@ -281,6 +281,8 @@ export async function interpretNavigationNeeds(
       message:
         "Enter a short description or use the preference controls directly.",
     };
+  // This phrase contains no coordinates; the planner receives the selected point separately.
+  text = text.replace(/\bnear me\b/gi, "nearby");
   if (containsSensitiveDetails(text))
     return {
       status: "unavailable",
@@ -337,8 +339,7 @@ export async function interpretNavigationNeeds(
   if (result.status !== "available")
     return {
       status: "unavailable",
-      message:
-        "Preference interpretation is unavailable right now. Use the controls to enter preferences directly.",
+      message: result.reason,
     };
 
   const patch = result.value.patch

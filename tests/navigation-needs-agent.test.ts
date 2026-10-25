@@ -262,3 +262,17 @@ describe("navigation needs interpreter", () => {
     expect(String(fetcher.mock.calls[0][0])).toContain("api.groq.com");
   });
 });
+it("interprets near me without sending an actual position or rejecting the generic phrase", async () => {
+  useDeepSeek();
+  const fetcher = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
+    const body = String(init?.body);
+    expect(body).toContain("nearby");
+    expect(body).not.toContain("30.6");
+    return completion(modelOutput({}, { service: "food" }));
+  });
+  const result = await agent.interpretNavigationNeeds("Find food near me", {
+    fetch: fetcher,
+  });
+  expect(result).toMatchObject({ status: "available", assistance: "ai" });
+  expect(fetcher).toHaveBeenCalledTimes(1);
+});
