@@ -25,7 +25,7 @@ Pantry details are reachable from cards, map selections and `/pantries/[id]`. Th
 | Production dependency advisory audit | `npm audit --omit=dev`: zero known vulnerabilities reported |
 | New authentication/pantry/crowd source formatting | Prettier check passed |
 | Crowd maintenance command | Executed successfully against isolated test DB; expired-row behavior covered by store tests |
-| Real email delivery | Not configured: no Resend credentials/provider or verified sender domain; not claimed as passed |
+| Real email delivery | Not configured: live SMTP credentials/relay and authorized sender not verified; not claimed as passed |
 
 The production browser total is **218 passed** (188 regression + 28 feature checks + 2 independent account/management lifecycle checks). The independent lifecycle cases exercised login, secure cookies, profile/preferences, favorites, pantry creation/editing/inventory/archive/restore, password change, reauthentication, persistence and account deletion. Temporary fixtures were removed and foreign-key checks were clean.
 
@@ -42,7 +42,7 @@ npm run check
 npm run dev
 ```
 
-Use Node 24. See `.env.example`, [AUTHENTICATION.md](AUTHENTICATION.md), and [Resend setup](RESEND.md) for current mail configuration. Set `REACH_COMMUNITY_DB` to durable private storage on a single application host. Production account writes require the configured HTTPS origin. The community pilot still requires its explicit production enable flag.
+Use Node 24. See `.env.example`, [AUTHENTICATION.md](AUTHENTICATION.md), and [SMTP setup](SMTP.md) for current mail configuration. Set `REACH_COMMUNITY_DB` to durable private storage on a single application host. Production account writes require the configured HTTPS origin. The community pilot still requires its explicit production enable flag.
 
 After registering and verifying a real email account, use `npm run account:admin -- administrator@example.org` from a trusted server shell; the browser cannot bootstrap itself. Schedule `npm run data:prune` at least daily. Test backups/restoration, mail inbox delivery, HTTPS proxy configuration and ingress rate limiting before hosting publicly. SQLite instances must share one coherent database; independently deployed unshared or ephemeral instances are unsupported.
 

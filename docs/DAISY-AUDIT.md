@@ -28,7 +28,7 @@ Audit scope: current application structure and presentation, to guide the in-pro
 | `/unsubscribe` | `UnsubscribePanel` | Email preference/unsubscribe flow. |
 | `/privacy`, `/terms` | Static content pages | Privacy/location/data disclosures and service terms. |
 
-At the time of this original audit, the repository implemented API routes for coverage, pantry directory and management, plans, journey/geocoding/reverse geocoding, crowd observations, notifications, the Postal webhook, volunteer, community, and account operations under `src/app/api`. The redesign was to leave their contracts and backend untouched. The current email webhook endpoint is `/api/email/webhook`.
+At the time of this original audit, the repository implemented API routes for coverage, pantry directory and management, plans, journey/geocoding/reverse geocoding, crowd observations, notifications, the Postal webhook, volunteer, community, and account operations under `src/app/api`. The redesign was to leave their contracts and backend untouched. The historical webhook integration has since been retired; current email uses SMTP or private preview.
 
 ### Planned versus operational claims
 

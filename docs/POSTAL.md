@@ -1,10 +1,3 @@
 # Postal setup retired
 
-Postal and SMTP transports have been removed from Reach. Do not use the
-configuration or endpoint instructions in older Postal materials. Current
-production setup, including the preserved local preview workflow, is documented
-in [Resend email setup](RESEND.md).
-
-Existing SQLite mail history with `provider='postal'` remains inert and is not
-resent. Back up the database before upgrading; the application performs its
-idempotent schema migration when the mail store initializes.
+The former Postal HTTP transport and its webhook configuration are retired. Current email supports configurable SMTP and private local preview; see [SMTP setup](SMTP.md). Historical `postal-*` evidence describes only the implementation tested at that time. Existing SQLite mail history remains intact and is not automatically sent again.

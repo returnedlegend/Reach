@@ -52,7 +52,7 @@ test("outreach requires renewed approval after edits or follow-up changes", asyn
         messages: [],
         recipients: [recipient],
         deliveryMode: "preview",
-        inboundConfigured: false,
+        replyMailboxConfigured: false,
       },
     });
   });

@@ -57,7 +57,7 @@ export type OutreachMessage = {
 export type OutreachHistory = {
   messages: OutreachMessage[];
   recipients: OutreachRecipient[];
-  deliveryMode: "resend" | "smtp" | "preview" | "disabled";
-  inboundConfigured: boolean;
+  deliveryMode: "smtp" | "preview" | "disabled";
+  replyMailboxConfigured: boolean;
   ownedRecipientIds?: string[];
 };

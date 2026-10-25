@@ -29,7 +29,6 @@ Compared with the pre-feature source download. Private `.env.local`, databases, 
 - `src/app/api/access/assist/route.ts`
 - `src/app/api/access/plan/route.ts`
 - `src/app/api/outreach/[[...path]]/route.ts`
-- `src/app/api/outreach/inbound/route.ts`
 - `src/app/outreach/page.tsx`
 - `src/app/outreach/unsubscribe/page.tsx`
 - `src/components/access-planner.css`
@@ -43,7 +42,6 @@ Compared with the pre-feature source download. Private `.env.local`, databases, 
 - `src/lib/access-service.ts`
 - `src/lib/access-time.ts`
 - `src/lib/access-types.ts`
-- `src/lib/outreach-inbound.ts`
 - `src/lib/outreach-store.ts`
 - `src/lib/outreach-types.ts`
 - `src/lib/outreach-worker.ts`
@@ -63,7 +61,6 @@ Compared with the pre-feature source download. Private `.env.local`, databases, 
 - `.env.example`
 - `README.md`
 - `docs/PANTRY-DATABASE.md`
-- `docs/RESEND.md`
 - `docs/VERIFICATION.md`
 - `next-env.d.ts`
 - `package-lock.json`
@@ -72,7 +69,6 @@ Compared with the pre-feature source download. Private `.env.local`, databases, 
 - `src/app/privacy/page.tsx`
 - `src/components/guided-reach.tsx`
 - `src/lib/mail-delivery.ts`
-- `src/lib/resend-webhook.ts`
 
 ## Removed
 

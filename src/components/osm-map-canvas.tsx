@@ -725,21 +725,38 @@ export function OsmMapCanvas({
     const originChanged = initial || previous.originKey !== originKey;
     const framingChanged = initial || previous.framingKey !== framingKey;
     cameraState.current = { runtime, originKey, framingKey };
-    if (isMapCoordinates(origin) && originChanged) {
-      runtime.map.easeTo({
-        center: [origin.lng, origin.lat],
-        zoom: 16,
-        duration: 0,
-      });
-      return;
-    }
-    if (!framingChanged) return;
     const positions: [number, number][] = [
       ...routeCoordinates,
       ...framingPoints.map((point): [number, number] => [point.lng, point.lat]),
     ];
     if (positions.length && isMapCoordinates(origin))
       positions.push([origin.lng, origin.lat]);
+    if (isMapCoordinates(origin) && originChanged) {
+      const hasFramingBeyondOrigin = positions.some(
+        ([longitude, latitude]) =>
+          longitude !== origin.lng || latitude !== origin.lat,
+      );
+      if (initial && hasFramingBeyondOrigin) {
+        const bounds = new runtime.library.LngLatBounds(
+          positions[0],
+          positions[0],
+        );
+        for (const position of positions) bounds.extend(position);
+        runtime.map.fitBounds(bounds, {
+          padding: 56,
+          maxZoom: 15,
+          duration: 0,
+        });
+      } else {
+        runtime.map.easeTo({
+          center: [origin.lng, origin.lat],
+          zoom: 16,
+          duration: 0,
+        });
+      }
+      return;
+    }
+    if (!framingChanged) return;
     if (!positions.length && initial && !isMapCoordinates(origin))
       positions.push(
         ...pantries

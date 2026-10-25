@@ -11,7 +11,7 @@ type Preferences = {
 };
 type Configuration = {
   preferences: Preferences;
-  deliveryMode: "resend" | "smtp" | "preview" | "disabled";
+  deliveryMode: "smtp" | "preview" | "disabled";
 };
 type Delivery = {
   id: string;

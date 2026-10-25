@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import type {
   OutreachHistory,
   OutreachMessage,
@@ -9,6 +9,8 @@ import type {
 import type { CommunityMine } from "@/lib/community-types";
 import { LocationPicker, type SelectedLocation } from "./location-picker";
 import "./outreach-panel.css";
+import { AILoadingIndicator } from "./ai-loading-indicator";
+import { FOOD_SEARCH_TIMEOUT_MS } from "@/lib/ai-timing";
 
 type Props = { pantryId?: string; onAvailabilityChange?: () => void };
 type DraftResponse = {
@@ -30,6 +32,7 @@ async function request<T>(path: string, method = "GET", body?: unknown) {
     credentials: "same-origin",
     cache: "no-store",
     referrerPolicy: "no-referrer",
+    signal: AbortSignal.timeout(FOOD_SEARCH_TIMEOUT_MS),
     ...(body === undefined
       ? {}
       : {
@@ -110,6 +113,7 @@ export function OutreachPanel({ pantryId, onAvailabilityChange }: Props) {
   const [history, setHistory] = useState<OutreachHistory | null>(null);
   const [loading, setLoading] = useState(true);
   const [busy, setBusy] = useState(false);
+  const actionPending = useRef(false);
   const [error, setError] = useState("");
   const [accountStatus, setAccountStatus] = useState<401 | 403 | null>(null);
   const [notice, setNotice] = useState("");
@@ -191,6 +195,8 @@ export function OutreachPanel({ pantryId, onAvailabilityChange }: Props) {
   }, [pantryId]);
 
   async function act<T>(path: string, body: unknown, success: string) {
+    if (actionPending.current) return null;
+    actionPending.current = true;
     setBusy(true);
     setError("");
     setAccountStatus(null);
@@ -208,6 +214,7 @@ export function OutreachPanel({ pantryId, onAvailabilityChange }: Props) {
         setAccountStatus(cause.status);
       return null;
     } finally {
+      actionPending.current = false;
       setBusy(false);
     }
   }
@@ -239,7 +246,7 @@ export function OutreachPanel({ pantryId, onAvailabilityChange }: Props) {
         subject: draft.subject,
         body: draft.body,
         authorized: true,
-        ...(followup
+        ...(followup && history?.deliveryMode === "preview"
           ? {
               followup: {
                 optIn: true,
@@ -414,11 +421,13 @@ export function OutreachPanel({ pantryId, onAvailabilityChange }: Props) {
               previews and will not be emailed.
             </p>
           )}
-          {!history.inboundConfigured && (
+          {history.deliveryMode === "smtp" && (
             <p className="outreach-callout" role="status">
-              Replies cannot currently be collected automatically. Check
-              recipient replies through your existing private contact
-              arrangements.
+              Replies go to Reach’s monitored email inbox and are not
+              automatically displayed here. For urgent help, call the
+              organization directly.
+              {!history.replyMailboxConfigured &&
+                " A reply mailbox must be configured before sending."}
             </p>
           )}
 
@@ -542,13 +551,18 @@ export function OutreachPanel({ pantryId, onAvailabilityChange }: Props) {
                   <button
                     className="btn btn-primary"
                     type="submit"
+                    aria-label={busy ? "Preparing draft…" : undefined}
                     disabled={
                       busy ||
                       history.deliveryMode === "disabled" ||
                       question.trim().length < 5
                     }
                   >
-                    {busy ? "Working…" : "Create a draft"}
+                    {busy ? (
+                      <AILoadingIndicator label="Preparing draft…" />
+                    ) : (
+                      "Create a draft"
+                    )}
                   </button>
                 </div>
               </>
@@ -622,22 +636,30 @@ export function OutreachPanel({ pantryId, onAvailabilityChange }: Props) {
                   I reviewed the recipient and message and authorize this email.
                 </span>
               </label>
-              <label className="outreach-check">
-                <input
-                  className="checkbox checkbox-primary"
-                  type="checkbox"
-                  checked={followup}
-                  disabled={busy}
-                  onChange={(event) => {
-                    setAuthorized(false);
-                    setFollowup(event.target.checked);
-                  }}
-                />
-                <span>
-                  Allow one follow-up after 24 hours if there is no reply. It
-                  expires after 48 hours.
-                </span>
-              </label>
+              {history.deliveryMode === "preview" ? (
+                <label className="outreach-check">
+                  <input
+                    className="checkbox checkbox-primary"
+                    type="checkbox"
+                    checked={followup}
+                    disabled={busy}
+                    onChange={(event) => {
+                      setAuthorized(false);
+                      setFollowup(event.target.checked);
+                    }}
+                  />
+                  <span>
+                    Allow one follow-up after 24 hours if there is no reply. It
+                    expires after 48 hours.
+                  </span>
+                </label>
+              ) : (
+                <p>
+                  Automatic follow-ups are unavailable because replies are
+                  managed in the Reach inbox. Review replies before sending
+                  another inquiry.
+                </p>
+              )}
               <div className="outreach-actions">
                 <button
                   className="btn btn-primary"

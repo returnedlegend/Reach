@@ -33,47 +33,6 @@
       "readable": true
     }
   ],
-  "resend": {
-    "authenticationHttp": 200,
-    "domain": "reachemail.com",
-    "status": "failed",
-    "region": "us-east-1",
-    "records": [
-      {
-        "record": "DKIM",
-        "type": "TXT",
-        "name": "resend._domainkey",
-        "value": "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCcKnAOdf7R3frpmTdja3YDlVrsN6nASRPFCSbwV2eNUGU7BTk5uf9W3o37S3RF04eoM+rwtRpkzky8d1mhUHGw+SB6GtC3plGCR/9+v9yvu/ua16TyIho7P0b0ZF2EzgSmxRijbIyipAen9vEuwjU/rxWNnXC32MGse7wC1Nw0LQIDAQAB",
-        "ttl": "Auto",
-        "status": "failed"
-      },
-      {
-        "record": "SPF",
-        "type": "MX",
-        "name": "send",
-        "value": "feedback-smtp.us-east-1.amazonses.com",
-        "priority": 10,
-        "ttl": "Auto",
-        "status": "failed"
-      },
-      {
-        "record": "SPF",
-        "type": "TXT",
-        "name": "send",
-        "value": "v=spf1 include:amazonses.com ~all",
-        "ttl": "Auto",
-        "status": "failed"
-      },
-      {
-        "record": "SPF",
-        "type": "CNAME",
-        "name": "rsend",
-        "value": "send.forge.rmta.net",
-        "ttl": "Auto",
-        "status": "failed"
-      }
-    ]
-  },
   "openrouter": {
     "authenticationHttp": 200,
     "rateLimit": {
@@ -98,28 +57,11 @@
       "answers": ["0 ."]
     },
     {
-      "name": "resend._domainkey.reachemail.com",
-      "type": "TXT",
-      "status": 0,
-      "answers": ["v=spf1 -all"]
-    },
-    {
-      "name": "send.reachemail.com",
-      "type": "TXT",
-      "status": 0,
-      "answers": ["v=spf1 -all"]
-    },
-    {
-      "name": "send.reachemail.com",
-      "type": "MX",
-      "status": 0,
-      "answers": ["0 ."]
-    },
-    {
       "name": "_dmarc.reachemail.com",
       "type": "TXT",
       "status": 0,
       "answers": ["v=spf1 -all"]
     }
-  ]
+  ],
+  "retiredEmailEvidence": "Provider-specific email metadata removed; remaining observations are historical and do not verify current SMTP delivery."
 }

@@ -3,10 +3,10 @@ import type { SendMailOptions, SentMessageInfo, Transporter } from "nodemailer";
 import type { AccountMail, MailDeliveryError } from "./mail-delivery";
 
 export type SmtpConfiguration = {
-  host: "smtp.resend.com";
+  host: string;
   port: 465 | 587;
   secure: boolean;
-  user: "resend";
+  user: string;
   password: string;
   fromEmail: string;
   fromName: string;
@@ -40,12 +40,16 @@ export function smtpConfiguration(): SmtpConfiguration | null {
     (port === "465" && secure === "true") ||
     (port === "587" && secure === "false");
   if (
-    host !== "smtp.resend.com" ||
+    !host ||
+    !/^[a-zA-Z0-9](?:[a-zA-Z0-9.-]{0,251}[a-zA-Z0-9])?$/.test(host) ||
     !validPort ||
     !validSecurity ||
-    user !== "resend" ||
-    !/^re_[A-Za-z0-9_-]{8,200}$/.test(password) ||
-    /(?:placeholder|your_resend|xxxxxxxx)/i.test(password) ||
+    !user ||
+    !cleanHeader(user) ||
+    user.length > 320 ||
+    !password ||
+    /[\r\n\0]/.test(password) ||
+    /(?:placeholder|your_password|xxxxxxxx)/i.test(password) ||
     !validEmail(fromEmail) ||
     /@(?:yourdomain\.com|your-domain\.example|example\.com)$/i.test(
       fromEmail,
@@ -55,10 +59,10 @@ export function smtpConfiguration(): SmtpConfiguration | null {
   )
     return null;
   return {
-    host: "smtp.resend.com",
+    host,
     port: port === "465" ? 465 : 587,
     secure: port === "465",
-    user: "resend",
+    user,
     password,
     fromEmail,
     fromName,
@@ -137,7 +141,6 @@ export async function smtpSend(
       ...(mail.html ? { html: mail.html } : {}),
       ...(mail.replyTo ? { replyTo: mail.replyTo } : {}),
       messageId: rfcMessageId,
-      headers: { "Resend-Idempotency-Key": `reach-email/${deliveryId}` },
     } satisfies SendMailOptions;
     const remaining = deadlineAt - Date.now();
     if (remaining <= 0) return { status: "uncertain" };

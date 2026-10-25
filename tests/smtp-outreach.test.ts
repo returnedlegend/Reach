@@ -34,19 +34,14 @@ function smtpEnvironment() {
   vi.stubEnv("REACH_EMAIL_PROVIDER", "smtp");
   vi.stubEnv("REACH_AI_PROVIDER", "");
   vi.stubEnv("REACH_AI_MODEL", "");
-  vi.stubEnv("SMTP_HOST", "smtp.resend.com");
+  vi.stubEnv("SMTP_HOST", "smtp.example.org");
   vi.stubEnv("SMTP_PORT", "465");
   vi.stubEnv("SMTP_SECURE", "true");
-  vi.stubEnv("SMTP_USER", "resend");
-  vi.stubEnv("SMTP_PASSWORD", "re_synthetic_smtp_key");
+  vi.stubEnv("SMTP_USER", "mailer");
+  vi.stubEnv("SMTP_PASSWORD", "synthetic-password");
   vi.stubEnv("SMTP_FROM_EMAIL", "mail@example.org");
   vi.stubEnv("SMTP_FROM_NAME", "Reach fixture");
-  vi.stubEnv("RESEND_API_KEY", "re_synthetic_inbound_key");
-  vi.stubEnv("REACH_OUTREACH_REPLY_DOMAIN", "replies.reach.example");
-  vi.stubEnv(
-    "RESEND_INBOUND_WEBHOOK_SECRET",
-    `whsec_${Buffer.from("smtp outreach fixture secret").toString("base64")}`,
-  );
+  vi.stubEnv("REACH_OUTREACH_REPLY_EMAIL", "replies@reach.example");
 }
 
 function makeTransportFactory(
@@ -161,6 +156,9 @@ describe("reviewed outreach over the shared SMTP delivery boundary", () => {
     expect(first.accepted).toBe(1);
     expect(second.processed).toBe(0);
     expect(sendMail).toHaveBeenCalledTimes(1);
+    expect(sendMail.mock.calls[0][0]).toMatchObject({
+      replyTo: "replies@reach.example",
+    });
     const thread = db
       .prepare("SELECT status,delivery_id FROM outreach_threads WHERE id=?")
       .get(threadId) as { status: string; delivery_id: string };
@@ -223,10 +221,110 @@ describe("reviewed outreach over the shared SMTP delivery boundary", () => {
     });
   });
 
-  it("requires configured inbound reply handling for SMTP authorization and worker dispatch", async () => {
-    vi.stubEnv("RESEND_API_KEY", "");
-    vi.stubEnv("RESEND_INBOUND_WEBHOOK_SECRET", "");
-    vi.stubEnv("REACH_OUTREACH_REPLY_DOMAIN", "");
+  it("rejects automatic follow-up consent while retaining the draft for a reviewed primary send", async () => {
+    const created = await request(["draft"], "POST", {
+      recipientId,
+      question: "Do you have produce available today?",
+    });
+    const draft = (await created.json()).message;
+    const result = await request([draft.id, "authorize"], "POST", {
+      subject: draft.subject,
+      body: draft.body,
+      authorized: true,
+      followup: { optIn: true, intervalHours: 24, expiresInHours: 48, max: 1 },
+    });
+    expect(result.status).toBe(400);
+    expect(await result.text()).toContain("Turn off follow-ups");
+    expect(
+      setupDatabase
+        .prepare(
+          "SELECT status,followup_remaining FROM outreach_threads WHERE id=?",
+        )
+        .get(draft.id),
+    ).toMatchObject({ status: "draft", followup_remaining: 0 });
+    expect(
+      (
+        await request([draft.id, "authorize"], "POST", {
+          subject: draft.subject,
+          body: draft.body,
+          authorized: true,
+        })
+      ).status,
+    ).toBe(202);
+  });
+
+  it("cancels existing automatic SMTP follow-ups and future consent while still sending a reviewed primary inquiry", async () => {
+    const primaryId = await draftAndAuthorize();
+    const primary = setupDatabase
+      .prepare("SELECT * FROM outreach_threads WHERE id=?")
+      .get(primaryId)!;
+    const parentId = randomUUID(),
+      childId = randomUUID();
+    const insert = (overrides: Record<string, string | number | null>) => {
+      const row = { ...primary, ...overrides };
+      const columns = Object.keys(row);
+      setupDatabase
+        .prepare(
+          `INSERT INTO outreach_threads (${columns.join(",")}) VALUES (${columns.map(() => "?").join(",")})`,
+        )
+        .run(...Object.values(row));
+    };
+    insert({
+      id: parentId,
+      reply_token: randomBytes(24).toString("hex"),
+      status: "accepted",
+      sent_at: new Date(+NOW - 25 * 3600000).toISOString(),
+      followup_remaining: 1,
+      followup_expires: new Date(+NOW + 48 * 3600000).toISOString(),
+    });
+    insert({
+      id: childId,
+      reply_token: randomBytes(24).toString("hex"),
+      parent_id: parentId,
+      status: "queued",
+      available_at: new Date(+NOW + 3600000).toISOString(),
+    });
+    const send = vi.fn(async () => ({
+      id: "primary-fixture-delivery",
+      status: "accepted" as const,
+    }));
+    const result = await dispatchOutreach(setupDatabase, {
+      now: () => NOW,
+      send,
+    });
+    expect(result).toMatchObject({ accepted: 1, cancelled: 1 });
+    expect(send).toHaveBeenCalledTimes(1);
+    expect(
+      setupDatabase
+        .prepare("SELECT status FROM outreach_threads WHERE id=?")
+        .get(primaryId)?.status,
+    ).toBe("accepted");
+    expect(
+      setupDatabase
+        .prepare(
+          "SELECT status,followup_remaining FROM outreach_threads WHERE id=?",
+        )
+        .get(parentId),
+    ).toMatchObject({ status: "accepted", followup_remaining: 0 });
+    expect(
+      setupDatabase
+        .prepare("SELECT status FROM outreach_threads WHERE id=?")
+        .get(childId)?.status,
+    ).toBe("cancelled");
+    expect(
+      setupDatabase
+        .prepare("SELECT COUNT(*) AS count FROM outreach_threads")
+        .get()?.count,
+    ).toBe(3);
+    await dispatchOutreach(setupDatabase, {
+      now: () => new Date(+NOW + 26 * 3600000),
+      send,
+    });
+    expect(send).toHaveBeenCalledTimes(1);
+  });
+
+  it("requires a monitored reply mailbox for SMTP authorization and worker dispatch", async () => {
+    vi.stubEnv("REACH_OUTREACH_REPLY_EMAIL", "");
     const created = await request(["draft"], "POST", {
       recipientId,
       question: "Do you have produce available today?",

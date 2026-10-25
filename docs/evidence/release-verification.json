@@ -88,7 +88,7 @@
     "Authorized Docker-capable host and controlled public app domain",
     "Production-suitable routing endpoint; directory/external links available without it",
     "Unresolved pantry address/gate/walk-up facts and BTD timetable conflict",
-    "Optional Resend domain authentication and separate optional-service release operations"
+    "Optional SMTP configuration, authorized sender and separate optional-service release operations"
   ],
   "containerRecoveryScope": "Restart and WAL backup/restore passed on image e7; UI-only save sync fix rebuilt and startup-smoke-tested as 8255fb40. See exact IDs/scopes in release-operations.json.",
   "sourceChecks": {

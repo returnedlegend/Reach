@@ -582,7 +582,7 @@ test("daisy selected controls stay visibly distinct after changing each view", a
       await check(
         "Community view",
         signIn,
-        community.getByRole("button", { name: "Find food", exact: true }),
+        community.getByRole("button", { name: "Find best resources", exact: true }),
       );
 
       await page.goto("/pantry-planner");

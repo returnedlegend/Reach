@@ -77,7 +77,8 @@ async function openAssistant(
   fromMap = false,
 ) {
   await page.goto("/");
-  if (fromMap) await page.getByRole("button", { name: "Map", exact: true }).click();
+  // The food-first homepage keeps the assistant in the map toolbar.
+  await page.getByRole("button", { name: "Map", exact: true }).click();
   await page.getByRole("button", { name: "Reach AI assistant", exact: true }).click();
   return page.getByRole("dialog", { name: "Reach AI assistant" });
 }

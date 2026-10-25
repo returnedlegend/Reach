@@ -126,7 +126,7 @@ test("saving in embedded pantry details updates Saved immediately without a relo
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("Brazos Church Pantry");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await page
     .getByRole("article", { name: "Brazos Church Pantry", exact: true })
     .getByRole("button", {

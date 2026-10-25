@@ -9,7 +9,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { randomBytes, randomUUID, createHmac } from "node:crypto";
+import { randomBytes, randomUUID } from "node:crypto";
 import { openPantryDatabase } from "../src/lib/pantry-store";
 import { accountHash } from "../src/lib/account-store";
 import {
@@ -19,7 +19,6 @@ import {
   MailDeliveryError,
 } from "../src/lib/mail-delivery";
 import { renderEmail } from "../src/lib/email-templates";
-import { createResendWebhookHandler } from "../src/lib/resend-webhook";
 import { createNotificationsHandler } from "../src/lib/notifications-api";
 import {
   createUnsubscribeToken,
@@ -36,9 +35,6 @@ const origin = "https://reach.example";
 const address = "private-recipient@example.org";
 const secret = "re_testtoken";
 const messageId = "00000000-0000-4000-8000-000000000701";
-const signingSecret = Buffer.from("svix signing fixture secret").toString(
-  "base64",
-);
 const rawToken = "a".repeat(64);
 const mail = {
   to: address,
@@ -50,9 +46,6 @@ let directory: string;
 let db: ReturnType<typeof openPantryDatabase>;
 let instant: Date;
 
-function accepted(_id = 701) {
-  return Response.json({ id: messageId });
-}
 function actor(verified = true) {
   const id = randomUUID(),
     token = randomBytes(32).toString("hex");
@@ -78,9 +71,8 @@ beforeEach(() => {
   db = openPantryDatabase(join(directory, "community.sqlite"));
   instant = new Date();
   vi.stubEnv("REACH_APP_ORIGIN", origin);
-  vi.stubEnv("REACH_EMAIL_PROVIDER", "resend");
-  vi.stubEnv("RESEND_API_KEY", secret);
-  vi.stubEnv("RESEND_FROM_EMAIL", "Reach <reach@example.org>");
+  vi.stubEnv("REACH_EMAIL_PROVIDER", "preview");
+  vi.stubEnv("REACH_EMAIL_PREVIEW_DIR", join(directory, "preview"));
   initializeMailSchema(db);
   initializeNotifications(db);
 });
@@ -91,150 +83,14 @@ afterEach(() => {
   rmSync(directory, { recursive: true, force: true });
 });
 
-describe("independent Resend transport security", () => {
-  it("sends one private recipient server-side and stores only delivery metadata", async () => {
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(accepted());
-    const result = await deliverMail(db, mail, { fetch: fetcher });
-    expect(result.status).toBe("accepted");
-    const [url, init] = fetcher.mock.calls[0];
-    expect(url).toBe("https://api.resend.com/emails");
-    expect(new Headers(init?.headers).get("authorization")).toBe(
-      `Bearer ${secret}`,
-    );
-    expect(JSON.parse(String(init?.body))).toMatchObject({
-      from: "Reach <reach@example.org>",
-      to: [address],
-      subject: mail.subject,
-      text: mail.text,
-    });
-    const record = JSON.stringify(
-      db.prepare("SELECT * FROM mail_deliveries").all(),
-    );
-    for (const privateValue of [
-      address,
-      secret,
-      rawToken,
-      "private-provider-token",
-      mail.subject,
-    ])
-      expect(record).not.toContain(privateValue);
-  });
-
-  it("retries a definite throttle but never retries an ambiguous network outcome", async () => {
-    const retry = vi
-      .fn<typeof fetch>()
-      .mockResolvedValueOnce(
-        Response.json(
-          {
-            statusCode: 429,
-            name: "rate_limit_exceeded",
-            message: "try later",
-          },
-          { status: 429 },
-        ),
-      )
-      .mockResolvedValueOnce(accepted());
-    expect((await deliverMail(db, mail, { fetch: retry })).status).toBe(
-      "accepted",
-    );
-    expect(retry).toHaveBeenCalledTimes(2);
-    const ambiguous = vi
-      .fn<typeof fetch>()
-      .mockRejectedValue(new Error(`timeout ${secret} ${rawToken}`));
-    expect((await deliverMail(db, mail, { fetch: ambiguous })).status).toBe(
-      "uncertain",
-    );
-    expect(ambiguous).toHaveBeenCalledTimes(1);
-    expect(
-      db
-        .prepare(
-          "SELECT status,error_code,attempts FROM mail_deliveries WHERE status='uncertain'",
-        )
-        .get(),
-    ).toMatchObject({
-      status: "uncertain",
-      error_code: "ambiguous",
-      attempts: 1,
-    });
-  });
-
-  it("treats provider 5xx and malformed success as ambiguous without resending", async () => {
-    for (const response of [
-      new Response("private details", { status: 503 }),
-      Response.json({ id: "malformed-id" }),
-    ]) {
-      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response);
-      expect((await deliverMail(db, mail, { fetch: fetcher })).status).toBe(
-        "uncertain",
-      );
-      expect(fetcher).toHaveBeenCalledTimes(1);
-    }
-  });
-
-  it("recognizes HTTP and application-level invalid credentials without retry or private error leakage", async () => {
-    for (const response of [
-      new Response(secret, { status: 401 }),
-      new Response(secret, { status: 403 }),
-    ]) {
-      const fetcher = vi.fn<typeof fetch>().mockResolvedValue(response);
-      await expect(
-        deliverMail(db, mail, { fetch: fetcher }),
-      ).rejects.toMatchObject({ code: "authentication", retryable: false });
-      expect(fetcher).toHaveBeenCalledTimes(1);
-    }
-    const stored = JSON.stringify(
-      db.prepare("SELECT * FROM mail_deliveries").all(),
-    );
-    for (const value of [secret, address, rawToken])
-      expect(stored).not.toContain(value);
-  });
-
-  it("fails closed on unconfigured transport and header injection before network access", async () => {
-    const fetcher = vi.fn<typeof fetch>();
-    await expect(
-      deliverMail(
-        db,
-        { ...mail, subject: "Hello\r\nBcc: attacker@example.org" },
-        { fetch: fetcher },
-      ),
-    ).rejects.toMatchObject({ code: "invalid_message" });
-    await expect(
-      deliverMail(
-        db,
-        { ...mail, to: "a@example.org,b@example.org" },
-        { fetch: fetcher },
-      ),
-    ).rejects.toMatchObject({ code: "invalid_message" });
-    vi.stubEnv("RESEND_API_KEY", "");
-    vi.stubEnv("RESEND_FROM_EMAIL", "");
-    expect(emailDeliveryMode()).toBe("disabled");
-    await expect(
-      deliverMail(db, mail, { fetch: fetcher }),
-    ).rejects.toMatchObject({ code: "not_configured" });
-    expect(fetcher).not.toHaveBeenCalled();
-  });
-
-  it("enforces persistent send limits before sending", async () => {
-    vi.stubEnv("REACH_EMAIL_HOURLY_LIMIT", "1");
-    const fetcher = vi.fn<typeof fetch>().mockResolvedValue(accepted());
-    await deliverMail(db, mail, { fetch: fetcher });
-    await expect(
-      deliverMail(db, mail, { fetch: fetcher }),
-    ).rejects.toMatchObject({ code: "rate_limited" });
-    expect(fetcher).toHaveBeenCalledTimes(1);
-  });
-
+describe("private mail presentation", () => {
   it("labels private development capture as preview and disables it in production", async () => {
     const preview = join(directory, "preview");
-    vi.stubEnv("RESEND_API_KEY", "");
-    vi.stubEnv("RESEND_FROM_EMAIL", "");
     vi.stubEnv("REACH_EMAIL_PROVIDER", "preview");
     vi.stubEnv("REACH_EMAIL_PREVIEW_DIR", preview);
     vi.stubEnv("NODE_ENV", "development");
     const fetcher = vi.fn<typeof fetch>();
-    expect((await deliverMail(db, mail, { fetch: fetcher })).status).toBe(
-      "preview",
-    );
+    expect((await deliverMail(db, mail, {})).status).toBe("preview");
     const filename = join(preview, readdirSync(preview)[0]);
     // Windows exposes ACLs rather than POSIX permission bits.
     if (process.platform !== "win32")
@@ -245,9 +101,9 @@ describe("independent Resend transport security", () => {
     expect(JSON.parse(readFileSync(filename, "utf8")).text).toBe(mail.text);
     vi.stubEnv("NODE_ENV", "production");
     expect(emailDeliveryMode()).toBe("disabled");
-    await expect(
-      deliverMail(db, mail, { fetch: fetcher }),
-    ).rejects.toMatchObject({ code: "not_configured" });
+    await expect(deliverMail(db, mail, {})).rejects.toMatchObject({
+      code: "not_configured",
+    });
     expect(fetcher).not.toHaveBeenCalled();
   });
 
@@ -422,166 +278,6 @@ describe("independent notification consent and privacy", () => {
         )
         .get()!.status,
     ).toBe("queued");
-  });
-});
-
-describe("independent authenticated Resend webhook", () => {
-  let webhookId = 0;
-  function event(type = "email.delivered", emailId = messageId) {
-    return {
-      type,
-      created_at: instant.toISOString(),
-      data: {
-        email_id: emailId,
-        to: [address],
-        subject: rawToken,
-        private_payload: `${secret} ${rawToken}`,
-      },
-    };
-  }
-  function signed(
-    body: unknown,
-    options: {
-      bodyOverride?: string;
-      id?: string;
-      timestamp?: string;
-      signature?: string;
-    } = {},
-  ) {
-    const raw = JSON.stringify(body);
-    const id = options.id ?? `msg-${++webhookId}`;
-    const timestamp = options.timestamp ?? String(Math.floor(+instant / 1000));
-    const digest = createHmac("sha256", Buffer.from(signingSecret, "base64"))
-      .update(`${id}.${timestamp}.${raw}`)
-      .digest("base64");
-    return new Request(`${origin}/api/email/webhook`, {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "svix-id": id,
-        "svix-timestamp": timestamp,
-        "svix-signature": options.signature ?? `v1,${digest}`,
-      },
-      body: options.bodyOverride ?? raw,
-    });
-  }
-  async function setup() {
-    vi.stubEnv("RESEND_WEBHOOK_SECRET", `whsec_${signingSecret}`);
-    await deliverMail(db, mail, {
-      fetch: vi.fn<typeof fetch>().mockResolvedValue(accepted()),
-    });
-    return createResendWebhookHandler(db, { now: () => instant });
-  }
-  const state = () =>
-    db
-      .prepare("SELECT status FROM mail_deliveries WHERE provider_message_id=?")
-      .get(messageId)!.status;
-
-  it("authenticates exact raw bytes before changing state and stores no payload", async () => {
-    const handle = await setup();
-    const body = event();
-    expect(
-      (await handle(signed(body, { bodyOverride: JSON.stringify(body) + " " })))
-        .status,
-    ).toBe(401);
-    expect(
-      (await handle(signed(body, { signature: "v1,invalid" }))).status,
-    ).toBe(401);
-    expect(state()).toBe("accepted");
-    expect(
-      db.prepare("SELECT count(*) n FROM mail_webhook_events").get()!.n,
-    ).toBe(0);
-    expect((await handle(signed(body))).status).toBe(200);
-    expect(state()).toBe("delivered");
-    const records =
-      JSON.stringify(db.prepare("SELECT * FROM mail_deliveries").all()) +
-      JSON.stringify(db.prepare("SELECT * FROM mail_webhook_events").all());
-    for (const value of [address, secret, rawToken])
-      expect(records).not.toContain(value);
-  });
-
-  it("rejects stale timestamps and unknown email IDs without poisoning dedupe", async () => {
-    const handle = await setup();
-    expect(
-      (
-        await handle(
-          signed(event(), {
-            timestamp: String(Math.floor(+instant / 1000) - 301),
-          }),
-        )
-      ).status,
-    ).toBe(401);
-    expect(
-      (
-        await handle(
-          signed(
-            event("email.delivered", "00000000-0000-4000-8000-000000009999"),
-          ),
-        )
-      ).status,
-    ).toBe(503);
-    expect(state()).toBe("accepted");
-    expect(
-      db.prepare("SELECT count(*) n FROM mail_webhook_events").get()!.n,
-    ).toBe(0);
-  });
-
-  it("deduplicates Svix IDs and prevents out-of-order status regression", async () => {
-    const handle = await setup();
-    const retryId = "duplicate-event-id";
-    expect(
-      (await handle(signed(event("email.delivery_delayed"), { id: retryId })))
-        .status,
-    ).toBe(200);
-    expect(
-      (await handle(signed(event("email.delivered"), { id: retryId }))).status,
-    ).toBe(200);
-    expect(state()).toBe("delayed");
-    await handle(signed(event("email.delivered")));
-    expect(state()).toBe("delivered");
-    await handle(signed(event("email.delivery_delayed")));
-    expect(state()).toBe("delivered");
-    await handle(signed(event("email.bounced")));
-    expect(state()).toBe("bounced");
-    await handle(signed(event("email.delivered")));
-    expect(state()).toBe("bounced");
-  });
-
-  it("maps sent, failed, suppressed and complaint events while ignoring tracking", async () => {
-    const handle = await setup();
-    expect((await handle(signed(event("email.sent")))).status).toBe(200);
-    expect(state()).toBe("accepted");
-    expect((await handle(signed(event("email.failed")))).status).toBe(200);
-    expect(state()).toBe("failed");
-    expect((await handle(signed(event("email.suppressed")))).status).toBe(200);
-    expect(state()).toBe("failed");
-    expect((await handle(signed(event("email.opened")))).status).toBe(200);
-    expect(state()).toBe("failed");
-    expect((await handle(signed(event("email.complained")))).status).toBe(200);
-    expect(state()).toBe("bounced");
-  });
-
-  it("rejects unsigned, malformed and oversized requests", async () => {
-    const handle = await setup();
-    expect(
-      (
-        await handle(
-          new Request(`${origin}/api/email/webhook`, {
-            method: "POST",
-            body: JSON.stringify(event()),
-          }),
-        )
-      ).status,
-    ).toBe(401);
-    expect(
-      (await handle(signed({ ...event(), padding: "x".repeat(65536) }))).status,
-    ).toBe(400);
-    expect(
-      (await handle(signed({ type: "email.delivered", data: {} }))).status,
-    ).toBe(400);
-    vi.stubEnv("RESEND_WEBHOOK_SECRET", "");
-    expect((await handle(signed(event()))).status).toBe(503);
-    expect(state()).toBe("accepted");
   });
 });
 

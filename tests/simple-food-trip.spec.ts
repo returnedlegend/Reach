@@ -10,7 +10,7 @@ async function start(page: Page) {
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("Brazos Church Pantry");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   const picker = page.getByRole("region", {
     name: "Choose a starting location",
   });

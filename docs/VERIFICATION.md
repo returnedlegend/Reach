@@ -1,10 +1,12 @@
+> Latest 2026-10-25 interface/email cleanup: [implementation and release limits](UI-POLISH.md), [independent quality review](QUALITY-REVIEW.md). Counts below describe earlier stages.
+
 > Current food-access planner and private outreach: [implementation and setup](ACCESS-PLANNER.md), [independent review](ACCESS-VERIFICATION.md), and [fixture evaluation](ACCESS-EVALUATION.md). These distinguish local tests from live service checks. Earlier counts below are historical.
 
 > Latest TX-10 expansion and in-app directions: [independent verification](TX10-VERIFICATION.md). Final checks: 313 unit tests, 385 browser checks passed, 7 intentional skips, data validation, TypeScript and production build passed. Live final-build map tiles, walking/driving routes and address lookup succeeded; GPS behavior was simulated. Earlier reports below are historical.
 
 > Current mobile interface and regression evidence: [daisyUI design system](DAISY-DESIGN.md) and [independent daisyUI review](DAISY-VERIFICATION.md). The [earlier UI redesign](UI-REDESIGN.md) is historical.
 
-> Current email setup: [Resend configuration and local preview](RESEND.md) and [Resend verification](RESEND-VERIFICATION.md). No live Resend delivery has been configured or verified.
+> Current email setup: [SMTP and private preview](SMTP.md). Automated checks do not establish live SMTP connectivity or inbox delivery.
 
 > Current mapping migration evidence: [OSM verification](OSM-VERIFICATION.md). The report below records an earlier development stage and does not establish live Google or OSM availability.
 

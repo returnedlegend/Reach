@@ -76,7 +76,7 @@ export function publicFeatures(): PublicFeatures {
       ? process.env.NODE_ENV !== "production"
       : emailProvider === "smtp"
         ? Boolean(process.env.SMTP_HOST && process.env.SMTP_FROM_EMAIL)
-        : Boolean(process.env.RESEND_API_KEY && process.env.RESEND_FROM_EMAIL);
+        : false;
   return {
     accounts: featureEnabled("accounts"),
     google: featureEnabled("google"),

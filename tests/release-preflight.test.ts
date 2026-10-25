@@ -126,7 +126,7 @@ describe("release preflight", () => {
           REACH_RELEASE_PROFILE: "extended",
           REACH_COMMUNITY_ENABLED: "true",
           REACH_ACCOUNT_ENABLED: "true",
-          REACH_EMAIL_PROVIDER: "resend",
+          REACH_EMAIL_PROVIDER: "smtp",
           REACH_AI_PROVIDER: "deepseek",
           REACH_RELEASE_ACCOUNTS: "true",
           REACH_RELEASE_AI: "true",
@@ -150,7 +150,7 @@ describe("release preflight", () => {
           REACH_RELEASE_PROFILE: "extended",
           REACH_PROCESS_ROLE: "email-worker",
           REACH_RELEASE_EMAIL: "true",
-          REACH_EMAIL_PROVIDER: "resend",
+          REACH_EMAIL_PROVIDER: "smtp",
         }),
       ),
     ).toEqual([]);
@@ -310,7 +310,7 @@ describe("release preflight", () => {
   it("does not include configured secret values in validation errors", () => {
     const secret = "do-not-print-this-token";
     expect(
-      issues(validEnvironment({ RESEND_API_KEY: secret })).join(" "),
+      issues(validEnvironment({ SMTP_PASSWORD: secret })).join(" "),
     ).not.toContain(secret);
   });
 });

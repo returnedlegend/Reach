@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowUpRight, LoaderCircle, MapPin, Send, X } from "lucide-react";
+import { ArrowUpRight, MapPin, Send, X } from "lucide-react";
 import { chicagoNow, googleMapsUrl } from "@/lib/journey";
 import type { AccessInput, AccessOption } from "@/lib/access-types";
 import type { AssistantResponse } from "@/lib/assistant-types";
@@ -9,6 +9,8 @@ import type { Resource } from "@/data/resources";
 import { LocationPicker, type SelectedLocation } from "./location-picker";
 import { OutreachPanel } from "./outreach-panel";
 import "./reach-assistant.css";
+import { AILoadingIndicator } from "./ai-loading-indicator";
+import { FOOD_SEARCH_TIMEOUT_MS } from "@/lib/ai-timing";
 
 type Props = {
   location: SelectedLocation | null;
@@ -319,7 +321,10 @@ export function ReachAssistant({
         cache: "no-store",
         referrerPolicy: "no-referrer",
         headers: { "Content-Type": "application/json" },
-        signal: active.signal,
+        signal: AbortSignal.any([
+          active.signal,
+          AbortSignal.timeout(FOOD_SEARCH_TIMEOUT_MS),
+        ]),
         body: JSON.stringify({
           message: sent,
           departureExplicit,
@@ -529,16 +534,18 @@ export function ReachAssistant({
           <button
             type="submit"
             className="btn btn-primary"
+            aria-label={busy ? "Preparing reply…" : undefined}
             disabled={
               busy || !message.trim() || message.length > 1200 || !departureTime
             }
           >
             {busy ? (
-              <LoaderCircle className="reach-assistant__spin" size={17} />
+              <AILoadingIndicator label="Preparing reply…" />
             ) : (
-              <Send size={17} />
+              <>
+                <Send size={17} aria-hidden="true" /> Send
+              </>
             )}
-            Send
           </button>
         </div>
       </form>

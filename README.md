@@ -24,7 +24,7 @@ Use Node 24. For browser tests, install Chromium with `npx playwright install ch
 
 Production account/access/assistant endpoints deliberately require a canonical HTTPS `REACH_APP_ORIGIN`; a plain HTTP production server without this setting is suitable only for basic discovery smoke checks, not end-to-end authenticated or assistant workflows. Do not bypass the origin guard to demonstrate those features. Live AI, search/routing, OAuth and mail still require their documented operator configuration. No live food availability or route is fabricated when a provider is unavailable.
 
-Google account sign-in is available alongside Reach passwords. Configure the separate Google OAuth Web client using [Google sign-in setup](docs/GOOGLE-SIGN-IN.md). Only identity permissions are requested; pantry emails still use Reach’s Resend service and explicit approval.
+Google account sign-in is available alongside Reach passwords. Configure the separate Google OAuth Web client using [Google sign-in setup](docs/GOOGLE-SIGN-IN.md). Only identity permissions are requested; pantry emails still use Reach’s configured SMTP service and explicit approval.
 
 Reach is a mobile-first community-resource and transit website for Bryan–College Station, built with Next.js 16, React 19, TypeScript, and Node.js 24.
 
@@ -32,7 +32,7 @@ The guided flow lets people search for a food site by name, city, address, or ZI
 
 ## Find food I can reach
 
-The home page starts with immediate food options and a short request. For the retained detailed feasibility planner, choose **Step-by-step trip controls**, then **Find food I can reach**; it uses the existing map and real routing boundary. Set walking/fare/transfer limits, arrival or return deadlines, and optional mobility/dietary requirements. Results distinguish known failures from missing information, evaluate availability at arrival, and explain the actual itinerary. Optional AI preference interpretation is disabled by default; manual controls always work. **Check availability** opens reviewed inquiries to enrolled contacts with a verified account. Sending stays in private preview here; real receiving requires separate Resend configuration. No production contacts or inventory are fabricated.
+The home page starts with immediate food options and a short request. For the retained detailed feasibility planner, choose **Step-by-step trip controls**, then **Find food I can reach**; it uses the existing map and real routing boundary. Set walking/fare/transfer limits, arrival or return deadlines, and optional mobility/dietary requirements. Results distinguish known failures from missing information, evaluate availability at arrival, and explain the actual itinerary. Optional AI preference interpretation is disabled by default; manual controls always work. **Check availability** opens reviewed inquiries to enrolled contacts with a verified account. Sending stays in private preview here; live sending requires SMTP and a monitored reply mailbox; new replies are handled manually. No production contacts or inventory are fabricated.
 
 See [planner setup, limits and outreach](docs/ACCESS-PLANNER.md), [independent checks](docs/ACCESS-VERIFICATION.md), [official integration research](docs/ACCESS-INTEGRATIONS.md), and [fixture evaluation](docs/ACCESS-EVALUATION.md), and [changed files](docs/ACCESS-FILES.md). `npm run access:evaluate` compares synthetic scenarios to a proximity-only baseline. The mail worker now dispatches both consent-based notifications and separately authorized inquiries. Private inquiry history is retained separately from the metadata-only notification queue.
 
@@ -44,7 +44,7 @@ The existing food-access planner now has optional service, urgency, household-si
 
 ## Conversational assistant and SMTP
 
-Use the home screen’s optional AI interpretation checkbox when configured. The retained **Reach AI assistant** dialog is available from Map, Step-by-step trip controls, or pantry details when enabled. It connects the selected starting point, existing public pantry data and deterministic routing to optional DeepSeek interpretation; computed results remain available without AI. **Ask about availability** opens editable, explicitly approved inquiries. Resend SMTP is now an explicit alternative to the existing Resend API transport, with TLS, bounded delivery, durable status and duplicate safeguards. Local preview remains the selected unconfigured workflow; no live delivery/inference is claimed. See [exact SMTP/AI setup](docs/SMTP-AI-SETUP.md), [independent verification](docs/SMTP-AI-VERIFICATION.md), and [changed files](docs/SMTP-AI-FILES.md).
+The **Reach AI assistant** dialog is available from Map, Step-by-step trip controls, or pantry details when enabled. It uses the selected starting point, maintained pantry data and deterministic routing with the configured AI provider. **Ask about availability** opens editable inquiries for explicit approval. Existing SMTP delivery supports TLS, bounded sending and duplicate safeguards; private preview sends nothing externally. Replies go to a configured monitored mailbox. See [SMTP setup](docs/SMTP.md).
 
 ## Mobile design
 
@@ -72,7 +72,7 @@ The existing SQLite store now also holds email accounts, private preferred locat
 
 Open **Account** or `/account` for sign-in, registration, verification, password recovery and profile settings. Pantry cards and selected map results open full details, optional crowd reports and busy-times charts. `/manage` is restricted to assigned verified managers and administrators. Community organizer/moderator permissions remain separate. Anonymous discovery and trip planning still work.
 
-Mail defaults to disabled. The selected local workflow is explicit private preview: set `REACH_EMAIL_PROVIDER=preview` and `REACH_APP_ORIGIN=http://localhost:3000` in `.env.local`, then run the development app. Account links are captured in private `.local/mail-preview` files; no external messages are sent. Production preview is disabled. Production delivery uses Resend's server-side API, a verified sender domain, the canonical HTTPS application origin and a persistent private SQLite volume. The [dated domain/DNS audit](docs/RESEND-DNS.md) records an earlier domain check; the [October 24 read-only provider check](docs/evidence/runtime-readiness.json) now reports failed domain authentication. Neither establishes real email delivery. Each installation needs its own secure provider configuration.
+Mail defaults to disabled. For private local preview, set `REACH_EMAIL_PROVIDER=preview` and `REACH_APP_ORIGIN=http://localhost:3000` in `.env.local`. Account links are captured in private `.local/mail-preview` files; nothing is sent. Production preview is disabled. Existing server-side SMTP requires a configured sender, TLS credentials, the canonical HTTPS origin and persistent storage. See [SMTP setup](docs/SMTP.md).
 
 Optional pantry, volunteer and pickup email preferences start off. A durable metadata-only queue rechecks current consent and authorization before dispatch; essential account security messages remain separate. Run the notification worker alongside the app, using the same database and origin:
 
@@ -81,7 +81,7 @@ Optional pantry, volunteer and pickup email preferences start off. A durable met
 NODE_ENV=development node --env-file=.env.local --import tsx scripts/mail-worker.ts --watch
 ```
 
-Use `--once` for a single bounded dispatch. With variables already exported, `NODE_ENV=development npm run mail:worker -- --once` also works. Worker summaries contain counts, not recipients or message bodies. See [Resend setup](docs/RESEND.md) for environment loading, private preview access, domain verification, webhook configuration and delivery-state limits, and the [migration report and file manifest](docs/RESEND-MIGRATION.md) for implementation and verification evidence.
+Use `--once` for a single bounded dispatch. Worker summaries contain counts, not recipients or message bodies. See [SMTP setup](docs/SMTP.md) for environment loading, private preview access and delivery limits. SMTP acceptance does not establish inbox delivery.
 
 ```bash
 npm run data:migrate
@@ -91,7 +91,7 @@ npm run data:prune
 npm run account:admin -- administrator@example.org
 ```
 
-Accounts extend the existing identity store with maintained Argon2id and Resend libraries. This is custom authentication and needs ongoing security maintenance. Read [authentication and email setup](docs/AUTHENTICATION.md), [Resend setup](docs/RESEND.md), [database migration, backup and rollback](docs/PANTRY-DATABASE.md), [crowd methodology and privacy thresholds](docs/CROWD-METHOD.md), [independent account verification](docs/ACCOUNT-VERIFICATION.md), and [integrated checks and setup](docs/ACCOUNT-INTEGRATION.md) before hosting.
+Accounts extend the existing identity store with Argon2id and server-side SMTP. This is custom authentication and needs ongoing security maintenance. Read [authentication setup](docs/AUTHENTICATION.md), [SMTP setup](docs/SMTP.md) and [database backup/rollback](docs/PANTRY-DATABASE.md) before hosting.
 
 Busy times use optional observations, never opening hours as traffic evidence. Historical bins require three reports on each of three separate local dates; each account may report once per pantry per local day. Missing or insufficient data stays empty. Recent community observations are not live occupancy or a promise of food. Inventory states show their source and update time. No crowd or inventory observations are seeded in production.
 
@@ -128,3 +128,5 @@ npm run test:e2e
 See [OSM migration verification](docs/OSM-VERIFICATION.md), [independent verification](docs/VERIFICATION.md), [v3 verification](docs/VERIFICATION-V3.md), [GTFS import](docs/GTFS.md), [map and data audit](docs/OSM-DATA-AUDIT.md), and [source review](docs/DATA-SOURCES.md). Earlier architecture, demo, and evidence documents also describe the retained pantry planner.
 
 Primary AI: [Run Llama 3.2 with Ollama](docs/LLAMA.md). The main food search uses Llama to compare and order matching pantry options by default. See [how pantry comparisons work](docs/AI-PANTRY-RANKING.md). Travel feasibility stays separate and computed; suggestions do not guarantee food availability.
+
+Latest interface loading and email cleanup: [implementation, checks and remaining release limits](docs/UI-POLISH.md), with [independent review](docs/QUALITY-REVIEW.md).

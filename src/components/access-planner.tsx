@@ -9,6 +9,8 @@ import {
   type FormEvent,
 } from "react";
 import dynamic from "next/dynamic";
+import { AILoadingIndicator } from "./ai-loading-indicator";
+import { FOOD_SEARCH_TIMEOUT_MS } from "@/lib/ai-timing";
 import { transitStops, type Resource } from "../data/resources";
 import Link from "next/link";
 import {
@@ -315,6 +317,15 @@ export function AccessPlanner({
   const [staleAvailability, setStaleAvailability] = useState(false);
   const [saveOriginConsent, setSaveOriginConsent] = useState(false);
   const [assistText, setAssistText] = useState("");
+  const [assistBusy, setAssistBusy] = useState(false);
+  const assistController = useRef<AbortController | null>(null);
+  useEffect(() => () => assistController.current?.abort(), []);
+  function resetAssist() {
+    assistController.current?.abort();
+    assistController.current = null;
+    setAssistBusy(false);
+    setAssist(null);
+  }
   const [assist, setAssist] = useState<AssistReply | null>(null);
   const [appliedAssist, setAppliedAssist] =
     useState<Partial<AccessInput> | null>(null);
@@ -519,6 +530,10 @@ export function AccessPlanner({
   }
 
   async function requestAssist() {
+    if (assistController.current || !assistText.trim()) return;
+    const active = new AbortController();
+    assistController.current = active;
+    setAssistBusy(true);
     setAssist(null);
     setAppliedAssist(null);
     try {
@@ -526,8 +541,14 @@ export function AccessPlanner({
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ task: "preferences", text: assistText }),
+        signal: AbortSignal.any([
+          active.signal,
+          AbortSignal.timeout(FOOD_SEARCH_TIMEOUT_MS),
+        ]),
       });
       const payload = (await result.json()) as AssistReply;
+      if (assistController.current !== active || active.signal.aborted) return;
+      if (!result.ok) throw new Error("Preference request failed.");
       setAssist({
         status: payload.status === "available" ? "available" : "unavailable",
         patch: safeAssistPatch(payload.patch),
@@ -538,11 +559,17 @@ export function AccessPlanner({
             : "Preference suggestions were not returned.",
       });
     } catch {
+      if (assistController.current !== active || active.signal.aborted) return;
       setAssist({
         status: "unavailable",
         message:
           "Preference interpretation is unavailable. You can still set preferences directly.",
       });
+    } finally {
+      if (assistController.current === active) {
+        assistController.current = null;
+        setAssistBusy(false);
+      }
     }
   }
 
@@ -960,7 +987,10 @@ export function AccessPlanner({
                 className="textarea textarea-bordered"
                 maxLength={1200}
                 value={assistText}
-                onChange={(event) => setAssistText(event.target.value)}
+                onChange={(event) => {
+                  resetAssist();
+                  setAssistText(event.target.value);
+                }}
                 placeholder="For example, I can walk for 10 minutes and need step-free travel."
               />
             </label>
@@ -968,10 +998,20 @@ export function AccessPlanner({
               className="btn btn-outline"
               type="button"
               onClick={requestAssist}
-              disabled={!assistText.trim()}
+              disabled={assistBusy || !assistText.trim()}
+              aria-label={assistBusy ? "Analyzing…" : undefined}
             >
-              Interpret preferences
+              {assistBusy ? <AILoadingIndicator /> : "Interpret preferences"}
             </button>
+            {assistBusy && (
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={resetAssist}
+              >
+                Cancel interpretation
+              </button>
+            )}
             {assist && (
               <div className="access-planner__assist" role="status">
                 <p>{assist.message}</p>
@@ -1006,11 +1046,16 @@ export function AccessPlanner({
         )}
         <button
           className="btn btn-primary access-planner__search"
+          aria-label={busy ? "Finding options…" : undefined}
           form="access-travel-preferences"
           type="submit"
           disabled={busy}
         >
-          {busy ? "Finding options…" : "Find food I can reach"}
+          {busy ? (
+            <AILoadingIndicator label="Finding options…" />
+          ) : (
+            "Find food I can reach"
+          )}
         </button>
       </div>
 

@@ -15,7 +15,7 @@ describe("public core release boundary", () => {
     vi.stubEnv("REACH_RELEASE_PROFILE", "");
     vi.stubEnv("REACH_ACCOUNT_ENABLED", "true");
     vi.stubEnv("REACH_COMMUNITY_ENABLED", "true");
-    vi.stubEnv("REACH_EMAIL_PROVIDER", "resend");
+    vi.stubEnv("REACH_EMAIL_PROVIDER", "smtp");
     vi.stubEnv("REACH_AI_PROVIDER", "deepseek");
     expect(coreRelease()).toBe(true);
     expect(publicFeatures()).toEqual(CORE_FEATURES);

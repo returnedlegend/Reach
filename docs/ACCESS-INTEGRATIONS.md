@@ -1,6 +1,6 @@
-# Optional AI and inbound email integrations
+# Optional AI and email integration boundaries
 
-Historical research checked 2026-10-22 against the linked official documentation. It is an integration decision note, not a live account or quota check. Its OpenRouter/Gemini/Groq comparison predates the current DeepSeek integration; use [DeepSeek AI setup](DEEPSEEK.md) for active configuration, pricing and privacy guidance. There are no configured Gemini, Groq, OpenRouter, or Resend credentials/accounts available for runtime validation. Existing Resend documentation covers outbound account and notification email in [RESEND.md](RESEND.md); this note covers inbound email research for the implemented optional workflow. The current transit and regional coverage audits remain in [GTFS.md](GTFS.md) and [TX10-DATA.md](TX10-DATA.md); consult those before changing route coverage or describing timetable confidence.
+Historical research checked 2026-10-22 against the linked official documentation. It is an integration decision note, not a live account or quota check. Its AI comparison is historical; consult current provider guides for active configuration. Outbound email now uses [SMTP or private preview](SMTP.md); replies require manual handling in a monitored mailbox. Current transit and regional coverage audits remain in [GTFS.md](GTFS.md) and [TX10-DATA.md](TX10-DATA.md).
 
 ## Recommendation
 
@@ -46,22 +46,9 @@ type AssistanceResult<T> =
 
 The `value` on non-available results should come from deterministic application logic, not generated text. Require runtime schema validation even when a provider advertises strict JSON output. Set a short timeout and bounded retries for transient errors; do not retry authentication, policy, invalid-request, or quota failures. Do not call an LLM for route safety, eligibility, medical/legal advice, account authorization, or facts absent from reviewed source data.
 
-## Resend inbound email contract
+## Email integration boundary
 
-Resend can receive email on a Resend-managed `<id>.resend.app` subdomain or a verified custom domain with the required MX configuration. A configured `email.received` webhook is a signed `POST`; the event contains metadata, not the body or attachments. Its useful correlation fields include `data.email_id` (Resend's identifier), `data.message_id` (RFC Message-ID), `data.from`, `data.to`, `data.received_for`, and `data.subject`. `received_for` records the recipient address associated with forwarding. Retrieve content server-side only after signature verification:
-
-```http
-GET https://api.resend.com/emails/receiving/{email_id}
-Authorization: Bearer <server-side Resend API key>
-```
-
-The Resend SDK equivalent is `resend.emails.receiving.get(email_id)`. The current REST reference says the retrieve response can include Resend-computed SPF/DKIM/DMARC `authentication` results for newer messages. However, the repository's pinned Resend Node SDK 6.34.1 `GetReceivingEmailResponseSuccess` type does not declare `authentication`; use the REST API if that field is needed, or verify its availability after an SDK upgrade. Do not cast it into existence. The webhook does not contain the original body, headers, or attachments. Resend supplies signed attachment URLs through the receiving attachment API; treat downloaded files as untrusted input.
-
-Verify each webhook with the endpoint-specific Resend signing secret and the exact raw body plus `svix-id`, `svix-timestamp`, and `svix-signature` headers, using the Resend SDK or Svix library. Verify before parsing or acting on event data, and make event handling idempotent by webhook event ID. Validate event type and destination address, then persist the `email_id` and `message_id` with the internal thread/case record before asynchronous retrieval. Do not treat a valid webhook signature as proof that the sender is trusted: it only authenticates the webhook delivery from Resend. Even if a future SDK adds the API's `authentication` field, it must not promote sender identity to verified or remove manual review for account-sensitive actions.
-
-For a reply in the original email thread, use the received email's `data.message_id` as the outgoing message's `In-Reply-To` header and prefix the subject with `Re:`. Email clients use the RFC `message_id` for threading; the Resend `email_id` is for retrieving the inbound message. Neither is an authorization credential. Match replies to an existing internal case using a random, unguessable case token or verified account workflow; do not infer account ownership from `From`, subject, display name, `To`, or a client-supplied `In-Reply-To`. Check Resend-computed authentication results where present, but SPF/DKIM/DMARC results are not user authentication and can be absent or inconclusive. Treat message content as hostile input and do not execute instructions embedded in mail.
-
-The repository's current mail endpoint is for outbound delivery events, as documented in [RESEND.md](RESEND.md). The implemented inbound route is `/api/outreach/inbound` and requires separate receiving-domain, key and webhook configuration. Research alone does not enable or verify live receiving.
+SMTP handles outbound delivery only. Live pantry inquiries require a monitored app-controlled `REACH_OUTREACH_REPLY_EMAIL`. There is no inbound provider API or webhook integration. Existing saved replies retain private ownership and explicit review checks; email content never authorizes sending or modifies public pantry records. See [SMTP setup](SMTP.md).
 
 ## BTD publication recheck
 
@@ -96,21 +83,12 @@ Provider documentation:
 - OpenRouter provider logging and data policy filters: <https://openrouter.ai/docs/guides/privacy/provider-logging>
 - OpenRouter routing and provider-selection controls: <https://openrouter.ai/docs/guides/routing/provider-selection>
 
-Resend receiving and webhook documentation:
-
-- Receiving overview and domain setup: <https://resend.com/docs/dashboard/receiving/introduction>
-- Create a receiving webhook: <https://resend.com/docs/dashboard/receiving/create-receiving-webhook>
-- `email.received` event payload: <https://resend.com/docs/webhooks/emails/received>
-- Retrieve received email API: <https://resend.com/docs/api-reference/emails/retrieve-received-email>
-- Retrieve received email content: <https://resend.com/docs/dashboard/receiving/get-email-content>
-- Threading and reply correlation: <https://resend.com/docs/dashboard/receiving/reply-to-emails>
-- Verify webhook signatures with Resend/Svix: <https://resend.com/docs/webhooks/verify-webhooks-requests>
 - Current official BTD GTFS source URL: <https://www.btd.org/2025btdgtfs/> (currently redirects to the ZIP linked in the verification above)
 - BTD fixed-route rates: <https://www.btd.org/fixed-routes/rates/>
 - BTD ADA paratransit eligibility: <https://www.btd.org/paratransit/eligibility/>
 - BTD schedules by city: <https://www.btd.org/fixed-routes/schedules/>
 - BTD Bryan/College Station Fixed Route Map PDF: <https://www.btd.org/wp-content/uploads/2025/11/BCS_FixedRouteMap.pdf>
-- Existing Reach outbound email setup: [RESEND.md](RESEND.md)
+- Existing Reach outbound email setup: [SMTP setup](SMTP.md)
 
 Transit and service area references:
 

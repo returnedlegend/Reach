@@ -35,7 +35,7 @@ type Preferences = {
 type Status = {
   enabled: boolean;
   emailConfigured: boolean;
-  deliveryMode?: "resend" | "smtp" | "preview" | "disabled";
+  deliveryMode?: "smtp" | "preview" | "disabled";
 };
 type LinkAction = { kind: "verify" | "reset"; token: string };
 

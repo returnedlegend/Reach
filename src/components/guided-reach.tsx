@@ -36,6 +36,7 @@ import { Surface, ActionButton } from "./ui";
 import { LocationPicker, type SelectedLocation } from "./location-picker";
 import { JourneyMap } from "./journey-map";
 import { LoadingState } from "./loading-state";
+import { AILoadingIndicator } from "./ai-loading-indicator";
 import {
   transportResources,
   transitStops,
@@ -1350,6 +1351,11 @@ export function GuidedReach({
               setMode(value);
             }}
             onDirections={startDirections}
+            onViewMap={(resource) => {
+              selectResource(resource.id);
+              setTab("map");
+              setPreviewOpen(true);
+            }}
             onCheckedDirections={showCheckedFoodTrip}
             initialRequest={simpleRequest}
             onRequestChange={setSimpleRequest}
@@ -1990,14 +1996,19 @@ export function GuidedReach({
                             disabled={
                               busy || !location || !selected.coordinates
                             }
+                            aria-label={busy ? "Calculating route…" : undefined}
                             onClick={() => {
                               routingEnabled.current = true;
                               setRouteRequest((value) => value + 1);
                             }}
                           >
-                            {route
-                              ? "Recalculate directions"
-                              : "Calculate route here"}
+                            {busy ? (
+                              <AILoadingIndicator label="Calculating route…" />
+                            ) : route ? (
+                              "Recalculate directions"
+                            ) : (
+                              "Calculate route here"
+                            )}
                           </button>
                         )}
                         {mode === "transit" && !checkedFoodTrip && (

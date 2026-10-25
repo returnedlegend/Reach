@@ -29,6 +29,10 @@ import {
 import { nextPublishedWindow } from "@/lib/discovery";
 import { LocationPicker, type SelectedLocation } from "./location-picker";
 import styles from "./simple-food-finder.module.css";
+import {
+  AILoadingIndicator,
+  RecommendationSkeletons,
+} from "./ai-loading-indicator";
 
 type RouteMetric = {
   miles: number;
@@ -43,6 +47,7 @@ type Props = {
   mode: TravelMode;
   onModeChange: (mode: TravelMode) => void;
   onDirections: (resource: Resource) => void;
+  onViewMap: (resource: Resource) => void;
   onCheckedDirections: (trip: CheckedFoodTrip) => void;
   initialRequest: string;
   onRequestChange: (text: string) => void;
@@ -72,6 +77,7 @@ export function SimpleFoodFinder(props: Props) {
   } | null>(null);
   const generation = useRef(0);
   const aiController = useRef<AbortController | null>(null);
+  const searchInFlight = useRef(false);
   const [checkedTrip, setCheckedTrip] = useState<
     | (AccessResponse & {
         assumptions?: string[];
@@ -97,6 +103,7 @@ export function SimpleFoodFinder(props: Props) {
     return () => {
       clearInterval(timer);
       aiController.current?.abort();
+      searchInFlight.current = false;
     };
   }, []);
   const found = useMemo(
@@ -252,8 +259,10 @@ export function SimpleFoodFinder(props: Props) {
     : undefined;
 
   async function search(text: string) {
+    if (searchInFlight.current) return;
     const version = ++generation.current;
     aiController.current?.abort();
+    searchInFlight.current = false;
     setDraft(text);
     setRequest(text);
     props.onRequestChange(text);
@@ -266,13 +275,15 @@ export function SimpleFoodFinder(props: Props) {
     setAiRanking(null);
     const local = discoverFood(resources, text).intent;
     if (local.mode) props.onModeChange(local.mode);
-    requestAnimationFrame(() => {
-      resultsHeading.current?.focus({ preventScroll: true });
-      resultsHeading.current?.scrollIntoView({ block: "start" });
-    });
+    if (!useAI || !text.trim())
+      requestAnimationFrame(() => {
+        resultsHeading.current?.focus({ preventScroll: true });
+        resultsHeading.current?.scrollIntoView({ block: "start" });
+      });
     if (!useAI || !text.trim()) return;
     const controller = new AbortController();
     aiController.current = controller;
+    searchInFlight.current = true;
     setThinking(true);
     setAiAttempted(true);
     try {
@@ -320,9 +331,15 @@ export function SimpleFoodFinder(props: Props) {
           props.onModeChange(data.intent.mode);
       }
     } catch {
-      /* Results are already visible. */
+      if (version === generation.current)
+        setAiMessage(
+          "The AI request could not finish. Check your connection and try again. Your pantry results are still available.",
+        );
     } finally {
-      if (version === generation.current) setThinking(false);
+      if (version === generation.current) {
+        searchInFlight.current = false;
+        setThinking(false);
+      }
     }
   }
   function submit(event: FormEvent) {
@@ -350,12 +367,36 @@ export function SimpleFoodFinder(props: Props) {
             rows={1}
             maxLength={1200}
             value={draft}
-            onChange={(event) => setDraft(event.target.value)}
+            onChange={(event) => {
+              if (searchInFlight.current) {
+                generation.current++;
+                aiController.current?.abort();
+                searchInFlight.current = false;
+                setThinking(false);
+                setAiRanking(null);
+                setAiMessage(
+                  "Request changed. Search again to compare these options.",
+                );
+              }
+              setDraft(event.target.value);
+            }}
             placeholder="I need food in Bryan and I’m walking"
           />
-          <button className="btn btn-primary" type="submit">
-            <Sparkles size={18} aria-hidden="true" /> Find food{" "}
-            <ArrowRight size={18} aria-hidden="true" />
+          <button
+            className="btn btn-primary"
+            type="submit"
+            disabled={thinking}
+            aria-busy={thinking}
+            aria-label={thinking ? "Analyzing…" : undefined}
+          >
+            {thinking ? (
+              <AILoadingIndicator />
+            ) : (
+              <>
+                <Sparkles size={18} aria-hidden="true" /> Find best resources{" "}
+                <ArrowRight size={18} aria-hidden="true" />
+              </>
+            )}
           </button>
         </form>
         <div className={styles.chips} aria-label="Quick food requests">
@@ -367,6 +408,7 @@ export function SimpleFoodFinder(props: Props) {
             <button
               key={text}
               className="btn btn-outline"
+              disabled={thinking}
               onClick={() => void search(text)}
             >
               {label}
@@ -383,6 +425,7 @@ export function SimpleFoodFinder(props: Props) {
                 if (!event.target.checked) {
                   generation.current++;
                   aiController.current?.abort();
+                  searchInFlight.current = false;
                   setThinking(false);
                   setAiRanking(null);
                 }
@@ -398,9 +441,7 @@ export function SimpleFoodFinder(props: Props) {
       <section className={styles.start} aria-label="Optional starting point">
         <div>
           <h2>
-            {location
-              ? "Starting from your chosen place"
-              : "Want options closer to you?"}
+            {location ? "Starting from your chosen place" : "Find food near me"}
           </h2>
           <p>
             {location
@@ -415,6 +456,7 @@ export function SimpleFoodFinder(props: Props) {
           onChange={(value) => {
             generation.current++;
             aiController.current?.abort();
+            searchInFlight.current = false;
             setThinking(false);
             setAiRanking(null);
             props.onLocationChange(value);
@@ -441,6 +483,7 @@ export function SimpleFoodFinder(props: Props) {
                   // interpretation of their earlier request.
                   generation.current++;
                   aiController.current?.abort();
+                  searchInFlight.current = false;
                   setThinking(false);
                   setAiRanking(null);
                   props.onModeChange(id);
@@ -494,6 +537,7 @@ export function SimpleFoodFinder(props: Props) {
                 onClick={() => {
                   generation.current++;
                   aiController.current?.abort();
+                  searchInFlight.current = false;
                   setThinking(false);
                   setAiMessage(
                     "AI comparison stopped. Your pantry results are still available.",
@@ -520,6 +564,14 @@ export function SimpleFoodFinder(props: Props) {
               >
                 Clear request
               </button>
+              {aiAttempted && assistance !== "ai" && (
+                <button
+                  className={styles.textButton}
+                  onClick={() => void search(request)}
+                >
+                  Try AI again
+                </button>
+              )}
             </p>
           )}
           {found.notices.map((note) => (
@@ -662,6 +714,7 @@ export function SimpleFoodFinder(props: Props) {
             )}
           </section>
         )}
+        {thinking && <RecommendationSkeletons />}
         <div className={styles.cards}>
           {visible.map(({ resource, summary, straightLineMiles }) => {
             const metric = currentRoutes[resource.id];
@@ -829,6 +882,12 @@ export function SimpleFoodFinder(props: Props) {
                     ))}
                 </details>
                 <div className={styles.more}>
+                  <button
+                    className={styles.textButton}
+                    onClick={() => props.onViewMap(resource)}
+                  >
+                    View on map
+                  </button>
                   <button
                     className={styles.textButton}
                     onClick={() => props.onDetails(resource.id)}

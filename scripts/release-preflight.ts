@@ -137,7 +137,7 @@ export function validateReleaseEnvironment(
     if (env.REACH_RELEASE_EMAIL !== "true") {
       problems.push("The email worker requires REACH_RELEASE_EMAIL=true.");
     }
-    if (!env.REACH_EMAIL_PROVIDER || env.REACH_EMAIL_PROVIDER === "disabled") {
+    if (env.REACH_EMAIL_PROVIDER !== "smtp") {
       problems.push("The email worker requires a configured email provider.");
     }
   }

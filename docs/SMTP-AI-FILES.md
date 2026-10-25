@@ -38,7 +38,6 @@ The private local `.env.local` was preserved and extended with missing placehold
 
 - `.env.example`
 - `README.md`
-- `docs/RESEND.md`
 - `package-lock.json`
 - `package.json`
 - `src/components/account-panel.tsx`
@@ -59,7 +58,7 @@ The private local `.env.local` was preserved and extended with missing placehold
 
 ## Ownership and purpose
 
-- SMTP adapter, shared mail boundary, account/notification status types and reviewed outreach guards: explicit Resend SMTP without changing existing templates or authentication.
+- SMTP adapter, shared mail boundary, account/notification status types and reviewed outreach guards: explicit SMTP without changing existing templates or authentication.
 - OpenRouter/Gemini clients and tests: configurable models, structured validation, explicit fallback and per-attempt budgets.
 - Assistant route/types/service, guided map, pantry detail and assistant component/styles: actual planner results, selected-coordinate routing, visible entry points, explicit reviewed inquiry access and keyboard/mobile interactions.
 - Documentation, screenshots, catalog evidence and tests: setup instructions, independent checks and honest external-service limitations.

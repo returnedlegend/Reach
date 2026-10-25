@@ -1,6 +1,6 @@
 # Direct DeepSeek migration — October 25, 2026
 
-The existing Reach application now uses the official DeepSeek API for the optional pantry/map assistant, request interpretation, grounded guidance, inquiry drafting and conservative reply extraction. Frontend routing and forms, SQLite, Resend/SMTP delivery, user authentication, maintained pantry data and deterministic trip ranking are retained. No dependencies were added. The migration was verified locally before GitHub delivery. No public deployment was performed.
+The existing Reach application now uses the official DeepSeek API for the optional pantry/map assistant, request interpretation, grounded guidance, inquiry drafting and conservative reply extraction. Frontend routing and forms, SQLite, SMTP delivery, user authentication, maintained pantry data and deterministic trip ranking are retained. No dependencies were added. The migration was verified locally before GitHub delivery. No public deployment was performed.
 
 ## Provider and safeguards
 

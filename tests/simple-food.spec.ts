@@ -3,6 +3,15 @@ import AxeBuilder from "@axe-core/playwright";
 import { foodResources } from "../src/data/resources";
 
 test.beforeEach(async ({ page }) => {
+  await page.route("**/api/food-search", (route) =>
+    route.fulfill({
+      json: {
+        assistance: "directory",
+        intent: { service: "food" },
+        aiMessage: "AI is unavailable. Directory matching remains available.",
+      },
+    }),
+  );
   // These checks deliberately do not use external providers. Pantry results
   // come from the real local directory; route/GPS failures are synthetic.
   await page.route("https://tiles.openfreemap.org/**", (route) =>
@@ -11,7 +20,9 @@ test.beforeEach(async ({ page }) => {
 });
 async function submit(page: Page, text: string) {
   await page.getByLabel("What do you need?", { exact: true }).fill(text);
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Find best resources", exact: true })
+    .click();
 }
 test("first screen already has food options without location, account, or forms", async ({
   page,
@@ -50,7 +61,7 @@ test("plain language finds Bryan pantries in one action and can be cleared", asy
   await page.goto("/");
   await submit(page, "I need food in Bryan and I’m walking");
   await expect(
-    page.getByText("Matched from the directory. AI was not used.", {
+    page.getByText("AI is unavailable. Directory matching remains available.", {
       exact: false,
     }),
   ).toBeVisible();

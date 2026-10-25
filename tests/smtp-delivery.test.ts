@@ -27,11 +27,11 @@ let db: DatabaseSync;
 function configureSmtp() {
   vi.stubEnv("NODE_ENV", "test");
   vi.stubEnv("REACH_EMAIL_PROVIDER", "smtp");
-  vi.stubEnv("SMTP_HOST", "smtp.resend.com");
+  vi.stubEnv("SMTP_HOST", "smtp.example.org");
   vi.stubEnv("SMTP_PORT", "465");
   vi.stubEnv("SMTP_SECURE", "true");
-  vi.stubEnv("SMTP_USER", "resend");
-  vi.stubEnv("SMTP_PASSWORD", "re_syntheticfixturekey");
+  vi.stubEnv("SMTP_USER", "mailer");
+  vi.stubEnv("SMTP_PASSWORD", "synthetic-password");
   vi.stubEnv("SMTP_FROM_EMAIL", "mail@example.org");
   vi.stubEnv("SMTP_FROM_NAME", "Reach test");
 }
@@ -47,15 +47,52 @@ afterEach(() => {
   vi.restoreAllMocks();
 });
 
-describe("Resend SMTP delivery boundary", () => {
+describe("SMTP delivery boundary", () => {
   it("enables SMTP only when its explicit supported configuration is valid", () => {
     expect(emailDeliveryMode()).toBe("smtp");
-    vi.stubEnv("SMTP_HOST", "smtp.attacker.example");
+    vi.stubEnv("SMTP_HOST", "smtp://invalid.example");
     expect(emailDeliveryMode()).toBe("disabled");
-    vi.stubEnv("SMTP_HOST", "smtp.resend.com");
+    vi.stubEnv("SMTP_HOST", "smtp.example.org");
     vi.stubEnv("SMTP_PORT", "587");
     vi.stubEnv("SMTP_SECURE", "true");
     expect(emailDeliveryMode()).toBe("disabled");
+  });
+
+  it("accepts independent relay credentials and rejects malformed headers", () => {
+    vi.stubEnv("SMTP_HOST", "mail.relay.example.net");
+    vi.stubEnv("SMTP_USER", "reach@example.net");
+    vi.stubEnv("SMTP_PASSWORD", "synthetic arbitrary password !@#");
+    expect(smtpConfiguration()).toMatchObject({
+      host: "mail.relay.example.net",
+      user: "reach@example.net",
+    });
+    vi.stubEnv("SMTP_USER", "mailer\r\nInjected: value");
+    expect(emailDeliveryMode()).toBe("disabled");
+    vi.stubEnv("SMTP_USER", "mailer");
+    vi.stubEnv("REACH_EMAIL_PROVIDER", "unsupported");
+    expect(emailDeliveryMode()).toBe("disabled");
+  });
+
+  it("classifies authentication and permanent refusal without exposing private diagnostics", async () => {
+    for (const [responseCode, code] of [
+      [535, "authentication"],
+      [550, "rejected"],
+    ] as const) {
+      const sendMail = vi
+        .fn()
+        .mockRejectedValue(
+          Object.assign(new Error("private credential and recipient"), {
+            responseCode,
+          }),
+        );
+      await expect(
+        deliverMail(db, mail, { smtpTransportFactory: () => ({ sendMail }) }),
+      ).rejects.toMatchObject({ code, retryable: false });
+      expect(sendMail).toHaveBeenCalledTimes(1);
+    }
+    expect(
+      JSON.stringify(db.prepare("SELECT * FROM mail_deliveries").all()),
+    ).not.toContain("private credential");
   });
 
   it("uses explicit STARTTLS configuration on port 587", async () => {
@@ -79,7 +116,7 @@ describe("Resend SMTP delivery boundary", () => {
     expect(config).toMatchObject({
       port: 587,
       secure: false,
-      host: "smtp.resend.com",
+      host: "smtp.example.org",
     });
   });
 
@@ -99,9 +136,7 @@ describe("Resend SMTP delivery boundary", () => {
     expect(result.status).toBe("accepted");
     // Read options from the transport call itself without logging or using a socket.
     const sendOptions = sendMail.mock.calls[0][0];
-    expect(sendOptions.headers).toMatchObject({
-      "Resend-Idempotency-Key": `reach-email/${result.id}`,
-    });
+    expect(sendOptions.headers).toBeUndefined();
     expect(sendOptions.messageId).toBe(`<reach.${result.id}@example.org>`);
     expect(sendOptions.from).toEqual({
       name: "Reach test",
@@ -183,10 +218,8 @@ describe("Resend SMTP delivery boundary", () => {
     });
   });
 
-  it("does not fall back to preview or Resend when SMTP credentials are placeholders", async () => {
+  it("does not fall back to another transport when SMTP credentials are placeholders", async () => {
     vi.stubEnv("SMTP_PASSWORD", "placeholder");
-    vi.stubEnv("RESEND_API_KEY", "re_syntheticfixturekey");
-    vi.stubEnv("RESEND_FROM_EMAIL", "Reach <mail@example.org>");
     expect(emailDeliveryMode()).toBe("disabled");
     await expect(deliverMail(db, mail)).rejects.toBeInstanceOf(
       MailDeliveryError,

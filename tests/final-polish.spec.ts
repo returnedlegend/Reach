@@ -46,26 +46,33 @@ test("homepage quick start leads directly to real food options and preserves foc
     .getByRole("button", { name: "Use these coordinates", exact: true })
     .click();
   await page
-    .getByRole("button", { name: "Find food near me", exact: true })
+    .getByRole("checkbox", { name: /Use AI to help understand/ })
+    .uncheck();
+  await page
+    .getByLabel("What do you need?", { exact: true })
+    .fill("Food in Bryan");
+  await page
+    .getByRole("button", { name: "Find best resources", exact: true })
     .click();
   const heading = page.getByRole("heading", {
-    name: "Your options",
+    name: "Places to try",
     exact: true,
   });
   await expect(heading).toBeVisible();
   await expect(heading).toBeFocused();
-  await expect(
-    page.getByRole("heading", { name: "Food assistance options", exact: true }),
-  ).toBeVisible();
   const directory = await page.request.get("/api/pantries?pageSize=100");
   expect(directory.ok()).toBe(true);
   const data = await directory.json();
-  await expect(
-    page.locator(".reach-resource-grid .reach-resource"),
-  ).toHaveCount(data.total);
-  await expect(page.locator(".reach-resource-grid")).not.toContainText(
-    "Sample Community Pantry",
+  const cards = page
+    .getByRole("region", { name: "Places to try", exact: true })
+    .getByRole("article");
+  await expect(cards).toHaveCount(3);
+  const recordedNames = new Set(
+    data.pantries.map((pantry: { name: string }) => pantry.name),
   );
+  for (const card of await cards.all())
+    expect(recordedNames.has(await card.getAttribute("aria-label"))).toBe(true);
+  await expect(cards.first()).not.toContainText("Sample Community Pantry");
   await page.screenshot({
     path: evidence(`final-polish-${info.project.name}-options.png`),
     fullPage: true,
@@ -83,7 +90,7 @@ test("homepage light and dark themes fit a small phone and pass automated access
     await page.setViewportSize({ width: 320, height: 740 });
   if (info.project.name === "mobile") {
     const primary = await page
-      .getByRole("button", { name: "Find food near me", exact: true })
+      .getByRole("button", { name: "Find best resources", exact: true })
       .boundingBox();
     const navigation = await page
       .getByRole("navigation", { name: "Main navigation", exact: true })
@@ -140,7 +147,7 @@ test("missing pages offer an accessible route back to food discovery", async ({
     .getByRole("link", { name: "Find food", exact: true })
     .click();
   await expect(page.getByRole("heading", { level: 1 })).toContainText(
-    "Food and support",
+    "Let’s find you food",
   );
 });
 

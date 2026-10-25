@@ -20,6 +20,7 @@ import {
 import { emailDeliveryMode } from "./mail-delivery";
 import {
   activeRecipient,
+  recipientEmail,
   createOutreachDraft,
   initializeOutreach,
   outreachHistory,
@@ -131,7 +132,7 @@ export function createOutreachHandler(
             .filter((r) => r.owner_id === actor.id)
             .map((r) => String(r.id)),
           deliveryMode: emailDeliveryMode(),
-          inboundConfigured: outreachInboundConfigured(),
+          replyMailboxConfigured: !!outreachReplyMailbox(),
         });
       }
       if (request.method !== "POST")
@@ -264,13 +265,15 @@ export function createOutreachHandler(
             503,
             "Email delivery is not configured. Your draft is saved; no email was sent.",
           );
-        if (
-          ["resend", "smtp"].includes(emailDeliveryMode()) &&
-          !outreachInboundConfigured()
-        )
+        if (emailDeliveryMode() === "smtp" && !outreachReplyMailbox())
           throw new AccountError(
             503,
-            "Configure the app-controlled receiving domain before sending outreach.",
+            "Configure a monitored Reach reply mailbox before sending outreach.",
+          );
+        if (emailDeliveryMode() === "smtp" && b.followup)
+          throw new AccountError(
+            400,
+            "Automatic follow-ups are unavailable because SMTP replies are handled manually. Turn off follow-ups and authorize this message only.",
           );
         accountTransaction(db, () => {
           const current = db
@@ -439,23 +442,10 @@ export function createOutreachHandler(
     }
   };
 }
-export function replyDomain(): string | null {
-  const domain = process.env.REACH_OUTREACH_REPLY_DOMAIN || "";
-  return /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/i.test(
-    domain,
-  ) && !/(?:^|\.)(?:example\.(?:com|org)|yourdomain\.com)$/.test(domain)
-    ? domain.toLowerCase()
+/** Replies are handled by an operator; SMTP does not ingest messages into Reach. */
+export function outreachReplyMailbox(): string | null {
+  const email = process.env.REACH_OUTREACH_REPLY_EMAIL || "";
+  return recipientEmail(email) && !/[\r\n\0]/.test(email)
+    ? email.toLowerCase()
     : null;
-}
-export function outreachInboundConfigured(): boolean {
-  const key =
-    process.env.RESEND_INBOUND_API_KEY || process.env.RESEND_API_KEY || "";
-  return (
-    !!replyDomain() &&
-    /^whsec_[A-Za-z0-9+/=]{16,200}$/.test(
-      process.env.RESEND_INBOUND_WEBHOOK_SECRET || "",
-    ) &&
-    /^re_[A-Za-z0-9_-]{8,200}$/.test(key) &&
-    !/placeholder|your_resend|xxxxxxxx/i.test(key)
-  );
 }

@@ -241,6 +241,26 @@ test("real MapLibre renders fixture tiles, keeps its canvas, and selects pantry 
     map.getByText("Interactive map ready.", { exact: true }),
   ).toBeVisible();
   await expect(map.locator(".maplibregl-canvas")).toBeVisible();
+  const selectedPin = map.getByRole("button", {
+    name: /— selected pantry$/,
+  });
+  await expect(selectedPin).toBeVisible();
+  expect(
+    await selectedPin.evaluate((element) => {
+      const map = element.closest('[aria-label="Interactive journey map"]');
+      if (!map) return false;
+      const marker = element.getBoundingClientRect();
+      const bounds = map.getBoundingClientRect();
+      const centerX = marker.left + marker.width / 2;
+      const centerY = marker.top + marker.height / 2;
+      return (
+        centerX >= bounds.left &&
+        centerX <= bounds.right &&
+        centerY >= bounds.top &&
+        centerY <= bounds.bottom
+      );
+    }),
+  ).toBe(true);
   const canvas = await map.locator("canvas").elementHandle();
   const stylesBeforeSelection = styleRequests;
   const originBefore = (await map.locator("p").first().innerText()).split(

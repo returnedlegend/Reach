@@ -558,7 +558,7 @@ test("verified account reviews outreach and private reply in isolated preview st
         send: deliverMail,
       });
       // Dispatch through the actual preview transport only. It writes a private local
-      // capture and cannot contact Resend because preview is the active provider.
+      // capture and cannot contact an email service because preview is the active provider.
       expect(previewResult.preview).toBe(1);
     } finally {
       if (oldPreviewDir === undefined)

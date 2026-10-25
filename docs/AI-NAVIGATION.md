@@ -1,6 +1,6 @@
 # Reach AI Navigation
 
-The navigation features below were implemented in the existing Next.js application. The active AI provider setup is now [DeepSeek](DEEPSEEK.md); provider instructions in the original 2026-10-23 implementation report are historical. The map remains MapLibre/OpenStreetMap; email remains Resend with private local preview.
+The navigation features below were implemented in the existing Next.js application. The active AI provider setup is now [DeepSeek](DEEPSEEK.md); provider instructions in the original 2026-10-23 implementation report are historical. The map remains MapLibre/OpenStreetMap; email supports configurable SMTP and private local preview.
 
 ## What runs
 

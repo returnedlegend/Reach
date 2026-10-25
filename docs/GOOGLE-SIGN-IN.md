@@ -1,6 +1,6 @@
 # Google sign-in and email permission
 
-Updated October 23, 2026. Reach now supports optional Google account sign-in alongside its existing email/password and community accounts. Google sign-in is **not required by Resend SMTP**. Pantry email still comes from Reach’s verified sending domain, after a user reviews and approves an inquiry. The app does not read the user’s Gmail inbox or send mail through their Gmail account.
+Updated October 23, 2026. Reach now supports optional Google account sign-in alongside its existing email/password and community accounts. Google sign-in is **not required by SMTP**. Pantry email still comes from Reach’s verified sending domain, after a user reviews and approves an inquiry. The app does not read the user’s Gmail inbox or send mail through their Gmail account.
 
 ## Configure Google sign-in
 
@@ -46,7 +46,7 @@ Google-only users can set a Reach password using **Forgot password** when accoun
 
 ## Email still needs its own setup
 
-Google sign-in does not configure Resend, its sender DNS, outbound SMTP connectivity, the worker, or signed inbound replies. Follow [SMTP + AI setup](SMTP-AI-SETUP.md). Users do not need to disclose Google passwords or grant Gmail scopes for Reach’s sending service. Sending from a user’s personal Gmail account would be a separate Gmail OAuth integration, with different scopes, token storage and Google verification obligations; it is not enabled here.
+Google sign-in does not configure a mail relay, its sender DNS, outbound SMTP connectivity, the worker, or a monitored reply mailbox. Follow [SMTP + AI setup](SMTP-AI-SETUP.md). Users do not need to disclose Google passwords or grant Gmail scopes for Reach’s sending service. Sending from a user’s personal Gmail account would be a separate Gmail OAuth integration, with different scopes, token storage and Google verification obligations; it is not enabled here.
 
 ## Files changed
 

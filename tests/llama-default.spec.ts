@@ -16,7 +16,7 @@ test("food search uses AI by default without an extra checkbox step", async ({
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("I need food in Bryan");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await expect(
     page.getByText(/AI helped understand your request/),
   ).toBeVisible();
@@ -40,7 +40,7 @@ test("an unavailable model leaves real pantry results usable", async ({
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("Food in Bryan");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await expect(page.getByText(/Synthetic stopped model server/)).toBeVisible();
   await expect(
     page
@@ -66,7 +66,7 @@ test("shows the server reason instead of silently saying AI was not used", async
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("Find food near me");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await expect(
     page.getByText(/Local AI is disabled on this server/),
   ).toBeVisible();

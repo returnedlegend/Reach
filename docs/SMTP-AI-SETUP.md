@@ -16,51 +16,13 @@ Default assumptions are visible: public transit, today and the selected Chicago 
 
 Use Node 24 and run `npm ci` in the project directory, then `npm run dev`. Next loads `.env.local`; standalone workers require explicitly loading it. The existing root `.env.local` was preserved and extended with missing placeholders, is ignored by Git and mode 0600. Do not overwrite it with `.env.example` if it already contains settings. The source download excludes that private file; on a new installation copy `.env.example` to `.env.local` before editing.
 
-### Resend SMTP
+### SMTP and pantry inquiries
 
-1. In Resend, add a sending domain you control and publish the DNS records shown in its dashboard. Wait until the domain is verified. Use a sender on that verified domain; an arbitrary `From` address will not establish authorization. Review [domain setup](https://resend.com/docs/dashboard/domains/introduction) and the current [SMTP guide](https://resend.com/docs/send-with-smtp).
-2. Create an appropriate sending API key. Paste it privately into **`SMTP_PASSWORD` in the project-root `.env.local`**, never into chat, source code or browser variables. Use the exact SMTP username `resend`.
-3. Configure the sender and transport:
+Configure your mail service's relay, private credentials, authorized sender and TLS settings using [SMTP setup](SMTP.md). Choose `REACH_EMAIL_PROVIDER=preview` for private local captures or explicitly select `smtp` for real delivery. Keep `REACH_APP_ORIGIN` and the private SQLite database consistent across app and workers.
 
-```dotenv
-REACH_EMAIL_PROVIDER=smtp
-SMTP_HOST=smtp.resend.com
-SMTP_PORT=465
-SMTP_SECURE=true
-SMTP_USER=resend
-SMTP_PASSWORD=
-SMTP_FROM_EMAIL=
-SMTP_FROM_NAME=Reach
-```
+Run `NODE_ENV=development node --env-file=.env.local --import tsx scripts/mail-worker.ts --watch` for local worker polling; use production mode, the release email gate and a canonical HTTPS origin when hosting. `--once` performs one bounded dispatch.
 
-Fill the two blank credential/sender fields. Port 465 uses implicit TLS. To use 587, change both `SMTP_PORT=587` and `SMTP_SECURE=false`; Reach then requires STARTTLS before authentication. Certificate verification remains enabled. Other hosts/ports are rejected. The runtime must permit outbound TCP to this host/port: this managed environment currently has no SMTP TCP grant. HTTP proxy access alone does not establish SMTP access; do not bypass its network policy.
-
-4. Set `REACH_APP_ORIGIN` to the exact app origin (for example, `http://localhost:3000` locally, or your canonical HTTPS origin in production). Restart the app after changes.
-5. Start the existing worker with the same private database, origin and environment:
-
-```bash
-# Development; sends only after you explicitly enable smtp above.
-NODE_ENV=development node --env-file=.env.local --import tsx scripts/mail-worker.ts --watch
-```
-
-For a production host use `NODE_ENV=production`, HTTPS and a private persistent database volume. Do not use the development preview provider in production. `--once` performs one bounded dispatch. The central delivery service also handles existing account verification/recovery/notification templates; it preserves HTML/text branding and rate limits.
-
-6. For pantry inquiries, enroll a source-backed organization contact using the existing reviewed/consented administration workflow described in [ACCESS-PLANNER.md](ACCESS-PLANNER.md). No real contacts are seeded. Review/edit the message, check **I reviewed the recipient and message and authorize this email**, then **Authorize and queue**. The worker rechecks enrollment, contact changes, permission, limits and authorization expiry before sending. AI cannot authorize it. No user location is added to the email.
-
-### Replies and delivery status
-
-SMTP does not receive email. Inquiries require the separate existing Resend receiving integration before authorization/dispatch:
-
-- `REACH_OUTREACH_REPLY_DOMAIN`: app-controlled receiving subdomain with the provider's receiving MX records.
-- `RESEND_INBOUND_API_KEY`: key with permission to retrieve received messages.
-- `RESEND_INBOUND_WEBHOOK_SECRET`: signing secret for the inbound event endpoint.
-- Configure the signed `email.received` event at `/api/outreach/inbound` on a reachable HTTPS app. See [ACCESS-INTEGRATIONS.md](ACCESS-INTEGRATIONS.md) and [RESEND.md](RESEND.md).
-
-Replies are matched using opaque per-thread reply addresses, signature/replay protections and requesting-account ownership. They appear in **Private message history** and must be reviewed before their dated facts become private planner inputs. The sender and food availability remain unverified; public pantry records are not overwritten. Use Refresh to check for new replies/status. Receiving is not established by a successful SMTP send.
-
-SMTP `accepted` means the relay accepted the message, not inbox delivery. Stable RFC `Message-ID` and the documented `Resend-Idempotency-Key` help preserve identity; only the provider's documented idempotency behavior establishes provider deduplication. An ambiguous socket/DATA result is `uncertain` and is not blindly retried. Explicit temporary refusals have bounded retries, and the entire send has a 20-second deadline. Application rate limits and worker leases also protect against duplicate/unsolicited sends.
-
-Resend's SMTP guide does not specify a stable opaque provider response-ID grammar. This adapter stores the RFC ID separately and does not invent an `email_id`; SMTP deliveries therefore stay accepted/uncertain unless another reliable event establishes more. The existing signed delivery webhook at `/api/email/webhook` tracks Resend HTTP-API deliveries by their actual opaque IDs; it does not falsely mark an unmatched SMTP send delivered. Receiving/reply association still works independently of that delivery-event limitation.
+Pantry inquiries require enrolled, consenting contacts, a verified account and explicit reviewed authorization. Live SMTP inquiries also require `REACH_OUTREACH_REPLY_EMAIL`, a monitored app-controlled mailbox. Operators receive replies in that mailbox; automatic inbound import and provider delivery webhooks are unavailable. Existing saved reply review remains private and does not establish public inventory. SMTP acceptance is distinct from inbox delivery.
 
 ### DeepSeek AI
 
@@ -84,4 +46,4 @@ Set the API key privately, review the provider's applicable data policy, then se
 
 See [independent verification](SMTP-AI-VERIFICATION.md) for observed browser/API results and [file manifest](SMTP-AI-FILES.md) for changed files. Automated SMTP tests use Nodemailer transport fakes and actual worker/delivery/database boundaries; browser model/route fixtures are labeled synthetic. No real email, authenticated AI completion or inbound provider callback was exercised for this task. The public model catalog was retrieved successfully.
 
-Remaining operator actions: verified sending domain and sender, private API/SMTP credentials, outbound SMTP TCP permission, canonical app origin and worker process, receiving subdomain/keys/webhook for inquiries, source-backed enrolled pantry contacts, and an explicitly authorized test recipient before a live delivery test. Configure DeepSeek spending controls separately from Reach's process-local request budgets. For higher traffic, move process-local AI limits to a shared store and review provider capacity and transit/data coverage; no new deployment is required for local preview use.
+Remaining operator actions: verified sending domain and sender, private SMTP credentials, outbound SMTP TCP permission, canonical app origin and worker process, a monitored reply mailbox for inquiries, source-backed enrolled pantry contacts, and an explicitly authorized test recipient before a live delivery test. Configure DeepSeek spending controls separately from Reach's process-local request budgets. For higher traffic, move process-local AI limits to a shared store and review provider capacity and transit/data coverage; no new deployment is required for local preview use.

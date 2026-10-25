@@ -15,7 +15,7 @@ import {
   syncOutreachDelivery,
   contactFingerprint,
 } from "./outreach-store";
-import { canContact, replyDomain, outreachInboundConfigured } from "./outreach";
+import { canContact, outreachReplyMailbox } from "./outreach";
 
 /** Future voice adapters implement this same delivery seam, not authorization or generation. */
 export type OutreachChannel = { deliver: typeof deliverMail };
@@ -39,11 +39,25 @@ export async function dispatchOutreach(
   if (
     emailDeliveryMode() === "disabled" ||
     !canonicalAccountOrigin() ||
-    (["resend", "smtp"].includes(emailDeliveryMode()) &&
-      !outreachInboundConfigured())
+    (emailDeliveryMode() === "smtp" && !outreachReplyMailbox())
   ) {
     counts.unavailable = true;
     return counts;
+  }
+  // SMTP cannot observe replies in the monitored mailbox. Revoke automatic
+  // follow-up work without removing message history or changing primary sends.
+  if (emailDeliveryMode() === "smtp") {
+    accountTransaction(db, () => {
+      db.prepare(
+        "UPDATE outreach_threads SET followup_remaining=0 WHERE followup_remaining>0",
+      ).run();
+      const cancelled = db
+        .prepare(
+          "UPDATE outreach_threads SET status='cancelled',followup_remaining=0 WHERE parent_id IS NOT NULL AND status='queued'",
+        )
+        .run();
+      counts.cancelled += Number(cancelled.changes);
+    });
   }
   const now = clock();
   // A crash after claiming can have sent mail. Never blindly re-send a lease.
@@ -119,6 +133,11 @@ export async function dispatchOutreach(
     let recipientSlot = false,
       userSlot = false;
     try {
+      if (thread.parent_id && emailDeliveryMode() === "smtp")
+        throw new AccountError(
+          409,
+          "Automatic SMTP follow-ups are unavailable.",
+        );
       const actor = db
         .prepare("SELECT email_verified_at FROM users WHERE id=?")
         .get(String(thread.user_id));
@@ -164,17 +183,17 @@ export async function dispatchOutreach(
         heading: String(thread.subject),
         paragraphs: String(thread.body).split(/\n\n+/),
         footer:
-          "This inquiry does not promise food availability. Replies may be processed to extract pickup facts and shared privately with this requester. Do not include unnecessary personal information. Public pantry records are not automatically changed.",
+          "This inquiry does not promise food availability. Replies go to a monitored Reach mailbox for operator review and are not automatically imported into Reach. Do not include unnecessary personal information. Public pantry records are not automatically changed.",
         unsubscribeUrl: unsubscribe,
       });
-      const domain = replyDomain();
+      const replyTo = outreachReplyMailbox();
       const result = await (options.send || deliverMail)(db, {
         to: String(recipient.email),
         subject: String(thread.subject),
         ...rendered,
         userId: String(thread.user_id),
         kind: "outreach",
-        ...(domain ? { replyTo: `reach-${thread.reply_token}@${domain}` } : {}),
+        ...(replyTo ? { replyTo } : {}),
       });
       db.prepare(
         "UPDATE outreach_threads SET status=?,delivery_id=?,sent_at=? WHERE id=?",

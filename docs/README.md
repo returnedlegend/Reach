@@ -33,7 +33,7 @@ Start with the [implemented first-release candidate](FIRST-RELEASE.md), its read
 | Maps, search, and routing         | [OpenStreetMap providers](OPENSTREETMAP.md)                      | [Navigation providers](NAVIGATION-PROVIDERS.md), [GTFS](GTFS.md), [District boundary](TX10-BOUNDARY.md)                           |
 | Assistant and AI configuration    | [DeepSeek AI setup](DEEPSEEK.md)                                 | [AI configuration](AI-CONFIGURATION.md), [AI assistance](AI-ASSISTANCE.md)                                                        |
 | Accounts and identity             | [Authentication](AUTHENTICATION.md)                              | [Google sign-in](GOOGLE-SIGN-IN.md), [Account integration](ACCOUNT-INTEGRATION.md)                                                |
-| Reviewed email and delivery       | [Resend](RESEND.md)                                              | [SMTP and AI setup](SMTP-AI-SETUP.md), [Access planner outreach](ACCESS-PLANNER.md)                                               |
+| Reviewed email and delivery       | [SMTP delivery](SMTP.md)                                              | [SMTP and AI setup](SMTP-AI-SETUP.md), [Access planner outreach](ACCESS-PLANNER.md)                                               |
 | Community participation           | [Community](COMMUNITY.md)                                        | [Food-sharing safety](FOOD-SHARING-SAFETY.md), [Volunteer coordination](VOLUNTEER-COORDINATION.md)                                |
 | Visual design and accessibility   | [DaisyUI design system](DAISY-DESIGN.md)                         | [DaisyUI verification](DAISY-VERIFICATION.md), [Alignment follow-up](FINAL-POLISH.md#follow-up-alignment-polish--october-23-2026) |
 
@@ -43,7 +43,7 @@ There are three distinct evidence levels:
 
 1. **Deterministic fixtures and mocks** test validation, authorization, routing logic, and error behavior. They do not prove real pantry stock, actual delivery, or live provider availability.
 2. **Real local application checks** exercise the running UI, public directory, database, and configuration endpoints. A configured status is not an inference or delivery test.
-3. **Dated live observations** apply only to the service, credentials, request, and time recorded. For example, dated checks in [OpenRouter verification](FREE-OPENROUTER-VERIFICATION.md) describe an earlier provider configuration and do not establish current DeepSeek availability or account status, or Resend delivery.
+3. **Dated live observations** apply only to the service, credentials, request, and time recorded. For example, dated checks in [OpenRouter verification](FREE-OPENROUTER-VERIFICATION.md) describe an earlier provider configuration and do not establish current DeepSeek availability or account status, or current email delivery.
 
 Screenshots under `evidence/` document rendering. Some tests deliberately neutralize external map tiles; such screenshots do not establish basemap service availability. Never publish screenshots containing precise private origins, account tokens, personal messages, or private preview links.
 

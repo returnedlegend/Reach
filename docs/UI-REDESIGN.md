@@ -98,6 +98,6 @@ flag. Do not rebuild beneath an active production test server.
 
 Mapping/search setup remains in [OpenStreetMap configuration](OPENSTREETMAP.md).
 Email remained in private local-preview mode during this historical redesign; see
-[current mail setup](RESEND.md). No real email or public deployment was part of
+[current mail setup](SMTP.md). No real email or public deployment was part of
 that work.
 Physical-device testing and manual screen-reader testing remain unperformed.

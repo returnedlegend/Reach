@@ -1036,7 +1036,7 @@ test("real browser accounts create and moderate an offer, accept a request and c
     await communityAccount(receiver, `ui_receiver_${suffix}`, password, true);
     await receiver
       .getByRole("navigation", { name: "Community views", exact: true })
-      .getByRole("button", { name: "Find food", exact: true })
+      .getByRole("button", { name: "Find best resources", exact: true })
       .click();
     await receiver
       .getByLabel("Search community posts", { exact: true })

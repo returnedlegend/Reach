@@ -1,9 +1,3 @@
 # Postal transport retired
 
-This document described the removed Postal and SMTP transports, webhook protocol,
-and retry behavior. Those instructions no longer apply to Reach. See [Resend email
-setup](RESEND.md) for current provider configuration, domain verification,
-webhooks, delivery states, and the local preview workflow.
-
-Historical source and test evidence remains in the repository, including
-`docs/evidence/postal-check.txt`. It describes the retired transport only.
+The former Postal HTTP transport and its webhook configuration are retired. Current email supports configurable SMTP and private local preview; see [SMTP setup](SMTP.md). Historical `postal-*` evidence describes only the implementation tested at that time. Existing SQLite mail history remains intact and is not automatically sent again.

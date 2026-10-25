@@ -128,7 +128,7 @@ npm run dev
 
 The design requires no credentials. Optional map/search/routing services retain
 their existing [OSM configuration](OPENSTREETMAP.md). Email remains in the
-previously requested [local preview workflow](RESEND.md); this redesign does
+previously requested [local preview workflow](SMTP.md); this redesign does
 not enable delivery or publicly deploy the application.
 
 ```bash

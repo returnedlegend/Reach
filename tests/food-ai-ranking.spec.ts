@@ -25,7 +25,7 @@ test("AI reorders pantry cards and exposes supporting facts without claiming ava
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("food in Bryan");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   const cards = page
     .getByRole("region", { name: "Places to try", exact: true })
     .getByRole("article");
@@ -64,7 +64,7 @@ test("expired comparisons do not replace directory order", async ({ page }) => {
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("food in Bryan");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await expect(page.getByText(/AI helped understand/)).toBeVisible();
   await expect(page.getByText("Stale fixture")).toHaveCount(0);
 });
@@ -86,7 +86,7 @@ test("a slow comparison leaves results usable and has an explicit stop button", 
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("food in Bryan");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await expect(
     page.getByText(/comparison can take up to two minutes/),
   ).toBeVisible();

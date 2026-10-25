@@ -37,7 +37,7 @@
   "providerConfigurationReadonly": "runtime-readiness.json",
   "realRoutingHandler": "live-recommendation.json",
   "googleOAuthHumanLogin": "not performed",
-  "liveEmail": "not sent; Resend domain failed authentication",
+  "liveEmail": "not sent; historical provider check does not verify current SMTP",
   "aiInference": "not performed in this readiness audit",
   "githubWorkflow": {
     "added": ".github/workflows/ci.yml",

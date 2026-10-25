@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { AILoadingIndicator } from "./ai-loading-indicator";
 import type { Resource } from "../data/resources";
 
 export type Coordinates = { lat: number; lng: number };
@@ -520,9 +521,14 @@ export function LocationPicker({
         className="btn btn-outline"
         type="button"
         onClick={useMyLocation}
+        aria-label={busy ? "Finding location…" : undefined}
         disabled={busy}
       >
-        {busy ? "Working…" : "Use my location"}
+        {busy ? (
+          <AILoadingIndicator label="Finding location…" />
+        ) : (
+          "Use my location"
+        )}
       </button>
       {!compact && (
         <button

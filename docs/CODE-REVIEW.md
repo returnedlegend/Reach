@@ -83,4 +83,4 @@ Install Playwright Chromium or deliberately set `PLAYWRIGHT_CHROMIUM_PATH` to an
 
 ## Remaining external limits
 
-No DNS record, nameserver, deployment or live email was changed during this review. No OpenRouter completion or recipient email was requested. Refer to [the dated Resend DNS audit](RESEND-DNS.md), [OpenRouter observations](FREE-OPENROUTER-VERIFICATION.md), provider guides and pantry source records for external evidence. This review does not resolve pantry stock, unverified access paths, timetable conflicts, DNS ownership/delegation or provider capacity.
+No DNS record, nameserver, deployment or live email was changed during this review. No OpenRouter completion or recipient email was requested. Refer to [OpenRouter observations](FREE-OPENROUTER-VERIFICATION.md), current [SMTP setup](SMTP.md), provider guides and pantry source records for external evidence. This review does not resolve pantry stock, unverified access paths, timetable conflicts, DNS ownership/delegation or provider capacity.

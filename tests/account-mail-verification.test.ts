@@ -63,15 +63,13 @@ function token(purpose: "verify" | "reset") {
 }
 
 beforeEach(() => {
-  directory = mkdtempSync(join(tmpdir(), "reach-resend-flow-"));
+  directory = mkdtempSync(join(tmpdir(), "reach-account-mail-flow-"));
   database = join(directory, "community.sqlite");
   previewDirectory = join(directory, "private-mail-preview");
   vi.stubEnv("NODE_ENV", "test");
   vi.stubEnv("REACH_APP_ORIGIN", origin);
   vi.stubEnv("REACH_EMAIL_PROVIDER", "preview");
   vi.stubEnv("REACH_EMAIL_PREVIEW_DIR", previewDirectory);
-  vi.stubEnv("RESEND_API_KEY", "");
-  vi.stubEnv("RESEND_FROM_EMAIL", "");
   db = openCommunityDatabase(database);
   handle = createAccountHandler(database, {
     sendMail: async (mail) => {

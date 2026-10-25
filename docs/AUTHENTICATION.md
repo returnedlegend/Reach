@@ -5,7 +5,7 @@ community records, moderator/organizer roles and active sessions. Supabase Auth
 and Better Auth were considered; introducing a second identity store or a remote
 provider without an agreed identity migration would split existing community
 ownership. This implementation deliberately owns a small email/password lifecycle
-using maintained Argon2 and the server-side Resend SDK. A future identity migration must map
+using maintained Argon2 and server-side SMTP delivery. A future identity migration must map
 existing IDs, migrate ownership, invalidate sessions, and complete a verified
 email/password migration rather than creating disconnected users.
 
@@ -24,10 +24,9 @@ Set these server-only values in environment settings:
 - `REACH_APP_ORIGIN`: exact canonical origin, e.g. `https://reach.example.org`,
   without a trailing slash. Production requires HTTPS. `REACH_COMMUNITY_ORIGIN`
   is a compatibility fallback.
-- `REACH_EMAIL_PROVIDER=resend`, `RESEND_API_KEY`, and `RESEND_FROM_EMAIL` select
-  Resend. The API key is server-only, and the sender must belong to a verified
-  Resend domain. Optional `RESEND_WEBHOOK_SECRET` verifies Resend delivery events.
-  See [Resend setup](RESEND.md) for domain, origin, webhook and worker setup.
+- `REACH_EMAIL_PROVIDER=smtp` selects the configured relay. Set its `SMTP_HOST`,
+  `SMTP_PORT`, `SMTP_SECURE`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM_EMAIL` and
+  `SMTP_FROM_NAME` privately. See [SMTP setup](SMTP.md) for TLS and worker setup.
 - `REACH_EMAIL_PROVIDER=preview` explicitly selects private file captures for local
   development only. Configure a canonical local `REACH_APP_ORIGIN`; captures have
   directory/file permissions 0700/0600 and are never returned by an HTTP endpoint.
@@ -35,11 +34,11 @@ Set these server-only values in environment settings:
 - `REACH_ACCOUNT_ENABLED=false` explicitly disables accounts. Email accounts
   otherwise operate independently of the development community feature flag.
 
-Mail defaults to disabled. Postal and SMTP transports have been removed. Invalid
+Mail defaults to disabled. SMTP and explicit private preview are supported. Invalid
 or missing origin/mail configuration produces an honest 503 for email operations.
 `GET /api/account/status` reports configuration and transport mode, not inbox
-delivery. Resend acceptance, preview capture and verified delivery events are
-distinct states; a network timeout may be uncertain. The server never logs email links,
+delivery. SMTP acceptance and preview capture are distinct states; a network
+timeout may be uncertain. Automatic delivery webhooks are unavailable. The server never logs email links,
 returns raw tokens or exposes a mail capture endpoint. Local preview files contain
 real account links and must remain private and be deleted after use.
 
@@ -52,7 +51,7 @@ NODE_ENV=development node --env-file=.env.local --import tsx scripts/mail-worker
 
 Use `--once` for one dispatch, or `NODE_ENV=development npm run mail:worker -- --once`
 when all variables are already exported. The worker must use the same database and
-canonical origin as the app. See [Resend setup](RESEND.md) for the complete preview
+canonical origin as the app. See [SMTP setup](SMTP.md) for the complete preview
 and production workflow. Tests inject delivery and temporary databases; local
 checks do not prove real provider connectivity, DNS alignment or actual inbox delivery.
 
@@ -89,7 +88,7 @@ privilege. Neither signup nor profile accepts roles or verification flags.
 Signup and recovery use the same generic 202 response for existing and unknown
 addresses. To avoid revealing existence through transport errors, ineligible requests
 also send a neutral informational message containing no token or account status.
-Definite pre-acceptance failures use the same 503 response and discard their unused token. Ambiguous acceptance preserves the token because Resend may already have accepted the link; it is never blindly resent.
+Definite pre-acceptance failures use the same 503 response and discard their unused token. Ambiguous acceptance preserves the token because the SMTP relay may already have accepted the link; it is never blindly resent.
 Address/global persistent limits apply before sending. A failed initial signup
 can leave an unverified identity: sign in and resend verification after mail is
 restored. This never verifies the address or changes an existing password.
@@ -159,8 +158,8 @@ backup restoration and migration against a copy before upgrading production.
 
 Run `npx vitest run tests/account.test.ts tests/account-security.test.ts
 tests/community.test.ts` and `npm run typecheck`. Account tests use temporary
-SQLite files and injected delivery; they do not validate Resend connectivity,
-domain DNS, webhook delivery or TLS proxy deployment. Run the mail suites documented
-in [Resend verification](RESEND-VERIFICATION.md) for transport, webhook and worker
+SQLite files and injected delivery; they do not validate live SMTP connectivity,
+domain DNS or TLS proxy deployment. Run `tests/mail-delivery.test.ts`,
+`tests/smtp-delivery.test.ts` and `tests/smtp-outreach.test.ts` for transport and worker
 checks. A final production smoke check should exercise actual
 verification/reset delivery, secure cookies and the canonical origin.

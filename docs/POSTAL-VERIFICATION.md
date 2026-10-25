@@ -1,9 +1,3 @@
 # Postal verification retired
 
-This historical independent review covers the former Postal transport and its
-tests. It does not verify the current Resend implementation. See [Resend
-verification](RESEND-VERIFICATION.md) for the current provider review and [Resend
-email setup](RESEND.md) for configuration.
-
-Retained evidence files named `postal-*` document only the test runs made against
-the retired implementation.
+The former Postal HTTP transport and its webhook configuration are retired. Current email supports configurable SMTP and private local preview; see [SMTP setup](SMTP.md). Historical `postal-*` evidence describes only the implementation tested at that time. Existing SQLite mail history remains intact and is not automatically sent again.

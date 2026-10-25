@@ -10,7 +10,7 @@
   "patterns": [
     "Google Maps API key format",
     "OpenRouter API key format",
-    "Resend API key format"
+    "retired email provider key format"
   ],
   "envLocalExists": true,
   "envLocalIgnored": true,

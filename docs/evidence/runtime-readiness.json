@@ -8,35 +8,9 @@
     "communityEnabled": false,
     "routingMode": "valhalla-demo"
   },
-  "resend": {
-    "authenticated": true,
-    "domain": "reachemail.com",
-    "status": "failed",
-    "recordStatuses": [
-      {
-        "type": "TXT",
-        "name": "resend._domainkey",
-        "status": "failed"
-      },
-      {
-        "type": "MX",
-        "name": "send",
-        "status": "failed"
-      },
-      {
-        "type": "TXT",
-        "name": "send",
-        "status": "failed"
-      },
-      {
-        "type": "CNAME",
-        "name": "rsend",
-        "status": "failed"
-      }
-    ]
-  },
   "openrouter": {
     "authenticationHttp": 200,
     "freeDailyLimit": 50
-  }
+  },
+  "retiredEmailEvidence": "Provider-specific email metadata removed; remaining observations are historical and do not verify current SMTP delivery."
 }

@@ -25,7 +25,7 @@ test("AI interpretation never blocks directory results or receives selected coor
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("I need food in Bryan");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await expect(
     page.getByText(/AI helped understand your request/),
   ).toBeVisible();
@@ -59,7 +59,7 @@ test("failed AI keeps food results and discloses attempted interpretation", asyn
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("I need food in Bryan");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await expect(page.getByText(/Synthetic unavailable provider/)).toBeVisible();
   await expect(
     page
@@ -94,7 +94,7 @@ test("turning AI off prevents a late interpretation from replacing results", asy
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("I need food in Bryan");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await expect(page.getByText(/Checking your request with AI/)).toBeVisible();
   await choice.uncheck();
   release();
@@ -158,7 +158,7 @@ test("a manual travel choice wins over an earlier pending AI interpretation", as
   await page
     .getByLabel("What do you need?", { exact: true })
     .fill("I need food in Bryan");
-  await page.getByRole("button", { name: "Find food", exact: true }).click();
+  await page.getByRole("button", { name: "Find best resources", exact: true }).click();
   await expect(page.getByText(/Checking your request with AI/)).toBeVisible();
   await page.getByRole("button", { name: "Ride", exact: true }).click();
   release();
