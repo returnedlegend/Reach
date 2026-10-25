@@ -1,4 +1,5 @@
 import candidates from "../../data/research/tx10-brazos-candidates.json";
+import expansionCandidates from "../../data/research/tx10-expansion-2026-10-25.json";
 import regionalCandidates from "../../data/research/tx10-regional-candidates.json";
 import type {
   Pantry,
@@ -53,10 +54,37 @@ const regionalIds = new Set([
   "schulenburg-area-food-pantry",
 ]);
 
+const expansionIds = new Set([
+  "elgin-community-cupboard",
+  "smithville-food-pantry",
+  "bellville-christian-food-pantry",
+  "columbus-food-pantry",
+  "flatonia-area-food-pantry",
+]);
+const providerSpecific = (id: string) =>
+  regionalIds.has(id) || expansionIds.has(id);
+
 const scheduleRules: Record<
   string,
   { weekday: number; nth: number; opens: string; closes: string }[]
 > = {
+  "elgin-community-cupboard": [
+    { weekday: 2, nth: 0, opens: "10:00", closes: "12:00" },
+  ],
+  "smithville-food-pantry": [
+    { weekday: 3, nth: 0, opens: "09:00", closes: "11:30" },
+  ],
+  "bellville-christian-food-pantry": [
+    { weekday: 4, nth: 2, opens: "08:00", closes: "10:00" },
+    { weekday: 4, nth: 2, opens: "17:30", closes: "18:30" },
+    { weekday: 4, nth: 4, opens: "17:00", closes: "18:30" },
+  ],
+  "columbus-food-pantry": [
+    { weekday: 5, nth: 3, opens: "08:00", closes: "12:00" },
+  ],
+  "flatonia-area-food-pantry": [
+    { weekday: 4, nth: 2, opens: "15:30", closes: "17:30" },
+  ],
   "anderson-food-pantry": [
     { weekday: 4, nth: 1, opens: "09:00", closes: "12:00" },
   ],
@@ -147,6 +175,7 @@ const selected = [
     .filter((c) => admittedBrazosIds.includes(c.id))
     .map(asCandidate),
   ...regionalCandidates.filter((c) => regionalIds.has(c.id)).map(asCandidate),
+  ...expansionCandidates.filter((c) => expansionIds.has(c.id)).map(asCandidate),
 ];
 
 function candidateNotes(c: Candidate): string {
@@ -170,7 +199,7 @@ function sourceRefs(c: Candidate): SourceRef[] {
       id: `${c.id}-coordinate-source`,
       title: "U.S. Census Geocoder — address-range point",
       url: c.coordinateSource.url,
-      checkedOn: "2026-10-22",
+      checkedOn: expansionIds.has(c.id) ? "2026-10-25" : "2026-10-22",
       verificationMethod: "website",
     });
   }
@@ -244,7 +273,7 @@ export const tx10Pantries: Pantry[] = selected.map((c) => {
     phone: c.phone,
     languages: c.languages,
     serviceArea: publishedServiceAreas[c.id],
-    pickupFormat: c.offering.includes("drive-through")
+    pickupFormat: /drive-through/i.test(c.offering)
       ? "drive-through"
       : c.offering.includes("walk-in")
         ? "walk-in"
@@ -255,10 +284,10 @@ export const tx10Pantries: Pantry[] = selected.map((c) => {
     )?.[0],
     documents: [
       {
-        name: regionalIds.has(c.id)
-          ? "Document requirements are not fully stated in the reviewed provider pages."
+        name: providerSpecific(c.id)
+          ? c.eligibility
           : "BVFB says ID or proof of income/address may be requested but cannot be required.",
-        requirement: regionalIds.has(c.id) ? "unknown" : "requested",
+        requirement: providerSpecific(c.id) ? "unknown" : "requested",
       },
     ],
     windows,
@@ -305,10 +334,20 @@ export const tx10PantryVerification: Record<string, PantryVerification> =
 
 export const tx10ResourceMetadata: Record<
   string,
-  { city: string; postalCode?: string; website?: string }
+  {
+    city: string;
+    postalCode?: string;
+    website?: string;
+    publishedScheduleVerified?: boolean;
+  }
 > = Object.fromEntries(
   selected.map((c) => [
     c.id,
-    { city: c.city, postalCode: c.postalCode, website: c.website },
+    {
+      city: c.city,
+      postalCode: c.postalCode,
+      website: c.website,
+      publishedScheduleVerified: expansionIds.has(c.id),
+    },
   ]),
 );

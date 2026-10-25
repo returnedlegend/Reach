@@ -17,6 +17,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { FOOD_SEARCH_TIMEOUT_MS } from "@/lib/ai-timing";
+import { discoveryComparison } from "@/lib/discovery-comparison";
 import type { FoodRanking } from "@/lib/food-ai-ranking";
 import type { Resource } from "@/data/resources";
 import type { TravelMode } from "@/lib/journey";
@@ -127,10 +128,31 @@ export function SimpleFoodFinder(props: Props) {
       intent,
     ],
   );
+  const mathematicalRanking: FoodRanking = found.matches
+    .filter(
+      ({ resource }) =>
+        resource.verificationStatus === "confirmed-site" ||
+        !!(resource.communityHotspot ?? resource.communityOffer),
+    )
+    .map((item) => ({
+      id: item.resource.id,
+      comparison: discoveryComparison(
+        item.resource,
+        item.straightLineMiles,
+        now ?? new Date(),
+      ),
+      reasons: [
+        item.resource.hours || "Hours unknown",
+        item.resource.eligibility || "Requirements unknown",
+      ],
+      selectedBy: "mathematical" as const,
+    }))
+    .sort((a, b) => (b.comparison?.score ?? 0) - (a.comparison?.score ?? 0))
+    .slice(0, 3);
   const activeRanking =
     aiRanking && now && now.getTime() < aiRanking.expires
       ? aiRanking.items
-      : [];
+      : mathematicalRanking;
   const directoryChoices = found.matches.length
     ? found.matches
     : found.alternatives;
@@ -150,11 +172,15 @@ export function SimpleFoodFinder(props: Props) {
       return match ? [match] : [];
     })
     .slice(0, 3);
-  const visible = showAll
-    ? choices
-    : activeRanking.length
-      ? recommended
-      : choices.slice(0, 3);
+  const topCards = activeRanking.length ? recommended : choices.slice(0, 3);
+  const extraCommunity = [
+    choices.find((item) => !!item.resource.communityHotspot),
+    choices.find((item) => !!item.resource.communityOffer),
+  ].filter(
+    (item): item is (typeof choices)[number] =>
+      !!item && !topCards.some((top) => top.resource.id === item.resource.id),
+  );
+  const visible = showAll ? choices : [...topCards, ...extraCommunity];
   const candidateKey = choices
     .slice(0, 3)
     .map((item) => item.resource.id)
@@ -176,7 +202,12 @@ export function SimpleFoodFinder(props: Props) {
     setRoutes({});
     setMetricsKey(routeKey);
     setCheckedTrip(null);
-    if (!location || found.blockedMode || !found.matches.length) {
+    if (
+      !location ||
+      mode === "transit" ||
+      found.blockedMode ||
+      !found.matches.length
+    ) {
       setRouteState("idle");
       return;
     }
@@ -329,7 +360,7 @@ export function SimpleFoodFinder(props: Props) {
       }
       if (typeof data.aiMessage === "string")
         setAiMessage(data.aiMessage.slice(0, 500));
-      if (data.assistance === "ai" && data.intent) {
+      if (data.intent) {
         if (Array.isArray(data.ranking) && typeof data.rankedAt === "string") {
           const valid = data.ranking.every(
             (item: { id?: unknown; reasons?: unknown }) =>
@@ -345,7 +376,7 @@ export function SimpleFoodFinder(props: Props) {
             });
         }
         setIntent(data.intent);
-        setAssistance("ai");
+        setAssistance(data.assistance === "ai" ? "ai" : "directory");
         if (["walking", "transit", "driving"].includes(data.intent.mode))
           props.onModeChange(data.intent.mode);
       }
@@ -458,7 +489,8 @@ export function SimpleFoodFinder(props: Props) {
             />{" "}
             Use AI to help understand my request and compare pantries. Sends
             this text to our AI provider; don’t include private details. Your
-            selected coordinates are not sent to AI.
+            selected coordinates are not sent to AI. Approximate distances and
+            comparison scores are sent.
           </label>
         }
       </section>
@@ -552,13 +584,13 @@ export function SimpleFoodFinder(props: Props) {
         {recommended.length > 0 && (
           <section aria-labelledby="ai-comparison-title">
             <h3 id="ai-comparison-title">
-              Your top {recommended.length} AI{" "}
+              Your top {recommended.length}{" "}
               {recommended.length === 1 ? "option" : "options"}
             </h3>
             {recommended.length < 3 && (
               <p>
-                AI selected fewer than three suitable matches. More directory
-                listings are available below.
+                Fewer than three matching listings are available for this
+                request. Try a nearby city or a broader search.
               </p>
             )}
             <p>
@@ -568,26 +600,31 @@ export function SimpleFoodFinder(props: Props) {
             <div className={styles.comparisonGrid}>
               {recommended.map(
                 ({ resource, summary, straightLineMiles }, index) => (
-                  <article className={styles.comparisonCard} key={resource.id}>
+                  <div
+                    className={styles.comparisonCard}
+                    key={resource.id}
+                    role="group"
+                    aria-label={`Compare ${resource.name}`}
+                  >
                     <h4>
                       {index + 1}. {resource.name}
                     </h4>
                     <dl>
-                      <dt>Mathematical travel comparison</dt>
+                      <dt>Distance and pickup score</dt>
                       <dd>
                         {(() => {
                           const comparison = activeRanking.find(
                             (item) => item.id === resource.id,
                           )?.comparison;
                           if (!comparison || comparison.score === null)
-                            return "Unknown — travel/transit has not been verified.";
+                            return "Unknown — add your location to compare distance.";
                           return (
                             <>
                               <strong>
                                 {comparison.score} points ·{" "}
                                 {comparison.status === "fits"
                                   ? "Fits checked constraints"
-                                  : "Needs confirmation"}
+                                  : "Confirm details before traveling"}
                               </strong>
                               <p>{comparison.explanation}</p>
                               <dl>
@@ -631,7 +668,7 @@ export function SimpleFoodFinder(props: Props) {
                     >
                       Directions to option {index + 1}
                     </button>
-                  </article>
+                  </div>
                 ),
               )}
             </div>
@@ -664,9 +701,9 @@ export function SimpleFoodFinder(props: Props) {
           {request && !thinking && (
             <p>
               {assistance === "ai"
-                ? activeRanking.length
-                  ? "AI compared these food options. Confirm availability and requirements."
-                  : "AI helped understand your request. All pantry details come from the directory."
+                ? activeRanking.some((item) => item.selectedBy === "ai")
+                  ? "AI compared candidates; distance and pickup scores determine the order. Confirm details before traveling."
+                  : "Showing current mathematical matches. Run AI again for a fresh comparison."
                 : aiAttempted
                   ? aiMessage ||
                     "AI could not finish interpreting your request. Showing directory matches instead; your text may have reached the AI provider."
@@ -710,12 +747,12 @@ export function SimpleFoodFinder(props: Props) {
           )}
           {location && mode === "transit" && (
             <p>
-              Bus schedules here cover limited BTD service. Open directions to
-              check a trip; no live bus predictions are connected.
+              Public-transit itineraries are outside this discovery feature.
+              Open Google Maps to check available transit directions.
             </p>
           )}
         </div>
-        {location && !found.blockedMode && (
+        {location && mode !== "transit" && !found.blockedMode && (
           <section className={styles.tripCheck} aria-label="Trip check">
             {tripExpired && (
               <p role="status">
@@ -865,12 +902,16 @@ export function SimpleFoodFinder(props: Props) {
                   </button>
                 </div>
                 <h3>{resource.name}</h3>
+                {extraCommunity.some(
+                  (item) => item.resource.id === resource.id,
+                ) && <p>Additional approved community option</p>}
                 {activeRanking.some((item) => item.id === resource.id) && (
                   <div className={styles.caution}>
                     <strong>
-                      {activeRanking[0]?.id === resource.id
-                        ? "AI's first suggestion to check"
-                        : "AI-compared option"}
+                      {activeRanking.find((item) => item.id === resource.id)
+                        ?.selectedBy === "ai"
+                        ? "AI-compared match"
+                        : "Distance-and-pickup match"}
                     </strong>
                     <details>
                       <summary>Why this suggestion?</summary>
@@ -1066,7 +1107,7 @@ export function SimpleFoodFinder(props: Props) {
             className={`btn btn-outline ${styles.showMore}`}
             onClick={() => setShowAll(true)}
           >
-            Show {choices.length - 3} more places
+            Show {choices.length - visible.length} more places
           </button>
         )}
         <div className={styles.help}>

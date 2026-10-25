@@ -200,11 +200,7 @@ export function discoverFood(
             words.every((word) => normalize(r.name).includes(word)),
           )
         : [];
-    candidates = named.length
-      ? named
-      : !options.origin
-        ? allowed.filter(pilot)
-        : allowed;
+    candidates = named.length ? named : allowed;
   }
 
   const notices: string[] = [];
@@ -242,6 +238,17 @@ export function discoverFood(
   // Prioritize an active recorded window, then the soonest future window, while
   // keeping proximity useful when an actual origin is selected.
   sorted.sort((a, b) => {
+    const eligible = (r: Resource) =>
+      r.verificationStatus === "confirmed-site" ||
+      !!(r.communityHotspot ?? r.communityOffer);
+    const verified =
+      Number(eligible(b.resource)) - Number(eligible(a.resource));
+    if (verified) return verified;
+    if (options.origin) {
+      const distance =
+        (a.straightLineMiles ?? Infinity) - (b.straightLineMiles ?? Infinity);
+      if (distance) return distance;
+    }
     const trust =
       Number(b.resource.verificationStatus === "confirmed-site") -
       Number(a.resource.verificationStatus === "confirmed-site");

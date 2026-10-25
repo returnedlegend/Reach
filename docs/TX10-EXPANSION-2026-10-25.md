@@ -1,0 +1,13 @@
+# TX-10 regional food-site expansion research
+
+Reviewed 2026-10-25 UTC. Five additional providers were verified from their complete official pages and recorded in [`data/research/tx10-expansion-2026-10-25.json`](../data/research/tx10-expansion-2026-10-25.json): Elgin Community Cupboard, Smithville Food Pantry, Bellville Christian Food Pantry, Columbus Food Pantry, and Flatonia Area Food Pantry. Their official sites publish active food distribution, pickup addresses, and recurring schedules; details such as intake rules and pickup format are recorded only where the pages state them. Columbus' currently published home-page hours are paired with the third-Friday monthly recurrence specified on its About page. Bellville's separate Sunday community meal is at another location and is not mixed into its pantry listing.
+
+Smithville, Bellville, Columbus, and Flatonia matched the U.S. Census Geocoder `Public_AR_Current` benchmark. Their returned address-range points were checked with the repository's `pointInCoverage` routine against `data/geo/tx10-119.geojson`, and all four fall inside the official 119th Congress TX-10 boundary. These are interpolated street points, not surveyed pickup entrances; entrance locations and pedestrian routes remain unverified.
+
+Elgin Community Cupboard's official site publishes only “303 Ave C, Elgin, TX 78621.” Census geocoding yields both 303 N Ave C and 303 S Ave C candidates. The reviewed official page has no map or directions link to distinguish them, so its coordinates are null and district membership is undetermined.
+
+Waller Assistance & Restoration Ministries (WARM) Food Pantry was also verified from its complete official pantry and contact pages. The pages give Tuesday–Thursday, 10 a.m.–3 p.m. service hours, first-visit intake requirements, eligibility, the physical address, and phone number.
+
+The U.S. Census Geocoder `Public_AR_Current` returned no address match for WARM's published address (`40070 Highway 290 Business, Waller, TX 77484`) or tested US Highway 290 variants. The candidate therefore has null coordinates and remains `needs-confirmation`. No point-in-polygon claim is made for WARM, and it is not represented as an in-district pickup site.
+
+The Sealy Christian Pantry's own site (`https://sealychristianpantry.org/` and `/contact/`) returned HTTP 406 during review. First United Methodist Church of Sealy's official page identifies the pantry and church address but did not establish pantry distribution hours or a distinct pickup site, so it was not added as a confirmed distribution candidate. No organization was contacted.

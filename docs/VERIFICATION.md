@@ -93,3 +93,24 @@ Visual review then found the resource-card layout defect that automated overflow
 Independent code review: static `nextScheduledJourney` accepts only published stop coordinates (decimal tolerance 0.00001°), applies current Chicago date/time and a full two-minute app boarding allowance including seconds, and reuses service calendars/transfer constraints. It refuses unsupported endpoints, invalid clocks, expired coverage and ambiguous clock-change journeys. This supports stop-to-stop schedule lookup; it does not establish walking connections from an arbitrary user location. Google transit requests add an initial two-minute app planning allowance and validate provider walking and timed transit steps; they remain provider estimates. The subsequent-ride transfer allowance review item is resolved: code inspection confirms each later ride requires departure at or after the preceding arrival plus all intervening walking durations plus five boarding minutes. An independent `npx vitest run tests/google-services.test.ts` run on 2026-10-16 passed **46/46 mocked-adapter tests**, including six transfer-boundary cases: same-stop departures at zero and 4:59 minutes fail while 5:00 passes; after a two-minute walk, departures at 2:00 and 6:59 minutes fail while 7:00 passes. Rejected connections return unavailable without route duration; accepted transfer instructions disclose the five-minute allowance. No authenticated Google itinerary or live vehicle feed was observed. A complete real pantry round trip remains unverified.
 
 Final main-agent integration checks (October 16, 2026): data validation, TypeScript, **112 unit tests**, and the production build passed after the transfer-buffer fix. The full production browser suite passed **44/44** checks across mobile and desktop before that final server-only buffer change; the affected Google adapter was independently rerun afterward (46/46). This includes the retained pantry planner, downloads and saved plans, guided coordinates, accessibility and honest unavailable responses. No authenticated Google success or deployed public website is claimed.
+
+## October 25, 2026 — reliable regional discovery
+- Production directory: 29 maintained food sites. Added Elgin, Smithville,
+  Bellville, Columbus and Flatonia from official provider pages. Four new Census
+  points independently match the TX-10 polygon. Elgin remains address-only because
+  Census yields two possible street points. WARM remains research-only.
+- 720 unit tests across 85 files passed, including malformed/partial AI fallback,
+  numerical distance, active windows, data admission and approved community records.
+- Six Chromium checks passed across mobile and desktop: three-option fallback on
+  simulated AI failure, new Smithville discovery, real local no-AI API results,
+  and approved hotspot/extra-food visibility using an isolated /tmp database.
+- Data validation, TypeScript and production build passed. No deployment.
+- A separate gpt-6-luna high verification agent fetched the official pages,
+  rechecked Census responses/boundary tests, identified Elgin ambiguity and the
+  active-window scoring defect, then rechecked corrections and 46 focused tests.
+- Live official source/geocoder requests succeeded. Ollama generation and live
+  walking/driving routing were not verified in this pass. Tests do not prove
+  pantry inventory, entrances or user eligibility. No BTD integration is required
+  or advertised by the discovery flow.
+- Exact origins stay on the Reach server. Approximate distances and scores are
+  location-derived information sent to the model when the user enables AI.

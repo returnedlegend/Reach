@@ -42,8 +42,7 @@ import {
   transitStops,
   type Resource,
 } from "@/data/resources";
-import { googleMapsUrl, nextScheduledJourney, chicagoNow } from "@/lib/journey";
-import { transitPaths } from "@/lib/transit-paths";
+import { googleMapsUrl, chicagoNow } from "@/lib/journey";
 import { rankResources, summarizeResource } from "@/lib/resource-summary";
 import {
   loadSavedItems,
@@ -114,12 +113,6 @@ const needs = [
     label: "Shelter",
     description: "Understand what’s available",
     Icon: Home,
-  },
-  {
-    id: "transportation",
-    label: "Transportation",
-    description: "Public transit & travel help",
-    Icon: Bus,
   },
 ] as const;
 const modes = [
@@ -389,14 +382,7 @@ export function GuidedReach({
             : [],
         )
       : [];
-  const shownStops =
-    need === "transportation"
-      ? transitStops.filter((stop) =>
-          ranked.some(({ resource }) => resource.id === stop.id),
-        )
-      : mode === "transit"
-        ? transitStops
-        : [];
+  const shownStops: typeof transitStops = [];
   useEffect(() => {
     setSaved(loadSavedItems());
     setClock(new Date());
@@ -495,23 +481,10 @@ export function GuidedReach({
       if (version !== requestVersion.current) return;
       if (result.status === "available") setRoute(result);
       else if (mode === "transit") {
-        const scheduled = nextScheduledJourney(
-          location.coordinates,
-          selected.coordinates,
-          now,
-        );
         setRoute({
-          status: scheduled.status,
-          message: `${result.message ?? "Street routing does not provide transit schedules."} ${scheduled.message}`,
-          ...(scheduled.status === "scheduled"
-            ? {
-                label: "Scheduled BTD timetable — confirm with operator",
-                paths: transitPaths(scheduled.journey.segments),
-                steps: scheduled.journey.segments.map((segment) => ({
-                  instruction: `${segment.kind === "bus" ? segment.route : segment.kind}: ${transitStops.find((stop) => stop.id === segment.from)?.name ?? segment.from} → ${transitStops.find((stop) => stop.id === segment.to)?.name ?? segment.to}, ${formatTime(segment.start)}–${formatTime(segment.end)} America/Chicago`,
-                })),
-              }
-            : {}),
+          status: "unavailable",
+          message:
+            "Open Google Maps to calculate public-transit directions. Reach does not provide transit schedules in this flow.",
         });
       } else setRoute(result);
     } catch {
@@ -1582,28 +1555,7 @@ export function GuidedReach({
                     onChange={changeLocation}
                     resources={foodResources}
                   />
-                  <details className="reach-disclosure">
-                    <summary>Start at a published BTD stop</summary>
-                    <p>Choose a stop only if you are actually there.</p>
-                    <div className="reach-stop-list">
-                      {transitStops.map((stop) => (
-                        <button
-                          className="btn btn-outline reach-action"
-                          key={stop.id}
-                          onClick={() =>
-                            changeLocation({
-                              coordinates: { lat: stop.lat, lng: stop.lng },
-                              label: stop.name,
-                              source: "manual",
-                              timestamp: Date.now(),
-                            })
-                          }
-                        >
-                          {stop.name}
-                        </button>
-                      ))}
-                    </div>
-                  </details>
+
                   {map}
                   <button
                     className="btn btn-primary reach-primary"
@@ -2518,47 +2470,10 @@ function SourceDetails({ resource, now }: { resource: Resource; now?: Date }) {
 }
 function ProviderInfo() {
   return (
-    <details className="reach-provider reach-disclosure">
-      <summary>Official transportation alternatives</summary>
-      <h3>Brazos Transit District</h3>
-      <p>
-        Public transit. Confirm service hours, fares, accessibility and
-        departures. Published schedules disagree; no live predictions are
-        connected.
-      </p>
-      <p>
-        <a href="https://www.btd.org/fixed-routes/">
-          Service hours, holidays and routes
-        </a>{" "}
-        ·{" "}
-        <a href="https://www.btd.org/mobile-app-ride-btd/">
-          Official Ride BTD tracking options
-        </a>{" "}
-        · <a href="tel:9797780607">Call 979-778-0607</a>
-      </p>
-      <h3>Bryan ISD school transportation</h3>
-      <p>
-        For eligible, registered students. Confirm eligibility with the
-        district. Stopfinder provides protected family access.
-      </p>
-      <p>
-        <a href="https://www.bryanisd.org/page/transportation">
-          Eligibility and school address lookup
-        </a>{" "}
-        ·{" "}
-        <a href="https://www.bryanisd.org/article/1662114">
-          Official Stopfinder announcement (2024)
-        </a>{" "}
-        · <a href="tel:9792097130">Call 979-209-7130</a>
-      </p>
-      <details>
-        <summary>Timetable source details</summary>
-        <p>
-          Static GTFS Route 00 Orange is connected, valid through December 31,
-          2026. GTFS, web and PDF schedules disagree. Official web sources
-          checked October 16, 2026.
-        </p>
-      </details>
-    </details>
+    <p>
+      Use the destination’s Google Maps link to calculate travel directions.
+      Transit schedules and vehicle tracking are outside Reach’s food discovery
+      feature.
+    </p>
   );
 }

@@ -23,12 +23,12 @@ describe("food discovery without a questionnaire", () => {
       );
     },
   );
-  it("shows maintained pilot pantries without a location, search, or AI", () => {
+  it("shows regional pantries without a location, search, or AI", () => {
     const result = discoverFood(foodResources, "", { now });
     expect(result.matches.length).toBeGreaterThan(2);
     expect(
-      result.matches.every((item) =>
-        /Bryan|College Station/i.test(item.resource.address),
+      result.matches.some((item) =>
+        /Bastrop|Giddings|La Grange/i.test(item.resource.address),
       ),
     ).toBe(true);
     expect(

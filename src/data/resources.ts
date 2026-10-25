@@ -32,6 +32,7 @@ export type Resource = {
   windows?: PantryWindow[];
   closures?: string[];
   scheduleNotes?: string;
+  publishedScheduleVerified?: boolean;
 };
 export function resourceFromPantry(
   p: Pantry,
@@ -44,6 +45,7 @@ export function resourceFromPantry(
     address: p.address,
     coordinates: review?.coordinates ?? null,
     website: metadata?.website,
+    publishedScheduleVerified: metadata?.publishedScheduleVerified,
     city: metadata?.city,
     postalCode: metadata?.postalCode,
     phone: p.phone,

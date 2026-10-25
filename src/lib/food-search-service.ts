@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { createFoodPlanHandler } from "./food-plan-service";
-import type { AccessOption } from "./access-types";
 import { rankFoodWithAI } from "./food-ai-ranking";
 import {
   accessFailure,
@@ -86,55 +84,34 @@ export function createFoodSearchHandler(
           "Please wait a moment. You can still browse food options below.",
         );
       const local = localFoodIntent(body.message);
-      if (!body.useAI)
-        return privateResponse({
-          assistance: "directory",
-          intent: local,
-          aiMessage: "AI is turned off for this search.",
-        });
       const service = (deps.status ?? getAIServiceStatus)();
-      if (service.state !== "configured")
-        return privateResponse({
-          assistance: "directory",
-          intent: local,
-          aiMessage: service.message,
-        });
-      let aiMessage =
-        "AI could not finish this request. You can still use the pantry results.";
+      let aiMessage = !body.useAI
+        ? "AI is turned off for this search."
+        : service.state !== "configured"
+          ? service.message
+          : "AI could not finish this request. You can still use the pantry results.";
       try {
-        let accessOptions: AccessOption[] = [];
-        if (body.origin && !deps.interpret) {
-          try {
-            const planned = await createFoodPlanHandler()(
-              new Request(request.url, {
-                method: "POST",
-                headers: request.headers,
+        const result =
+          deps.interpret && body.useAI && service.state === "configured"
+            ? await deps.interpret(body.message, { signal: request.signal })
+            : await rankFoodWithAI(body.message, {
+                origin: body.origin,
+                mode: local.mode ?? body.mode,
+                skipAI: !body.useAI || service.state !== "configured",
                 signal: request.signal,
-                body: JSON.stringify({
-                  origin: body.origin,
-                  mode: local.mode ?? body.mode ?? "walking",
-                  message: body.message,
-                }),
-              }),
-            );
-            if (planned.ok)
-              accessOptions = (await planned.json()).options ?? [];
-          } catch {
-            /* Missing routing data remains unknown, never a fabricated journey. */
-          }
-        }
-        const result = deps.interpret
-          ? await deps.interpret(body.message, { signal: request.signal })
-          : await rankFoodWithAI(body.message, {
-              origin: body.origin,
-              mode: local.mode ?? body.mode,
-              accessOptions,
-              signal: request.signal,
-              cookieHeader: request.headers.get("cookie"),
-            });
-        if (result.status === "available" && result.assistance === "ai") {
+                cookieHeader: request.headers.get("cookie"),
+              });
+        if (result.status === "available") {
           return privateResponse({
-            assistance: "ai",
+            assistance: result.assistance,
+            ...("ranking" in result
+              ? {
+                  aiMessage:
+                    !body.useAI || service.state !== "configured"
+                      ? aiMessage
+                      : result.message,
+                }
+              : {}),
             ...("ranking" in result
               ? { ranking: result.ranking, rankedAt: result.rankedAt }
               : {}),

@@ -1,0 +1,200 @@
+[
+  {
+    "id": "warm-waller-food-pantry",
+    "name": "Waller Assistance & Restoration Ministries (WARM) Food Pantry",
+    "address": "40070 Highway 290 Business, Waller, TX 77484",
+    "coordinates": null,
+    "phone": "936-372-5173",
+    "website": "https://warmwaller.org/food-pantry",
+    "hours": "Tuesday–Thursday 10 a.m.–3 p.m. The website says first-time visitors must arrive no later than 2 p.m. to meet with a caseworker.",
+    "offering": "WARM Food Pantry distributes frozen and canned meats, canned vegetables, bread, fresh produce and other food to families in need.",
+    "eligibility": "The official page says TEFAP eligibility requires either qualifying benefits (SNAP, TANF, SSI, NSLP, or non-institutional Medicaid) or household income at or below 185% of federal poverty guidelines. First-time visitors must register with a caseworker and bring proof of qualifying benefits or household income, proof of residence, and government-issued ID for each adult. Annual eligibility recertification is required.",
+    "accessibility": "Not stated on reviewed pages.",
+    "notes": "Official Food Pantry page identifies the service and hours and gives the physical address and phone. Census Geocoder Public_AR_Current returned no address match for the published address or tested street-name variants. Coordinates remain null; TX-10 point-in-polygon membership has not been established, so this candidate is not claimed to be inside the district.",
+    "city": "Waller",
+    "postalCode": "77484",
+    "sources": [
+      {
+        "title": "WARM — Food Pantry",
+        "url": "https://warmwaller.org/food-pantry",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "WARM — Contact Us",
+        "url": "https://warmwaller.org/contact-us",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=40070%20Highway%20290%20Business%2C%20Waller%2C%20TX%2077484&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current returned no address matches. Coordinates are null and boundary membership is undetermined."
+    },
+    "verificationStatus": "needs-confirmation"
+  },
+  {
+    "id": "elgin-community-cupboard",
+    "name": "Elgin Community Cupboard",
+    "address": "303 Avenue C, Elgin, TX 78621",
+    "coordinates": null,
+    "website": "https://elgincommunitycupboard.org/",
+    "hours": "Tuesday 10 a.m.–12 p.m.",
+    "offering": "The official site says the food bank provides food assistance to people in the Elgin area.",
+    "eligibility": "The site does not state specific eligibility or documentation requirements.",
+    "accessibility": "Not stated on reviewed page.",
+    "notes": "The official site confirms a food distribution service, recurring hours, and the published address “303 Ave C” but does not specify north or south. Census geocoding returns both 303 N Ave C and 303 S Ave C candidates. The official site has no embedded map or directions link that resolves the ambiguity. Coordinates remain null; neither candidate is used to claim TX-10 membership.",
+    "city": "Elgin",
+    "postalCode": "78621",
+    "sources": [
+      {
+        "title": "Elgin Community Cupboard — Home / Food Services",
+        "url": "https://elgincommunitycupboard.org/",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=303%20Ave%20C%2C%20Elgin%2C%20TX%2078621&benchmark=Public_AR_Current&format=json",
+      "method": "The official address omits the N/S direction, and Census Geocoder Public_AR_Current returns both 303 N AVE C and 303 S AVE C candidates. The official page provides no map or directions link to resolve which is the pantry site. Coordinates are null; district coverage was not tested."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "smithville-food-pantry",
+    "name": "Smithville Food Pantry",
+    "address": "301 Lee Street, Smithville, TX 78957",
+    "coordinates": {
+      "lat": 30.004215406837,
+      "lng": -97.162543455262
+    },
+    "phone": "512-237-2322",
+    "website": "https://smithvillefoodpantry.org/",
+    "hours": "Wednesdays 9:00–11:30 a.m.",
+    "offering": "Food distribution assistance; the pantry describes its mission as providing nutritious food to reduce food insecurity in the Smithville community.",
+    "eligibility": "Must meet federally mandated income requirements and live within ZIP code 78957. Application is completed in person Wednesday mornings during pantry hours.",
+    "accessibility": "Not stated on reviewed pages.",
+    "notes": "Official home and contact pages identify an operating food pantry, weekly distribution hours, address and intake requirements. Census Geocoder returned an address-range point inside the official TX-10 119th Congress geometry. Entrance location and pedestrian access are unverified.",
+    "city": "Smithville",
+    "postalCode": "78957",
+    "sources": [
+      {
+        "title": "Smithville Food Pantry — Home",
+        "url": "https://smithvillefoodpantry.org/",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Smithville Food Pantry — Contact Us / Assistance Requirements",
+        "url": "https://smithvillefoodpantry.org/contact-us/",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=301+Lee+Street%2C+Smithville%2C+TX+78957&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current matched 301 LEE ST, SMITHVILLE, TX 78957 and returned an address-range/interpolated street point. Point-in-polygon against the official TX-10 119th Congress geometry is inside; entrance location is not surveyed."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "bellville-christian-food-pantry",
+    "name": "Bellville Christian Food Pantry",
+    "address": "234 South Masonic Street, Bellville, TX 77418",
+    "coordinates": {
+      "lat": 29.948822516887,
+      "lng": -96.25967793551
+    },
+    "phone": "979-865-5976",
+    "website": "https://bellvillechristian.wixsite.com/bellville-christian",
+    "hours": "2nd Thursday monthly 8:00–10:00 a.m. and 5:30–6:30 p.m.; 4th Thursday monthly 5:00–6:30 p.m.",
+    "offering": "Drive-through food distribution. Official page says entrance line starts from the driveway on Thomas Street, behind Bellville Methodist Church.",
+    "eligibility": "Application required; proof of residence and current ID required. Applicant must live within the Bellville ISD school district.",
+    "accessibility": "Drive-through distribution; step-free access and other accommodations not stated.",
+    "notes": "The official pantry site publishes recurring distribution hours, address, location/entrance directions, and client requirements. It also advertises a separate Sunday free meal at a different location; that program is not included here. Census Geocoder returned an address-range point inside the official TX-10 119th Congress geometry. Entrance location and pedestrian access are unverified.",
+    "city": "Bellville",
+    "postalCode": "77418",
+    "sources": [
+      {
+        "title": "Bellville Christian Food Pantry — Home / Distribution and Eligibility",
+        "url": "https://bellvillechristian.wixsite.com/bellville-christian",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=234+S+Masonic+St%2C+Bellville%2C+TX+77418&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current matched 234 S MASONIC ST, BELLVILLE, TX 77418 and returned an address-range/interpolated street point. Point-in-polygon against the official TX-10 119th Congress geometry is inside; entrance location is not surveyed."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "columbus-food-pantry",
+    "name": "Columbus Food Pantry",
+    "address": "419 Washington Street, Columbus, TX 78934",
+    "coordinates": {
+      "lat": 29.704279345787,
+      "lng": -96.53949555309
+    },
+    "phone": "979-500-4292",
+    "website": "https://columbusfoodpantry.org/",
+    "hours": "Third Friday monthly, 8:00 a.m.–12:00 p.m. The official site states the distribution hours changed permanently and publishes a 2026 distribution calendar.",
+    "offering": "Drive-through food distribution from the First United Methodist Church Family Life Center.",
+    "eligibility": "Complete required household paperwork annually, state household income and size, live in the Columbus area, and appear in person at least once per year.",
+    "accessibility": "Drive-through distribution; step-free access and other accommodations not stated.",
+    "notes": "The official home page gives the changed distribution hours and address; its About page says distribution occurs on the third Friday each month at the Family Life Center, and How to Receive Food documents requirements. Census Geocoder returned an address-range point inside the official TX-10 119th Congress geometry. Entrance location and pedestrian access are unverified.",
+    "city": "Columbus",
+    "postalCode": "78934",
+    "sources": [
+      {
+        "title": "Columbus Food Pantry — Home / Distribution Hours",
+        "url": "https://columbusfoodpantry.org/",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Columbus Food Pantry — About / Location and Distribution",
+        "url": "https://columbusfoodpantry.org/about",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Columbus Food Pantry — How to Receive Food",
+        "url": "https://columbusfoodpantry.org/how-to-receive-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=419+Washington+Street%2C+Columbus%2C+TX+78934&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current matched 419 WASHINGTON ST, COLUMBUS, TX 78934 and returned an address-range/interpolated street point. Point-in-polygon against the official TX-10 119th Congress geometry is inside; entrance location is not surveyed."
+    },
+    "verificationStatus": "confirmed-site"
+  },
+  {
+    "id": "flatonia-area-food-pantry",
+    "name": "Flatonia Area Food Pantry",
+    "address": "212 East North Main Street, Flatonia, TX 78941",
+    "coordinates": {
+      "lat": 29.687672609804,
+      "lng": -97.106748217899
+    },
+    "phone": "713-828-8227",
+    "website": "https://www.flatoniafoodpantry.com/",
+    "hours": "Second Thursday monthly, 3:30–5:30 p.m.",
+    "offering": "Monthly food pantry providing healthy and nutritious food to people in need in the Flatonia area.",
+    "eligibility": "Official About page says it serves Flatonia residents; other eligibility and documentation rules are not stated on reviewed pages.",
+    "accessibility": "Not stated on reviewed pages.",
+    "notes": "Official home and About pages identify the pantry, recurring service day/time, address, phone, and Flatonia resident service area. Census Geocoder returned an address-range point inside the official TX-10 119th Congress geometry. Entrance location and pedestrian access are unverified.",
+    "city": "Flatonia",
+    "postalCode": "78941",
+    "sources": [
+      {
+        "title": "Flatonia Area Food Pantry — Home / Hours",
+        "url": "https://www.flatoniafoodpantry.com/",
+        "checkedOn": "2026-10-25"
+      },
+      {
+        "title": "Flatonia Area Food Pantry — About",
+        "url": "https://www.flatoniafoodpantry.com/about",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=212+E+North+Main+St%2C+Flatonia%2C+TX+78941&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current matched 212 E NORTH MAIN ST, FLATONIA, TX 78941 and returned an address-range/interpolated street point. Point-in-polygon against the official TX-10 119th Congress geometry is inside; entrance location is not surveyed."
+    },
+    "verificationStatus": "confirmed-site"
+  }
+]

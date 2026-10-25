@@ -49,7 +49,11 @@ describe("AI pantry comparisons", () => {
         now,
         generate: vi.fn().mockResolvedValue(response(ids)),
       });
-      expect(result.status).toBe("unavailable");
+      expect(result.status).toBe("available");
+      if (result.status === "available") {
+        expect(result.assistance).toBe("directory");
+        expect(result.ranking.map((item) => item.id)).toEqual(["a", "b"]);
+      }
     },
   );
   it("excludes unconfirmed sites and pickup prohibited on foot", async () => {
@@ -103,32 +107,35 @@ describe("AI pantry comparisons", () => {
         generate,
       }),
     ).toMatchObject({
-      status: "unavailable",
+      status: "available",
+      assistance: "directory",
       message: "Local model unavailable",
     });
   });
-  it("rejects generated prose instead of allowing ungrounded reasons", async () => {
+  it("rejects generated prose and returns mathematical matches", async () => {
     const fake = response(["a"]);
     fake.value.reason = "Food guaranteed";
-    expect(
-      (
-        await rankFoodWithAI("food in Bryan", {
-          resources: [site("a")],
-          generate: vi.fn().mockResolvedValue(fake),
-        })
-      ).status,
-    ).toBe("unavailable");
+    const result = await rankFoodWithAI("food in Bryan", {
+      resources: [site("a")],
+      now,
+      generate: vi.fn().mockResolvedValue(fake),
+    });
+    expect(result.status).toBe("available");
+    if (result.status === "available") {
+      expect(result.assistance).toBe("directory");
+      expect(JSON.stringify(result.ranking)).not.toContain("Food guaranteed");
+    }
   });
 });
 
-it("allows the model to shortlist a suitable subset instead of forcing poor matches", async () => {
+it("fills partial model responses with mathematical matches", async () => {
   const result = await rankFoodWithAI("food in Bryan", {
     resources: [site("a"), site("b")],
     generate: vi.fn().mockResolvedValue(response(["b"])),
   });
   expect(result.status).toBe("available");
   if (result.status === "available")
-    expect(result.ranking.map((r) => r.id)).toEqual(["b"]);
+    expect(result.ranking.map((r) => r.id)).toEqual(["b", "a"]);
 });
 
 it("excludes known weekday mismatches before asking the model", async () => {
@@ -320,18 +327,42 @@ it("returns only the top three validated model selections", async () => {
 });
 
 it("uses measured travel scores over model order and excludes checked infeasible trips", async () => {
-  const access = (id: string, travel: number, status: "fits" | "no" = "fits") => ({
-    id, status, outbound: {mode:"transit",source:"scheduled"},
-    scoreBreakdown: {closingBufferBonus:0,travelPenalty:travel,walkingPenalty:0,farePenalty:0,transferPenalty:0,uncertaintyPenalty:0,waitingPenalty:0,serviceDelayPenalty:0,totalTravelMinutes:travel,totalWalkingMinutes:0,totalTransfers:0,totalFare:null},
-  }) as import("../src/lib/access-types").AccessOption;
-  const generate = vi.fn().mockResolvedValue(response(["slow", "blocked", "fast"]));
+  const access = (id: string, travel: number, status: "fits" | "no" = "fits") =>
+    ({
+      id,
+      status,
+      outbound: { mode: "transit", source: "scheduled" },
+      scoreBreakdown: {
+        closingBufferBonus: 0,
+        travelPenalty: travel,
+        walkingPenalty: 0,
+        farePenalty: 0,
+        transferPenalty: 0,
+        uncertaintyPenalty: 0,
+        waitingPenalty: 0,
+        serviceDelayPenalty: 0,
+        totalTravelMinutes: travel,
+        totalWalkingMinutes: 0,
+        totalTransfers: 0,
+        totalFare: null,
+      },
+    }) as import("../src/lib/access-types").AccessOption;
+  const generate = vi
+    .fn()
+    .mockResolvedValue(response(["slow", "blocked", "fast"]));
   const result = await rankFoodWithAI("food in Bryan by bus", {
-    resources: ["slow", "blocked", "fast"].map(id => site(id)), now, generate,
-    accessOptions: [access("slow",60),access("fast",15),access("blocked",5,"no")],
+    resources: ["slow", "blocked", "fast"].map((id) => site(id)),
+    now,
+    generate,
+    accessOptions: [
+      access("slow", 60),
+      access("fast", 15),
+      access("blocked", 5, "no"),
+    ],
   });
   expect(result.status).toBe("available");
   if (result.status !== "available") throw new Error("Expected comparison");
-  expect(result.ranking.map(item => item.id)).toEqual(["fast","slow"]);
+  expect(result.ranking.map((item) => item.id)).toEqual(["fast", "slow"]);
   expect(result.ranking[0].comparison?.score).toBe(-15);
   expect(generate.mock.calls[0][0].prompt).toContain("travelMinutes");
 });

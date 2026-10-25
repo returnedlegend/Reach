@@ -12,6 +12,10 @@ const geometryPath = fileURLToPath(
 const geometry = JSON.parse(readFileSync(geometryPath, "utf8")).features[0]
   .geometry as CoverageGeometry;
 const admittedIds = [
+  "smithville-food-pantry",
+  "bellville-christian-food-pantry",
+  "columbus-food-pantry",
+  "flatonia-area-food-pantry",
   "anderson-food-pantry",
   "bedias-food-pantry",
   "christian-community-services-navasota",
@@ -31,6 +35,18 @@ const admittedIds = [
 ];
 
 describe("TX-10 pantry admissions", () => {
+  it("keeps Elgin's ambiguous N/S map pin unknown while preserving official pickup information", () => {
+    const site = foodResources.find(
+      (r) => r.id === "elgin-community-cupboard",
+    )!;
+    expect(site.coordinates).toBeNull();
+    expect(site.address).toContain("303 Avenue C");
+    expect(site.notes).toMatch(/ambig|two/i);
+    expect(
+      site.sources.some((s) => s.url === "https://elgincommunitycupboard.org/"),
+    ).toBe(true);
+  });
+
   it("keeps only pinned pickup points inside the official 119th Congress geometry", () => {
     const newRecords = realPantries.filter((p) => admittedIds.includes(p.id));
     expect(newRecords.map((p) => p.id).sort()).toEqual([...admittedIds].sort());
@@ -58,7 +74,7 @@ describe("TX-10 pantry admissions", () => {
   });
 
   it("retains source dates, address metadata and honest schedule uncertainty", () => {
-    expect(foodResources).toHaveLength(24);
+    expect(foodResources).toHaveLength(29);
     for (const id of admittedIds) {
       const resource = foodResources.find((p) => p.id === id)!;
       expect(resource.sources.length, id).toBeGreaterThan(0);
@@ -73,7 +89,7 @@ describe("TX-10 pantry admissions", () => {
             source.url?.startsWith("https://") &&
             (auditedOnOctober24
               ? ["2026-10-21", "2026-10-24"].includes(source.checkedOn ?? "")
-              : /^2026-10-2[12]$/.test(source.checkedOn ?? "")),
+              : /^2026-10-2[125]$/.test(source.checkedOn ?? "")),
         ),
         id,
       ).toBe(true);

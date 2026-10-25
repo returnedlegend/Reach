@@ -1,3 +1,9 @@
+# Current expansion — October 25, 2026
+
+The production directory now has **29 sites**, adding Elgin Community Cupboard, Smithville Food Pantry, Bellville Christian Food Pantry, Columbus Food Pantry and Flatonia Area Food Pantry. See [official sources and coordinate evidence](TX10-EXPANSION-2026-10-25.md). WARM remains a research lead with no verified map point. This is reviewed coverage, not a claim that every TX-10 pantry is listed.
+
+The following section documents the earlier 24-site baseline.
+
 # TX-10 food pantry data
 
 The production pantry directory now contains 24 food sites: the original eight Brazos County listings plus 16 additions whose pickup points fall inside the official 119th Congress TX-10 boundary. The new sites have public schedule and service evidence in the primary provider or food-bank source listed in each record. Their entrances, pedestrian paths, same-day inventory, and holiday exceptions have not been reviewed.

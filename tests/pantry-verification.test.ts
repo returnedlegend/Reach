@@ -7,15 +7,18 @@ describe("maintained pantry evidence", () => {
     expect(Object.keys(pantryVerification).sort()).toEqual(
       realPantries.map((p) => p.id).sort(),
     );
-    expect(new Set(foodResources.map((p) => p.id)).size).toBe(24);
+    expect(new Set(foodResources.map((p) => p.id)).size).toBe(29);
     for (const p of foodResources) {
       expect(
         p.sources.every(
           (s) => Boolean(s.checkedOn && s.url?.startsWith("https://")),
         ),
       ).toBe(true);
-      expect(Number.isFinite(p.coordinates?.lat)).toBe(true);
-      expect(Number.isFinite(p.coordinates?.lng)).toBe(true);
+      if (p.id === "elgin-community-cupboard") expect(p.coordinates).toBeNull();
+      else {
+        expect(Number.isFinite(p.coordinates?.lat)).toBe(true);
+        expect(Number.isFinite(p.coordinates?.lng)).toBe(true);
+      }
       expect(p.offering).toMatch(/distribution|goods|shopping|food pantry|food pickup|food assistance/i);
       expect(p.hours).not.toMatch(/open now/i);
     }

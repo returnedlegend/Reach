@@ -1,114 +1,49 @@
-# AI pantry comparison
+# Distance-first pantry comparison — October 25, 2026
 
-The food-first search now asks the configured AI (local Ollama/Llama by default)
-to compare matching pantry records, rather than only extract a service type.
-The person can describe priorities in the existing search box, for example
-“food in Bryan without an appointment” or “groceries in Bryan on Saturday.”
+Reach supplies up to three matching options without waiting for a model. If fewer
+than three records satisfy the geographic/service filters, it says so instead of
+inventing results or silently ignoring the requested area.
 
-## Data and boundaries
+## Numeric ranking
+Each eligible record gets:
+- Distance: 60 / (1 + straight-line miles).
+- Pickup schedule: 25 / (1 + days until the next published pickup).
+- Evidence: 15 for a confirmed maintained pickup site; 10 for an approved
+  community listing.
 
-- Candidates come from the active server directory. Existing geographic/service
-  filtering runs first. Only confirmed pickup sites qualify; known prohibited
-  pedestrian pickup is excluded for walking/transit comparisons.
-- Up to six matching candidates are compared in one model request. This is a
-  comparison of that shortlist, not a nationwide or mathematically optimal search.
-- The prompt includes maintained offerings, distribution schedules, computed next
-  published windows in Central time, requirements, access notes and freshness.
-  Registration, distribution and appointment information remain distinct.
-- The request text is sent to the configured provider. Selected coordinates,
-  account data and credentials are not included. The existing sensitive-text
-  check rejects addresses, phone numbers and email addresses in the request.
-- The model returns a shortlist of ordered candidate IDs and the main supporting
-  fact key. Explicit service and mode handling remains in the existing local parser. It cannot create pantry records or write explanations.
-  The server displays the selected fact plus schedule and requirements text; unknown facts stay unknown.
-- Ollama native JSON-schema output constrains generation. The server also validates
-  the response, rejects invented/duplicate IDs and empty recommendations, and refuses ungrounded
-  reason keys. Text inside the request and directory is treated as data.
-- Existing privacy consent, release controls, rate limits and timeouts still apply.
-  No automatic cloud-provider fallback was added.
+Unknown distance and schedule earn zero in that component and remain labeled
+unknown. These are preference points, not probabilities, routed distances or a
+guarantee of opening hours, eligibility, food stock or travel feasibility.
+Actual selected coordinates are used server-side. Only rounded distance and score
+components reach the AI, not raw origin coordinates or private household addresses.
+Household offers have only approximate areas, so exact distance remains unknown.
 
-## What the person sees
+Explicit city/ZIP/service filters apply first. Unsupported or expired community
+records and known walking prohibitions remain excluded. With a selected origin,
+nearby approved hotspots compete with maintained sites instead of being buried
+behind them. No-location browsing includes the regional directory, not just Bryan.
 
-Cards can change order after comparison. The first is labeled “AI's first suggestion
-to check,” with the published facts used in the comparison. It is not a promise of
-food stock, eligibility, appointments, safe access or a feasible journey.
+## AI and resilience
+The six-candidate model request includes numeric distance, score components,
+published schedules, requirements and uncertainty. Two candidate slots are
+reserved for approved community options where available. A valid model response
+breaks equal-score ties; it does not override a higher mathematical score.
+Partial responses are filled from eligible mathematical matches up to three.
+Invalid IDs, duplicates, provider failure or an empty response use mathematical
+results, labeled directory assistance. Only IDs actually returned by a valid model
+are labeled AI-compared. Invented prose is never displayed as provider facts.
 
-Existing computed trip recommendations remain separate and authoritative for
-travel feasibility. AI order does not override their checks. Exact origins and
-routed travel times are not available to this comparison model.
+The UI shows mathematical comparisons immediately, refreshes server directory
+data on AI search, and expires model comparisons after one minute. Existing
+privacy, explicit AI choice, release controls and rate limits remain. No external
+provider call is required to return local mathematical matches.
 
-Directory results appear immediately. Timeouts, invalid output and unavailable AI
-leave them usable with an honest message. Comparisons expire after five minutes.
-A new search, disabling AI, changing location or manually changing travel mode
-clears the previous comparison. Submit again to compare the updated request.
+## Scope
+No BTD integration or bus-schedule fallback is required by discovery. Public
+transit directions open Google Maps to calculate a trip separately. Existing
+walking/driving routing remains optional. Historical advanced transit code and
+tests are retained, but are not a claim of live integration.
 
-## Operations
-
-No new key or provider is required. Use the Ollama configuration in LLAMA.md.
-Model latency depends on hardware and load; concurrent builds/browser tests can
-consume enough CPU to hit the configured timeout. Do not raise timeouts without
-considering hosting limits. A valid structured response is not proof that the
-model made the best choice: human review and source verification remain necessary.
-
-Official reference: https://docs.ollama.com/capabilities/structured-outputs
-
-## Schedule guard
-
-For an explicit “only … Saturday” (or other named weekday) restriction, complete,
-non-conflicting structured schedules are checked before inference. Known weekday
-mismatches cannot be promoted by AI. Multiple explicitly permitted days are kept.
-Unverified or missing schedules remain unknown, not evidence that pickup is possible.
-The guard does not establish a booking, food stock or a usable trip on that date.
-
-## Validation
-
-The implementation includes tests for changed model order, grounded explanations,
-invented and duplicate IDs, unsuitable-site exclusion, sensitive text, provider
-failure, empty and partial recommendations, explicit weekday restrictions, native
-schema requests, stale results, mobile ordering and disabling AI. Live evidence
-is recorded separately from fixture-based tests in the evidence directory.
-
-Final checks on October 25, 2026: **678 unit tests in 75 files**, TypeScript,
-production data validation and production build passed. **18 mobile/desktop
-browser cases passed** after fixing stale-result handling. Earlier browser runs
-during active development had failures; the final stable run passed all cases.
-
-A separate actual mobile-browser request for Saturday pickup reached local
-Llama 3.2 3B and returned HTTP 200 with an AI ranking. A Hopeful Harvest moved
-to the first visible card; its explanation showed the recorded Saturday schedule
-and requirements. See [live response](evidence/llama-ranking-live.json) and
-[mobile screenshot](evidence/llama-ranking-mobile.png).
-Earlier loaded-CPU attempts timed out, and an earlier unconstrained response failed
-validation; neither was presented as AI success. Native schema generation and the
-smaller response contract were exercised successfully.
-
-This is not an independently certified optimal ranking. Lower-ranked options with
-incomplete/conflicting schedules still need confirmation; the structured weekday
-guard intentionally does not infer missing facts from prose. Source freshness,
-food availability and trip feasibility remain separate limitations.
-
-## Slower local computers
-
-Local pantry ranking now has a dedicated 120-second server deadline and a
-125-second browser deadline. Other AI tasks retain their existing timeout
-settings; cloud-provider deadlines are unchanged. This ranking budget does not
-use the older 40-second OLLAMA_TIMEOUT_MS setting. The UI keeps directory results
-visible, explains the possible wait and provides “Stop AI comparison.”
-
-Ranking asks for at most 256 output tokens and avoids duplicate freshness dates
-and redundant prompt instructions. It still sends the maintained schedules,
-requirements and uncertainty; facts are not silently truncated. A timeout stays
-an unavailable comparison, never a fabricated AI result. Cancelled requests are
-distinguished from deadlines. A busy/underpowered machine may still exceed two
-minutes: keep Ollama running and close heavy applications before retrying.
-Hosting/proxy time limits can impose a shorter deadline independently.
-
-Timeout-fix verification: 684 unit tests in 75 files, TypeScript, data validation
-and production build passed. All 20 mobile/desktop browser cases passed after
-restarting a stalled development preview. Fake-clock tests explicitly cover a
-50-second successful inference, the two-minute cap, stalled response bodies,
-user cancellation and unchanged cloud deadlines. A real mobile-browser “Food in
-Bryan” request returned HTTP 200 with an accepted AI ranking and displayed The
-Salvation Army first. See [live timeout-fix evidence](evidence/llama-timeout-live.json).
-An earlier live browser attempt did not display an accepted comparison; it is
-not counted as a pass. No success is claimed for the user's separate machine.
+The maintained directory has 29 pantry sites; approved, unexpired food hotspots
+and extra-food offers are added from the same private SQLite database at runtime.
+Only a moderator can approve them; pending submissions do not appear.
