@@ -102,6 +102,28 @@ afterEach(() => {
   rmSync(dir, { recursive: true, force: true });
 });
 describe("account-free sharing moderation", () => {
+  it("accepts the actual local host despite stale config but rejects cross-origin submissions", async () => {
+    vi.stubEnv("NODE_ENV", "development");
+    vi.stubEnv("REACH_APP_ORIGIN", "https://old-reach.example");
+    const send = (origin: string, host = "localhost:3000") =>
+      postSharingSubmission(
+        new Request("http://127.0.0.1:3000/api/sharing/submissions", {
+          method: "POST",
+          headers: { host, origin, "content-type": "application/json" },
+          body: JSON.stringify(submission()),
+        }),
+      );
+    expect((await send("http://localhost:3000")).status).toBe(201);
+    expect((await send("http://127.0.0.1:3000", "127.0.0.1:3000")).status).toBe(
+      201,
+    );
+    expect((await send("http://localhost:3001")).status).toBe(403);
+    expect((await send("https://evil.example")).status).toBe(403);
+    expect((await send("http://127.0.0.1:3000")).status).toBe(403);
+    vi.stubEnv("NODE_ENV", "production");
+    expect((await send("http://localhost:3000")).status).toBe(403);
+  });
+
   it("requires separate consent and privately expires or deletes developer test images", async () => {
     const png = `data:image/png;base64,${(
       await sharp({

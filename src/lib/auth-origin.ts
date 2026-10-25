@@ -1,4 +1,5 @@
 import { accountFail as fail } from "./account-store";
+import { localDevelopmentOrigin } from "./local-request-origin";
 
 export function canonicalAccountOrigin(): string | null {
   const configured =
@@ -20,6 +21,8 @@ export function canonicalAccountOrigin(): string | null {
 }
 
 export function accountRequestOrigin(request: Request): string {
+  const local = localDevelopmentOrigin(request);
+  if (local) return local;
   const canonical = canonicalAccountOrigin();
   if (canonical) return canonical;
   if (

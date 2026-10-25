@@ -86,3 +86,10 @@ Recipient is fixed at **reachpantrysupport@gmail.com**. Messages contain a gener
 ## Verification
 
 Unit tests exercise pending approval, roles, consents, limits, duplicate suppression, cross-origin rejection, private data, expired windows, queue outcomes and restricted registration. Browser fixtures use an isolated `/tmp` SQLite database and synthetic food; they never create real food availability. See [VERIFICATION.md](VERIFICATION.md) for the final run results. No real email or Google login was completed during this work.
+
+### Local submission origin troubleshooting
+In development, guest submissions and account request checks use the direct
+loopback Host (localhost, 127.0.0.1, or ::1), even if a stale canonical origin is
+configured. The browser Origin must still match that host and port exactly.
+Forwarded headers are not trusted. Production still requires the configured
+canonical HTTPS origin. After pulling this fix, restart npm run dev.

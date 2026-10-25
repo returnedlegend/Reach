@@ -1,4 +1,5 @@
 import { featureEnabled } from "./release-features";
+import { localDevelopmentOrigin } from "./local-request-origin";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { chmodSync, closeSync, mkdirSync, openSync } from "node:fs";
 import { dirname, resolve } from "node:path";
@@ -404,6 +405,8 @@ function validateWindow(data: Record<string, unknown>) {
   }
 }
 export function communityRequestOrigin(request: Request) {
+  const local = localDevelopmentOrigin(request);
+  if (local) return local;
   const configured =
     process.env.REACH_APP_ORIGIN || process.env.REACH_COMMUNITY_ORIGIN;
   if (configured) {
