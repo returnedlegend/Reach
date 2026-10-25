@@ -1,3 +1,4 @@
+import { MAX_PICKUP_WINDOW_MS } from "./sharing-policy";
 import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import type { Resource } from "../data/resources";
@@ -86,7 +87,7 @@ function parseRow(row: OfferRow, now: Date): OfferResource | null {
       !row.id ||
       startsAt.getTime() >= endsAt.getTime() ||
       endsAt.getTime() <= now.getTime() ||
-      endsAt.getTime() - startsAt.getTime() > 24 * 60 * 60 * 1000 ||
+      endsAt.getTime() - startsAt.getTime() > MAX_PICKUP_WINDOW_MS ||
       startsAt.getTime() !== new Date(rowStart).getTime() ||
       endsAt.getTime() !== new Date(rowEnd).getTime() ||
       !isCalendarDate(data.useBy) ||

@@ -102,6 +102,52 @@ afterEach(() => {
   rmSync(dir, { recursive: true, force: true });
 });
 describe("account-free sharing moderation", () => {
+  it("accepts and approves seven-day pickups but rejects longer windows", async () => {
+    const data = offer();
+    data.endsAt = new Date(
+      Date.parse(data.startsAt) + 7 * 86400000,
+    ).toISOString();
+    data.useBy = new Date(Date.now() + 10 * 86400000)
+      .toISOString()
+      .slice(0, 10);
+    const send = (value: unknown) =>
+      postSharingSubmission(
+        new Request("https://reach.example/api/sharing/submissions", {
+          method: "POST",
+          headers: {
+            origin: "https://reach.example",
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(submission(randomUUID(), { data: value })),
+        }),
+      );
+    const response = await send(data);
+    expect(response.status).toBe(201);
+    const id = (await response.json()).submission.id;
+    const review = await postSharingReview(
+      new Request("https://reach.example/api/sharing/admin", {
+        method: "POST",
+        headers: {
+          origin: "https://reach.example",
+          "content-type": "application/json",
+          cookie: moderator,
+        },
+        body: JSON.stringify({ action: "approve" }),
+      }),
+      id,
+    );
+    expect(review.status).toBe(200);
+    expect(
+      (
+        await send({
+          ...data,
+          endsAt: new Date(Date.parse(data.endsAt) + 1).toISOString(),
+        })
+      ).status,
+    ).toBe(400);
+    expect((await send({ ...data, useBy: "2020-01-01" })).status).toBe(400);
+  });
+
   it("accepts the actual local host despite stale config but rejects cross-origin submissions", async () => {
     vi.stubEnv("NODE_ENV", "development");
     vi.stubEnv("REACH_APP_ORIGIN", "https://old-reach.example");

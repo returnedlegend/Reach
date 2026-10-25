@@ -1,3 +1,4 @@
+import { MAX_PICKUP_WINDOW_MS } from "./sharing-policy";
 import { featureEnabled } from "./release-features";
 import { localDevelopmentOrigin } from "./local-request-origin";
 import { createHash, randomBytes, randomUUID } from "node:crypto";
@@ -383,11 +384,11 @@ function validateWindow(data: Record<string, unknown>) {
     end <= start ||
     end <= Date.now() ||
     start > Date.now() + 30 * 86400000 ||
-    end - start > 86400000
+    end - start > MAX_PICKUP_WINDOW_MS
   )
     fail(
       400,
-      "Use a future pickup window within 30 days, lasting at most 24 hours.",
+      "Use a future pickup window within 30 days, lasting at most 7 days.",
     );
   if (data.useBy) {
     const date = String(data.useBy);

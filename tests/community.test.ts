@@ -285,7 +285,7 @@ describe("moderation, privacy and food constraints", () => {
       { lat: 30.6 },
       { useBy: "2020-01-01" },
       { useBy: "2027-02-30" },
-      { endsAt: new Date(Date.now() + 2 * 86400000).toISOString() },
+      { endsAt: new Date(Date.now() + 8 * 86400000).toISOString() },
     ])
       expect((await call("offers", "POST", draft(changes), alice)).status).toBe(
         400,

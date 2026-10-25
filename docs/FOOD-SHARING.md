@@ -93,3 +93,17 @@ loopback Host (localhost, 127.0.0.1, or ::1), even if a stale canonical origin i
 configured. The browser Origin must still match that host and port exactly.
 Forwarded headers are not trusted. Production still requires the configured
 canonical HTTPS origin. After pulling this fix, restart npm run dev.
+
+### Pickup windows and review alerts
+Pickup windows may last up to seven days, with a future start within 30 days.
+Food must remain within its use-by date throughout pickup. This is a continuous
+pickup window, not a recurring daily schedule; choose times you can actually
+honor. The same duration limit applies at submission, approval, and discovery.
+
+Review submissions at /admin; authorized moderators sign in at /admin/sign-in.
+Alerts target reachpantrysupport@gmail.com and contain a private review-page link.
+Preview mode saves mail locally and does not send it. For live alerts configure
+SMTP as described in SMTP.md, set REACH_APP_ORIGIN to the address used for Reach,
+and run npm run sharing:alerts -- --watch for queued retries. An accepted SMTP
+message is not proof of inbox delivery. A localhost admin link works only on the
+computer running Reach.

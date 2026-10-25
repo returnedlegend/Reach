@@ -1,3 +1,4 @@
+import { MAX_PICKUP_WINDOW_MS } from "./sharing-policy";
 import type { DatabaseSync } from "node:sqlite";
 import { z } from "zod";
 import type { Resource } from "../data/resources";
@@ -59,7 +60,7 @@ function parseRow(row: HotspotRow, now: Date): HotspotResource | null {
       !Number.isFinite(rowEndsAt.getTime()) ||
       startsAt.getTime() >= endsAt.getTime() ||
       endsAt.getTime() <= now.getTime() ||
-      endsAt.getTime() - startsAt.getTime() > 24 * 60 * 60 * 1000 ||
+      endsAt.getTime() - startsAt.getTime() > MAX_PICKUP_WINDOW_MS ||
       startsAt.getTime() !== rowStartsAt.getTime() ||
       endsAt.getTime() !== rowEndsAt.getTime()
     )

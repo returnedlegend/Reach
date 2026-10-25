@@ -144,10 +144,10 @@ describe("community hotspot resource adapter", () => {
     });
     const tooLong = hotspot({
       startsAt: "2026-06-01T16:00:00.000Z",
-      endsAt: "2026-06-02T17:00:00.000Z",
+      endsAt: "2026-06-08T17:00:00.000Z",
     });
     insert(db, {
-      id: "over-24-hours",
+      id: "over-seven-days",
       data: tooLong,
       startsAt: tooLong.startsAt,
       endsAt: tooLong.endsAt,
@@ -164,8 +164,8 @@ describe("community hotspot resource adapter", () => {
     });
     insert(db, { id: "valid" });
 
-    expect(listHotspotResources(db, now).map((resource) => resource.id)).toEqual([
-      "community-hotspot:valid",
-    ]);
+    expect(
+      listHotspotResources(db, now).map((resource) => resource.id),
+    ).toEqual(["community-hotspot:valid"]);
   });
 });

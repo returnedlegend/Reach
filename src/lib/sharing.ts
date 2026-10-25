@@ -1,3 +1,4 @@
+import { MAX_PICKUP_WINDOW_MS } from "./sharing-policy";
 import { createHash, randomUUID } from "node:crypto";
 import { z } from "zod";
 import type { DatabaseSync } from "node:sqlite";
@@ -130,10 +131,10 @@ function validatedData(
     start <= Date.now() ||
     end <= Date.now() ||
     end <= start ||
-    end - start > 86400000
+    end - start > MAX_PICKUP_WINDOW_MS
   )
     throw Object.assign(
-      new Error("Choose a future pickup window lasting at most 24 hours."),
+      new Error("Choose a future pickup window lasting at most 7 days."),
       { status: 400 },
     );
   if (start > Date.now() + 30 * 86400000)
@@ -171,7 +172,7 @@ function approvedData(kind: "hotspot" | "offer", raw: Record<string, unknown>) {
     !Number.isFinite(end) ||
     end <= Date.now() ||
     end <= start ||
-    end - start > 86400000
+    end - start > MAX_PICKUP_WINDOW_MS
   )
     throw Object.assign(new Error("Pickup window has ended or is invalid."), {
       status: 409,

@@ -52,7 +52,8 @@ describe("sharing submission alerts", () => {
       const result = await dispatchSharingAlerts(db, { now: () => BASE, send });
       expect(result.accepted).toBe(2);
       expect(send).toHaveBeenCalledTimes(2);
-      const mail = send.mock.calls[0][1];
+      const mail = send.mock.calls.map((call) => call[1]).find((mail) => mail.text.includes("request=submission-1"))!;
+      expect(mail).toBeDefined();
       expect(mail.to).toBe("reachpantrysupport@gmail.com");
       expect(mail.kind).toBe("sharing_alert");
       expect(mail.text).toContain("sharing submission");
