@@ -30,6 +30,7 @@ import {
   type FoodIntent,
 } from "@/lib/simple-food";
 import { nextPublishedWindow } from "@/lib/discovery";
+import { displayRanking } from "@/lib/display-ranking";
 import { LocationPicker, type SelectedLocation } from "./location-picker";
 import styles from "./simple-food-finder.module.css";
 import {
@@ -152,10 +153,18 @@ export function SimpleFoodFinder(props: Props) {
     }))
     .sort((a, b) => (b.comparison?.score ?? 0) - (a.comparison?.score ?? 0))
     .slice(0, 3);
-  const activeRanking =
+  const suggestedRanking =
     aiRanking && now && now.getTime() < aiRanking.expires
       ? aiRanking.items
-      : mathematicalRanking;
+      : [];
+  const activeRanking = displayRanking(
+    suggestedRanking,
+    mathematicalRanking,
+    new Set(found.matches.map(({ resource }) => resource.id)),
+  );
+  const visibleAiSummary = aiSummary.filter((item) =>
+    activeRanking.some((rank) => rank.id === item.id),
+  );
   const directoryChoices = found.matches.length
     ? found.matches
     : found.alternatives;
@@ -323,6 +332,8 @@ export function SimpleFoodFinder(props: Props) {
     setAiSummary([]);
     const local = discoverFood(resources, text).intent;
     if (local.mode) props.onModeChange(local.mode);
+    // Refresh moderated listings for every search, including directory-only use.
+    router.refresh();
     if (!useAI || !text.trim())
       requestAnimationFrame(() => {
         resultsHeading.current?.focus({ preventScroll: true });
@@ -335,7 +346,6 @@ export function SimpleFoodFinder(props: Props) {
     setThinking(true);
     setAiAttempted(true);
     try {
-      router.refresh(); // Include newly approved listings in the server-provided directory.
       const response = await fetch("/api/food-search", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -426,12 +436,6 @@ export function SimpleFoodFinder(props: Props) {
         <p>
           Tell us what would help. We’ll find places to try and help you get
           there.
-        </p>
-        <p>
-          Have food to share or want to host a pickup?{" "}
-          <Link className="btn btn-outline" href="/share">
-            Host a Food Pickup / Share Extra Food
-          </Link>
         </p>
         <form onSubmit={submit} className={styles.ask}>
           <label htmlFor="food-request">What do you need?</label>
@@ -600,18 +604,16 @@ export function SimpleFoodFinder(props: Props) {
           </span>
         </div>
         <p className={styles.context}>
-          {activeRanking.length
-            ? "Travel has not been checked yet."
-            : location
-              ? "Sorted using your starting point and published schedules. Distance alone does not establish a usable trip."
-              : found.area
-                ? `Showing matches for ${found.area}. Add your starting point for travel help.`
-                : "Showing selected central Texas pantries. Add your location or enter a city to narrow the list."}
+          {!location
+            ? `${found.area ? `Showing matches for ${found.area}. ` : "Showing selected central Texas sites. "}Add your starting point to compare distance. These are directory suggestions, not checked trips.`
+            : activeRanking.length
+              ? "Travel has not been checked yet."
+              : "Sorted using your starting point and published schedules. Distance alone does not establish a usable trip."}
         </p>
         {aiRanking &&
           now &&
           now.getTime() < aiRanking.expires &&
-          aiSummary.length > 0 &&
+          visibleAiSummary.length > 0 &&
           !thinking && (
             <section
               className={styles.comparisonCard}
@@ -620,7 +622,7 @@ export function SimpleFoodFinder(props: Props) {
             >
               <h3 id="ai-summary-heading">AI’s quick take</h3>
               <ul>
-                {aiSummary
+                {visibleAiSummary
                   .filter((item) =>
                     recommended.some((match) => match.resource.id === item.id),
                   )
@@ -771,7 +773,7 @@ export function SimpleFoodFinder(props: Props) {
           {request &&
             aiAttempted &&
             !thinking &&
-            aiSummary.length === 0 &&
+            visibleAiSummary.length === 0 &&
             assistance === "ai" &&
             useAI && (
               <div role="status">
@@ -1001,7 +1003,9 @@ export function SimpleFoodFinder(props: Props) {
                       {activeRanking.find((item) => item.id === resource.id)
                         ?.selectedBy === "ai"
                         ? "AI-compared match"
-                        : "Distance-and-pickup match"}
+                        : location
+                          ? "Distance-and-pickup match"
+                          : "Directory suggestion"}
                     </strong>
                     <details>
                       <summary>Why this suggestion?</summary>

@@ -1,3 +1,7 @@
+# Judge-review follow-up — October 25, 2026
+
+659 unit tests, 26 mobile/desktop browser checks, TypeScript, data validation and build passed. Six initial-page accessibility scans found no automated WCAG A/AA violations or horizontal overflow. See the [review](JUDGE-REVIEW-2026-10-25.md) and [evidence](evidence/judge-review-2026-10-25/results.json) for scope and limitations. Older counts below are historical.
+
 # Current validation — October 25, 2026
 
 - 657 unit tests across 78 files passed.

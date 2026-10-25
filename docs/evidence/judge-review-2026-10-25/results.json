@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-25",
+  "baseline": {
+    "unitTestsPassed": 657,
+    "newBrowserAssertionsFailedBeforeFix": 3
+  },
+  "final": {
+    "unitTestsPassed": 659,
+    "unitFilesPassed": 79,
+    "browserChecksPassed": 26,
+    "typecheck": "passed",
+    "dataValidation": "passed",
+    "productionBuild": "passed"
+  },
+  "accessibilityScans": [
+    {
+      "width": 390,
+      "path": "/",
+      "overflow": false,
+      "assetFailures": [],
+      "violations": []
+    },
+    {
+      "width": 390,
+      "path": "/share",
+      "overflow": false,
+      "assetFailures": [],
+      "violations": []
+    },
+    {
+      "width": 390,
+      "path": "/admin/sign-in",
+      "overflow": false,
+      "assetFailures": [],
+      "violations": []
+    },
+    {
+      "width": 1280,
+      "path": "/",
+      "overflow": false,
+      "assetFailures": [],
+      "violations": []
+    },
+    {
+      "width": 1280,
+      "path": "/share",
+      "overflow": false,
+      "assetFailures": [],
+      "violations": []
+    },
+    {
+      "width": 1280,
+      "path": "/admin/sign-in",
+      "overflow": false,
+      "assetFailures": [],
+      "violations": []
+    }
+  ],
+  "limitations": [
+    "Synthetic AI responses; no live Groq inference verified",
+    "Temporary SQLite records; no real food availability established",
+    "Automated accessibility scans cover initial home, sharing, and admin sign-in states only",
+    "No public deployment or new field research"
+  ]
+}

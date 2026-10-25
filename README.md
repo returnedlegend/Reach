@@ -64,3 +64,5 @@ Use persistent private storage and test backups before hosting. See
 [publishing](docs/PUBLISHING.md), [development](docs/DEVELOPMENT.md), and the
 [documentation index](docs/README.md). This repository does not imply that the app
 is publicly deployed or that external providers have been verified live.
+
+Read the [judge-style review and engineering response](docs/JUDGE-REVIEW-2026-10-25.md) for reproduced defects, fixes, validation, and remaining competition-readiness work.
