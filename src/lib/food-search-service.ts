@@ -1,4 +1,6 @@
 import { z } from "zod";
+import { createFoodPlanHandler } from "./food-plan-service";
+import type { AccessOption } from "./access-types";
 import { rankFoodWithAI } from "./food-ai-ranking";
 import {
   accessFailure,
@@ -50,6 +52,7 @@ const schema = z
   .object({
     message: z.string().trim().min(1).max(1200),
     useAI: z.boolean().default(false),
+    mode: z.enum(["walking", "transit", "driving"]).optional(),
     origin: z
       .object({
         lat: z.number().min(-90).max(90),
@@ -99,10 +102,33 @@ export function createFoodSearchHandler(
       let aiMessage =
         "AI could not finish this request. You can still use the pantry results.";
       try {
+        let accessOptions: AccessOption[] = [];
+        if (body.origin && !deps.interpret) {
+          try {
+            const planned = await createFoodPlanHandler()(
+              new Request(request.url, {
+                method: "POST",
+                headers: request.headers,
+                signal: request.signal,
+                body: JSON.stringify({
+                  origin: body.origin,
+                  mode: local.mode ?? body.mode ?? "walking",
+                  message: body.message,
+                }),
+              }),
+            );
+            if (planned.ok)
+              accessOptions = (await planned.json()).options ?? [];
+          } catch {
+            /* Missing routing data remains unknown, never a fabricated journey. */
+          }
+        }
         const result = deps.interpret
           ? await deps.interpret(body.message, { signal: request.signal })
           : await rankFoodWithAI(body.message, {
               origin: body.origin,
+              mode: local.mode ?? body.mode,
+              accessOptions,
               signal: request.signal,
               cookieHeader: request.headers.get("cookie"),
             });

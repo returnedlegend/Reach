@@ -154,3 +154,29 @@ directory listings remain separately available. Comparison cards use stored
 pickup schedules, requirements, food and access facts, with explicit unknowns.
 Distances in this comparison are labeled straight-line estimates, not routing
 results. Selection does not guarantee food availability or eligibility.
+
+### Mathematical AI travel comparisons
+With a selected origin, AI search first invokes Reach's existing access planner
+for the requested travel mode and current Central time. The planner applies
+walking limits, transfer/fare limits, pickup windows, eligibility and appointment
+uncertainty. Default assumptions are those in foodTripInput (including a
+30-minute visit and 15-minute arrival buffer). Text preferences can refine them.
+
+The model receives server-computed measurements and score components, not raw
+coordinates, private routes, or authority to fabricate transit availability.
+Within feasible/needs-confirmation tiers, higher mathematical scores win:
+closing-buffer bonus minus travel, walking, fare, transfer, uncertainty,
+waiting and service-delay penalties. Default engine weights are 1 point per
+travel minute, 2 per walking minute, 4 per dollar, 8 per transfer, 12 per unresolved
+condition and 0.1 per closing-buffer minute (up to 120 minutes). Engine overrides
+are reflected in returned component values. Unknown fares incur a conservative
+penalty but remain unknown in the displayed dollar amount. Negative points are
+normal and are not percentages. No-route options are excluded when actually
+assessed as infeasible; unassessed records have no score.
+
+The maintained-site planner currently does not calculate community/household
+itineraries. These remain unassessed, even when approximate proximity is known.
+Missing provider credentials, unsupported service, or unknown schedules never
+become a positive public-transit accessibility claim. Comparisons expire after
+one minute; rerun search to check again. Mathematical tests use fixtures, not
+proof of live transit or local Ollama operation.

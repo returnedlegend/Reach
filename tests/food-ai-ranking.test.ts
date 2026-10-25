@@ -318,3 +318,20 @@ it("returns only the top three validated model selections", async () => {
     "Return exactly three when at least three are suitable",
   );
 });
+
+it("uses measured travel scores over model order and excludes checked infeasible trips", async () => {
+  const access = (id: string, travel: number, status: "fits" | "no" = "fits") => ({
+    id, status, outbound: {mode:"transit",source:"scheduled"},
+    scoreBreakdown: {closingBufferBonus:0,travelPenalty:travel,walkingPenalty:0,farePenalty:0,transferPenalty:0,uncertaintyPenalty:0,waitingPenalty:0,serviceDelayPenalty:0,totalTravelMinutes:travel,totalWalkingMinutes:0,totalTransfers:0,totalFare:null},
+  }) as import("../src/lib/access-types").AccessOption;
+  const generate = vi.fn().mockResolvedValue(response(["slow", "blocked", "fast"]));
+  const result = await rankFoodWithAI("food in Bryan by bus", {
+    resources: ["slow", "blocked", "fast"].map(id => site(id)), now, generate,
+    accessOptions: [access("slow",60),access("fast",15),access("blocked",5,"no")],
+  });
+  expect(result.status).toBe("available");
+  if (result.status !== "available") throw new Error("Expected comparison");
+  expect(result.ranking.map(item => item.id)).toEqual(["fast","slow"]);
+  expect(result.ranking[0].comparison?.score).toBe(-15);
+  expect(generate.mock.calls[0][0].prompt).toContain("travelMinutes");
+});

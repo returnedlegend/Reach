@@ -312,6 +312,7 @@ export function SimpleFoodFinder(props: Props) {
           message: text,
           useAI: true,
           origin: location?.coordinates,
+          mode,
         }),
       });
       const data = await response.json();
@@ -340,7 +341,7 @@ export function SimpleFoodFinder(props: Props) {
           if (valid && Number.isFinite(time))
             setAiRanking({
               items: data.ranking,
-              expires: Math.min(time + 300000, Date.now() + 300000),
+              expires: Math.min(time + 60000, Date.now() + 60000),
             });
         }
         setIntent(data.intent);
@@ -572,6 +573,37 @@ export function SimpleFoodFinder(props: Props) {
                       {index + 1}. {resource.name}
                     </h4>
                     <dl>
+                      <dt>Mathematical travel comparison</dt>
+                      <dd>
+                        {(() => {
+                          const comparison = activeRanking.find(
+                            (item) => item.id === resource.id,
+                          )?.comparison;
+                          if (!comparison || comparison.score === null)
+                            return "Unknown — travel/transit has not been verified.";
+                          return (
+                            <>
+                              <strong>
+                                {comparison.score} points ·{" "}
+                                {comparison.status === "fits"
+                                  ? "Fits checked constraints"
+                                  : "Needs confirmation"}
+                              </strong>
+                              <p>{comparison.explanation}</p>
+                              <dl>
+                                {Object.entries(comparison.parameters).map(
+                                  ([key, value]) => (
+                                    <div key={key}>
+                                      <dt>{key.replace(/([A-Z])/g, " $1")}</dt>
+                                      <dd>{value ?? "Unknown"}</dd>
+                                    </div>
+                                  ),
+                                )}
+                              </dl>
+                            </>
+                          );
+                        })()}
+                      </dd>
                       <dt>Food</dt>
                       <dd>{resource.shortOffering || summary.offering}</dd>
                       <dt>Pickup times</dt>
