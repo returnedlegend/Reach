@@ -1,0 +1,443 @@
+[
+  {
+    "id": "sealy-christian-pantry",
+    "name": "Sealy Christian Pantry",
+    "address": "412 Old San Felipe Road, Sealy, TX 77474",
+    "coordinates": {
+      "lat": 29.779664958874,
+      "lng": -96.147018462482
+    },
+    "city": "Sealy",
+    "phone": "979-885-3866",
+    "website": "https://sealychristianpantry.org/",
+    "hours": "Every Wednesday 10 a.m.–6 p.m., by appointment.",
+    "offering": "Food assistance by appointment.",
+    "eligibility": "Appointments required. Qualified clients may receive food every other week; qualification and document details are not stated.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Sealy Christian Pantry — Home",
+        "url": "https://sealychristianpantry.org/",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=412+Old+San+Felipe+Road%2C+Sealy%2C+TX+77474&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "iola-food-pantry",
+    "name": "Iola Food Pantry",
+    "address": "23471 FM 244, Iola, TX",
+    "coordinates": null,
+    "city": "Iola",
+    "phone": "936-306-3303",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Third Saturday 9–11 a.m.",
+    "offering": "Walk-in client-choice food pantry.",
+    "eligibility": "Serves Grimes and surrounding counties. Monthly visit limit.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=23471+FM+244%2C+Iola%2C+TX&benchmark=Public_AR_Current&format=json",
+      "method": "No unique Census address match obtained; point and district membership unresolved."
+    },
+    "verificationStatus": "needs-confirmation",
+    "coverage": "unresolved"
+  },
+  {
+    "id": "son-shine-outreach-madisonville",
+    "name": "Son-Shine Outreach Center",
+    "address": "1680 Highway 75, Madisonville, TX",
+    "coordinates": {
+      "lat": 30.973207079637,
+      "lng": -95.917966177565
+    },
+    "city": "Madisonville",
+    "phone": "936-348-5282",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Tuesday, Wednesday and Thursday 9 a.m.–12 p.m. and 1–4 p.m.",
+    "offering": "Walk-in food pantry.",
+    "eligibility": "Serves Madison County, Bedias, Iola, Normangee and Centerville. Visit limit every 30 days.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=1680+Highway+75%2C+Madisonville%2C+TX&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "bread-partners-expo-brenham",
+    "name": "Bread Partners — Washington County Expo Center",
+    "address": "1305 E. Blue Bell Road, Brenham, TX",
+    "coordinates": {
+      "lat": 30.178565299505,
+      "lng": -96.390537140453
+    },
+    "city": "Brenham",
+    "phone": "979-830-0886",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Tuesday 7:30–8:30 a.m.; Thursday 5:30–6:30 p.m.",
+    "offering": "Drive-through food distribution.",
+    "eligibility": "Serves Washington County. Weekly visit limit.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=1305+E.+Blue+Bell+Road%2C+Brenham%2C+TX&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "burton-bridge-ministry-pantry",
+    "name": "Burton Bridge Ministry Pantry",
+    "address": "307 North Brazos, Burton, TX",
+    "coordinates": {
+      "lat": 30.181160152878,
+      "lng": -96.593181548869
+    },
+    "city": "Burton",
+    "phone": "979-337-3370",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Monday and Tuesday 10 a.m.–12 p.m.; Wednesday 3–5 p.m.; Saturday 9 a.m.–12 p.m.",
+    "offering": "Walk-in client-choice food pantry.",
+    "eligibility": "Serves Burton ISD. Visit limit three times per month.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=307+North+Brazos%2C+Burton%2C+TX&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "bread-partners-st-ann-somerville",
+    "name": "Bread Partners — St. Ann Catholic Church",
+    "address": "333 Thornberry Drive, Somerville, TX 77879",
+    "coordinates": {
+      "lat": 30.35228746317,
+      "lng": -96.536617729542
+    },
+    "city": "Somerville",
+    "phone": "979-830-0886",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Monday 7:30–7:45 a.m.",
+    "offering": "Mobile drive-through food distribution at St. Ann Catholic Church.",
+    "eligibility": "Serves Burleson and Washington Counties. Weekly visit limit.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=333+Thornberry+Drive%2C+Somerville%2C+TX+77879&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "bread-partners-chappell-hill",
+    "name": "Bread Partners — Chappell Hill Museum",
+    "address": "9220 Poplar Street, Chappell Hill, TX 77426",
+    "coordinates": null,
+    "city": "Chappell Hill",
+    "phone": "979-830-0886",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Monday 9:30 a.m. start; end time not published.",
+    "offering": "Mobile drive-through food distribution at Chappell Hill Museum.",
+    "eligibility": "Serves Burleson and Washington Counties. Weekly visit limit.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=9220+Poplar+Street%2C+Chappell+Hill%2C+TX+77426&benchmark=Public_AR_Current&format=json",
+      "method": "No unique Census address match obtained; point and district membership unresolved."
+    },
+    "verificationStatus": "needs-confirmation",
+    "coverage": "unresolved"
+  },
+  {
+    "id": "bcs-spanish-sda-produce",
+    "name": "BCS Spanish Seventh Day Adventist — Fresh Produce",
+    "address": "1406 Ursulaine Street, Bryan, TX 77803",
+    "coordinates": {
+      "lat": 30.676138771682,
+      "lng": -96.357658807907
+    },
+    "city": "Bryan",
+    "phone": "979-492-9058",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Second Tuesday and fourth Thursday 1:30–4 p.m.",
+    "offering": "Drive-through supplemental produce and bakery distribution; not a shelf-stable grocery pantry.",
+    "eligibility": "Serves Brazos Valley. Spanish translators available.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=1406+Ursulaine+Street%2C+Bryan%2C+TX+77803&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "christ-church-college-station-produce",
+    "name": "Christ Church — Fresh Produce",
+    "address": "4201 State Highway 6 South, College Station, TX 77845",
+    "coordinates": {
+      "lat": 30.563822666626,
+      "lng": -96.262809751403
+    },
+    "city": "College Station",
+    "phone": "979-690-4673",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "First and third Thursday 9:30–10:30 a.m.",
+    "offering": "Drive-through supplemental produce and bakery distribution; not a shelf-stable grocery pantry.",
+    "eligibility": "Serves Brazos County.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=4201+State+Highway+6+South%2C+College+Station%2C+TX+77845&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "friends-peace-lutheran-produce",
+    "name": "Friends Church / Peace Lutheran Church — Fresh Produce",
+    "address": "2201 Rio Grande Boulevard, College Station, TX 77845",
+    "coordinates": {
+      "lat": 30.592495585808,
+      "lng": -96.309645288017
+    },
+    "city": "College Station",
+    "phone": "979-693-4403",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Friday 4–6 p.m.",
+    "offering": "Drive-through supplemental produce and bakery distribution; not a shelf-stable grocery pantry.",
+    "eligibility": "Serves all counties.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=2201+Rio+Grande+Boulevard%2C+College+Station%2C+TX+77845&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "north-bryan-new-birth-produce",
+    "name": "North Bryan New Birth Fresh Food Drop",
+    "address": "4615 Blue Jay Lane, Bryan, TX",
+    "coordinates": {
+      "lat": 30.718445055562,
+      "lng": -96.39022504278
+    },
+    "city": "Bryan",
+    "phone": "979-492-5633",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Second and fourth Wednesday 3–4 p.m.",
+    "offering": "Drive-through supplemental produce and bakery distribution; not a shelf-stable grocery pantry.",
+    "eligibility": "Serves all counties.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=4615+Blue+Jay+Lane%2C+Bryan%2C+TX&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "project-downtown-produce",
+    "name": "Project Downtown Fresh Food Drop",
+    "address": "2702 Evergreen Circle, Bryan, TX",
+    "coordinates": {
+      "lat": 30.639355560363,
+      "lng": -96.374496572086
+    },
+    "city": "Bryan",
+    "phone": "979-450-1714",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Fourth Saturday 10–10:30 a.m.",
+    "offering": "Walk-in supplemental produce and bakery distribution in the parking lot of the duplex; not a shelf-stable grocery pantry.",
+    "eligibility": "Serves Brazos County.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=2702+Evergreen+Circle%2C+Bryan%2C+TX&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "sulamita-produce",
+    "name": "Sulamita Fresh Food Drop",
+    "address": "1707 Groesbeck Street, Bryan, TX",
+    "coordinates": {
+      "lat": 30.656026065175,
+      "lng": -96.379128538188
+    },
+    "city": "Bryan",
+    "phone": "979-492-4594",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "First Saturday 9:30–10:30 a.m.",
+    "offering": "Drive-through supplemental produce and bakery distribution at Sulamita Iglesia Evangelical; not a shelf-stable grocery pantry.",
+    "eligibility": "Serves all counties.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=1707+Groesbeck+Street%2C+Bryan%2C+TX&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "smyrna-sda-navasota-produce",
+    "name": "Smyrna SDA Church — Fresh Produce",
+    "address": "516 Laredo Street, Navasota, TX 77868",
+    "coordinates": {
+      "lat": 30.396986528298,
+      "lng": -96.09415544271
+    },
+    "city": "Navasota",
+    "phone": "936-825-3412",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Second and fourth Wednesday 3–4 p.m.",
+    "offering": "Walk-up supplemental produce and bakery distribution; not a shelf-stable grocery pantry.",
+    "eligibility": "Serves Grimes County. Spanish translators available.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=516+Laredo+Street%2C+Navasota%2C+TX+77868&benchmark=Public_AR_Current&format=json",
+      "method": "U.S. Census Geocoder Public_AR_Current single address match."
+    },
+    "verificationStatus": "confirmed-site",
+    "coverage": "inside-119th-tx10"
+  },
+  {
+    "id": "macedonia-baptist-plantersville-produce",
+    "name": "Macedonia Baptist Church — Fresh Produce",
+    "address": "6957 County Road 206, Plantersville, TX 77363",
+    "coordinates": null,
+    "city": "Plantersville",
+    "phone": "936-444-9057",
+    "website": "https://www.bvfb.org/find-food",
+    "hours": "Second Friday 11:30 a.m.–12:30 p.m.",
+    "offering": "Drive-through supplemental produce and bakery distribution; not a shelf-stable grocery pantry.",
+    "eligibility": "Serves Grimes County.",
+    "accessibility": "Not verified.",
+    "notes": "Published pickup site and schedule; confirm exceptions and food availability before travel. Coordinates, when present, are Census address-range interpolation, not a surveyed pickup entrance.",
+    "sources": [
+      {
+        "title": "Brazos Valley Food Bank — Find Food",
+        "url": "https://www.bvfb.org/find-food",
+        "checkedOn": "2026-10-25"
+      }
+    ],
+    "coordinateSource": {
+      "url": "https://geocoding.geo.census.gov/geocoder/locations/onelineaddress?address=6957+County+Road+206%2C+Plantersville%2C+TX+77363&benchmark=Public_AR_Current&format=json",
+      "method": "No unique Census address match obtained; point and district membership unresolved."
+    },
+    "verificationStatus": "needs-confirmation",
+    "coverage": "unresolved"
+  }
+]

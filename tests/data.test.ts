@@ -8,7 +8,7 @@ describe("reviewed data fixtures", () => {
   it("accepts fictional fixtures and real source-reviewed coverage", () => {
     expect(validateData(demoData)).toEqual([]);
     expect(validateData(productionData)).toEqual([]);
-    expect(productionData.pantries).toHaveLength(29);
+    expect(productionData.pantries).toHaveLength(41);
   });
   it("includes fits, confirm and no outcomes for the default scenario", () => {
     const statuses = planVisits(demoDefaults, demoData).map((r) => r.status);

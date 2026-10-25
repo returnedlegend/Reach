@@ -1,3 +1,4 @@
+import newCandidates from "../../data/research/new-tx10-candidates.json";
 import candidates from "../../data/research/tx10-brazos-candidates.json";
 import expansionCandidates from "../../data/research/tx10-expansion-2026-10-25.json";
 import regionalCandidates from "../../data/research/tx10-regional-candidates.json";
@@ -61,13 +62,67 @@ const expansionIds = new Set([
   "columbus-food-pantry",
   "flatonia-area-food-pantry",
 ]);
+const newIds = new Set(
+  newCandidates
+    .filter((c) => c.coverage === "inside-119th-tx10")
+    .map((c) => c.id),
+);
 const providerSpecific = (id: string) =>
-  regionalIds.has(id) || expansionIds.has(id);
+  id === "sealy-christian-pantry" ||
+  regionalIds.has(id) ||
+  expansionIds.has(id);
 
 const scheduleRules: Record<
   string,
   { weekday: number; nth: number; opens: string; closes: string }[]
 > = {
+  "sealy-christian-pantry": [
+    { weekday: 3, nth: 0, opens: "10:00", closes: "18:00" },
+  ],
+  "son-shine-outreach-madisonville": [
+    { weekday: 2, nth: 0, opens: "09:00", closes: "12:00" },
+    { weekday: 2, nth: 0, opens: "13:00", closes: "16:00" },
+    { weekday: 3, nth: 0, opens: "09:00", closes: "12:00" },
+    { weekday: 3, nth: 0, opens: "13:00", closes: "16:00" },
+    { weekday: 4, nth: 0, opens: "09:00", closes: "12:00" },
+    { weekday: 4, nth: 0, opens: "13:00", closes: "16:00" },
+  ],
+  "bread-partners-expo-brenham": [
+    { weekday: 2, nth: 0, opens: "07:30", closes: "08:30" },
+    { weekday: 4, nth: 0, opens: "17:30", closes: "18:30" },
+  ],
+  "burton-bridge-ministry-pantry": [
+    { weekday: 1, nth: 0, opens: "10:00", closes: "12:00" },
+    { weekday: 2, nth: 0, opens: "10:00", closes: "12:00" },
+    { weekday: 3, nth: 0, opens: "15:00", closes: "17:00" },
+    { weekday: 6, nth: 0, opens: "09:00", closes: "12:00" },
+  ],
+  "bread-partners-st-ann-somerville": [
+    { weekday: 1, nth: 0, opens: "07:30", closes: "07:45" },
+  ],
+  "bcs-spanish-sda-produce": [
+    { weekday: 2, nth: 2, opens: "13:30", closes: "16:00" },
+    { weekday: 4, nth: 4, opens: "13:30", closes: "16:00" },
+  ],
+  "christ-church-college-station-produce": [
+    { weekday: 4, nth: 1, opens: "09:30", closes: "10:30" },
+    { weekday: 4, nth: 3, opens: "09:30", closes: "10:30" },
+  ],
+  "friends-peace-lutheran-produce": [
+    { weekday: 5, nth: 0, opens: "16:00", closes: "18:00" },
+  ],
+  "north-bryan-new-birth-produce": [
+    { weekday: 3, nth: 2, opens: "15:00", closes: "16:00" },
+    { weekday: 3, nth: 4, opens: "15:00", closes: "16:00" },
+  ],
+  "project-downtown-produce": [
+    { weekday: 6, nth: 4, opens: "10:00", closes: "10:30" },
+  ],
+  "sulamita-produce": [{ weekday: 6, nth: 1, opens: "09:30", closes: "10:30" }],
+  "smyrna-sda-navasota-produce": [
+    { weekday: 3, nth: 2, opens: "15:00", closes: "16:00" },
+    { weekday: 3, nth: 4, opens: "15:00", closes: "16:00" },
+  ],
   "elgin-community-cupboard": [
     { weekday: 2, nth: 0, opens: "10:00", closes: "12:00" },
   ],
@@ -171,6 +226,7 @@ function asCandidate(c: unknown): Candidate {
 }
 
 const selected = [
+  ...newCandidates.filter((c) => newIds.has(c.id)).map(asCandidate),
   ...candidates
     .filter((c) => admittedBrazosIds.includes(c.id))
     .map(asCandidate),
@@ -199,7 +255,10 @@ function sourceRefs(c: Candidate): SourceRef[] {
       id: `${c.id}-coordinate-source`,
       title: "U.S. Census Geocoder — address-range point",
       url: c.coordinateSource.url,
-      checkedOn: expansionIds.has(c.id) ? "2026-10-25" : "2026-10-22",
+      checkedOn:
+        expansionIds.has(c.id) || newIds.has(c.id)
+          ? "2026-10-25"
+          : "2026-10-22",
       verificationMethod: "website",
     });
   }
@@ -221,6 +280,7 @@ export const tx10Pantries: Pantry[] = selected.map((c) => {
       w.opens,
       w.closes,
       baseSource,
+      c.id === "sealy-christian-pantry" ? true : undefined,
     ),
   );
   if (c.id === "bastrop-county-emergency-food-pantry") {
@@ -347,7 +407,7 @@ export const tx10ResourceMetadata: Record<
       city: c.city,
       postalCode: c.postalCode,
       website: c.website,
-      publishedScheduleVerified: expansionIds.has(c.id),
+      publishedScheduleVerified: expansionIds.has(c.id) || newIds.has(c.id),
     },
   ]),
 );
