@@ -71,3 +71,11 @@ matching sites using the person's request and maintained pantry facts.
 [AI pantry comparison](AI-PANTRY-RANKING.md) documents the algorithm, guardrails
 and limits. The model chooses IDs and a supporting fact key; Reach supplies the
 actual schedule/requirements text and keeps trip feasibility separate.
+
+### Diagnosing missing summaries (2026-10-25)
+
+Run `npm run ai:check` from the Reach folder. It checks the configured local Ollama endpoint and installed model without printing credentials or sending personal information. Run `npm run ai:check -- --generate` to additionally exercise a small structured generation request. Reach configuration alone does not prove Ollama is running. Start Ollama on the machine running Reach and restart Reach after environment changes.
+
+The comparison prompt now requests three short summaries instead of up to six, preserves numeric comparison parameters, and caps individual fact excerpts. The ranking output budget is 640 tokens (previously 256); a response truncated by the model produces explicit guidance. A comparison with no usable summary offers a retry instead of silently presenting scores as a generated summary. The two-minute local inference deadline remains bounded; this does not guarantee fast inference on every CPU.
+
+Current verification environment: the diagnostic could not reach Ollama. No live generation success is claimed for this change; provider tests use fixtures.

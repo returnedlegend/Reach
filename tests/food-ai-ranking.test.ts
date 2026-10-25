@@ -322,7 +322,7 @@ it("returns only the top three validated model selections", async () => {
   expect(result.ranking.map((item) => item.id)).toEqual(["d", "b", "a"]);
   expect(result.ranking.every((item) => item.reasons.length > 0)).toBe(true);
   expect(generate.mock.calls[0][0].prompt).toContain(
-    "Return exactly three when at least three are suitable",
+    "Select up to three real IDs",
   );
 });
 

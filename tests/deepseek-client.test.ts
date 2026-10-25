@@ -248,7 +248,7 @@ it("lets a slow local pantry comparison finish after the former 40-second deadli
   vi.stubEnv("REACH_AI_PROVIDER", "ollama");
   vi.useFakeTimers();
   const fetcher = vi.fn(async (_url: RequestInfo | URL, init?: RequestInit) => {
-    expect(JSON.parse(String(init?.body)).max_tokens).toBe(256);
+    expect(JSON.parse(String(init?.body)).max_tokens).toBe(640);
     await new Promise<void>((resolve, reject) => {
       setTimeout(resolve, 50_000);
       init?.signal?.addEventListener("abort", () =>
@@ -342,4 +342,16 @@ it("reports a deadline while reading a stalled response body", async () => {
     status: "unavailable",
     reason: expect.stringContaining("Keep Ollama running"),
   });
+});
+
+it("explains truncated local summaries instead of silently accepting partial JSON", async () => {
+  vi.stubEnv("REACH_AI_PROVIDER", "ollama");
+  const fetcher = vi.fn(async () => completion({ ok: true }, {
+    choices: [{ finish_reason: "length", message: { content: '{"ok":' } }],
+  }));
+  expect(await run(fetcher, { feature: "ranking" })).toMatchObject({
+    status: "unavailable",
+    reason: expect.stringContaining("response limit"),
+  });
+  expect(fetcher).toHaveBeenCalledOnce();
 });

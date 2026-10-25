@@ -354,7 +354,7 @@ export async function deepseekJson<T>(
                   }),
               max_tokens:
                 input.feature === "ranking"
-                  ? 256
+                  ? 640
                   : input.role === "primary"
                     ? 4096
                     : 1600,
@@ -369,7 +369,9 @@ export async function deepseekJson<T>(
         if (controller.signal.aborted) return fail(cancellationReason());
         // An ambiguous network failure may already have been billed; do not automatically duplicate it.
         return fail(
-          "DeepSeek network request failed. Manual planning remains available.",
+          usesLlama()
+            ? "Reach cannot connect to Ollama. Start Ollama on the computer running Reach, then try again. Run npm run ai:check for details."
+            : "DeepSeek network request failed. Manual planning remains available.",
         );
       }
       if (!response.ok) {
@@ -380,7 +382,11 @@ export async function deepseekJson<T>(
           await wait(delay, controller.signal);
           continue;
         }
-        return fail(safeError(response.status));
+        return fail(
+          usesLlama() && response.status === 404
+            ? "The configured Llama model was not found. Run npm run ai:check, then install the model shown there."
+            : safeError(response.status),
+        );
       }
       const envelope = (await readLimited(response, controller.signal)) as {
         model?: unknown;
@@ -398,6 +404,10 @@ export async function deepseekJson<T>(
       }
       const choice = envelope?.choices?.[0];
       const content = choice?.message?.content;
+      if (localRanking && choice?.finish_reason === "length")
+        return fail(
+          "Local Llama reached the response limit before finishing its summary. Update Reach and try again. Pantry matches remain available.",
+        );
       if (
         (choice?.finish_reason !== undefined &&
           choice.finish_reason !== "stop") ||

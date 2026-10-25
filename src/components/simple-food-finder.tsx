@@ -747,6 +747,26 @@ export function SimpleFoodFinder(props: Props) {
               </button>
             </div>
           )}
+          {request &&
+            aiAttempted &&
+            !thinking &&
+            aiSummary.length === 0 &&
+            assistance === "ai" &&
+            useAI && (
+              <div role="status">
+                <p>
+                  {aiMessage ||
+                    "No AI summary was returned. Your pantry matches remain available."}
+                </p>
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => void search(request)}
+                >
+                  Try AI again
+                </button>
+              </div>
+            )}
           {request && !thinking && (
             <p>
               {assistance === "ai"

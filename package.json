@@ -23,7 +23,8 @@
     "access:evaluate": "tsx scripts/evaluate-access.ts",
     "data:review": "tsx scripts/review-directory.ts",
     "sharing:alerts": "tsx scripts/sharing-alerts-worker.ts",
-    "admin:setup": "tsx scripts/setup-admin.ts"
+    "admin:setup": "tsx scripts/setup-admin.ts",
+    "ai:check": "tsx scripts/check-ai.ts"
   },
   "dependencies": {
     "@node-rs/argon2": "2.2.2",
