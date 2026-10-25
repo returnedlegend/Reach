@@ -32,5 +32,3 @@ Use the actual release build. Do not overlay fictional stock, routes or users. K
 - **Student contribution:** Name the components each participant actually designed, implemented, reviewed and can explain. Distinguish AI-generated sections and third-party libraries.
 - **Learning:** Give a real implementation/debugging example and what changed because of it.
 - **Next version:** Choose a measured improvement: verified walking entrances and eligibility, better BTD data, Spanish, offline reference information, or validated outcomes. Avoid promising everything at once.
-
-Attach or make available the README, [algorithm documentation](PANTRY-RECOMMENDATION.md), [publishing guide](PUBLISHING.md), actual verification evidence and source code as requested. Keep production credentials, private SQLite data, saved personal origins and email previews out of submission archives.

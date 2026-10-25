@@ -2,8 +2,6 @@
 
 ## Audit and priorities
 
-The repository is a Next.js 16.4 / React 19 TypeScript application, using Tailwind 4 and DaisyUI 5, MapLibre, Node 24 SQLite, Argon2id, OpenRouter, and SMTP. Existing features include anonymous discovery, deterministic route feasibility, account and pantry management, community moderation, consent-based outreach, and saved local trips. Preserve these boundaries; do not replace them with a prototype.
-
 Priority checklist (ordered by impact and effort):
 
 - [x] Repair Windows public-OSM limiter and browser-test portability without weakening private-file checks.
@@ -79,8 +77,6 @@ Open `http://127.0.0.1:3000`. For the optimized build: `npm run build`, then `np
 Browser setup: `npx playwright install chromium`; `PLAYWRIGHT_CHROMIUM_PATH` optionally selects an existing binary. Unit GTFS reproduction needs Python (`python3` on POSIX, `python` on Windows, or `REACH_PYTHON` pointing to an executable). `npm run test:e2e` runs the full browser suite; historical/live-service suites have their own setup requirements and were not all executed in this pass.
 
 ## External-service and launch limitations
-
-No live OpenRouter inference, SMTP delivery, Google OAuth exchange, public geocoding/routing SLA, or physical-device testing is claimed. Provider configuration and sender verification remain operator responsibilities; see [[OPENSTREETMAP]], [[SMTP-AI-SETUP]], [[SMTP]], [[GOOGLE-SIGN-IN]], and [[FOOD-SHARING-SAFETY]]. Do not expose real user data or enable community food sharing publicly without its safety/moderation review. SQLite needs a persistent private single-host volume and backups. Windows NTFS privacy requires appropriate operator ACLs; passing cross-platform tests is not an ACL audit. The existing boundary is explicitly the **119th Congress** dataset, not a claim about future district boundaries. Food supply and same-day eligibility must always be confirmed with the pantry.
 
 ## Follow-up alignment polish — October 23, 2026
 

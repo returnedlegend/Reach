@@ -411,8 +411,8 @@ export function VolunteerPanel() {
             <>
               {!canClaim && (
                 <p className="pantry-notice">
-                  To accept a pickup, verify your email and opt in to volunteer
-                  participation in{" "}
+                  To accept a pickup, ask an administrator for access and opt in
+                  to volunteer participation in{" "}
                   <a href="/account">your account preferences</a>.
                 </p>
               )}
@@ -576,7 +576,7 @@ export function VolunteerPanel() {
         </>
       )}
       <footer className="volunteer-footer">
-        <a href="/account">Notification preferences</a>
+        <a href="/">Find food</a>
         <a href="/privacy">Privacy</a>
         <a href="/food-hotspots">Food offers</a>
       </footer>

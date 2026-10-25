@@ -111,9 +111,3 @@ schedule and privacy checks. The fixture now explicitly sets
 `OSM_NOMINATIM_SINGLE_INSTANCE=false` and an empty `OSM_GEOCODER_URL`;
 HTTP verification confirms the disabled configuration response. All four
 affected mobile cases passed focused reruns before the final matrix restarted.
-
-Independent final assessment: no unresolved implementation blocker was found
-within this tested local scope. Geographic coverage remains partial; website
-research and provider estimates do not establish current inventory, eligibility
-at intake, a safe entrance, physical-device behavior or continuing provider
-availability. Real email delivery and public deployment were outside this work.

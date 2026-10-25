@@ -985,9 +985,7 @@ export function CommunityPanel({
                 <>
                   <h3>Your account</h3>
                   <p>
-                    <a href="/account">
-                      Profile, email verification, and account settings
-                    </a>
+                    <a href="/account">Account settings</a>
                   </p>
                   <p>
                     Signed in as <strong>{user.username}</strong> · {user.role}

@@ -20,10 +20,7 @@ import {
   initializeVolunteerSchema,
   offerHasVolunteerRun,
 } from "./volunteer-store";
-import {
-  initializeNotifications,
-  queueNotification,
-} from "./notifications-store";
+import { initializeNotifications } from "./notifications-store";
 import { COMMUNITY_PICKUP_AREAS } from "./community-types";
 import type { ManagedVolunteerRun, VolunteerRun } from "./volunteer-types";
 
@@ -206,99 +203,6 @@ async function body<T>(request: Request, schema: z.ZodType<T>): Promise<T> {
     fail(400, "Check the required fields and pickup consent.");
   return parsed.data;
 }
-function notifyManagers(
-  db: DatabaseSync,
-  row: Row,
-  kind:
-    | "donation-offered"
-    | "assignment-confirmed"
-    | "pickup-completed"
-    | "pickup-cancelled"
-    | "donation-changed",
-) {
-  for (const user of rows(
-    db,
-    "SELECT DISTINCT u.id FROM users u LEFT JOIN pantry_managers m ON m.user_id=u.id AND m.pantry_id=? WHERE u.email_verified_at IS NOT NULL AND (m.user_id IS NOT NULL OR u.pantry_role='administrator') ORDER BY u.id LIMIT 100",
-    String(row.pantry_id),
-  )) {
-    if (
-      blocked(db, String(user.id), String(row.donor_id)) ||
-      (row.volunteer_id &&
-        blocked(db, String(user.id), String(row.volunteer_id)))
-    )
-      continue;
-    queueNotification(db, {
-      eventKey: `run:${row.id}:${row.revision}:${kind}`,
-      userId: String(user.id),
-      category: "pantry",
-      kind,
-      resourceId: String(row.id),
-      resourceType: "run",
-    });
-  }
-}
-function notifyStatus(
-  db: DatabaseSync,
-  row: Row,
-  kind:
-    | "assignment-confirmed"
-    | "pickup-completed"
-    | "pickup-cancelled"
-    | "donation-changed",
-) {
-  for (const userId of new Set(
-    [row.donor_id, row.volunteer_id].filter(
-      (id): id is string => typeof id === "string",
-    ),
-  )) {
-    if (
-      row.volunteer_id &&
-      blocked(db, String(row.donor_id), String(row.volunteer_id))
-    )
-      continue;
-    queueNotification(db, {
-      eventKey: `run:${row.id}:${row.revision}:${kind}`,
-      userId,
-      category: "pickup",
-      kind,
-      resourceId: String(row.id),
-      resourceType: "run",
-    });
-  }
-  notifyManagers(db, row, kind);
-}
-/** Bounded fan-out: at most 20 consenting eligible volunteers, once per user/day. */
-function notifyOpen(db: DatabaseSync, row: Row) {
-  for (const user of rows(
-    db,
-    `SELECT u.id FROM users u JOIN notification_preferences n ON n.user_id=u.id LEFT JOIN volunteer_notice_limits l ON l.user_id=u.id
-    WHERE u.email_verified_at IS NOT NULL AND u.pantry_role!='administrator' AND n.volunteer=1 AND n.volunteer_participation=1 AND u.id!=?
-    AND (l.last_notified_at IS NULL OR l.last_notified_at<?)
-    AND NOT EXISTS(SELECT 1 FROM blocks b WHERE (b.user_id=u.id AND b.blocked_id=?) OR (b.user_id=? AND b.blocked_id=u.id))
-    AND NOT EXISTS(SELECT 1 FROM pantry_managers m JOIN blocks b ON (b.user_id=m.user_id AND b.blocked_id=u.id) OR (b.blocked_id=m.user_id AND b.user_id=u.id) WHERE m.pantry_id=?)
-    AND NOT EXISTS(SELECT 1 FROM pantry_managers m WHERE m.pantry_id=? AND m.user_id=u.id)
-    AND NOT EXISTS(SELECT 1 FROM volunteer_runs v WHERE v.volunteer_id=u.id AND v.status='assigned')
-    ORDER BY COALESCE(l.last_notified_at,''),u.id LIMIT 20`,
-    String(row.donor_id),
-    new Date(Date.now() - 86400000).toISOString(),
-    String(row.donor_id),
-    String(row.donor_id),
-    String(row.pantry_id),
-    String(row.pantry_id),
-  )) {
-    queueNotification(db, {
-      eventKey: `run:${row.id}:${row.revision}:open`,
-      userId: String(user.id),
-      category: "volunteer",
-      kind: "new-opportunity",
-      resourceId: String(row.id),
-      resourceType: "run",
-    });
-    db.prepare(
-      "INSERT INTO volunteer_notice_limits VALUES(?,?) ON CONFLICT(user_id) DO UPDATE SET last_notified_at=excluded.last_notified_at",
-    ).run(String(user.id), at());
-  }
-}
 export function createVolunteerHandler(databasePath?: string) {
   return async (
     request: Request,
@@ -465,7 +369,6 @@ export function createVolunteerHandler(databasePath?: string) {
             stamp,
             stamp,
           );
-          notifyManagers(db, run(db, newId), "donation-offered");
         });
         return reply({ run: managed(db, user, run(db, newId)) }, 201);
       }
@@ -574,9 +477,6 @@ export function createVolunteerHandler(databasePath?: string) {
         db.prepare(
           "UPDATE volunteer_runs SET status=?,volunteer_id=?,pickup_consent=?,revision=revision+1,updated_at=? WHERE id=?",
         ).run(status, volunteer, consent, at(), id);
-        const changed = run(db, id);
-        notifyStatus(db, changed, kind);
-        if (status === "open") notifyOpen(db, changed);
         if (action === "complete")
           db.prepare(
             "UPDATE records SET status='ended',updated_at=? WHERE id=?",

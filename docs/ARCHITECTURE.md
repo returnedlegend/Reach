@@ -27,8 +27,6 @@ HTTP route files under `src/app/api` are thin entry points into handlers in `src
 - An email draft is not authorization to send. Review approval is reset after message edits; workers recheck relevant authorization and contact conditions before dispatch.
 - `GET /api/coverage` serves the repository's existing 119th Congress Census boundary and provenance, not an approximate or future district shape.
 
-See [development and maintenance](DEVELOPMENT.md), [authentication](AUTHENTICATION.md), [pantry storage](PANTRY-DATABASE.md), and [SMTP/AI setup](SMTP-AI-SETUP.md) for configuration and operational details.
-
 ## Data flows through four parts
 
 1. **Presentation:** the Next.js interface collects trip constraints and displays explanations and itinerary segments. Separate real and demo datasets prevent fictional records from appearing as verified local recommendations. Real results use the active maintained directory and expose missing walking links and source conflicts.

@@ -42,7 +42,7 @@ test("discovery starts compact and comparison details remain available on demand
 test("retired account pages do not send visitors into a sign-in loop", async ({
   page,
 }) => {
-  for (const path of ["/manage", "/volunteer", "/outreach"]) {
+  for (const path of ["/manage", "/volunteer"]) {
     await page.goto(path);
     await expect(
       page.getByText(/optional service is not available/),
@@ -109,5 +109,24 @@ test("administrator signs in, changes password, and must authenticate again", as
     db.prepare("DELETE FROM sessions WHERE user_id=?").run(id);
     db.prepare("DELETE FROM users WHERE id=?").run(id);
     closeCommunityDatabases();
+  }
+});
+
+test("public pages contain no delivery controls and retired endpoints are absent", async ({
+  page,
+}) => {
+  for (const path of ["/", "/share", "/privacy", "/admin/sign-in"]) {
+    await page.goto(path);
+    await expect(page.locator("body")).not.toContainText(
+      /email delivery|SMTP|Resend|Postal|development email preview|email notifications|Ask about availability/i,
+    );
+  }
+  for (const path of [
+    "/outreach",
+    "/unsubscribe",
+    "/api/outreach",
+    "/api/notifications",
+  ]) {
+    expect((await page.request.get(path)).status()).toBe(404);
   }
 });

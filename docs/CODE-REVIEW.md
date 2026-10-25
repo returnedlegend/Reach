@@ -63,14 +63,6 @@ npm run build
 
 Use a **disposable** database and a loopback server for the public browser subset; do not reuse production accounts or data. After building, start this server in a POSIX shell:
 
-```sh
-reach_review_dir="$(mktemp -d)"
-REACH_COMMUNITY_DB="$reach_review_dir/community.sqlite" \
-REACH_COMMUNITY_ENABLED=false REACH_EMAIL_PROVIDER=disabled \
-REACH_AI_PROVIDER=disabled \
-node node_modules/next/dist/bin/next start --hostname 127.0.0.1 --port 3014
-```
-
 Once that server is ready, in another shell:
 
 ```sh
@@ -82,5 +74,3 @@ REACH_TEST_URL=http://127.0.0.1:3014 npm run test:e2e -- \
 Install Playwright Chromium or deliberately set `PLAYWRIGHT_CHROMIUM_PATH` to an available compatible binary. [Development setup](DEVELOPMENT.md) explains server lifecycle, Community opt-in, origin matching and Windows equivalents. Do not rebuild the app beneath an active server.
 
 ## Remaining external limits
-
-No DNS record, nameserver, deployment or live email was changed during this review. No OpenRouter completion or recipient email was requested. Refer to [OpenRouter observations](FREE-OPENROUTER-VERIFICATION.md), current [SMTP setup](SMTP.md), provider guides and pantry source records for external evidence. This review does not resolve pantry stock, unverified access paths, timetable conflicts, DNS ownership/delegation or provider capacity.

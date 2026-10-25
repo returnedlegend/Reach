@@ -4,13 +4,6 @@ Use the actual running build to demonstrate the real pantry directory first. Res
 
 ## Prepare before presenting
 
-1. Follow [development setup](DEVELOPMENT.md#local-setup). Rehearse on both the presentation screen and a phone-sized viewport. Avoid changing code during the recording, since development hot reload can reset a workflow.
-2. Review pantry sources and dates. The current maintained directory has 24 sites, not complete district-wide service coverage. Never promise current food supply or eligibility from a listing alone.
-3. Decide which integrations you will actually use. Verify maps/search/routes beforehand; if a provider is unavailable, keep its honest fallback visible. `GET /api/ai/status` is configuration information, not proof that inference works.
-4. Use a known public starting point only if you explicitly identify it as the demonstration origin. Do not imply that example coordinates are the viewer's actual location.
-5. Use a clean browser profile or clear only the demo's saved resources. Keep private account tokens, personal origins, email previews and messages off the projected screen.
-6. Do not enable live mail merely for the presentation. If demonstrating reviewed inquiries, use an authorized test account, an enrolled consenting recipient and a clearly explained preview workflow.
-
 ## Three minute real directory walkthrough
 
 | Time      | Show                                                                                | Explain                                                                                                                                                                                     |

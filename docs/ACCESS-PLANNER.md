@@ -20,24 +20,9 @@ Use Node 24 (`nvm install` / `nvm use` with the included `.nvmrc`), then `npm ci
 
 For local account/inquiry preview:
 
-```dotenv
-REACH_APP_ORIGIN=http://localhost:3000
-REACH_EMAIL_PROVIDER=preview
-REACH_EMAIL_PREVIEW_DIR=.local/mail-preview
-REACH_AI_PROVIDER=disabled
-```
-
 Use the browser's exact origin and port. Private POST endpoints require a matching Origin header; production requires a configured canonical HTTPS origin. Use one persistent SQLite host for the app and worker. Routing is disabled in a fresh example until deliberately configured; set an identifying `OSM_USER_AGENT` and follow [routing terms and opt-in](OPENSTREETMAP.md). The community Valhalla demo is low-volume, rate-limited and has no production SLA. Useful listings, source links, manual coordinates and external directions remain available without a routing service.
 
 Run both notification and outreach queues with the same database and environment:
-
-```sh
-NODE_ENV=development node --env-file=.env.local --import tsx scripts/mail-worker.ts --watch
-# One bounded outreach-only dispatch, if needed:
-NODE_ENV=development node --env-file=.env.local --import tsx scripts/outreach-worker.ts --once
-```
-
-Preview writes private email captures and sends nothing. Never publish captures: account links and private messages may be present. Delete them after testing. Preview is prohibited in production. No fake receiving HTTP endpoint is exposed in development.
 
 ## Optional AI
 
@@ -57,13 +42,7 @@ node --env-file=.env.local --import tsx scripts/outreach-admin.ts PANTRY_ID ORGA
 
 This command records an administrator's attestation; it does not independently verify consent or send mail. Household donors enroll their own approved unexpired offer using their verified account email. They can stop inquiries. Recipient review displays the verified public organization contact; household addresses are masked.
 
-Workflow: choose enrolled contact → editable template/optional AI draft → review recipient/message → explicit authorization → durable queue → worker → SMTP acceptance or local preview. Incoming SMTP replies are handled manually outside Reach; existing saved replies retain user review and recalculation controls. Every message truthfully discloses the AI-assisted inquiry. Approval is bound to the enrolled contact fingerprint; a changed contact cancels queued mail. Initial approval expires after 24 hours. Recipient cooldown is at most one inquiry per day, with five authorized sends per user/day, bounded retries and duplicate dispatch safeguards. Ambiguous transport outcomes are **uncertain**, not automatically resent. Automatic follow-ups are unavailable for live SMTP because replies are handled outside Reach. Preview-only follow-up fixtures retain separate consent, minimum intervals, bounded counts and expiry. Queued automatic SMTP child messages are cancelled without deleting history. Pending authorization does not grant permission for arbitrary outreach.
-
 The queue and message history are SQLite-backed. Worker summaries contain counts only. Completed inquiries are deleted after 30 days when an enabled worker runs; event deduplication records after seven days. Preview files need separate cleanup. Private endpoints are authenticated/owner-scoped and no-store. The existing metadata-only notification queue remains separate from the private inquiry bodies/replies. See [privacy notice](../src/app/privacy/page.tsx).
-
-### SMTP sending and manually handled replies
-
-Follow [SMTP setup](SMTP.md). Live inquiries require `REACH_OUTREACH_REPLY_EMAIL`, a monitored app-controlled mailbox used as Reply-To. Operators handle incoming replies there; automatic inbound import and delivery webhooks are unavailable. No new reply is automatically attached to an inquiry or converted into availability claims. Private preview requires no live mailbox.
 
 Existing saved replies retain requesting-account ownership, review and expiry checks. They remain unverified sender reports; user confirmation never guarantees food at arrival. No message can execute a tool, publish pantry edits or authorize another email.
 
@@ -74,5 +53,3 @@ Only the requesting account sees its reviewed report. Household routes additiona
 `OutreachChannel` separates delivery from generation, authorization and extraction. Email is implemented; there are no telephony dependencies or pretend call controls. A future voice adapter needs separate consent, recipient preferences, disclosure/recording rules, cost controls and verification before activation.
 
 ## Verification and limits
-
-See [independent feature verification](ACCESS-VERIFICATION.md), [fixture evaluation](ACCESS-EVALUATION.md), and `npm run access:evaluate`. Unit fixtures are deliberately synthetic and never production data. External walking estimates do not establish safe pedestrian entrances, step-free access or current food inventory. No live AI inference, SMTP delivery or public deployment is claimed without a successful real check. Public source and routing checks are reported separately from fixture browser tests.

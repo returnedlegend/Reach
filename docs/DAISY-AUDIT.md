@@ -28,8 +28,6 @@ Audit scope: current application structure and presentation, to guide the in-pro
 | `/unsubscribe` | `UnsubscribePanel` | Email preference/unsubscribe flow. |
 | `/privacy`, `/terms` | Static content pages | Privacy/location/data disclosures and service terms. |
 
-At the time of this original audit, the repository implemented API routes for coverage, pantry directory and management, plans, journey/geocoding/reverse geocoding, crowd observations, notifications, the Postal webhook, volunteer, community, and account operations under `src/app/api`. The redesign was to leave their contracts and backend untouched. The historical webhook integration has since been retired; current email uses SMTP or private preview.
-
 ### Planned versus operational claims
 
 The brief's high-level concepts are not all uniformly live. The map, location search, route calculation, pantry details, source-backed regional directory, community listings, volunteer flow, accounts, notifications, and crowd observations have implementations. Some of those depend on provider configuration, record coverage, permissions, or account role and can legitimately show empty/unavailable states. “Texas 10th district / Austin expansion” is described as growing coverage, not evidence of a fully populated region. Do not imply universal coverage, confirmed pantry inventory, verified live transit, or reliable busy-time predictions. Existing interfaces already use source labels, confidence/caveat copy, community-submitted labels, and empty states; retain those distinctions.

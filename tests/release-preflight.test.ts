@@ -135,27 +135,6 @@ describe("release preflight", () => {
     ).toEqual([]);
   });
 
-  it("requires an explicitly enabled provider before the email worker can start", () => {
-    expect(
-      issues(
-        validEnvironment({
-          REACH_PROCESS_ROLE: "email-worker",
-          REACH_EMAIL_PROVIDER: "disabled",
-        }),
-      ),
-    ).toContain("The email worker requires REACH_RELEASE_PROFILE=extended.");
-    expect(
-      issues(
-        validEnvironment({
-          REACH_RELEASE_PROFILE: "extended",
-          REACH_PROCESS_ROLE: "email-worker",
-          REACH_RELEASE_EMAIL: "true",
-          REACH_EMAIL_PROVIDER: "smtp",
-        }),
-      ),
-    ).toEqual([]);
-  });
-
   it("requires a configured Valhalla endpoint and rejects public demo routing in production", () => {
     expect(issues(validEnvironment({ OSM_ROUTER_MODE: "valhalla" }))).toContain(
       "OSM_ROUTER_URL must select the hosted or self-hosted Valhalla service.",

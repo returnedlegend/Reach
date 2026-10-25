@@ -36,13 +36,6 @@ Compared by content hash with the source archive before this task; no source fil
 
 ## Purpose
 
-- `google-auth-config`, `google-identity`, `google-auth` and `/api/auth/google/[action]`: bounded identity-only OIDC, PKCE, signed-token validation, session integration, explicit linking and safe disconnect.
-- Account and outreach UI plus privacy documentation: mobile consent, honest configuration/connection states and separate SMTP message authorization.
-- `account.ts`: exports the existing session creator for shared cookie/session semantics; existing password authentication remains.
-- `next.config.ts`: omits callback query strings from Next development request logs.
-- `package.json` and lockfile: adds the maintained `jose` JWT verification dependency.
-- Tests/evidence/setup/review documentation: local cryptographic and provider fixtures, production browser checks, and external configuration requirements.
-
 ## Visible button follow-up
 
 The screenshot follow-up modifies `src/components/google-sign-in.tsx`, `src/components/account-panel.css`, `tests/google-sign-in.spec.ts`, and the Google setup/verification documentation. It adds `public/google-g.png` from Google’s official branding assets, makes the existing sign-in action visible when unconfigured, and adds an owner setup panel. The OAuth backend and its security rules remain unchanged. Existing Google consent/unconfigured screenshots are refreshed after browser verification.

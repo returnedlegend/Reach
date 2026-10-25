@@ -126,11 +126,6 @@ npm ci
 npm run dev
 ```
 
-The design requires no credentials. Optional map/search/routing services retain
-their existing [OSM configuration](OPENSTREETMAP.md). Email remains in the
-previously requested [local preview workflow](SMTP.md); this redesign does
-not enable delivery or publicly deploy the application.
-
 ```bash
 npm run check
 npm run test:e2e
@@ -172,11 +167,6 @@ measured routes or safe travel advice. The [capture manifest](evidence/daisy-map
 records the requested endpoints, viewport sizes and absence of runtime errors.
 The independent report covers their limits. Older [mobile](evidence/redesign-mobile-home.png)
 and [desktop](evidence/redesign-desktop-home.png) images show the previous design.
-
-The [historical check output](evidence/daisy-check.txt) includes a Turbopack
-filesystem-tracing warning from the then-current `postal-delivery.ts`. That
-implementation has since been removed; this captured output does not describe
-the current build.
 
 No external provider integration was newly verified by this presentation task.
 Controlled maps, routes, geolocation and email fixtures must not be confused

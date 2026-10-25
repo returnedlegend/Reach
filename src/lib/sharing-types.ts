@@ -33,5 +33,4 @@ export type SharingReview = {
 };
 export type SharingAdminResponse = {
   submissions: SharingReview[];
-  notification: { mode: "smtp" | "preview" | "disabled"; pending: number };
 };

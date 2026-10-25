@@ -11,8 +11,6 @@ export function AdminSubmissions() {
   const [authError, setAuthError] = useState(false);
   const [loading, setLoading] = useState(true);
   const [pending, setPending] = useState<string>();
-  const [notification, setNotification] =
-    useState<SharingAdminResponse["notification"]>();
   const [focusRequest, setFocusRequest] = useState("");
 
   useEffect(() => {
@@ -35,7 +33,6 @@ export function AdminSubmissions() {
         throw new Error(result.error || "Could not load submissions.");
       }
       setItems((result as SharingAdminResponse).submissions || []);
-      setNotification((result as SharingAdminResponse).notification);
       setAuthError(false);
     } catch (reason) {
       setError(
@@ -131,16 +128,6 @@ export function AdminSubmissions() {
         </button>
         <p>Review each submission before it becomes a public listing.</p>
       </header>
-      {notification && (
-        <p className="sharing-notice" role="status">
-          {notification.pending} queued alerts ·{" "}
-          {notification.mode === "smtp"
-            ? "SMTP configured; delivery is not guaranteed"
-            : notification.mode === "preview"
-              ? "Preview only — no email sent"
-              : "Email delivery is not configured"}
-        </p>
-      )}
       {focusRequest &&
         !loading &&
         !items.some((item) => item.id === focusRequest) && (

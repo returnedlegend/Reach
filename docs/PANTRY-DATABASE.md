@@ -45,11 +45,8 @@ Migrations are forward-only. To roll back a failed deployment, stop writers, res
 
 `npx vitest run tests/pantry-database.test.ts` exercises the actual SQLite handlers and import, source preservation, manager ownership, moderator separation, optimistic locking, archive/restore history, reviewed corrections, hours/inventory, favorites privacy/cascade, strict inputs, same-origin checks and request size limits. No external service credentials are needed for these checks.
 
-
 ## Private food-access inquiries
 
 The optional outreach module initializes its own additive `outreach_recipients`, `outreach_threads`, `outreach_replies`, `outreach_events` and `outreach_limits` tables in the same database. Idempotent column checks add authorization expiry, approved-contact fingerprints and consented pickup coordinates. This does not change pantry migration version 1, overwrite maintained pantry data or populate production recipients/inventory. The deterministic planner itself stores no starting locations.
-
-Unlike the separate metadata-only notification queue, these private tables contain reviewed messages, plain-text replies, correlation tokens and, only with explicit accepted-pickup consent, household destination coordinates. Back up the database privately before upgrading. Preserve its permissions and never package it or preview captures in a source download. User deletion cascades through private threads and replies. Completed inquiries are pruned after 30 days when an enabled mail worker runs; event deduplication records after seven days. A disabled worker does not perform that cleanup. Coordinate records and expired facts must not be treated as current arrangements.
 
 See [the food-access planner guide](ACCESS-PLANNER.md) for workers, enrollment, receiving setup, cancellation, suppression, single-host limits and private reply review. Existing pantry backup/restore procedures apply to the complete shared database. A code rollback leaves the additive outreach tables present; do not run an older worker concurrently with the upgraded application or delete tables to simulate a rollback.

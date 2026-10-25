@@ -1,4 +1,3 @@
-import { queueNotification } from "./notifications-store";
 import { createHash, randomUUID } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
 import { foodResources, type Resource } from "../data/resources";
@@ -371,26 +370,6 @@ export function recordPantryHistory(
     new Date().toISOString(),
   );
   pantryAudit(db, actor, action, id, { version: pantry.version });
-  if (actor) {
-    const recipients = new Set([
-      actor,
-      ...db
-        .prepare(
-          "SELECT user_id FROM pantry_managers WHERE pantry_id=? LIMIT 100",
-        )
-        .all(id)
-        .map((row) => String(row.user_id)),
-    ]);
-    for (const userId of recipients)
-      queueNotification(db, {
-        eventKey: `pantry:${id}:${pantry.version}:${action}`,
-        userId,
-        category: "pantry",
-        kind: "pantry-updated",
-        resourceType: "pantry",
-        resourceId: id,
-      });
-  }
 }
 export function createPantry(
   db: DatabaseSync,

@@ -1,4 +1,3 @@
-import { queueNotification } from "./notifications-store";
 import { randomUUID } from "node:crypto";
 import { z } from "zod";
 import type { DatabaseSync } from "node:sqlite";
@@ -597,25 +596,6 @@ export function createPantryHandler(databasePath?: string) {
             action === "restore" ? 1 : 0,
             id,
           );
-          for (const affected of affectedRuns) {
-            const run = db
-              .prepare("SELECT * FROM volunteer_runs WHERE id=?")
-              .get(affected.id)!;
-            for (const userId of new Set(
-              [run.donor_id, run.volunteer_id].filter(
-                (value): value is string => typeof value === "string",
-              ),
-            )) {
-              queueNotification(db, {
-                eventKey: `run:${run.id}:${run.revision}:pickup-cancelled`,
-                userId,
-                category: "pickup",
-                kind: "pickup-cancelled",
-                resourceType: "run",
-                resourceId: String(run.id),
-              });
-            }
-          }
           bump(db, id);
           recordPantryHistory(db, id, action, u.id);
         });

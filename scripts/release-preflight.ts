@@ -124,23 +124,6 @@ export function validateReleaseEnvironment(
       }
     }
   }
-  const processRole = env.REACH_PROCESS_ROLE || "app";
-  if (processRole !== "app" && processRole !== "email-worker") {
-    problems.push("REACH_PROCESS_ROLE must be app or email-worker.");
-  }
-  if (processRole === "email-worker") {
-    if (profile !== "extended") {
-      problems.push(
-        "The email worker requires REACH_RELEASE_PROFILE=extended.",
-      );
-    }
-    if (env.REACH_RELEASE_EMAIL !== "true") {
-      problems.push("The email worker requires REACH_RELEASE_EMAIL=true.");
-    }
-    if (env.REACH_EMAIL_PROVIDER !== "smtp") {
-      problems.push("The email worker requires a configured email provider.");
-    }
-  }
 
   const database = env.REACH_COMMUNITY_DB;
   if (database !== expectedDatabase) {

@@ -64,14 +64,6 @@ export default function Privacy() {
         embedded metadata; visible landmarks or text may still reveal a place.
       </p>
       <p>
-        When email delivery is configured, new-submission alerts go to
-        reachpantrysupport@gmail.com with a link to the protected review page,
-        not your private contact details or photos. Provider acceptance does not
-        guarantee inbox delivery. Development preview saves messages privately
-        on the server and sends no email. Submission success does not guarantee
-        that an alert was delivered.
-      </p>
-      <p>
         Contact reachpantrysupport@gmail.com to request correction or removal.
         Submission and moderation records remain until an administrator removes
         them; there is no automatic deletion schedule. An optional
@@ -107,11 +99,8 @@ export default function Privacy() {
           Public registration, Google sign-in, account-based outreach and
           volunteer coordination are not offered in the current anonymous
           interface. Existing installations may retain older account and inquiry
-          records. Completed inquiry history is removed after 30 days when the
-          mail worker runs; private development-preview files require separate
-          cleanup by the operator. Contact the operator to remove older records.
-          These retained modules should not be treated as working public
-          features.
+          records. Contact the operator to remove older records. These retained
+          modules should not be treated as working public features.
         </p>
       </details>
     </main>

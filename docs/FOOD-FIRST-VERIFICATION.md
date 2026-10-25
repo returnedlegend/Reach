@@ -36,11 +36,6 @@ No Lint script exists. Changed-file Prettier, `git diff --check`, startup-script
 
 ## Actual external observations
 
-- **OpenRouter:** the new handler returned directory fallback for a synthetic general request. A separate diagnostic saw a real model-catalog HTTP 200, then completion HTTP 429 and 404. No new successful inference or paid fallback was verified. [Evidence](evidence/food-first-live-ai.json).
-- **OpenFreeMap:** 14 actual style/sprite/font/tile requests returned HTTP 200 and actual MapLibre rendering was visually inspected. A direct managed Chromium attempt lacked trust in the environment's TLS proxy CA and showed the honest map fallback. A second check used trusted Node HTTPS to fulfill the unchanged live response bytes into MapLibre for one normal viewport. This is live asset retrieval/rendering through a test transport, not proof of direct end-user browser transport or future uptime. [Live retrieval](evidence/food-first-live-map.json), [direct-browser failure](evidence/food-first-direct-map.json).
-- **Email:** no message was sent and no DNS was changed in this historical check. Retired provider-specific metadata is no longer current setup evidence. Follow [SMTP setup](SMTP.md); live SMTP delivery remains unverified.
-- **Integrated walking/transit/geocoding:** controlled response and failure paths passed. No new live production routing, real-time bus feed, physical GPS, surveyed entrance, actual pickup, inbox delivery or human OAuth flow is established by this report. External Google Maps links were checked for correct parameters; opening such a link is not a website-retrieved itinerary.
-
 ## Performance and visual review
 
 The unthrottled local standalone build was measured using cold browser contexts and a warm local server, with external requests blocked. Three single observations gave roughly 264–288 ms LCP, 0–0.0695 CLS, 205,845 encoded bytes of initial JS, no initial API requests, no horizontal overflow and no browser runtime errors. These are **local diagnostics**, not field Core Web Vitals, INP measurements, low-end-device results, statistical comparisons or uptime guarantees. [Conditions and numbers](evidence/food-first-visual-performance.json). The earlier development-bundle measurements in the [data audit](CORE-DATA-PERFORMANCE.md) are not comparable production baselines.

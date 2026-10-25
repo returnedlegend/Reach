@@ -185,11 +185,11 @@ export function createAssistantHandler(
           status: selected ? "ready" : "needs-details",
           assistance: "computed",
           reply: selected
-            ? "You can review this pantry’s enrolled contacts and edit an inquiry. No email has been sent. Sign-in, contact enrollment and your explicit approval are required."
-            : "Select a pantry on the map or name one from the directory before starting an inquiry. No email has been sent.",
-          ...(selected
-            ? { inquiryPantryId: selected.id }
-            : { followUp: "Which pantry would you like to contact?" }),
+            ? `Open ${selected.name} in the directory to see its published contact details. Confirm availability directly before traveling.`
+            : "Select a pantry on the map or name one from the directory to see its published contact details.",
+          ...(!selected
+            ? { followUp: "Which pantry would you like to contact?" }
+            : {}),
         } satisfies AssistantResponse);
       }
       if (!body.input)

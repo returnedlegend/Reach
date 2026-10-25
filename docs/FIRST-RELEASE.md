@@ -26,22 +26,7 @@ For a separately reviewed feature, select `extended`, complete its checks, set o
 
 ## Current readiness
 
-| Area                                                             | Status                               | Evidence / remaining action                                                                                                                                                                            |
-| ---------------------------------------------------------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Anonymous directory, manual/location fallback, save/export/print | Ready in the tested local build      | Browser checks on mobile, tablet and desktop; default dark and saved-light behavior included.                                                                                                          |
-| Deterministic trip comparison                                    | Ready with disclosed coverage limits | Synthetic constraints/timezone/return/budget regressions; real preview-only route observation. No global optimum or food guarantee.                                                                    |
-| Basemap                                                          | Exercised live                       | Real OpenFreeMap assets returned HTTP 200 and a MapLibre canvas with attribution rendered. Hosted service has no SLA.                                                                                  |
-| Production in-app street routing                                 | Blocked by provider choice           | Select an appropriate hosted/self-hosted HTTPS Valhalla-compatible endpoint. The core directory and external directions remain usable while disabled; computed itineraries are explicitly unavailable. |
-| Public hosting and HTTPS                                         | Blocked by target/access             | No authorized hosting identity or controlled app domain is connected. Local HTTPS tests and containers are not a deployment.                                                                           |
-| Pantry entrances, stock and eligibility                          | Conditional / partly unknown         | Source research completed; no organization contact or field visit. Three sites stay unverified for recommendation.                                                                                     |
-| BTD transit                                                      | Partial, scheduled and conflicting   | Retained reviewed feed through December 31, 2026; current download/table discrepancy remains unresolved. No real-time vehicle integration.                                                             |
-| Accounts, Google, email, AI, community, volunteering             | Intentionally gated in core          | Separate production attestations/configuration are required. None is required for anonymous discovery.                                                                                                 |
-| SMTP sending | Optional, live delivery unverified | Configure the chosen relay, authorized sender, worker and monitored reply mailbox. No live mail is claimed. |
-| Human accessibility/language review                              | Outstanding                          | Scoped automated accessibility checks passed; no screen-reader certification, physical entrance audit, or reviewed Spanish claim.                                                                      |
-
 ## Verification and evidence
-
-Final checks: **578 unit tests across 69 files**, data validation, TypeScript and the production build passed. **49 distinct local HTTPS browser cases** passed across final runs, including mobile/Android/tablet/desktop coverage. Three scoped home-page axe scans found no violations. Independent review rechecked the save defect and core gates; real map assets and a preview-only walking round trip succeeded. Container recovery is recorded for the pre-UI-fix image; the final UI-refresh image was separately rebuilt and startup-smoke-tested. No post-fix intentional real-volume saturation, public deployment, email delivery or new AI inference is claimed.
 
 Use [release verification evidence](evidence/release-verification.json), [independent review](RELEASE-VERIFICATION.md), [data evidence](RELEASE-DATA.md), [provider observations](evidence/release-providers.json), [live route check](evidence/release-live-routing.json), [browser/map/axe observations](evidence/release-visual.json), and [container operations](evidence/release-operations.json).
 
@@ -58,10 +43,5 @@ Prioritize changed intake windows, closure reports, location conflicts and on-fo
 Run `npm run data:prune` at least daily with the production database/env loaded. It removes expired anonymous corrections as well as expired crowd data. Reports also expire during subsequent submissions. A changed source should not be presented as a physical verification. Maintain registration, distribution, office, appointment, stock and pedestrian-access facts separately. Back up before changes and retain an auditable history.
 
 ## Smallest external actions
-
-1. Select a Docker-capable single host with persistent disk and the public app domain. Grant the appropriate deployment access securely; do not paste credentials into chat. Follow [publishing](PUBLISHING.md), test the actual HTTPS URL, then publish only to that authorized target.
-2. Select a production-suitable HTTPS Valhalla-compatible router and any needed compliant geocoder. Configure the endpoint, provider identification and applicable quotas/terms. If routing remains disabled, describe the release as directory plus external navigation rather than claiming on-site itinerary coverage.
-3. Confirm actual distribution addresses/entrances and walking pickup for initial recommended journeys. Keep stock and personal eligibility conditional until supported.
-4. Optional email: configure an authorized SMTP sender and relay, preserve unrelated mail/DNS settings, and conduct a controlled authorized recipient test before release. Pantry replies need a monitored mailbox and manual handling. Google OAuth needs its separate final-origin test.
 
 Competition preparation remains separate. No registration, public video upload, eligibility certification, or new claim of student authorship was made. Historical submission materials must not be mistaken for a completed public-service launch.

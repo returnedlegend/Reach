@@ -36,11 +36,7 @@ Map, geocoder and routing tests use explicit controlled provider responses. A su
 
 ## Identity and email boundaries
 
-No real accounts are created and no email is sent by this review. Account preference and administrative UI tests use browser-intercepted fixture responses. The authorized production fixture uses a fresh disposable database at `/tmp/reach-redesign-production/community.sqlite`, a local synthetic moderator, and synthetic test identities. Email delivery is explicitly disabled. The separate preview-email suite remains gated because the production application intentionally disables its development preview transport.
-
 The test-only Node TLS proxy at `https://localhost:3443` forwards to the loopback production server on port 3055. Local verification clients ignore its self-signed test certificate; application certificate verification is unchanged. The explicit canonical HTTPS origin exercises secure account cookies and actual same-origin HTTP guards. Temporary credentials and private keys are kept in mode-600 files outside the repository and are omitted from evidence.
-
-After the successful run, the account status endpoint still reported disabled email delivery and the isolated database contained zero mail deliveries. The verification production server and TLS proxy were stopped; the existing development server on port 3000 remained available with HTTP 200.
 
 ## Execution record
 

@@ -441,9 +441,11 @@ it("rejects cross-origin, oversized, and mismatched duplicate submissions while 
   expect((await send({ ...value, contactName: "Changed" })).status).toBe(409);
   expect(
     openCommunityDatabase(path)
-      .prepare("SELECT count(*) AS n FROM sharing_alert_outbox")
+      .prepare(
+        "SELECT count(*) AS n FROM sqlite_master WHERE type='table' AND name='sharing_alert_outbox'",
+      )
       .get()?.n,
-  ).toBe(1);
+  ).toBe(0);
   vi.stubEnv("REACH_COMMUNITY_ENABLED", "false");
   expect((await send(submission())).status).toBe(201);
 });

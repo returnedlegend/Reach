@@ -26,20 +26,6 @@ Production still defaults to anonymous `core`. Optional AI needs the reviewed `e
 
 ## Feature inventory
 
-| Area                   | Actual state                                                                                       | Material limit                                                                                                      |
-| ---------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| Discovery              | Repaired; immediate local results and request-aware search                                         | Selected central Texas sites, not a complete directory                                                              |
-| Recommendations        | Simple entry to retained arrival/intake/return feasibility engine                                  | Real routes require an approved production endpoint; comparison is bounded                                          |
-| Map and location       | Retained MapLibre/OSM, synchronized selection, GPS/manual/address/map inputs and text alternatives | Real-device GPS, safe walking entrances and live provider uptime are not established by fixtures                    |
-| Save/download/print    | Retained and browser-regression checked                                                            | Storage can be blocked; no offline routing/map download                                                             |
-| AI                     | New bounded interpretation and usable fallback                                                     | Live completion failed in this pass; configured does not mean available                                             |
-| Email/authentication   | Existing secure workflows retained and independently reviewed; gated public scope                  | Live SMTP delivery and final-origin human OAuth login remain unverified; no mail sent                        |
-| Pantry data            | 24 maintained records, 21 confirmed-site classifications, three unresolved                         | No organization contacted; stock, many requirements and 18 pedestrian policies remain unknown                       |
-| Transit                | Static BTD Route 00 and missed-bus logic retained                                                  | GTFS/published timetable conflicts, narrow coverage, no live vehicle feed; Bryan ISD is restricted school transport |
-| Community/volunteering | Retained behind operator gates                                                                     | Not part of anonymous core; moderation/partner operations not established                                           |
-| Language/offline       | English UI and downloadable text retained                                                          | Full Spanish UI, installable PWA, service worker and offline routing are not implemented; deliberately deferred     |
-| Hosting                | Existing single-host publishing kit and build retained                                             | No public host/domain selected, no deployment performed                                                             |
-
 Unresolved records remain Bedias (address conflict), Grimes mobile distribution (event gate/access), and Madison mobile distribution (event location/recurrence conflict). No records were promoted based on proximity. No new organization verification is claimed. See [data evidence](RELEASE-DATA.md), [data/performance audit](CORE-DATA-PERFORMANCE.md), [map audit](CORE-MAP-AUDIT.md), and [backend audit](CORE-BACKEND-AUDIT.md).
 
 ## Engineering and verification
@@ -69,5 +55,3 @@ Editorial assessment: **69/100**, not an impact benchmark. Functionality 17/25, 
 ## Honest demonstration and genuinely remaining actions
 
 A two-minute demonstration can show immediate options; “food in Bryan”; denied location with manual recovery; actual-point Maps links; a separately labeled synthetic intake/return comparison; exact checked instructions on the map; saved download/print; and an outage with useful options still visible. Do not represent fixtures as real trips or a test print invocation as a physical printer test.
-
-Still required: choose host/domain/operator; configure and exercise production routing; resolve uncertain pantry/transit facts; configure and verify the chosen SMTP sender and relay if email is enabled; regain suitable free AI capacity if AI is enabled; test intended real devices, screen readers and service-user tasks. Contest eligibility, significant student contribution, truthful AI disclosure, conflicting deadlines and a compliant 1–3 minute public video remain entrant-owned. [Competition notes](CHALLENGE-REQUIREMENTS-2026.md) and [submission preparation](SUBMISSION-PREPARATION.md) remain applicable. Nothing was deployed, sent to an organization, or merged to `main` by this pass.

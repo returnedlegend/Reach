@@ -50,7 +50,7 @@ export function featureEnabled(feature: keyof PublicFeatures): boolean {
     case "volunteering":
       return community && accounts;
     case "email":
-      return accounts && process.env.REACH_EMAIL_PROVIDER !== "disabled";
+      return false;
     case "ai":
       return process.env.REACH_AI_PROVIDER !== "disabled";
   }

@@ -1,11 +1,9 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { coreRelease, publicFeatures } from "../src/lib/release-features";
 import { CORE_FEATURES } from "../src/lib/public-feature-types";
-import { emailDeliveryMode } from "../src/lib/mail-delivery";
 import { getAIServiceStatus } from "../src/lib/ai-config";
 import { createAccountHandler } from "../src/lib/account";
 import { createVolunteerHandler } from "../src/lib/volunteer";
-import { createOutreachHandler } from "../src/lib/outreach";
 import { createAssistantHandler } from "../src/lib/reach-assistant";
 afterEach(() => vi.unstubAllEnvs());
 describe("public core release boundary", () => {
@@ -18,7 +16,6 @@ describe("public core release boundary", () => {
     vi.stubEnv("REACH_AI_PROVIDER", "deepseek");
     expect(coreRelease()).toBe(true);
     expect(publicFeatures()).toEqual(CORE_FEATURES);
-    expect(emailDeliveryMode()).toBe("disabled");
     expect(getAIServiceStatus().state).toBe("disabled");
   });
   it("keeps public sharing enabled when a stale environment flag says false", () => {
@@ -85,9 +82,6 @@ describe("public core release boundary", () => {
     expect(
       (await createVolunteerHandler(impossiblePath)(request(), [])).status,
     ).toBe(404);
-    expect(
-      (await createOutreachHandler(impossiblePath)(request(), [])).status,
-    ).toBe(404);
     const plan = vi.fn();
     expect(
       (await createAssistantHandler(impossiblePath, { plan })(request()))
@@ -100,8 +94,6 @@ describe("public core release boundary", () => {
     );
     expect(await status.json()).toMatchObject({
       enabled: false,
-      emailConfigured: false,
-      deliveryMode: "disabled",
     });
   });
 });
@@ -126,5 +118,11 @@ it("never advertises retired account services even with stale extended feature f
   vi.stubEnv("REACH_EMAIL_PROVIDER", "preview");
   vi.stubEnv("GOOGLE_CLIENT_ID", "synthetic");
   vi.stubEnv("GOOGLE_CLIENT_SECRET", "synthetic");
-  expect(publicFeatures()).toMatchObject({accounts:false,google:false,email:false,volunteering:false,community:true});
+  expect(publicFeatures()).toMatchObject({
+    accounts: false,
+    google: false,
+    email: false,
+    volunteering: false,
+    community: true,
+  });
 });

@@ -58,18 +58,6 @@ Compared with the pre-feature source download. Private `.env.local`, databases, 
 
 ## Modified
 
-- `.env.example`
-- `README.md`
-- `docs/PANTRY-DATABASE.md`
-- `docs/VERIFICATION.md`
-- `next-env.d.ts`
-- `package-lock.json`
-- `package.json`
-- `scripts/mail-worker.ts`
-- `src/app/privacy/page.tsx`
-- `src/components/guided-reach.tsx`
-- `src/lib/mail-delivery.ts`
-
 ## Removed
 
 None.

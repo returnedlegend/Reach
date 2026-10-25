@@ -25,7 +25,6 @@ import type {
   AccessResponse,
 } from "../lib/access-types";
 import { LocationPicker, type SelectedLocation } from "./location-picker";
-import { OutreachPanel } from "./outreach-panel";
 import { NavigationPreferences } from "./navigation-preferences";
 import { NavigationGuidanceView } from "./navigation-guidance";
 import {
@@ -608,11 +607,6 @@ export function AccessPlanner({
           ← Back
         </button>
         <span>Food access planner</span>
-        {features.email && (
-          <Link className="btn btn-outline" href="/outreach">
-            Availability inquiries
-          </Link>
-        )}
       </div>
       <header className="access-planner__hero">
         <p className="access-planner__eyebrow">
@@ -1458,19 +1452,6 @@ export function AccessPlanner({
                             by Reach.
                           </p>
                         </div>
-                      )}
-                    {features.email &&
-                      selectedId === option.id &&
-                      option.kind === "pantry" && (
-                        <OutreachPanel
-                          pantryId={option.resource.id}
-                          onAvailabilityChange={() => {
-                            setStaleAvailability(true);
-                            setMessage(
-                              "Availability updated. Recalculate to review a revised trip.",
-                            );
-                          }}
-                        />
                       )}
                   </article>
                 ))}

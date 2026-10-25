@@ -14,24 +14,7 @@ Pantry details are reachable from cards, map selections and `/pantries/[id]`. Th
 
 ## Checks actually run
 
-| Check | Result |
-| --- | --- |
-| Pre-change `npm run check` | Passed: 184 tests, TypeScript, data validation, production build |
-| Final `npm run check` | Passed: 251 tests across 20 files, TypeScript, data validation, production build |
-| Maintained data validation | Passed: 6 separate fictional demo pantries and 8 production pantry records |
-| Existing browser regressions | 188/188 passed on isolated production server, across 390px phone, 412px Android-sized, 820px tablet and 1280px desktop Chromium viewports |
-| Final-build account/detail/management UI checks | 28/28 passed across those four viewports |
-| Independent real account/management lifecycle | 2/2 passed on final production build, mobile and desktop; no mocked APIs |
-| Production dependency advisory audit | `npm audit --omit=dev`: zero known vulnerabilities reported |
-| New authentication/pantry/crowd source formatting | Prettier check passed |
-| Crowd maintenance command | Executed successfully against isolated test DB; expired-row behavior covered by store tests |
-| Real email delivery | Not configured: live SMTP credentials/relay and authorized sender not verified; not claimed as passed |
-
 The production browser total is **218 passed** (188 regression + 28 feature checks + 2 independent account/management lifecycle checks). The independent lifecycle cases exercised login, secure cookies, profile/preferences, favorites, pantry creation/editing/inventory/archive/restore, password change, reauthentication, persistence and account deletion. Temporary fixtures were removed and foreign-key checks were clean.
-
-The independent reviewer owns [ACCOUNT-VERIFICATION.md](ACCOUNT-VERIFICATION.md), including adversarial handler tests and actual browser findings. Unit/integration tests use temporary SQLite files. Verification/reset emails use an injected memory sink or deliberate transport failure; no external recipient was contacted. Browser tests use isolated fixture accounts, controlled map/provider responses where documented, and synthetic crowd data only in explicitly mocked cases. Successful browser checks do not establish real-world pantry inventory, visitor volume, walking accessibility, live transit or external mail delivery.
-
-The production browser test server ran locally behind a temporary HTTPS proxy. Playwright's `REACH_TEST_LOCAL_TLS=true` permits that local test certificate only; external mail transport was not configured. Test databases, credentials, TLS keys, browser traces and build/dependency directories are excluded from the project download. There was no public deployment.
 
 ## Reproduce and operate
 
@@ -41,8 +24,6 @@ npm run data:migrate
 npm run check
 npm run dev
 ```
-
-Use Node 24. See `.env.example`, [AUTHENTICATION.md](AUTHENTICATION.md), and [SMTP setup](SMTP.md) for current mail configuration. Set `REACH_COMMUNITY_DB` to durable private storage on a single application host. Production account writes require the configured HTTPS origin. The community pilot still requires its explicit production enable flag.
 
 After registering and verifying a real email account, use `npm run account:admin -- administrator@example.org` from a trusted server shell; the browser cannot bootstrap itself. Schedule `npm run data:prune` at least daily. Test backups/restoration, mail inbox delivery, HTTPS proxy configuration and ingress rate limiting before hosting publicly. SQLite instances must share one coherent database; independently deployed unshared or ephemeral instances are unsupported.
 

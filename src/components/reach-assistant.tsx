@@ -7,7 +7,6 @@ import type { AccessInput, AccessOption } from "@/lib/access-types";
 import type { AssistantResponse } from "@/lib/assistant-types";
 import type { Resource } from "@/data/resources";
 import { LocationPicker, type SelectedLocation } from "./location-picker";
-import { OutreachPanel } from "./outreach-panel";
 import "./reach-assistant.css";
 import { AILoadingIndicator } from "./ai-loading-indicator";
 import { FOOD_SEARCH_TIMEOUT_MS } from "@/lib/ai-timing";
@@ -206,7 +205,6 @@ export function ReachAssistant({
   const [error, setError] = useState("");
   const [aiStatus, setAiStatus] = useState<AiStatus | null>(null);
   const [aiStatusChecked, setAiStatusChecked] = useState(false);
-  const [outreachId, setOutreachId] = useState<string | null>(null);
   const [preferences, setPreferences] = useState<Partial<AccessInput>>({});
   const [turns, setTurns] = useState<
     Array<{ question: string; answer: string }>
@@ -609,34 +607,11 @@ export function ReachAssistant({
               )}
             </>
           )}
-          {(reply.inquiryPantryId || selectedPantryId) && (
-            <button
-              className="btn btn-outline"
-              type="button"
-              onClick={() =>
-                setOutreachId(reply.inquiryPantryId ?? selectedPantryId!)
-              }
-            >
-              Ask about availability
-            </button>
-          )}
-        </div>
-      )}
-      {outreachId && (
-        <div className="reach-assistant__outreach">
-          <button className="btn btn-ghost" onClick={() => setOutreachId(null)}>
-            Back to assistant
-          </button>
-          <OutreachPanel
-            pantryId={outreachId}
-            onAvailabilityChange={() => setOutreachId(null)}
-          />
         </div>
       )}
       <p className="reach-assistant__fineprint">
         A route or listing is not proof of current availability, eligibility, or
-        a confirmed visit. Availability inquiries are never sent automatically;
-        review and approve them in the next step.
+        a confirmed visit.
       </p>
     </dialog>
   );

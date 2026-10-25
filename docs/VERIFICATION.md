@@ -1,3 +1,16 @@
+# Current validation — October 25, 2026
+
+- 657 unit tests across 78 files passed.
+- TypeScript, production data validation and the production build passed.
+- 18 Chromium checks passed at mobile (390×844) and desktop (1280×900) sizes.
+- Real local browser flows covered anonymous sharing, protected photos, moderator
+  approval, approved hotspot/household discovery, administrator sign-in and
+  password changes with session revocation. Retired routes return 404.
+- The test server used a private temporary SQLite database and synthetic records.
+  These checks do not establish live AI, routing, food availability or deployment.
+- Maintained admin and sharing instructions are in [administrator access](AUTHENTICATION.md)
+  and [food sharing](FOOD-SHARING.md). Older counts below are historical.
+
 ## 2026-10-25: Public accounts removed; sharing always available
 
 `/account` now redirects to `/share`, public account navigation is removed, and protected moderator sign-in moves to `/admin/sign-in`. Community sharing ignores the legacy disable flags, including under the core profile. Historical account data and protected authentication are retained; no records were destructively erased.
@@ -9,8 +22,6 @@ Validation: 699 unit tests across 81 files; TypeScript, production data validati
 ---
 
 ## 2026-10-25: Account-free sharing and admin approval
-
-Implemented `/share` (three-step Host a Food Pickup / Share Extra Food), `/admin`, moderator-only photo review, consented public contact, atomic approval into existing search/AI data, daily caps, idempotent submissions and a durable support-inbox alert queue. Public registration is closed; existing sign-in and recovery remain. A configured, authoritative Google identity can bootstrap the first moderator. See [FOOD-SHARING.md](FOOD-SHARING.md) for setup and limitations.
 
 Final `npm run check` passed: **697 unit tests in 81 files**, TypeScript, data validation (24 production pantries; separate fictional fixtures), and optimized production build. `git diff --check` passed. Real environment files are ignored; only placeholder configuration is tracked.
 
@@ -24,8 +35,6 @@ Final `npm run check` passed: **697 unit tests in 81 files**, TypeScript, data v
 
 The independent Luna verification manager inspected the implementation, found missing consent records/alert-status reporting, rechecked their fixes, and exercised the submission/admin/photo/privacy flows directly. Main review additionally corrected dark-theme surfaces, mobile header overflow, keyboard-visible consent links and stale signup fixtures. This is a targeted regression run, not a claim that the entire historical browser suite was executed.
 
-**External limits:** no real SMTP message was sent, no inbox delivery verified, and no interactive Google login completed. SMTP host/user/password/sender are absent and local email mode is preview. Alert previews and mocked SMTP outcomes are not live delivery. Geocoding failure was simulated; this task does not re-certify live geocoding, AI inference, food availability, or legal compliance. The requested moderator identity is configured privately but has not signed in here. Public deployment was not performed.
-
 ---
 
 > Latest 2026-10-25 interface/email cleanup: [implementation and release limits](UI-POLISH.md), [independent quality review](QUALITY-REVIEW.md). Counts below describe earlier stages.
@@ -35,8 +44,6 @@ The independent Luna verification manager inspected the implementation, found mi
 > Latest TX-10 expansion and in-app directions: [independent verification](TX10-VERIFICATION.md). Final checks: 313 unit tests, 385 browser checks passed, 7 intentional skips, data validation, TypeScript and production build passed. Live final-build map tiles, walking/driving routes and address lookup succeeded; GPS behavior was simulated. Earlier reports below are historical.
 
 > Current mobile interface and regression evidence: [daisyUI design system](DAISY-DESIGN.md) and [independent daisyUI review](DAISY-VERIFICATION.md). The [earlier UI redesign](UI-REDESIGN.md) is historical.
-
-> Current email setup: [SMTP and private preview](SMTP.md). Automated checks do not establish live SMTP connectivity or inbox delivery.
 
 > Current mapping migration evidence: [OSM verification](OSM-VERIFICATION.md). The report below records an earlier development stage and does not establish live Google or OSM availability.
 
@@ -124,5 +131,3 @@ Checks: 736 unit tests across 86 files passed; TypeScript and production build p
 The private local environment was switched to Groq, preserving unrelated values and adding placeholders only when absent. `.env.local` remains ignored and is not part of the commit. See GROQ.md for setup, account billing limits and synthetic generation diagnostics.
 
 ## Feature and UX audit — 2026-10-25
-
-See [the complete audit](RELEASE-AUDIT-2026-10-25.md) for route/component coverage, fixes and blocked live checks. Final `npm run check` passed: 739 unit tests, TypeScript, production/demo data validation and production build. The clean-database production browser suite passed 80 checks; two correction/save checks and two demo save/download/print checks also passed (84 total). Eighteen mobile route visits reported no sampled axe violations, overflow or client errors. Groq, email delivery, geocoding success and production pedestrian routing remain unverified/blocked. Real OpenFreeMap rendering was observed. No deployment or external email occurred.

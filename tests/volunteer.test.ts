@@ -234,7 +234,7 @@ describe("donation runs on existing moderated food offers", () => {
         )
         .get(id)!.n,
     );
-    expect(count).toBe(3);
+    expect(count).toBe(0);
     expect(
       (await call(`${id}/claim`, "POST", { pickupConsent: true }, winner))
         .status,
@@ -473,7 +473,7 @@ describe("donation runs on existing moderated food offers", () => {
     ).toBe(403);
     expect((await call(`${id}/cancel`, "POST", {}, donor)).status).toBe(200);
   });
-  it("bounds opportunity notices, excludes ineligible people, and rotates daily recipients", async () => {
+  it("opens donation runs without enqueueing notices", async () => {
     for (let i = 0; i < 25; i++) user(`candidate${String(i).padStart(2, "0")}`);
     const unverified = user("unverified", false),
       inactive = user("inactive", true, false);
@@ -488,7 +488,7 @@ describe("donation runs on existing moderated food offers", () => {
         "SELECT user_id FROM notification_outbox WHERE resource_id=? AND kind='new-opportunity'",
       )
       .all(id);
-    expect(notices).toHaveLength(20);
+    expect(notices).toHaveLength(0);
     expect(notices.map((n) => n.user_id)).not.toEqual(
       expect.arrayContaining([
         donor.id,
@@ -513,7 +513,7 @@ describe("donation runs on existing moderated food offers", () => {
         "SELECT user_id FROM notification_outbox WHERE resource_id=? AND kind='new-opportunity'",
       )
       .all(second);
-    expect(rotated.length).toBe(6);
+    expect(rotated.length).toBe(0);
     expect(
       rotated.some((n) => notices.some((first) => first.user_id === n.user_id)),
     ).toBe(false);

@@ -9,11 +9,6 @@ import {
 } from "@/lib/saved-items";
 import { serviceFreshness } from "@/lib/service-freshness";
 import { CORE_FEATURES, type PublicFeatures } from "@/lib/public-feature-types";
-import dynamic from "next/dynamic";
-const OutreachPanel = dynamic(
-  () => import("./outreach-panel").then((m) => m.OutreachPanel),
-  { loading: () => <p role="status">Loading inquiry controls…</p> },
-);
 import { useRouter } from "next/navigation";
 import { offerNavigationOrigin } from "@/lib/navigation-handoff";
 import {
@@ -430,7 +425,7 @@ export function PantryDetail({
               {message}
             </p>
           )}
-          {(features.ai || features.email) && (
+          {features.ai && (
             <section
               className="card bg-base-100 pantry-section"
               aria-labelledby="pantry-contact-assistant"
@@ -439,9 +434,8 @@ export function PantryDetail({
                 Questions before you travel?
               </h2>
               <p>
-                Check routes with the assistant or review an inquiry to an
-                enrolled pantry contact. Food availability is not guaranteed.
-                Email requires sign-in and your approval.
+                Check routes with the assistant. Food availability is not
+                guaranteed.
               </p>
               <div className="pantry-actions">
                 {features.ai && (
@@ -452,20 +446,7 @@ export function PantryDetail({
                     Reach AI assistant
                   </Link>
                 )}
-                {features.email && (
-                  <button
-                    className="btn btn-primary"
-                    type="button"
-                    aria-expanded={showInquiry}
-                    onClick={() => setShowInquiry((v) => !v)}
-                  >
-                    Ask about availability
-                  </button>
-                )}
               </div>
-              {features.email && showInquiry && (
-                <OutreachPanel pantryId={pantryId} />
-              )}
             </section>
           )}
           <div className="pantry-detail-grid">

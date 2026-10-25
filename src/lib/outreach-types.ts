@@ -54,10 +54,3 @@ export type OutreachMessage = {
     intervalHours: number;
   };
 };
-export type OutreachHistory = {
-  messages: OutreachMessage[];
-  recipients: OutreachRecipient[];
-  deliveryMode: "smtp" | "preview" | "disabled";
-  replyMailboxConfigured: boolean;
-  ownedRecipientIds?: string[];
-};

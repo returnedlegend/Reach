@@ -1138,11 +1138,8 @@ export function PantryManagement() {
       )}
       {user && !user.emailVerified && (
         <section className="card bg-base-100 pantry-section">
-          <h2>Verify your email to continue</h2>
-          <p>
-            Use the verification email sent to your account before accessing
-            pantry management.
-          </p>
+          <h2>Management access required</h2>
+          <p>Ask an administrator to review your management permissions.</p>
           <Link href="/account">Open your account</Link>
         </section>
       )}

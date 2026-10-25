@@ -11,10 +11,7 @@ import {
 } from "./community";
 import { sanitizeCommunityPhoto } from "./community-photo";
 import { isDate } from "./time";
-import { initializeSharingAlerts, queueSharingAlert } from "./sharing-alerts";
 import { featureEnabled } from "./release-features";
-import { emailDeliveryMode } from "./mail-delivery";
-export { dispatchSharingAlerts } from "./sharing-alerts-worker";
 
 export function closeSharingDatabases() {
   /* sharing records use the community database connection */
@@ -377,7 +374,6 @@ export async function postSharingSubmission(req: Request) {
         testId ? "optional-test-id-v1" : null,
         testId ? at : null,
       );
-      queueSharingAlert(db, id, "submission");
       db.exec("COMMIT");
       return json(201, { submission: { id, status: "pending" } });
     } catch (e) {
@@ -397,21 +393,13 @@ export function getSharingAdmin(req: Request) {
   try {
     moderator(req);
     const db = dbFor();
-    initializeSharingAlerts(db);
     const rows = all(
-        db,
-        "SELECT id,kind,status,contact_name,contact_email,public_contact,data,CASE WHEN photo IS NULL THEN NULL ELSE 1 END AS photo,CASE WHEN test_id IS NULL OR test_id_expires_at<=? THEN NULL ELSE 1 END AS test_id,submitted_at,reviewed_at,reason,record_id FROM sharing_submissions ORDER BY (status='pending') DESC,submitted_at DESC LIMIT 200",
-        new Date().toISOString(),
-      ),
-      pending = Number(
-        get(
-          db,
-          "SELECT count(*) AS n FROM sharing_alert_outbox WHERE status='queued'",
-        )?.n || 0,
-      );
+      db,
+      "SELECT id,kind,status,contact_name,contact_email,public_contact,data,CASE WHEN photo IS NULL THEN NULL ELSE 1 END AS photo,CASE WHEN test_id IS NULL OR test_id_expires_at<=? THEN NULL ELSE 1 END AS test_id,submitted_at,reviewed_at,reason,record_id FROM sharing_submissions ORDER BY (status='pending') DESC,submitted_at DESC LIMIT 200",
+      new Date().toISOString(),
+    );
     return json(200, {
       submissions: rows.map(serialize),
-      notification: { mode: emailDeliveryMode(), pending },
     });
   } catch (e) {
     const x = e as Error & { status?: number };

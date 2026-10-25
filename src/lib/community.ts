@@ -18,10 +18,7 @@ import {
 } from "./auth-password";
 import { isDate } from "./time";
 import { offerHasVolunteerRun } from "./volunteer-store";
-import {
-  initializeNotifications,
-  queueNotification,
-} from "./notifications-store";
+import { initializeNotifications } from "./notifications-store";
 import { sanitizeCommunityPhoto } from "./community-photo";
 import {
   COMMUNITY_PICKUP_AREAS,
@@ -238,35 +235,6 @@ function blocked(db: DatabaseSync, a: string, b: string) {
     a,
   );
 }
-function notifyPickupRequest(db: DatabaseSync, id: string, status: string) {
-  const row = get(
-    db,
-    "SELECT q.requester_id,r.owner_id FROM requests q JOIN records r ON r.id=q.offer_id WHERE q.id=?",
-    id,
-  );
-  if (!row || blocked(db, String(row.owner_id), String(row.requester_id)))
-    return;
-  const kind =
-    status === "collected"
-      ? "pickup-completed"
-      : status === "cancelled" || status === "declined"
-        ? "pickup-cancelled"
-        : status === "accepted"
-          ? "assignment-confirmed"
-          : "volunteer-interest";
-  for (const userId of new Set([
-    String(row.owner_id),
-    String(row.requester_id),
-  ]))
-    queueNotification(db, {
-      eventKey: `request:${id}:${status}`,
-      userId,
-      category: "pickup",
-      kind,
-      resourceId: id,
-      resourceType: "request",
-    });
-}
 function activeDonationRunIds(db: DatabaseSync, offerId: string): string[] {
   if (!offerHasVolunteerRun(db, offerId)) return [];
   return all(
@@ -274,42 +242,6 @@ function activeDonationRunIds(db: DatabaseSync, offerId: string): string[] {
     "SELECT id FROM volunteer_runs WHERE offer_id=? AND status IN ('pending','open','assigned')",
     offerId,
   ).map((row) => String(row.id));
-}
-function notifyClosedDonationRuns(db: DatabaseSync, runIds: string[]) {
-  for (const id of runIds) {
-    const run = get(
-      db,
-      "SELECT * FROM volunteer_runs WHERE id=? AND status='cancelled'",
-      id,
-    );
-    if (!run) continue;
-    for (const userId of new Set(
-      [run.donor_id, run.volunteer_id].filter(
-        (v): v is string => typeof v === "string",
-      ),
-    ))
-      queueNotification(db, {
-        eventKey: `run:${run.id}:${run.revision}:pickup-cancelled`,
-        userId,
-        category: "pickup",
-        kind: "pickup-cancelled",
-        resourceId: String(run.id),
-        resourceType: "run",
-      });
-    for (const manager of all(
-      db,
-      "SELECT DISTINCT u.id FROM users u LEFT JOIN pantry_managers m ON m.user_id=u.id AND m.pantry_id=? WHERE u.email_verified_at IS NOT NULL AND (m.user_id IS NOT NULL OR u.pantry_role='administrator') LIMIT 100",
-      String(run.pantry_id),
-    ))
-      queueNotification(db, {
-        eventKey: `run:${run.id}:${run.revision}:pickup-cancelled`,
-        userId: String(manager.id),
-        category: "pantry",
-        kind: "pickup-cancelled",
-        resourceId: String(run.id),
-        resourceType: "run",
-      });
-  }
 }
 function record(db: DatabaseSync, id: string) {
   return (
@@ -1017,16 +949,9 @@ export function createCommunityHandler(
               id,
             );
             if (action !== "submit") {
-              for (const pending of all(
-                db,
-                "SELECT id FROM requests WHERE offer_id=? AND status IN ('requested','accepted')",
-                id,
-              ))
-                notifyPickupRequest(db, String(pending.id), "cancelled");
               db.prepare(
                 "UPDATE requests SET status='cancelled',updated_at=? WHERE offer_id=? AND status IN ('requested','accepted')",
               ).run(now(), id);
-              notifyClosedDonationRuns(db, closingRuns);
             }
             audit(db, u.id, action, id);
           });
@@ -1092,7 +1017,6 @@ export function createCommunityHandler(
             db.prepare(
               "INSERT INTO requests VALUES(?,?,?,'requested',1,?,?)",
             ).run(rid, id, u.id, now(), now());
-            notifyPickupRequest(db, rid, "requested");
             audit(db, u.id, "request", rid);
           });
           return response({ id: rid, status: "requested" }, 201);
@@ -1159,17 +1083,10 @@ export function createCommunityHandler(
             db.prepare(
               "UPDATE records SET status='ended',updated_at=? WHERE id=?",
             ).run(now(), String(offer.id));
-            for (const declined of all(
-              db,
-              "SELECT id FROM requests WHERE offer_id=? AND status='requested'",
-              String(offer.id),
-            ))
-              notifyPickupRequest(db, String(declined.id), "declined");
             db.prepare(
               "UPDATE requests SET status='declined',updated_at=? WHERE offer_id=? AND status='requested'",
             ).run(now(), String(offer.id));
           }
-          notifyPickupRequest(db, id, status);
           audit(db, u.id, action, id);
         });
         return response({ ok: true });
@@ -1197,13 +1114,6 @@ export function createCommunityHandler(
           db.prepare(
             "UPDATE requests SET status='cancelled',updated_at=? WHERE offer_id=? AND status IN ('requested','accepted')",
           ).run(now(), parts[2]);
-          for (const cancelled of all(
-            db,
-            "SELECT id FROM requests WHERE offer_id=? AND status='cancelled'",
-            parts[2],
-          ))
-            notifyPickupRequest(db, String(cancelled.id), "cancelled");
-          notifyClosedDonationRuns(db, closingRuns);
           audit(db, u.id, "moderator-remove", parts[2], data.reason);
         });
         return response({ ok: true });

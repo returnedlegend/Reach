@@ -1,7 +1,5 @@
 # Reach AI Navigation
 
-The navigation features below were implemented in the existing Next.js application. The active AI provider setup is now [DeepSeek](DEEPSEEK.md); provider instructions in the original 2026-10-23 implementation report are historical. The map remains MapLibre/OpenStreetMap; email supports configurable SMTP and private local preview.
-
 ## What runs
 
 Open **Find food I can reach** on the home page. The question-first planner accepts GPS with permission, a manual address/coordinates, or a corrected map pin. Preferences remain editable without an account. New service, urgency, household-size, identification and near-transit controls are optional. Driving joins walking and scheduled transit. All trip clocks use America/Chicago, including next-day offsets.

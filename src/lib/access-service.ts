@@ -275,7 +275,7 @@ export function createAccessHandler(
             eligibility:
               "Accepted household pickup request; check original conditions and food labels.",
             notes:
-              "User-confirmed private arrangement. Sender identity and food safety are not established by email.",
+              "User-confirmed private arrangement. Identity and food safety are not independently verified.",
             offering: String(data.foodCategory || "Household food"),
             verificationStatus: "needs-confirmation" as const,
             detailsNeedConfirmation: true,
@@ -283,7 +283,7 @@ export function createAccessHandler(
               {
                 title:
                   "Your accepted pickup request and privately reviewed reply",
-                url: "/outreach",
+                url: "/privacy",
                 checkedOn: String(row.received_at).slice(0, 10),
               },
             ],

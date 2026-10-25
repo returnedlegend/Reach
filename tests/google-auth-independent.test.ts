@@ -10,7 +10,6 @@ import { openCommunityDatabase } from "../src/lib/community";
 import { accountHash, getAccountActor } from "../src/lib/account-store";
 import { createAccountHandler } from "../src/lib/account";
 import { hashAccountPasswordSync } from "../src/lib/auth-password";
-import type { AccountMail } from "../src/lib/mail-account";
 
 const origin = "https://reach.example.org";
 const clientId = "123456-test.apps.googleusercontent.com";
@@ -751,7 +750,7 @@ describe("independent Google OIDC account boundary", () => {
     ).toBe(false);
   });
 
-  it("requires a Reach password to disconnect Google and preserves the linked account through recovery", async () => {
+  it("requires a Reach password to disconnect Google", async () => {
     vi.stubEnv("REACH_ADMIN_EMAIL", "google-only@gmail.com");
     const verifier = makeVerifier((nonce) =>
       claims(nonce, { email: "google-only@gmail.com" }),
@@ -811,91 +810,6 @@ describe("independent Google OIDC account boundary", () => {
         now,
       ),
     ).not.toBeNull();
-
-    const sent: AccountMail[] = [];
-    const account = createAccountHandler(database, {
-      now: () => now,
-      sendMail: async (mail) => {
-        sent.push(mail);
-      },
-    });
-    const accountRequest = (path: string, body: unknown) =>
-      account(
-        new Request(`${origin}/api/account/${path}`, {
-          method: "POST",
-          headers: { origin, "content-type": "application/json" },
-          body: JSON.stringify(body),
-        }),
-      );
-    const requested = await accountRequest("forgot-password", {
-      email: "google-only@gmail.com",
-    });
-    expect(requested.status).toBe(202);
-    const resetToken = sent[0].text.match(/#reset=([a-f0-9]{64})/)?.[1];
-    expect(resetToken).toMatch(/^[a-f0-9]{64}$/);
-    const newPassword = "independent-google-recovery-password";
-    expect(
-      (
-        await accountRequest("reset-password", {
-          token: resetToken,
-          password: newPassword,
-        })
-      ).status,
-    ).toBe(200);
-    expect(
-      db.prepare("SELECT count(*) count FROM google_identities").get(),
-    ).toEqual({
-      count: 1,
-    });
-    expect(
-      getAccountActor(
-        db,
-        new Request(origin, { headers: { cookie: sessionCookie } }),
-        now,
-      ),
-    ).toBeNull();
-
-    const login = await accountRequest("login", {
-      email: "google-only@gmail.com",
-      password: newPassword,
-    });
-    expect(login.status).toBe(200);
-    const recoveredSession = login.headers
-      .getSetCookie()
-      .find((value) => value.startsWith("reach_community_session="))!
-      .split(";")[0];
-    const recoveredStatus = await google(
-      request("status", "GET", { cookie: recoveredSession }),
-      "status",
-    );
-    expect(await recoveredStatus.json()).toMatchObject({
-      configured: true,
-      linked: true,
-      hasPassword: true,
-    });
-    const deniedWithWrongPassword = await disconnect(
-      "still-wrong-password",
-      recoveredSession,
-    );
-    expect(deniedWithWrongPassword.status).toBe(401);
-    expect(
-      db.prepare("SELECT count(*) count FROM google_identities").get(),
-    ).toEqual({
-      count: 1,
-    });
-    const disconnected = await disconnect(newPassword, recoveredSession);
-    expect(disconnected.status).toBe(200);
-    expect(await disconnected.json()).toMatchObject({
-      message: expect.stringContaining("disconnected"),
-    });
-    expect(
-      db.prepare("SELECT count(*) count FROM google_identities").get(),
-    ).toEqual({
-      count: 0,
-    });
-    expect(db.prepare("SELECT count(*) count FROM sessions").get()).toEqual({
-      count: 0,
-    });
   });
 
   it("allows a password-confirmed disconnect after Google OAuth configuration is removed", async () => {

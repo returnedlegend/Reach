@@ -1,7 +1,5 @@
 # Optional AI and email integration boundaries
 
-Historical research checked 2026-10-22 against the linked official documentation. It is an integration decision note, not a live account or quota check. Its AI comparison is historical; consult current provider guides for active configuration. Outbound email now uses [SMTP or private preview](SMTP.md); replies require manual handling in a monitored mailbox. Current transit and regional coverage audits remain in [GTFS.md](GTFS.md) and [TX10-DATA.md](TX10-DATA.md).
-
 ## Recommendation
 
 Keep AI assistance explicitly opt-in and disabled by default. Set one provider and one model explicitly; never fail over from one hosted provider to another automatically. When the provider is disabled, unavailable, out of quota, or fails schema validation, return the existing deterministic application result and a clear unavailable state. Do not send account credentials, verification or recovery links, private messages, or unnecessary personal data to an inference provider.
@@ -48,8 +46,6 @@ The `value` on non-available results should come from deterministic application 
 
 ## Email integration boundary
 
-SMTP handles outbound delivery only. Live pantry inquiries require a monitored app-controlled `REACH_OUTREACH_REPLY_EMAIL`. There is no inbound provider API or webhook integration. Existing saved replies retain private ownership and explicit review checks; email content never authorizes sending or modifies public pantry records. See [SMTP setup](SMTP.md).
-
 ## BTD publication recheck
 
 Checked 2026-10-22. The official GTFS source URL listed in [GTFS.md](GTFS.md), <https://www.btd.org/2025btdgtfs/>, currently redirects to <https://www.btd.org/wp-content/uploads/2025/01/2025BTDGTFS.zip>. That response was HTTP 200, 247,754 bytes, with `Last-Modified: Wed, 21 Oct 2026 15:21:44 GMT`. Its SHA-256 is `192d83d6a79b816a88a892566c82a3ead6d566671860e544722b883f67f21ace`.
@@ -82,13 +78,6 @@ Provider documentation:
 - OpenRouter structured outputs and per-endpoint capability: <https://openrouter.ai/docs/guides/features/structured-outputs>
 - OpenRouter provider logging and data policy filters: <https://openrouter.ai/docs/guides/privacy/provider-logging>
 - OpenRouter routing and provider-selection controls: <https://openrouter.ai/docs/guides/routing/provider-selection>
-
-- Current official BTD GTFS source URL: <https://www.btd.org/2025btdgtfs/> (currently redirects to the ZIP linked in the verification above)
-- BTD fixed-route rates: <https://www.btd.org/fixed-routes/rates/>
-- BTD ADA paratransit eligibility: <https://www.btd.org/paratransit/eligibility/>
-- BTD schedules by city: <https://www.btd.org/fixed-routes/schedules/>
-- BTD Bryan/College Station Fixed Route Map PDF: <https://www.btd.org/wp-content/uploads/2025/11/BCS_FixedRouteMap.pdf>
-- Existing Reach outbound email setup: [SMTP setup](SMTP.md)
 
 Transit and service area references:
 

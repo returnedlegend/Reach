@@ -1,12 +1,8 @@
 # Direct DeepSeek migration — October 25, 2026
 
-The existing Reach application now uses the official DeepSeek API for the optional pantry/map assistant, request interpretation, grounded guidance, inquiry drafting and conservative reply extraction. Frontend routing and forms, SQLite, SMTP delivery, user authentication, maintained pantry data and deterministic trip ranking are retained. No dependencies were added. The migration was verified locally before GitHub delivery. No public deployment was performed.
-
 ## Provider and safeguards
 
 The shared server client is `src/lib/deepseek-client.ts`. `src/instrumentation.ts` validates settings when the Node server starts, reporting safe configuration warnings without a provider request. Ordinary tasks select `DEEPSEEK_MODEL=deepseek-flash` with thinking disabled. Guidance involving a return or transfer can select `DEEPSEEK_REASONING_MODEL=deepseek-v4-pro` with bounded low-effort thinking. The official base URL is `https://api.deepseek.com`; its documented `/v1` alias is accepted. Other hosts and redirects are rejected so the key cannot be sent to a configured proxy endpoint.
-
-The client uses the existing HTTP/Fetch infrastructure rather than adding an SDK dependency. It sends official JSON mode, supplies the task schema in the prompt, and validates returned content with the existing strict Zod schemas. Incomplete output, unsupported facts/fields and empty/malformed responses are rejected. Models cannot change the route engine, ranking, source facts or email authorization. The email worker still requires reviewed approval and its existing authentication/rate/duplicate checks.
 
 There is a total timeout, bounded output, at most two attempts for HTTP 429/5xx with backoff and Retry-After handling, a short circuit breaker, and retained process-local request ceilings. An ambiguous network failure is not automatically retried because a paid request may already have been accepted. There is no automatic provider or model fallback. Manual pantry planning, computed guidance and editable email templates remain available. Aggregate token counters are available server-side; they do not estimate dollar charges or prove that a failed response was unbilled.
 
@@ -62,40 +58,6 @@ The DeepSeek account owner must add usable API balance or provision a funded key
 - `tests/deepseek-workflows.test.ts`
 
 ### Modified
-
-- `.env.example`
-- `README.md`
-- `deploy/production.env.example`
-- `docs/ACCESS-INTEGRATIONS.md`
-- `docs/ACCESS-PLANNER.md`
-- `docs/AI-CONFIGURATION.md`
-- `docs/AI-NAVIGATION.md`
-- `docs/ARCHITECTURE.md`
-- `docs/CODE-REVIEW.md`
-- `docs/DEMO.md`
-- `docs/DEVELOPMENT.md`
-- `docs/FEATURE-READINESS-2026-10-24.md`
-- `docs/FOOD-FIRST-RELEASE.md`
-- `docs/FREE-OPENROUTER.md`
-- `docs/NAVIGATION-FILES.md`
-- `docs/NAVIGATION-PROVIDERS.md`
-- `docs/PUBLISHING.md`
-- `docs/README.md`
-- `docs/SMTP-AI-FILES.md`
-- `docs/SMTP-AI-SETUP.md`
-- `src/lib/access-ai.ts`
-- `src/lib/ai-config.ts`
-- `src/lib/navigation-guidance-agent.ts`
-- `src/lib/navigation-needs-agent.ts`
-- `src/lib/release-features.ts`
-- `tests/access-ai.test.ts`
-- `tests/ai-fallback.test.ts`
-- `tests/food-search-service.test.ts`
-- `tests/navigation-independent.test.ts`
-- `tests/navigation-needs-agent.test.ts`
-- `tests/release-features.test.ts`
-- `tests/release-preflight.test.ts`
-- `tests/smtp-ai-independent.test.ts`
 
 ### Removed or replaced
 

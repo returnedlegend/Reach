@@ -1,9 +1,5 @@
-import { createHash, randomBytes, randomUUID } from "node:crypto";
 import type { DatabaseSync } from "node:sqlite";
-import type {
-  NotificationEvent,
-  NotificationPreferences,
-} from "./notification-types";
+import type { NotificationPreferences } from "./notification-types";
 
 export const notificationSchema = `
 CREATE TABLE IF NOT EXISTS notification_preferences(user_id TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,pantry INTEGER NOT NULL DEFAULT 0 CHECK(pantry IN(0,1)),volunteer INTEGER NOT NULL DEFAULT 0 CHECK(volunteer IN(0,1)),pickup INTEGER NOT NULL DEFAULT 0 CHECK(pickup IN(0,1)),volunteer_participation INTEGER NOT NULL DEFAULT 0 CHECK(volunteer_participation IN(0,1)),updated_at TEXT NOT NULL);
@@ -54,78 +50,4 @@ export function saveNotificationPreferences(
       db.prepare(
         "UPDATE notification_outbox SET status='suppressed',updated_at=? WHERE user_id=? AND category=? AND status='queued'",
       ).run(at.toISOString(), userId, category);
-}
-/** Called within the business mutation's transaction. No network or nested transaction. */
-export function queueNotification(
-  db: DatabaseSync,
-  event: NotificationEvent,
-  at = new Date(),
-) {
-  initializeNotifications(db);
-  const user = db
-    .prepare("SELECT email,email_verified_at FROM users WHERE id=?")
-    .get(event.userId);
-  if (!user?.email || !user.email_verified_at) return;
-  if (
-    event.category !== "security" &&
-    !getNotificationPreferences(db, event.userId)[event.category]
-  )
-    return;
-  db.prepare(
-    `INSERT OR IGNORE INTO notification_outbox(id,user_id,event_key,category,kind,resource_type,resource_id,available_at,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?,?)`,
-  ).run(
-    randomUUID(),
-    event.userId,
-    event.eventKey,
-    event.category,
-    event.kind,
-    event.resourceType ?? null,
-    event.resourceId ?? null,
-    at.toISOString(),
-    at.toISOString(),
-    at.toISOString(),
-  );
-}
-export function createUnsubscribeToken(
-  db: DatabaseSync,
-  userId: string,
-  at = new Date(),
-) {
-  initializeNotifications(db);
-  db.prepare("DELETE FROM notification_unsubscribe WHERE expires_at<=?").run(
-    at.toISOString(),
-  );
-  const token = randomBytes(32).toString("hex");
-  db.prepare("INSERT INTO notification_unsubscribe VALUES(?,?,?)").run(
-    createHash("sha256").update(token).digest("hex"),
-    userId,
-    new Date(+at + 30 * 86400000).toISOString(),
-  );
-  return token;
-}
-export function consumeUnsubscribeToken(
-  db: DatabaseSync,
-  token: string,
-  at = new Date(),
-) {
-  initializeNotifications(db);
-  if (!/^[a-f0-9]{64}$/.test(token)) return;
-  const hash = createHash("sha256").update(token).digest("hex");
-  const row = db
-    .prepare(
-      "SELECT user_id FROM notification_unsubscribe WHERE token_hash=? AND expires_at>?",
-    )
-    .get(hash, at.toISOString());
-  if (!row) return;
-  const id = String(row.user_id),
-    old = getNotificationPreferences(db, id);
-  saveNotificationPreferences(
-    db,
-    id,
-    { ...old, pantry: false, volunteer: false, pickup: false },
-    at,
-  );
-  db.prepare("DELETE FROM notification_unsubscribe WHERE token_hash=?").run(
-    hash,
-  );
 }

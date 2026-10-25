@@ -2,20 +2,6 @@
 
 This historical report records independent local QA for the access planner and private outreach flows. Browser QA used a loopback Next.js development server on `127.0.0.1:3111`, a fresh SQLite database under `/tmp/reach-access-qa/`, and a private mail-preview directory under the same path. The browser test process and server used that same database. The pantry directory preflight returned 24 records; account status reported preview delivery.
 
-| Requirement | Result | Evidence and scope |
-| --- | --- | --- |
-| Location denial, manual origin, coordinate validation | PASS | Real UI flow at mobile and desktop widths; denied geolocation and out-of-range coordinates do not create an origin. |
-| Honest behavior when routing is disabled | PASS | Manual origin returns an explicit unconfigured-routing state with no fabricated itinerary. |
-| Trip constraints and selected result | PASS | Synthetic API response exercises travel mode, walking/fare/transfer limits, step-free preference, return coordinates/deadline, card/map selection and accessible map-list selection. |
-| Accessibility and small-screen layout | PASS | Six access-flow cases passed; axe found no serious/critical violations on planner results; retained accessibility suite passed on both projects; horizontal overflow assertions passed. |
-| Outreach requires review and recipient consent | PASS | Isolated fixture account/contact; reviewed message and disclosure, explicit consent, actual authenticated API and SQLite queue. No live contact. |
-| Delivery privacy and idempotency | PASS | Worker used preview mode only; UI reports “Preview only · no email sent.” Unit tests cover idempotency and changed-contact cancellation before sender invocation. |
-| Existing reply review | Retained; automatic inbound retired | Existing saved replies remain private and require owner confirmation. New SMTP replies require manual mailbox handling and are not automatically imported. Historical webhook tests have been removed with that integration. |
-| Private availability scope | PASS | Browser confirmation updates only the owner’s private availability; public pantry inventory remains unchanged. Isolated DB tests cover ownership and expiry. |
-| Public pantry facts and live service conditions | BLOCKED | Synthetic UI/API fixtures and the local directory do not prove current stock, opening, eligibility or service delivery. These remain confirmation-required. |
-| Live AI and outbound email | BLOCKED | AI was disabled and email was preview-only; no provider inference, real recipient delivery or live inbound callback was exercised. |
-| Live route provider | BLOCKED for this independent run | Routing was disabled in this QA environment. The parent agent separately recorded live route/planner checks in `docs/evidence/access-live-routing.json` and `docs/evidence/access-live-planner.json`; they are not independent results from this report. |
-
 ## Browser and backend results
 
 `tests/access-flow.spec.ts` passed all six cases (three flows across mobile at 390 px and desktop at 1280 px). It covers geolocation denial, manual coordinate bounds and unconfigured routing; a synthetic planner response exercising constraints and map/card selection; and preview-only reviewed outreach with a synthetic reply. Planner fixture data is marked synthetic and makes no claim that a real route was measured. The reply test checks that a date-only fact of `2026-10-23` displays October 23, 2026 rather than shifting to the prior Chicago date, and that pickup hours display as 09:00–10:00 with the America/Chicago label.
@@ -30,8 +16,6 @@ After the final visual review found an oversized next-day checkbox, the planner 
 
 The reviewed outreach path is scoped to source-backed public organization contacts entered through verified and consented enrollment. Those organization addresses are intentionally visible for review; they are not treated as private household contacts. The browser fixture uses only `example.test` recipient data. Household addresses and coordinates remain private; public directory records are not updated from household reply data. The isolated browser case checks that the confirmed availability appears only in the requesting account’s private view and leaves public pantry inventory untouched.
 
-Authorization is explicit and time-limited. The backend tests exercise owner/session checks, authorization expiry, suppression and rate limits. The worker rechecks the reviewed recipient address before dispatch and cancels if it changed. Queue dispatch uses idempotency and does not retry uncertain leases as if delivery were known. Existing sender reports remain unverified. The former inbound webhook is retired, and current SMTP replies are handled manually. Prompt-injection content is treated as untrusted text, not as instructions or authorization. Private replies require owner review and confirmation before creating private availability, which expires.
-
 No live AI inference ran. Preference assistance displayed its disabled state and allowed manual controls. No live email was sent; the worker wrote only a preview capture in the isolated temporary directory. Tests do not establish provider-side AI retention, real deliverability, recipient identity beyond the synthetic records, or live callback configuration.
 
 ## QA findings and fixes
@@ -42,10 +26,7 @@ One initial outreach browser run returned HTTP 503 because the test inserted mal
 
 ## Limits and reproducibility
 
-The browser server used `REACH_EMAIL_PROVIDER=preview`, `REACH_AI_PROVIDER=disabled`, and `OSM_ROUTER_MODE=disabled`, with a fresh private SQLite database and preview capture directory under `/tmp/reach-access-qa`. No live email, AI inference, route-provider request, or pantry transaction occurred. The local database’s 24 records are not proof that listed services are open, stocked, eligible, reachable, or accepting walk-ins. Source links and reported details still require confirmation by users.
-
 Relevant checks included `npx tsc --noEmit`, `git diff --check`, the six access-flow browser cases, the 12 retained workflow/accessibility cases, and isolated access tests. The project-wide unit/type/data/build checks and parent-run live checks are reported separately by the parent agent; they are not represented here as independently rerun.
-
 
 ## Main-agent completion gate
 
