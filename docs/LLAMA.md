@@ -1,0 +1,33 @@
+# Reach's primary AI: Llama 3.2
+
+Reach defaults to `llama3.2:3b` served by Ollama. Food searches use AI automatically, with a visible disclosure and a user control to turn interpretation off. The existing pantry database, feasibility engine, walking/transfer limits, distribution windows and return checks determine the recommendation. Llama interprets requests and highlights computed evidence; it cannot invent pantry facts or establish food stock. The highest-ranked checked pantry is not a claim of a globally optimal or guaranteed pickup.
+
+## Run on Linux
+
+Install Ollama from https://ollama.com/download/linux, then run `ollama pull llama3.2:3b`. Start `ollama serve` if the installer has not already started the service. Run Reach normally with `npm run dev`. The updated local and example configurations select Llama:
+
+```ini
+REACH_AI_PROVIDER=ollama
+OLLAMA_MODEL=llama3.2:3b
+OLLAMA_BASE_URL=http://127.0.0.1:11434/v1
+OLLAMA_TIMEOUT_MS=40000
+REACH_AI_DATA_POLICY_ACCEPTED=true
+REACH_RELEASE_PROFILE=extended
+REACH_RELEASE_AI=true
+```
+
+Keep other feature gates at their reviewed values. An explicit `REACH_AI_PROVIDER=disabled` remains an operator emergency switch. DeepSeek remains available only when explicitly selected. Old DeepSeek keys no longer implicitly select the provider. No API key is needed for local Ollama; no cloud credentials are sent to it.
+
+## Run the website with Docker Compose
+
+The existing `deploy/compose.yaml` includes an internal Ollama service and one-time model pull. The app waits for the pull to complete. Models persist in `ollama-data`; the model port is not published. The website server reaches `http://ollama:11434/v1`; visitors need only their browsers. Follow [Publishing Reach](PUBLISHING.md) for domain, HTTPS and database setup. Building/running this setup requires downloading the Ollama image and roughly 2 GB of model weights and provisioning enough RAM/CPU. This pass does not publicly deploy it. The mutable official image tag should be pinned to a tested digest for an operator's production release.
+
+Only loopback hosts and the exact private Compose hostname `ollama` are accepted. Arbitrary remote endpoints and redirects are rejected. The example uses CPU execution; performance depends on hardware and concurrent load. `llama3.2:1b` is available for smaller machines when running locally, but it may follow instructions less reliably. API billing is absent for local inference; hosting, hardware and electricity are not free. Review Meta's model license.
+
+The shared JSON client retains its historical `deepseekJson` name for compatibility while dispatching according to the selected provider. Request quotas, cancellation, bounded output and strict schema validation apply to Llama. The server deadline defaults to 40 seconds (maximum60), and immediate directory results remain visible while inference runs. A stopped model, malformed response or timeout leaves honest directory results available. Email still requires user approval before sending.
+
+Official references: https://docs.ollama.com/api/openai-compatibility and https://ollama.com/library/llama3.2 . Configuration status is not a live health check. See `docs/evidence/llama-primary-verification.json` for this pass's actual checks and live observations.
+
+## Verification on October 25, 2026
+
+All 651 unit tests, TypeScript, data validation and the production build passed. Four mobile/desktop browser cases verify default AI submission and outage recovery with controlled responses. A separate actual mobile-browser submission through `/api/food-search` successfully called locally installed Ollama0.40.11 with `llama3.2:3b`, returned HTTP200 with `assistance: ai`, interpreted groceries/transit, and kept three maintained pantry cards visible. The cold request took about16seconds on this environment's CPU; this is one observation, not a latency guarantee. No cloud model or paid API was used for that check. Docker Compose was parsed and inspected but was not launched. This proves local website inference, not deployment, actual food stock or live route availability.

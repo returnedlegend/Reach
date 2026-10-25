@@ -48,7 +48,7 @@ export function featureEnabled(feature: keyof PublicFeatures): boolean {
 export function publicFeatures(): PublicFeatures {
   if (coreRelease()) return { ...CORE_FEATURES };
   const aiProvider =
-    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "deepseek";
+    process.env.REACH_AI_PROVIDER?.trim().toLowerCase() || "ollama";
   const aiKey =
     aiProvider === "deepseek"
       ? process.env.DEEPSEEK_API_KEY
@@ -59,7 +59,7 @@ export function publicFeatures(): PublicFeatures {
           : undefined;
   const configuredAI =
     process.env.REACH_AI_DATA_POLICY_ACCEPTED === "true" &&
-    Boolean(aiKey?.trim()) &&
+    (aiProvider === "ollama" || Boolean(aiKey?.trim())) &&
     !/placeholder|your[_-].*(?:key|here)/i.test(aiKey || "");
   const emailProvider = process.env.REACH_EMAIL_PROVIDER;
   const configuredMail =

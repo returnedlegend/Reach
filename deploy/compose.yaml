@@ -13,6 +13,13 @@ services:
       - ./production.env
     environment:
       NODE_ENV: production
+      REACH_AI_PROVIDER: ollama
+      OLLAMA_BASE_URL: http://ollama:11434/v1
+      OLLAMA_MODEL: llama3.2:3b
+      OLLAMA_TIMEOUT_MS: "40000"
+      REACH_RELEASE_PROFILE: extended
+      REACH_RELEASE_AI: "true"
+      REACH_AI_DATA_POLICY_ACCEPTED: "true"
       REACH_PROCESS_ROLE: app
       HOSTNAME: 0.0.0.0
       PORT: "3000"
@@ -20,6 +27,9 @@ services:
       REACH_COMMUNITY_DB: /var/lib/reach/community.sqlite
     volumes:
       - reach-data:/var/lib/reach
+    depends_on:
+      ollama-pull:
+        condition: service_completed_successfully
     expose:
       - "3000"
     networks:
@@ -37,6 +47,35 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
+
+  ollama:
+    image: ollama/ollama:latest
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - reach
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    security_opt:
+      - no-new-privileges:true
+
+  ollama-pull:
+    image: ollama/ollama:latest
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    command: ["pull", "llama3.2:3b"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+    networks:
+      - reach
+    restart: "no"
+    security_opt:
+      - no-new-privileges:true
 
   caddy:
     image: caddy:2-alpine
@@ -94,6 +133,7 @@ services:
       - no-new-privileges:true
 
 volumes:
+  ollama-data:
   reach-data:
   caddy-data:
   caddy-config:

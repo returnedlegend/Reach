@@ -30,10 +30,7 @@ chmod 600 deploy/production.env
 
 Set `REACH_DOMAIN` and `REACH_APP_ORIGIN` to the same public host, for example
 `reach.example.org` and `https://reach.example.org`. The origin must have no
-trailing slash. The template selects `REACH_RELEASE_PROFILE=core`, which keeps
-accounts, Google sign-in, email, community submissions, volunteering and AI
-disabled. Choose `extended` only when you intend to configure and operate those
-features. The individual `REACH_RELEASE_ACCOUNTS`, `REACH_RELEASE_GOOGLE`,
+trailing slash. The template selects `REACH_RELEASE_PROFILE=extended` with Llama AI enabled. Accounts, Google sign-in, email, community submissions and volunteering remain disabled. Compose starts a private Ollama service and downloads Llama 3.2 before starting the app. Provision CPU, RAM and persistent model storage; see [Llama setup](LLAMA.md). The individual `REACH_RELEASE_ACCOUNTS`, `REACH_RELEASE_GOOGLE`,
 `REACH_RELEASE_EMAIL`, `REACH_RELEASE_COMMUNITY`,
 `REACH_RELEASE_VOLUNTEERING` and `REACH_RELEASE_AI` values are operator
 attestations: set each to `true` only after its release checks pass. The app
