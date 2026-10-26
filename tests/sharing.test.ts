@@ -17,6 +17,7 @@ import {
   postSharingSubmission,
 } from "../src/lib/sharing";
 import sharp from "sharp";
+import { listOfferResources } from "../src/lib/offer-resources";
 let dir: string, path: string, moderator: string, regular: string;
 function session(role: "moderator" | "resident") {
   const db = openCommunityDatabase(path),
@@ -584,4 +585,56 @@ it("rejects a phone contact containing no usable number", async () => {
     }),
   );
   expect(result.status).toBe(400);
+});
+
+it("lets only moderators remove approved listings and retains the review history", async () => {
+  const created = await postSharingSubmission(
+    new Request("https://reach.example/api/sharing/submissions", {
+      method: "POST",
+      headers: {
+        origin: "https://reach.example",
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(submission()),
+    }),
+  );
+  expect(created.status).toBe(201);
+  const id = (await created.json()).submission.id;
+  const action = (
+    action: string,
+    cookie = moderator,
+    origin = "https://reach.example",
+  ) =>
+    postSharingReview(
+      new Request("https://reach.example/api/sharing/admin", {
+        method: "POST",
+        headers: { cookie, origin, "content-type": "application/json" },
+        body: JSON.stringify({ action }),
+      }),
+      id,
+    );
+  expect((await action("remove")).status).toBe(409);
+  expect((await action("approve")).status).toBe(200);
+  expect((await action("remove", regular)).status).toBe(403);
+  expect((await action("remove", "")).status).toBe(401);
+  expect(
+    (await action("remove", moderator, "https://evil.example")).status,
+  ).toBe(403);
+  const db = openCommunityDatabase(path);
+  expect(
+    (db.prepare("SELECT status FROM records").get() as { status: string })
+      .status,
+  ).toBe("approved");
+  expect(listOfferResources(db)).toHaveLength(1);
+  expect((await action("remove")).status).toBe(200);
+  expect(listOfferResources(db)).toHaveLength(0);
+  expect(
+    (db.prepare("SELECT status FROM records").get() as { status: string })
+      .status,
+  ).toBe("ended");
+  const admin = await (await getSharingAdmin(req(moderator))).json();
+  expect(admin.submissions[0].status).toBe("removed");
+  expect(admin.submissions[0].recordId).toBeTruthy();
+  expect((await action("remove")).status).toBe(409);
+  expect((await action("approve")).status).toBe(409);
 });

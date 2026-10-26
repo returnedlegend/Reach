@@ -41,3 +41,13 @@ See [administrator access](AUTHENTICATION.md).
 Tests use isolated SQLite databases and synthetic food/photo fixtures. They do not
 establish real food availability. Existing production data is not seeded or
 replaced by test records.
+
+### Removing an approved listing
+
+In `/admin`, signed-in moderators can choose **Remove listing** on an approved
+food pickup or extra-food submission. Confirmation is required. Removal ends the
+linked community record so fresh public searches, map lists and AI candidates
+exclude it. The private review history remains visible with a **removed** status;
+this action does not erase the submission. Already-open pages may need refreshing.
+The API checks moderator permissions and same-origin requests and rejects repeated
+removal or reapproval. Maintained directory pantries are not deleted by this action.

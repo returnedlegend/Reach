@@ -57,10 +57,20 @@ export function AdminSubmissions() {
     }
   }, [focusRequest, items, loading]);
 
-  async function decide(item: SharingReview, decision: "approve" | "reject") {
+  async function decide(
+    item: SharingReview,
+    decision: "approve" | "reject" | "remove",
+  ) {
     if (
       decision === "approve" &&
       !window.confirm("Approve this submission and make its listing public?")
+    )
+      return;
+    if (
+      decision === "remove" &&
+      !window.confirm(
+        "Remove this listing from public search and maps? The review record will be kept.",
+      )
     )
       return;
     const reason =
@@ -104,7 +114,7 @@ export function AdminSubmissions() {
     <main className="sharing-shell">
       <header className="sharing-header">
         <Link href="/" className="sharing-back">
-          ← Reach
+          ← ReachAI
         </Link>
         <span className="sharing-kicker">Reviewer workspace</span>
         <h1>Food submissions</h1>
@@ -268,7 +278,16 @@ export function AdminSubmissions() {
                 </div>
               )}
               {item.status === "approved" && item.recordId && (
-                <p>Public listing created · {item.recordId}</p>
+                <div className="sharing-actions">
+                  <button
+                    type="button"
+                    className="sharing-reject"
+                    disabled={!!pending}
+                    onClick={() => void decide(item, "remove")}
+                  >
+                    {pending === item.id ? "Removing…" : "Remove listing"}
+                  </button>
+                </div>
               )}
             </article>
           ))}

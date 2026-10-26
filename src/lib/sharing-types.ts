@@ -19,7 +19,7 @@ export type SharingSubmissionInput = {
 export type SharingReview = {
   id: string;
   kind: SharingKind;
-  status: "pending" | "approved" | "rejected";
+  status: "pending" | "approved" | "rejected" | "removed";
   contactName: string;
   contactEmail: string;
   publicContact: PublicSharingContact;

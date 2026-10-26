@@ -41,7 +41,7 @@ const inputSchema = z
   .strict();
 const reviewSchema = z
   .object({
-    action: z.enum(["approve", "reject"]),
+    action: z.enum(["approve", "reject", "remove"]),
     reason: z.string().trim().max(500).optional(),
   })
   .strict();
@@ -59,6 +59,8 @@ function dbFor() {
       }[]
     ).map((c) => c.name),
   );
+  if (!columns.has("removed_at"))
+    db.exec("ALTER TABLE sharing_submissions ADD COLUMN removed_at TEXT");
   if (!columns.has("consent_version"))
     db.exec(
       "ALTER TABLE sharing_submissions ADD COLUMN consent_version TEXT NOT NULL DEFAULT 'food-sharing-v1'",
@@ -235,7 +237,7 @@ function serialize(row: Row) {
   return {
     id: String(row.id),
     kind: row.kind,
-    status: row.status,
+    status: row.removed_at ? "removed" : row.status,
     contactName: row.contact_name,
     contactEmail: row.contact_email,
     publicContact: JSON.parse(String(row.public_contact)),
@@ -395,7 +397,7 @@ export function getSharingAdmin(req: Request) {
     const db = dbFor();
     const rows = all(
       db,
-      "SELECT id,kind,status,contact_name,contact_email,public_contact,data,CASE WHEN photo IS NULL THEN NULL ELSE 1 END AS photo,CASE WHEN test_id IS NULL OR test_id_expires_at<=? THEN NULL ELSE 1 END AS test_id,submitted_at,reviewed_at,reason,record_id FROM sharing_submissions ORDER BY (status='pending') DESC,submitted_at DESC LIMIT 200",
+      "SELECT id,kind,status,removed_at,contact_name,contact_email,public_contact,data,CASE WHEN photo IS NULL THEN NULL ELSE 1 END AS photo,CASE WHEN test_id IS NULL OR test_id_expires_at<=? THEN NULL ELSE 1 END AS test_id,submitted_at,reviewed_at,reason,record_id FROM sharing_submissions ORDER BY (status='pending') DESC,submitted_at DESC LIMIT 200",
       new Date().toISOString(),
     );
     return json(200, {
@@ -477,8 +479,11 @@ export async function postSharingReview(req: Request, id: string) {
     const review = parsed.data,
       row = get(db, "SELECT * FROM sharing_submissions WHERE id=?", id);
     if (!row) return json(404, { error: "Submission not found." });
-    if (row.status !== "pending")
-      return json(409, { error: "Submission has already been reviewed." });
+    const expectedStatus = review.action === "remove" ? "approved" : "pending";
+    if (row.status !== expectedStatus || row.removed_at)
+      return json(409, {
+        error: "This action is not available for this listing.",
+      });
     const at = new Date().toISOString();
     let recordId: string | null = null;
     db.exec("BEGIN IMMEDIATE");
@@ -496,12 +501,30 @@ export async function postSharingReview(req: Request, id: string) {
       if (
         get(
           db,
-          "SELECT id FROM sharing_submissions WHERE id=? AND status='pending'",
+          "SELECT id FROM sharing_submissions WHERE id=? AND status=? AND removed_at IS NULL",
           id,
+          expectedStatus,
         ) == null
       ) {
         db.exec("ROLLBACK");
         return json(409, { error: "Submission has already been reviewed." });
+      }
+      if (review.action === "remove") {
+        if (!row.record_id) throw new Error("Approved listing has no record.");
+        db.prepare(
+          "UPDATE records SET status='ended',updated_at=?,moderation_reason=? WHERE id=?",
+        ).run(
+          at,
+          review.reason || "Removed by administrator",
+          String(row.record_id),
+        );
+        db.prepare(
+          "UPDATE sharing_submissions SET removed_at=?,reviewer_id=?,reason=? WHERE id=?",
+        ).run(at, actor.id, review.reason || "Removed by administrator", id);
+        db.exec("COMMIT");
+        return json(200, {
+          submission: { id, status: "removed", recordId: row.record_id },
+        });
       }
       if (review.action === "approve") {
         const data = approvedData(
