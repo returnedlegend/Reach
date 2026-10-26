@@ -3,7 +3,7 @@
 11 slides, editable PowerPoint, matching PDF, speaker notes and real local screenshots.
 
 ## Before submission
-- Replace [Your name], [School / Grade], and corresponding speaker-note placeholders.
+- Presenters: Raman Jamal — Bryan High, 11th grade; Aran Jamal — Davila, 7th grade.
 - Check the current district submission rules and video length limit.
 - Open the PowerPoint in Canva using Upload files, then open/import it as a presentation. Check fonts and spacing after import. The Canva integration was not available in this session; no Canva design URL was created.
 - Use slides 1–10 for the presentation; slide 11 is the source appendix. Rehearse to match the allowed duration.

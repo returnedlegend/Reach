@@ -54,9 +54,9 @@ start('A practical next step')
 text('Find food.\nFind a way forward.',65,225,980,78,WHITE,True)
 text('Food assistance, made easier to find.',70,465,900,34,MUTED)
 box(70,580,600,66,TEAL,16);text('ReachAI  /  Congressional App Challenge',93,598,560,22,BG,True)
-text('[Your name]  ·  [School / Grade]',70,700,900,25,MUTED)
+text('Raman Jamal · Bryan High · 11th grade\nAran Jamal · Davila · 7th grade',70,700,960,25,MUTED)
 picture('home.png',1110,125,380,680)
-end('Hi, I am [your name], a [grade] student at [school]. I created ReachAI to make finding food assistance simpler. Replace these placeholders before submitting. This deck shows actual local app screenshots captured October 25, 2026 Central time.')
+end('Raman: Hi, I am Raman Jamal, an 11th-grade student at Bryan High. Aran: And I am Aran Jamal, a 7th-grade student at Davila. Together: This is ReachAI, designed to make finding food assistance simpler. This deck shows actual local app screenshots captured October 25, 2026 Central time.')
 
 start('The problem','A national problem. A local next step.')
 text('≈ 1 in 7',70,240,900,132,TEAL,True)
@@ -111,14 +111,14 @@ end('The recorded project checks include 661 unit tests and 14 mobile/desktop br
 
 start('The goal')
 text('From “I need food”\nto a practical next step.',75,245,1450,83,WHITE,True)
-text('ReachAI',80,535,1400,76,TEAL,True);text('[Your name]  ·  Thank you',85,675,1350,32,MUTED)
-end('ReachAI does not solve food insecurity alone. Its goal is to make a practical next step easier. I am [your name], and this is ReachAI. Thank you. Add a real public demo URL or QR code only after deployment is verified; none has been invented here.')
+text('ReachAI',80,535,1400,76,TEAL,True);text('Raman Jamal + Aran Jamal',85,675,1350,36,WHITE,True);text('Thank you',85,745,1350,28,MUTED)
+end('ReachAI does not solve food insecurity alone. Its goal is to make a practical next step easier. We are Raman Jamal and Aran Jamal, and this is ReachAI. Thank you. Add a real public demo URL or QR code only after deployment is verified; none has been invented here.')
 
 start('Appendix / sources','Evidence behind the presentation')
 refs=[('USDA Economic Research Service','2024: 13.7% of U.S. households; 47.9 million people in food-insecure households.','https://www.ers.usda.gov/topics/food-nutrition-assistance/food-security-in-the-us/key-statistics-graphics'),('Directory source review','66 maintained sites; restrictions and unresolved facts retained.','Repository: docs/TX10-COVERAGE-AUDIT.md and docs/TX10-SIXTY-REVIEW.md'),('Real app screenshots','Captured from the local ReachAI build. No invented AI response or private submission.','Repository: https://github.com/returnedlegend/Reach  •  branch improve/food-first-experience')]
 for i,(a,b,c) in enumerate(refs):
  y=250+i*175;text(a,75,y,1450,30,TEAL,True);text(b,75,y+48,1440,24);text(c,75,y+92,1440,17,MUTED)
-end('Source appendix; keep available for judges, but it need not be narrated. Source statistics were directly checked on the USDA webpage in this conversation. Screenshot capture: October25,2026 America/Chicago. Software checks are historical reported checks from the latest changes, not user impact measurements. Replace presenter placeholders before submission.')
+end('Source appendix; keep available for judges, but it need not be narrated. Source statistics were directly checked on the USDA webpage in this conversation. Screenshot capture: October25,2026 America/Chicago. Software checks are historical reported checks from the latest changes, not user impact measurements. Presenters: Raman Jamal, Bryan High, 11th grade; Aran Jamal, Davila, 7th grade.')
 
 prs.save(D/'ReachAI-Congressional-App-Challenge.pptx')
 c=canvas.Canvas(str(D/'ReachAI-Congressional-App-Challenge.pdf'),pagesize=(960,540))

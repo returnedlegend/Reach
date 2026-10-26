@@ -1,5 +1,5 @@
 SLIDE 1
-Hi, I am [your name], a [grade] student at [school]. I created ReachAI to make finding food assistance simpler. Replace these placeholders before submitting. This deck shows actual local app screenshots captured October 25, 2026 Central time.
+Raman: Hi, I am Raman Jamal, an 11th-grade student at Bryan High. Aran: And I am Aran Jamal, a 7th-grade student at Davila. Together: This is ReachAI, designed to make finding food assistance simpler. This deck shows actual local app screenshots captured October 25, 2026 Central time.
 
 SLIDE 2
 USDA reports that 13.7 percent of U.S. households experienced food insecurity in 2024—about one in seven. 47.9 million people lived in food-insecure households. This is not a pantry-use statistic and does not measure lack of awareness. Source: https://www.ers.usda.gov/topics/food-nutrition-assistance/food-security-in-the-us/key-statistics-graphics
@@ -26,7 +26,7 @@ SLIDE 9
 The recorded project checks include 661 unit tests and 14 mobile/desktop browser checks for the latest UI changes; TypeScript and production build passed. This is not a new full audit of every workflow. During this screenshot session AI was unconfigured and the basemap failed to load, so no successful live AI or map demonstration is claimed. Next priorities are real-user testing, provider confirmation and deployed installation verification.
 
 SLIDE 10
-ReachAI does not solve food insecurity alone. Its goal is to make a practical next step easier. I am [your name], and this is ReachAI. Thank you. Add a real public demo URL or QR code only after deployment is verified; none has been invented here.
+ReachAI does not solve food insecurity alone. Its goal is to make a practical next step easier. We are Raman Jamal and Aran Jamal, and this is ReachAI. Thank you. Add a real public demo URL or QR code only after deployment is verified; none has been invented here.
 
 SLIDE 11
-Source appendix; keep available for judges, but it need not be narrated. Source statistics were directly checked on the USDA webpage in this conversation. Screenshot capture: October25,2026 America/Chicago. Software checks are historical reported checks from the latest changes, not user impact measurements. Replace presenter placeholders before submission.
+Source appendix; keep available for judges, but it need not be narrated. Source statistics were directly checked on the USDA webpage in this conversation. Screenshot capture: October25,2026 America/Chicago. Software checks are historical reported checks from the latest changes, not user impact measurements. Presenters: Raman Jamal, Bryan High, 11th grade; Aran Jamal, Davila, 7th grade.
