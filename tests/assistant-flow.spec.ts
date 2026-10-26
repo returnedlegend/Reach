@@ -79,8 +79,8 @@ async function openAssistant(
   await page.goto("/");
   // The food-first homepage keeps the assistant in the map toolbar.
   await page.getByRole("button", { name: "Map", exact: true }).click();
-  await page.getByRole("button", { name: "Reach AI assistant", exact: true }).click();
-  return page.getByRole("dialog", { name: "Reach AI assistant" });
+  await page.getByRole("button", { name: "ReachAI assistant", exact: true }).click();
+  return page.getByRole("dialog", { name: "ReachAI assistant" });
 }
 
 async function setManualOrigin(dialog: import("@playwright/test").Locator) {
@@ -154,7 +154,7 @@ test.describe("assistant conversation", () => {
       await page.keyboard.press("Escape");
       await expect(dialog).not.toBeVisible();
       await expect(
-        page.locator(".reach-map-view").getByRole("button", { name: "Reach AI assistant", exact: true }),
+        page.locator(".reach-map-view").getByRole("button", { name: "ReachAI assistant", exact: true }),
       ).toBeFocused();
     });
 

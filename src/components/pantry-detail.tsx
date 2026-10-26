@@ -443,7 +443,7 @@ export function PantryDetail({
                     className="btn btn-outline"
                     href={`/?assistant=1&pantry=${encodeURIComponent(pantryId)}`}
                   >
-                    Reach AI assistant
+                    ReachAI assistant
                   </Link>
                 )}
               </div>

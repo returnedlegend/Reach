@@ -947,7 +947,7 @@ export function ReachApp({
         <footer className="site-footer">
           <div className="footer-brand">
             <Route size={18} />
-            <strong>Reach AI</strong>
+            <strong>ReachAI</strong>
             <span>Small steps. More possibilities.</span>
           </div>
           <div>

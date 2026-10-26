@@ -5,8 +5,8 @@ import { publicFeatures } from "@/lib/release-features";
 export const dynamic = "force-dynamic";
 import { themeBootstrap } from "@/lib/theme";
 export const metadata: Metadata = {
-  title: "Reach AI · Find food nearby",
-  applicationName: "Reach AI",
+  title: "ReachAI · Find food nearby",
+  applicationName: "ReachAI",
   description:
     "Find source-backed food assistance across central Texas and plan a visit with in-app directions. Regional coverage is growing.",
 };

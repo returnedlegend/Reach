@@ -6,9 +6,9 @@ async function openAssistant(page: import("@playwright/test").Page) {
     .getByRole("button", { name: "Trip planner", exact: true })
     .click();
   await page
-    .getByRole("button", { name: "Reach AI assistant", exact: true })
+    .getByRole("button", { name: "ReachAI assistant", exact: true })
     .click();
-  return page.getByRole("dialog", { name: "Reach AI assistant" });
+  return page.getByRole("dialog", { name: "ReachAI assistant" });
 }
 
 async function fixtureReply(

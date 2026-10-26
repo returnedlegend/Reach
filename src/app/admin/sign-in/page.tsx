@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { AdminCredentials } from "@/components/admin-credentials";
 
 export const metadata: Metadata = {
-  title: "Administrator sign in · Reach AI",
+  title: "Administrator sign in · ReachAI",
   referrer: "no-referrer",
   robots: { index: false, follow: false },
 };

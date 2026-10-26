@@ -1190,7 +1190,7 @@ export function GuidedReach({
                 setAssistantOpen(true);
               }}
             >
-              Ask Reach AI assistant
+              Ask ReachAI assistant
             </button>
           )}
         {!selected.communityHotspot &&
@@ -1291,11 +1291,11 @@ export function GuidedReach({
     >
       <pre className="reach-print-content">{printText}</pre>
       <header className="navbar reach-header">
-        <a href="/" className="reach-brand" aria-label="Reach AI home">
+        <a href="/" className="reach-brand" aria-label="ReachAI home">
           <span>
             <HeartHandshake size={25} />
           </span>
-          Reach AI
+          ReachAI
         </a>
         <span className="reach-place">
           <MapPin size={14} />
@@ -1445,7 +1445,7 @@ export function GuidedReach({
                         setAssistantOpen(true);
                       }}
                     >
-                      Reach AI assistant
+                      ReachAI assistant
                     </button>
                   )}
                 </div>
@@ -1748,7 +1748,7 @@ export function GuidedReach({
                   setAssistantOpen(true);
                 }}
               >
-                Reach AI assistant
+                ReachAI assistant
               </button>
             )}
             <div className="reach-section-heading">
@@ -2318,7 +2318,7 @@ export function GuidedReach({
         )}
         <footer className="reach-footer">
           <a className="reach-brand-small" href="/">
-            Reach AI
+            ReachAI
           </a>
           <p>
             Texas District 10 · Coverage is incomplete.

@@ -397,7 +397,7 @@ export function ReachAssistant({
       <header className="reach-assistant__header">
         <div>
           <span className="reach-kicker">PRIVATE TRIP HELP</span>
-          <h2 id="reach-assistant-title">Reach AI assistant</h2>
+          <h2 id="reach-assistant-title">ReachAI assistant</h2>
         </div>
         <button
           ref={closeRef}

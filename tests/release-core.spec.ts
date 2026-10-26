@@ -47,7 +47,7 @@ test("standalone pantry supports device saving and anonymous correction without 
     page.getByText(/Pedestrian pickup permission is unknown/),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: /Sign in|Reach AI assistant/i }),
+    page.getByRole("link", { name: /Sign in|ReachAI assistant/i }),
   ).toHaveCount(0);
   await expect(
     page.getByRole("button", { name: "Ask about availability" }),

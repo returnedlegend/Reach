@@ -5,6 +5,6 @@ export async function register() {
   const status = getAIServiceStatus();
   if (status.state === "unavailable") {
     // Static messages only: never log credentials, submitted text or provider error bodies.
-    console.warn(`[Reach AI configuration: ${status.code}] ${status.message}`);
+    console.warn(`[ReachAI configuration: ${status.code}] ${status.message}`);
   }
 }

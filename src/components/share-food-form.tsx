@@ -282,7 +282,7 @@ export function ShareFoodForm() {
     <main className="sharing-shell">
       <header className="sharing-header">
         <Link href="/" className="sharing-back">
-          ← Reach AI
+          ← ReachAI
         </Link>
         <h1>Share food</h1>
         <p>

@@ -3,7 +3,7 @@ import { ReleaseUnavailable } from "@/components/release-unavailable";
 import type { Metadata } from "next";
 import { VolunteerPanel } from "@/components/volunteer-panel";
 export const metadata: Metadata = {
-  title: "Volunteer pickups · Reach AI",
+  title: "Volunteer pickups · ReachAI",
   referrer: "no-referrer",
   robots: { index: false, follow: false },
 };
