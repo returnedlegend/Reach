@@ -1291,11 +1291,11 @@ export function GuidedReach({
     >
       <pre className="reach-print-content">{printText}</pre>
       <header className="navbar reach-header">
-        <a href="/" className="reach-brand" aria-label="Reach home">
+        <a href="/" className="reach-brand" aria-label="Reach AI home">
           <span>
             <HeartHandshake size={25} />
           </span>
-          reach<span className="reach-brand-dot">.</span>
+          Reach AI
         </a>
         <span className="reach-place">
           <MapPin size={14} />
@@ -2318,7 +2318,7 @@ export function GuidedReach({
         )}
         <footer className="reach-footer">
           <a className="reach-brand-small" href="/">
-            reach.
+            Reach AI
           </a>
           <p>
             Texas District 10 · Coverage is incomplete.

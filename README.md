@@ -1,6 +1,6 @@
-# Reach
+# Reach AI
 
-Reach helps people find food assistance in the reviewed TX-10 area. It uses
+Reach AI helps people find food assistance in the reviewed TX-10 area. It uses
 Next.js 16, React 19, TypeScript, Node.js 24 and persistent SQLite storage.
 
 ## Run locally

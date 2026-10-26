@@ -5,7 +5,7 @@ import { GuidedReach } from "@/components/guided-reach";
 import { publicDirectory } from "@/lib/public-directory";
 export const dynamic = "force-dynamic";
 
-export const metadata = { title: "Food hotspots | Reach" };
+export const metadata = { title: "Food hotspots | Reach AI" };
 
 export default async function FoodHotspotsPage({
   searchParams,

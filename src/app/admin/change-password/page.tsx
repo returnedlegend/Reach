@@ -4,7 +4,7 @@ import { AdminCredentials } from "@/components/admin-credentials";
 import { getAccountActor } from "@/lib/account-store";
 import { openCommunityDatabase } from "@/lib/community";
 export const metadata = {
-  title: "Change administrator password · Reach",
+  title: "Change administrator password · Reach AI",
   robots: { index: false, follow: false },
 };
 export default async function ChangePasswordPage() {

@@ -36,11 +36,11 @@ export function SiteNavigation({
     <>
       <header className="site-navigation" data-secondary-nav>
         <div className="navbar site-navigation-inner">
-          <Link href="/" className="site-logo" aria-label="Reach home">
+          <Link href="/" className="site-logo" aria-label="Reach AI home">
             <span>
               <HeartHandshake size={21} aria-hidden="true" />
             </span>
-            reach<span className="site-logo-dot">.</span>
+            Reach AI
           </Link>
           <nav className="site-desktop-links" aria-label="Main navigation">
             {destinations.map(({ href, label }) => (
