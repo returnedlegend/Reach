@@ -45,7 +45,7 @@ test("AI reorders pantry cards and exposes supporting facts without claiming ava
   ).toBeVisible();
   await expect(page.getByText(/AI compared these food options/)).toBeVisible();
   await page
-    .getByRole("checkbox", { name: /Use AI to help understand/ })
+    .getByRole("checkbox", { name: /Compare with AI/ })
     .uncheck();
   await expect(page.getByText("AI's first suggestion to check")).toHaveCount(0);
 });

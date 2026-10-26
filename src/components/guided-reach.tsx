@@ -1511,7 +1511,6 @@ export function GuidedReach({
               {step === 0 && (
                 <>
                   <h2>What do you need?</h2>
-                  <p>Let’s start with what would help today.</p>
                   <div className="reach-needs">
                     {needs.map(({ id, label, description, Icon }) => (
                       <button
@@ -1549,7 +1548,6 @@ export function GuidedReach({
               {step === 1 && (
                 <>
                   <h2>Where are you starting?</h2>
-                  <p>Choose a place that works for you.</p>
                   <LocationPicker
                     value={location}
                     onChange={changeLocation}
@@ -2184,7 +2182,6 @@ export function GuidedReach({
         )}
         {tab === "saved" && (
           <section className="reach-saved">
-            <span className="reach-kicker">HERE WHEN YOU NEED THEM</span>
             <h1>Your saved places & trips.</h1>
             <p>
               Saved on this browser, on this device. Resource bookmarks never
@@ -2194,7 +2191,7 @@ export function GuidedReach({
             {!saved.resourceIds.length ? (
               <div className="reach-empty">
                 <Bookmark size={28} />
-                <h3>A place to keep your next steps.</h3>
+                <h3>No saved places yet</h3>
                 <p>Tap Save on a resource to find it here.</p>
                 <button
                   className="btn btn-outline reach-action"
@@ -2218,8 +2215,7 @@ export function GuidedReach({
             <h2>Saved trips</h2>
             {!saved.trips.length && (
               <p>
-                No trips saved yet. Save one from Your options after choosing a
-                destination.
+                No saved trips yet. Choose a destination to plan one.
               </p>
             )}
             {saved.trips.map((trip) => {
@@ -2325,13 +2321,12 @@ export function GuidedReach({
             reach.
           </a>
           <p>
-            A little more within reach. Verified sites across Texas District 10;
-            coverage is incomplete.
+            Texas District 10 · Coverage is incomplete.
           </p>
           <div>
             <a href="/privacy">Privacy and location</a>
             <a href="/terms">Terms of use</a>
-            <a href="/pantry-planner">Detailed pantry round-trip planner</a>
+            <a href="/pantry-planner">Round-trip planner</a>
           </div>
           <details className="reach-disclosure">
             <summary>About this directory & your location</summary>

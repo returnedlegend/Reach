@@ -648,7 +648,7 @@ test("daisy selected controls stay visibly distinct after changing each view", a
       await page.goto("/");
       await page
         .getByRole("button", {
-          name: "Step-by-step trip controls",
+          name: "Trip planner",
           exact: true,
         })
         .click();

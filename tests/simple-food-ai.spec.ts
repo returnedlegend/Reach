@@ -20,7 +20,7 @@ test("AI interpretation never blocks directory results or receives selected coor
   });
   await page.goto("/");
   await page
-    .getByRole("checkbox", { name: /Use AI to help understand/ })
+    .getByRole("checkbox", { name: /Compare with AI/ })
     .check();
   await page
     .getByLabel("What do you need?", { exact: true })
@@ -54,7 +54,7 @@ test("failed AI keeps food results and discloses attempted interpretation", asyn
   );
   await page.goto("/");
   await page
-    .getByRole("checkbox", { name: /Use AI to help understand/ })
+    .getByRole("checkbox", { name: /Compare with AI/ })
     .check();
   await page
     .getByLabel("What do you need?", { exact: true })
@@ -88,7 +88,7 @@ test("turning AI off prevents a late interpretation from replacing results", asy
   });
   await page.goto("/");
   const choice = page.getByRole("checkbox", {
-    name: /Use AI to help understand/,
+    name: /Compare with AI/,
   });
   await choice.check();
   await page
@@ -153,7 +153,7 @@ test("a manual travel choice wins over an earlier pending AI interpretation", as
     .getByRole("button", { name: "Use these coordinates", exact: true })
     .click();
   await page
-    .getByRole("checkbox", { name: /Use AI to help understand/ })
+    .getByRole("checkbox", { name: /Compare with AI/ })
     .check();
   await page
     .getByLabel("What do you need?", { exact: true })

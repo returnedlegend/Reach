@@ -170,7 +170,7 @@ test("geolocation denial leaves immediate results and manual address entry usabl
       .getByRole("region", { name: "Places to try", exact: true })
       .getByRole("article"),
   ).toHaveCount(3);
-  await page.getByText("Enter an address instead", { exact: true }).click();
+  await page.getByText("Enter an address", { exact: true }).click();
   await page.getByLabel("Address", { exact: true }).fill("Brazos Church");
   await page.getByRole("button", { name: /Brazos Church Pantry.*304/ }).click();
   await expect(

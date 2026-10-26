@@ -6,7 +6,7 @@ test("public account route opens food sharing while the legacy feature flag is f
   await page.goto("/account");
   await expect(page).toHaveURL(/\/share$/);
   await expect(
-    page.getByRole("heading", { name: "Share food with your neighbors" }),
+    page.getByRole("heading", { name: "Share food" }),
   ).toBeVisible();
   await expect(page.getByLabel("Title", { exact: true })).toBeVisible();
   await expect(page.getByLabel("Description", { exact: true })).toBeVisible();

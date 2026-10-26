@@ -46,7 +46,7 @@ test("homepage quick start leads directly to real food options and preserves foc
     .getByRole("button", { name: "Use these coordinates", exact: true })
     .click();
   await page
-    .getByRole("checkbox", { name: /Use AI to help understand/ })
+    .getByRole("checkbox", { name: /Compare with AI/ })
     .uncheck();
   await page
     .getByLabel("What do you need?", { exact: true })

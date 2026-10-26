@@ -175,7 +175,7 @@ test("AI can suggest an approved household offer without exposing or routing to 
     await expect(listing).toHaveCount(0);
     await page.getByRole("button", { name: "Explore", exact: true }).click();
     await page
-      .getByRole("checkbox", { name: /Use AI to help understand/ })
+      .getByRole("checkbox", { name: /Compare with AI/ })
       .uncheck();
     await page
       .getByLabel("What do you need?", { exact: true })

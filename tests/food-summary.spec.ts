@@ -39,7 +39,7 @@ test("shows generated option summary and clears it when AI is disabled", async (
     summary.getByText(/AI-generated from listed facts/),
   ).toBeVisible();
   await page
-    .getByRole("checkbox", { name: /Use AI to help understand/ })
+    .getByRole("checkbox", { name: /Compare with AI/ })
     .uncheck();
   await expect(summary).toHaveCount(0);
 });

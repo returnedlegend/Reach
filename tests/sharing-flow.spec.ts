@@ -164,7 +164,7 @@ test("account-free sharing stays private until an authenticated moderator approv
     await form.getByRole("button", { name: "Send for review" }).click();
     await expect(
       page.getByRole("heading", {
-        name: "Your submission is awaiting approval",
+        name: "Sent for review",
       }),
     ).toBeVisible();
     const submitted = await (await submittedResponse).json();
@@ -389,7 +389,7 @@ test("manual public coordinates submit a hotspot and the review link focuses its
     await form.getByRole("button", { name: "Send for review" }).click();
     await expect(
       page.getByRole("heading", {
-        name: "Your submission is awaiting approval",
+        name: "Sent for review",
       }),
     ).toBeVisible();
     const submitted = await (await submittedResponse).json();

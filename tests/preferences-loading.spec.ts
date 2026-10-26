@@ -22,7 +22,7 @@ test("preference interpretation cancels stale text and prevents concurrent calls
   });
   await page.goto("/");
   await page
-    .getByRole("button", { name: "Step-by-step trip controls", exact: true })
+    .getByRole("button", { name: "Trip planner", exact: true })
     .click();
   await page
     .getByRole("button", { name: "Find food I can reach", exact: true })

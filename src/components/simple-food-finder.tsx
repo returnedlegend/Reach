@@ -8,7 +8,6 @@ import {
   ArrowRight,
   MapPin,
   Phone,
-  Soup,
   Check,
   Footprints,
   Bus,
@@ -427,16 +426,9 @@ export function SimpleFoodFinder(props: Props) {
   return (
     <div className={styles.finder}>
       <section className={styles.welcome} aria-labelledby="food-welcome">
-        <span className={styles.eyebrow}>
-          <Soup size={18} aria-hidden="true" /> A LITTLE HELP, CLOSE BY
-        </span>
         <h1 id="food-welcome">
           Let’s find you <span>food.</span>
         </h1>
-        <p>
-          Tell us what would help. We’ll find places to try and help you get
-          there.
-        </p>
         <form onSubmit={submit} className={styles.ask}>
           <label htmlFor="food-request">What do you need?</label>
           <textarea
@@ -510,11 +502,11 @@ export function SimpleFoodFinder(props: Props) {
                 }
               }}
             />{" "}
-            Use AI to help understand my request and compare pantries.
+            Compare with AI
           </label>
         }
         <details>
-          <summary>What is shared with AI?</summary>
+          <summary>AI privacy</summary>
           <p>
             Your request, public listing facts, approximate distances and
             comparison scores go to the configured AI provider. Your selected
@@ -527,12 +519,12 @@ export function SimpleFoodFinder(props: Props) {
       <section className={styles.start} aria-label="Optional starting point">
         <div>
           <h2>
-            {location ? "Starting from your chosen place" : "Find food near me"}
+            {location ? "Your starting point" : "Find food near me"}
           </h2>
           <p>
             {location
-              ? "Travel checks send this exact point to our routing provider. It is not saved. Change it anytime."
-              : "Optional. Travel checks share your chosen point with our routing provider. It isn’t saved."}
+              ? "Shared with the routing provider, not saved."
+              : "Optional. Shared with the routing provider, not saved."}
           </p>
         </div>
         <LocationPicker
@@ -1078,7 +1070,7 @@ export function SimpleFoodFinder(props: Props) {
                     <p className={styles.caution}>
                       {resource.pedestrianPickup === "not-allowed"
                         ? "This site does not allow pickup on foot."
-                        : "Walking or taking a bus? Call first to check pickup on foot."}
+                        : "Picking up on foot? Call first."}
                     </p>
                   )}
                 <div className={styles.cardActions}>
@@ -1091,7 +1083,7 @@ export function SimpleFoodFinder(props: Props) {
                           : `tel:${resource.communityContact.value}`
                       }
                     >
-                      Contact to arrange pickup
+                      Arrange pickup
                     </a>
                   ) : resource.communityOffer ? (
                     <a
@@ -1130,8 +1122,8 @@ export function SimpleFoodFinder(props: Props) {
                 </div>
                 <p className={styles.caption}>
                   {resource.communityOffer
-                    ? "Community-shared food. Safety and availability aren’t verified. Check allergens and packaging; arrange pickup before traveling."
-                    : "Google Maps calculates directions. Confirm food availability before going."}
+                    ? "Community food: safety and availability unverified. Check allergens and packaging; arrange pickup first."
+                    : "Directions calculated in Google Maps. Call to confirm food."}
                 </p>
                 <details className={styles.visit}>
                   <summary>Pickup times & what to bring</summary>
@@ -1205,10 +1197,7 @@ export function SimpleFoodFinder(props: Props) {
           </button>
         )}
         <div className={styles.help}>
-          <h3>Need help finding something else?</h3>
-          <p>
-            For more local options, call 211 or check the regional food bank.
-          </p>
+          <h3>More food help</h3>
           <div>
             <a className="btn btn-outline" href="tel:211">
               Call 211
@@ -1223,7 +1212,7 @@ export function SimpleFoodFinder(props: Props) {
           </div>
         </div>
         <button className={styles.textButton} onClick={props.onAdvanced}>
-          Step-by-step trip controls
+          Trip planner
         </button>
       </section>
     </div>

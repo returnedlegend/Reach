@@ -269,8 +269,8 @@ export function ShareFoodForm() {
       <main className="sharing-shell">
         <section className="sharing-card sharing-success" aria-live="polite">
           <span className="sharing-kicker">Thank you for sharing</span>
-          <h1>Your submission is awaiting approval</h1>
-          <p>It will not appear publicly until a reviewer approves it.</p>
+          <h1>Sent for review</h1>
+          <p>Your listing will appear after approval.</p>
           <Link className="sharing-link" href="/">
             Return to Reach
           </Link>
@@ -284,11 +284,9 @@ export function ShareFoodForm() {
         <Link href="/" className="sharing-back">
           ← Reach
         </Link>
-        <span className="sharing-kicker">Community food sharing</span>
-        <h1>Share food with your neighbors</h1>
+        <h1>Share food</h1>
         <p>
-          Send a food pickup or extra groceries for review. You can submit
-          without an account.
+          No account needed. Listings are reviewed before publishing.
         </p>
       </header>
       <div
@@ -305,7 +303,7 @@ export function ShareFoodForm() {
           }}
         >
           <strong>Host a Food Pickup</strong>
-          <span>Tell neighbors about a community meal or pickup event.</span>
+          <span>Community meals and pickup events.</span>
         </button>
         <button
           type="button"
@@ -316,7 +314,7 @@ export function ShareFoodForm() {
           }}
         >
           <strong>Share Extra Food</strong>
-          <span>Offer sealed, shelf-stable groceries for pickup.</span>
+          <span>Sealed, shelf-stable groceries.</span>
         </button>
       </div>
       <form ref={formRef} className="sharing-card" onSubmit={submit} noValidate>

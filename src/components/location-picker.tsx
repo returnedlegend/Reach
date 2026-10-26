@@ -515,7 +515,7 @@ export function LocationPicker({
       <p>
         {compact
           ? "Where are you starting?"
-          : "Use your location or search an address or place. Your location is used only when you choose it. You can also choose a point on the map."}
+          : "Choose your location, search an address, or tap the map."}
       </p>
       <button
         className="btn btn-outline"
@@ -552,7 +552,7 @@ export function LocationPicker({
       )}
       {simple ? (
         <details className="location-address-disclosure">
-          <summary>Enter an address instead</summary>
+          <summary>Enter an address</summary>
           {addressForm}
         </details>
       ) : (
@@ -562,8 +562,7 @@ export function LocationPicker({
         <fieldset className="location-suggestions">
           <legend>Local places</legend>
           <p>
-            Matches from Reach’s pantry directory. No search is sent while you
-            type.
+            From Reach’s directory. Searches stay local as you type.
           </p>
           {localSuggestions.map((resource) => (
             <button

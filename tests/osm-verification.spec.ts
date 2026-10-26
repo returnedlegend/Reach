@@ -41,7 +41,7 @@ async function startingLocation(page: Page) {
   await page.goto("/");
   await page
     .getByRole("button", {
-      name: "Step-by-step trip controls",
+      name: "Trip planner",
       exact: true,
     })
     .click();

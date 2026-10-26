@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 async function openAssistant(page: import("@playwright/test").Page) {
   await page.goto("/");
   await page
-    .getByRole("button", { name: "Step-by-step trip controls", exact: true })
+    .getByRole("button", { name: "Trip planner", exact: true })
     .click();
   await page
     .getByRole("button", { name: "Reach AI assistant", exact: true })

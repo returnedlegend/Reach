@@ -170,7 +170,7 @@ test("public hotspot sharing needs no signup; account hotspots require organizer
     await sharingLink.click();
     await expect(
       page.getByRole("heading", {
-        name: "Share food with your neighbors",
+        name: "Share food",
         exact: true,
       }),
     ).toBeVisible();

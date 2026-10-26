@@ -11,7 +11,7 @@ test("food search uses AI by default without an extra checkbox step", async ({
   });
   await page.goto("/");
   await expect(
-    page.getByRole("checkbox", { name: /Use AI to help understand/ }),
+    page.getByRole("checkbox", { name: /Compare with AI/ }),
   ).toBeChecked();
   await page
     .getByLabel("What do you need?", { exact: true })
