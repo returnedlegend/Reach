@@ -832,10 +832,10 @@ export function GuidedReach({
           <a
             className="btn btn-outline reach-action"
             href={`tel:${resource.phone}`}
-            aria-label={`Call ${resource.name}`}
+            aria-label={`Call ${resource.name} at ${resource.phone}`}
           >
             <Phone size={17} />
-            Call
+            Call {resource.phone}
           </a>
         )}
         <button

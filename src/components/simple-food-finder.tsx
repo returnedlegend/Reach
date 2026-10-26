@@ -1075,10 +1075,10 @@ export function SimpleFoodFinder(props: Props) {
                     <a
                       className="btn btn-outline"
                       href={`tel:${resource.phone}`}
-                      aria-label={`Call ${resource.name}`}
+                      aria-label={`Call ${resource.name} at ${resource.phone}`}
                     >
                       <Phone size={17} aria-hidden="true" />
-                      Call
+                      Call {resource.phone}
                     </a>
                   )}
                 </div>
