@@ -120,14 +120,9 @@ test("an explicit inability to walk never produces walking links or route reques
   const picker = page.getByRole("region", {
     name: "Choose a starting location",
   });
-  await picker
-    .getByText("Advanced: enter coordinates", { exact: true })
-    .click();
-  await picker.getByLabel("Latitude", { exact: true }).fill("30.65");
-  await picker.getByLabel("Longitude", { exact: true }).fill("-96.35");
-  await picker
-    .getByRole("button", { name: "Use these coordinates", exact: true })
-    .click();
+  await page.context().grantPermissions(["geolocation"]);
+  await page.context().setGeolocation({ latitude: 30.65, longitude: -96.35 });
+  await picker.getByRole("button", { name: "Use my location", exact: true }).click();
   await expect(
     page.getByRole("link", { name: "Google Maps directions" }),
   ).toHaveCount(0);
@@ -197,14 +192,9 @@ test("corrected origin changes route requests and links; failed routes never rem
   const picker = page.getByRole("region", {
     name: "Choose a starting location",
   });
-  await picker
-    .getByText("Advanced: enter coordinates", { exact: true })
-    .click();
-  await picker.getByLabel("Latitude", { exact: true }).fill("30.6501234");
-  await picker.getByLabel("Longitude", { exact: true }).fill("-96.3505678");
-  await picker
-    .getByRole("button", { name: "Use these coordinates", exact: true })
-    .click();
+  await page.context().grantPermissions(["geolocation"]);
+  await page.context().setGeolocation({ latitude: 30.6501234, longitude: -96.3505678 });
+  await picker.getByRole("button", { name: "Use my location", exact: true }).click();
   await expect(
     page.getByText(/No checked trip is available right now/),
   ).toBeVisible();
@@ -222,13 +212,11 @@ test("corrected origin changes route requests and links; failed routes never rem
     new URL((await link.getAttribute("href"))!).searchParams.get("origin"),
   ).toBe("30.6501234,-96.3505678");
   requested.length = 0;
-  await picker.getByLabel("Latitude", { exact: true }).fill("30.6601234");
-  await picker
-    .getByRole("button", { name: "Use these coordinates", exact: true })
-    .click();
+  await page.context().setGeolocation({ latitude: 30.6601234, longitude: -96.3505678 });
+  await picker.getByRole("button", { name: "Use my location", exact: true }).click();
   await expect.poll(() => requested.length).toBeGreaterThan(0);
   expect(requested.every((body) => body.origin.lat === 30.6601234)).toBe(true);
-  expect(
+  await expect.poll(async () =>
     new URL((await link.getAttribute("href"))!).searchParams.get("origin"),
   ).toBe("30.6601234,-96.3505678");
   await page.getByRole("button", { name: "Bus", exact: true }).click();
@@ -275,14 +263,9 @@ test("retrieved route metrics are labeled, saving updates the Saved tab, and lay
   const picker = page.getByRole("region", {
     name: "Choose a starting location",
   });
-  await picker
-    .getByText("Advanced: enter coordinates", { exact: true })
-    .click();
-  await picker.getByLabel("Latitude", { exact: true }).fill("30.65");
-  await picker.getByLabel("Longitude", { exact: true }).fill("-96.35");
-  await picker
-    .getByRole("button", { name: "Use these coordinates", exact: true })
-    .click();
+  await page.context().grantPermissions(["geolocation"]);
+  await page.context().setGeolocation({ latitude: 30.65, longitude: -96.35 });
+  await picker.getByRole("button", { name: "Use my location", exact: true }).click();
   await expect(
     page.getByText("1.3 routed miles · about 25 min walking").first(),
   ).toBeVisible();

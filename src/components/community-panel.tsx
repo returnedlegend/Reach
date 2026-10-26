@@ -1620,45 +1620,8 @@ function PostForm({
                   : "No public venue point selected yet."}
               </p>
             </div>
-            <details>
-              <summary>Advanced location details (keyboard fallback)</summary>
-              <p className="community-small">
-                Enter coordinates for the public venue. These are published with
-                the address.
-              </p>
-              <div className="community-form-grid">
-                <Field
-                  label="Public venue latitude"
-                  hint="Bryan–College Station area, 30.4 to 30.9."
-                >
-                  <input
-                    name="lat"
-                    type="number"
-                    step="any"
-                    min={30.4}
-                    max={30.9}
-                    value={latitude}
-                    onChange={(event) => setLatitude(event.target.value)}
-                    className="input input-bordered"
-                  />
-                </Field>
-                <Field
-                  label="Public venue longitude"
-                  hint="Bryan–College Station area, −96.7 to −96.1."
-                >
-                  <input
-                    name="lng"
-                    type="number"
-                    step="any"
-                    min={-96.7}
-                    max={-96.1}
-                    value={longitude}
-                    onChange={(event) => setLongitude(event.target.value)}
-                    className="input input-bordered"
-                  />
-                </Field>
-              </div>
-            </details>
+            <input type="hidden" name="lat" value={latitude} />
+            <input type="hidden" name="lng" value={longitude} />
             <label className="community-check">
               <input
                 type="checkbox"

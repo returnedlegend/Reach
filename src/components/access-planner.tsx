@@ -1117,12 +1117,6 @@ export function AccessPlanner({
                     <li key={reason}>{reason}</li>
                   ))}
                 </ul>
-                <p>
-                  Algorithm: feasibility checks, then weighted travel, walking,
-                  cost uncertainty, waiting, transfers and intake buffer.
-                  Different tradeoffs are preserved as alternatives. Scores are
-                  not probabilities.
-                </p>
               </details>
             </section>
           )}

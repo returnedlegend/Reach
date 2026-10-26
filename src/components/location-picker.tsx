@@ -152,29 +152,6 @@ export function LocationPicker({
     activeRequest.current = null;
   }
 
-  function useManualCoordinates(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const lat = Number(latitude);
-    const lng = Number(longitude);
-    if (!latitude.trim() || !longitude.trim() || !validCoordinates(lat, lng)) {
-      setMessage(
-        "Enter a latitude from -90 to 90 and longitude from -180 to 180.",
-      );
-      return;
-    }
-    stopFollowing();
-    invalidateRequest();
-    setBusy(false);
-    setCandidates([]);
-    onChangeRef.current({
-      coordinates: { lat, lng },
-      label: "Manually entered starting point",
-      source: "manual",
-      timestamp: Date.now(),
-    });
-    setMessage("Starting point selected.");
-  }
-
   function useMyLocation() {
     stopFollowing();
     invalidateRequest();
@@ -210,7 +187,7 @@ export function LocationPicker({
           const { latitude: lat, longitude: lng, accuracy } = position.coords;
           if (!validCoordinates(lat, lng)) {
             setMessage(
-              "The browser returned invalid coordinates. Enter them manually below.",
+              "Location unavailable. Search an address or choose a map pin.",
             );
             return;
           }
@@ -302,7 +279,7 @@ export function LocationPicker({
           const { latitude: lat, longitude: lng, accuracy } = position.coords;
           if (!validCoordinates(lat, lng)) {
             setMessage(
-              "The browser returned invalid coordinates. Follow is stopped; enter coordinates manually.",
+              "Location unavailable. Search an address or choose a map pin.",
             );
             stopFollowing();
             return;
@@ -635,86 +612,6 @@ export function LocationPicker({
           ))}
         </p>
       )}
-      <details className="location-advanced">
-        <summary>Advanced: enter coordinates</summary>
-        {compact && (
-          <button
-            className="btn btn-outline"
-            type="button"
-            onClick={startFollowing}
-            disabled={busy}
-          >
-            {isFollowing ? "Stop following" : "Follow my location"}
-          </button>
-        )}
-        <p>
-          Enter an exact point or inspect your selected location. Coordinate
-          precision does not establish a safe entrance.
-        </p>
-        {value && (
-          <p>
-            Source:{" "}
-            {value.source === "gps"
-              ? "Browser location"
-              : value.source === "address"
-                ? "Address or local place"
-                : value.source === "map"
-                  ? "Confirmed map point"
-                  : "Manual point"}
-            .{" "}
-            {value.timestamp
-              ? `Selected ${new Date(value.timestamp).toLocaleTimeString()}.`
-              : ""}
-          </p>
-        )}
-        {value && (
-          <button
-            className="btn btn-outline"
-            type="button"
-            onClick={lookUpSelectedCoordinates}
-            disabled={busy}
-          >
-            Look up selected coordinates
-          </button>
-        )}
-        <form onSubmit={useManualCoordinates}>
-          <label>
-            Latitude
-            <input
-              className="input w-full"
-              inputMode="decimal"
-              type="number"
-              min="-90"
-              max="90"
-              step="any"
-              value={latitude}
-              onChange={(event) => {
-                stopFollowing();
-                setLatitude(event.target.value);
-              }}
-            />
-          </label>
-          <label>
-            Longitude
-            <input
-              className="input w-full"
-              inputMode="decimal"
-              type="number"
-              min="-180"
-              max="180"
-              step="any"
-              value={longitude}
-              onChange={(event) => {
-                stopFollowing();
-                setLongitude(event.target.value);
-              }}
-            />
-          </label>
-          <button className="btn btn-outline" type="submit">
-            Use these coordinates
-          </button>
-        </form>
-      </details>
       {message && <p role="status">{message}</p>}
     </section>
   );

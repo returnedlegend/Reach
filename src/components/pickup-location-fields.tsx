@@ -38,18 +38,6 @@ export function PickupLocationFields() {
     [],
   );
 
-  function updateCoordinates(latText: string, lngText: string) {
-    setLatitude(latText);
-    setLongitude(lngText);
-    const lat = Number(latText);
-    const lng = Number(lngText);
-    setMessage(
-      latText && lngText && !inPickupArea({ lat, lng })
-        ? "Pickup coordinates must be within the Bryan–College Station area."
-        : "",
-    );
-  }
-
   async function searchAddress() {
     const text = address.trim();
     if (text.length < 3) {
@@ -194,47 +182,6 @@ export function PickupLocationFields() {
           ))}
         </p>
       )}
-      {selectedCoordinates && (
-        <p className="sharing-hint">
-          Selected coordinates: {latitude}, {longitude}. Location details are
-          reported by the submitter and not verified.
-        </p>
-      )}
-      <details>
-        <summary>Enter pickup coordinates manually</summary>
-        <p className="sharing-hint">
-          Use coordinates for the public pickup location. Your home location is
-          not needed.
-        </p>
-        <div className="sharing-grid">
-          <label>
-            Latitude
-            <input
-              type="number"
-              min="30.4"
-              max="30.9"
-              step="any"
-              value={latitude}
-              onChange={(event) =>
-                updateCoordinates(event.target.value, longitude)
-              }
-            />
-          </label>
-          <label>
-            Longitude
-            <input
-              type="number"
-              min="-96.7"
-              max="-96.1"
-              step="any"
-              value={longitude}
-              onChange={(event) =>
-                updateCoordinates(latitude, event.target.value)
-              }
-            />
-          </label>
-        </div>
-      </details>
       <input
         type="hidden"
         name="lat"
@@ -247,7 +194,7 @@ export function PickupLocationFields() {
       />
       {!selectedCoordinates && (
         <p className="sharing-hint">
-          Search and select a location or enter coordinates in the allowed area.
+          Search and select the pickup address.
         </p>
       )}
     </div>

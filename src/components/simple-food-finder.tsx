@@ -664,44 +664,6 @@ export function SimpleFoodFinder(props: Props) {
                         {index + 1}. {resource.name}
                       </h4>
                       <dl>
-                        <dt>Distance and pickup score</dt>
-                        <dd>
-                          {(() => {
-                            const comparison = activeRanking.find(
-                              (item) => item.id === resource.id,
-                            )?.comparison;
-                            if (!comparison || comparison.score === null)
-                              return "Unknown — add your location to compare distance.";
-                            return (
-                              <>
-                                <strong>
-                                  {comparison.score} points ·{" "}
-                                  {comparison.status === "fits"
-                                    ? "Fits checked constraints"
-                                    : "Confirm details before traveling"}
-                                </strong>
-                                <details>
-                                  <summary>
-                                    How this score is calculated
-                                  </summary>
-                                  <p>{comparison.explanation}</p>
-                                  <dl>
-                                    {Object.entries(comparison.parameters).map(
-                                      ([key, value]) => (
-                                        <div key={key}>
-                                          <dt>
-                                            {key.replace(/([A-Z])/g, " $1")}
-                                          </dt>
-                                          <dd>{value ?? "Unknown"}</dd>
-                                        </div>
-                                      ),
-                                    )}
-                                  </dl>
-                                </details>
-                              </>
-                            );
-                          })()}
-                        </dd>
                         <dt>Food</dt>
                         <dd>{resource.shortOffering || summary.offering}</dd>
                         <dt>Pickup times</dt>
@@ -786,7 +748,7 @@ export function SimpleFoodFinder(props: Props) {
             <p>
               {assistance === "ai"
                 ? activeRanking.some((item) => item.selectedBy === "ai")
-                  ? "AI compared candidates; distance and pickup scores determine the order. Confirm details before traveling."
+                  ? "Options compared by distance and pickup details. Confirm before traveling."
                   : "Showing current mathematical matches. Run AI again for a fresh comparison."
                 : aiAttempted
                   ? aiMessage ||
